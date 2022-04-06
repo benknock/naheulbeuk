@@ -1,0 +1,24 @@
+{
+  "NAHEULBEUK.AbilityCou": "Courage",
+  "NAHEULBEUK.AbilityInt": "Intelligence",
+  "NAHEULBEUK.AbilityCha": "Charisme",
+  "NAHEULBEUK.AbilityFo": "Force",
+  "NAHEULBEUK.AbilityAd": "Adresse",
+  "NAHEULBEUK.AbilityAtt": "Attaque",
+  "NAHEULBEUK.AbilityPrd": "Parade",
+
+  "NAHEULBEUK.AbilityCouAbbr": "cou",
+  "NAHEULBEUK.AbilityIntAbbr": "int",
+  "NAHEULBEUK.AbilityChaAbbr": "cha",
+  "NAHEULBEUK.AbilityFoAbbr": "fo",
+  "NAHEULBEUK.AbilityAdAbbr": "ad",
+  "NAHEULBEUK.AbilityAttAbbr": "att",
+  "NAHEULBEUK.AbilityPrdAbbr": "prd",
+
+  "NAHEULBEUK.EffectCreate": "Create Effect",
+  "NAHEULBEUK.EffectToggle": "Toggle Effect",
+  "NAHEULBEUK.EffectEdit": "Edit Effect",
+  "NAHEULBEUK.EffectDelete": "Delete Effect",
+
+  "NAHEULBEUK.Add": "Add"
+}

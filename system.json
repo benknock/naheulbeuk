@@ -1,0 +1,69 @@
+{
+  "name": "naheulbeuk",
+  "title": "Naheulbeuk",
+  "description": "The Naheulbeuk system for FoundryVTT!",
+  "version": "1.1.1",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "9",
+  "author": "Asacolips",
+  "esmodules": ["module/naheulbeuk.mjs"],
+  "styles": ["css/naheulbeuk.css"],
+  "scripts": [],
+  "packs": [
+    {
+      "name": "armes",
+      "label": "Armes",
+      "system": "naheulbeuk",
+      "path": "./packs/armes.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+        "name": "competences-h",
+        "label": "Compétences héritées",
+        "system": "naheulbeuk",
+        "path": "./packs/competences-h.db",
+        "type": "Item",
+        "tag": "item"
+    },
+    {
+      "name": "competences-a",
+      "label": "Compétences choisies",
+      "system": "naheulbeuk",
+      "path": "./packs/competences-a.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "metiers",
+      "label": "Métiers",
+      "system": "naheulbeuk",
+      "path": "./packs/metiers.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "origines",
+      "label": "Origines",
+      "system": "naheulbeuk",
+      "path": "./packs/origines.db",
+      "type": "Item",
+      "tag": "item"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 5,
+  "gridUnits": "ft",
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "power",
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "license": "LICENSE.txt"
+}

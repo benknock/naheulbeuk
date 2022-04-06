@@ -1,0 +1,80 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="grid grid-2col">
+        <div class="resource">
+          <label class="resource-label">Quantité</label>
+          <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number"/>
+        </div>
+        <div class="resource">
+          <label class="resource-label">Poids (kg)</label>
+          <input type="text" name="data.weight" value="{{data.weight}}" data-dtype="Number"/>
+        </div>
+      </div>
+      <div class="grid grid-2col">
+        <div class="resource">
+          <label class="resource-label">Prix (po)</label>
+          <input type="text" name="data.prix" value="{{data.prix}}" data-dtype="Number"/>
+        </div>
+        <div class="resource">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="attributes">Description</a>
+    <a class="item" data-tab="description">Détails</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="attributes">
+      {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the rollData prop. --}}
+      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
+    </div>
+
+    {{!-- Attributes Tab --}}
+    <div class="tab attributes" data-group="primary" data-tab="description">
+      {{!-- As you add new fields, add them in here! --}}
+      <div class="resource">
+        <h2><label class="resource-label">Jet de dés</label></h2>
+      </div>
+      <div class="resource">
+        <input type="text" name="data.formula" value="{{data.formula}}" data-dtype="String"/>
+      </div>
+      <div class="resource" style="margin-top: 10px;">
+        <h2><label class="resource-label">Bonus / Malus :</label></h2>
+        <div class="resources grid grid-6col">
+          <label class="resource-label">Courage</label>
+          <input type="text" name="data.cou" value="{{data.cou}}" data-dtype="String"/>
+          <label class="resource-label">Intelligence</label>
+          <input type="text" name="data.int" value="{{data.int}}" data-dtype="String"/>
+          <label class="resource-label">Charisme</label>
+          <input type="text" name="data.cha" value="{{data.cha}}" data-dtype="String"/>
+        </div>
+        <div class="resources grid grid-6col">
+          <label class="resource-label">Adresse</label>
+          <input type="text" name="data.ad" value="{{data.ad}}" data-dtype="String"/>
+          <label class="resource-label">Force</label>
+          <input type="text" name="data.fo" value="{{data.fo}}" data-dtype="String"/>
+          <label class="resource-label">Attaque</label>
+          <input type="text" name="data.att" value="{{data.att}}" data-dtype="String"/>
+        </div>
+        <div class="resources grid grid-6col">
+          <label class="resource-label">Parade</label>
+          <input type="text" name="data.prd" value="{{data.prd}}" data-dtype="String"/>
+          <label class="resource-label">Protection</label>
+          <input type="text" name="data.pr" value="{{data.pr}}" data-dtype="String"/>
+          <label class="resource-label">Protection Magique</label>
+          <input type="text" name="data.prm" value="{{data.prm}}" data-dtype="String"/>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

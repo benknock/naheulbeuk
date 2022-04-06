@@ -1,0 +1,323 @@
+{
+  "Actor": {
+    "types": ["character"],
+    "templates": {
+      "base": {
+        "health": {
+          "value": 10,
+          "min": 0,
+          "max": 10
+        },
+        "pa": {
+          "value": 5,
+          "min": 0,
+          "max": 5
+        },
+        "biography": ""
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "attributes": {
+        "level": {
+          "value": 1
+        },
+        "destin": {
+          "value": 0
+        },
+        "xp": {
+          "value": 0
+        },
+        "sexe": {
+          "value": ""
+        },
+        "signe": {
+          "value": ""
+        },
+        "pa": {
+          "value": 0
+        },
+        "po": {
+          "value":0
+        },
+        "lt": {
+          "value": 0
+        },
+        "lb": {
+          "value": 0
+        },
+        "pr": {
+          "value": 0,
+          "bonus": 0,
+          "bonus-ss--encombrement":0
+        },
+        "prm": {
+          "value": 0,
+          "bonus": 0
+        },
+        "rm": {
+          "value":0
+        },
+        "esq": {
+          "value":0
+        },
+        "mphy": {
+          "value":0
+        },
+        "mpsy": {
+          "value":0
+        },
+        "lancerarme": {
+          "value":0,
+          "bonus":0,
+          "degat":0
+        },
+        "bourse": {
+          "value": 0,
+          "max": 0
+        },
+        "sac": {
+          "value": 0,
+          "max": 0
+        },
+        "magie":{
+          "value": false
+        },
+        "generaliste": {
+          "value": false
+        },
+        "combat": {
+          "value": false
+        },
+        "domestique": {
+          "value": false
+        },
+        "feu": {
+          "value": false
+        },
+        "metamorphose": {
+          "value": false
+        },
+        "thermodynamique": {
+          "value": false
+        },
+        "invocation": {
+          "value": false
+        },
+        "necromancie": {
+          "value": false
+        },
+        "illusion": {
+          "value": false
+        },
+        "eau": {
+          "value": false
+        },
+        "terre": {
+          "value": false
+        },
+        "air": {
+          "value": false
+        },
+        "tzinntch": {
+          "value": false
+        },
+        "pr-niourgl": {
+          "value": false
+        },
+        "pr-dlul": {
+          "value": false
+        },
+        "pr-youclidh": {
+          "value": false
+        },
+        "pr-slanoush": {
+          "value": false
+        },
+        "pr-adathie": {
+          "value": false
+        },
+        "pa-niourgl": {
+          "value": false
+        },
+        "pa-slanoush": {
+          "value": false
+        },
+        "pa-dlul": {
+          "value": false
+        },
+        "pa-braav": {
+          "value": false
+        },
+        "pa-khornettoh": {
+          "value": false
+        }
+      },
+      "abilities": {
+        "cou": {
+          "value": 0,
+          "bonus": 0
+        },
+        "int": {
+          "value": 0,
+          "bonus": 0
+        },
+        "cha": {
+          "value": 0,
+          "bonus": 0
+        },
+        "ad": {
+          "value": 0,
+          "bonus": 0
+        },
+        "fo": {
+          "value": 0,
+          "bonus": 0
+        },
+        "att": {
+          "value": 8,
+          "bonus": 0
+        },
+        "prd": {
+          "value": 10,
+          "bonus": 0
+        }
+      }
+    },
+    "npc": {
+      "templates": ["base"],
+      "cr": 0
+    }
+  },
+  "Item": {
+    "types": ["truc", "arme", "armure", "sac", "competence", "metier", "origine", "sort","etat"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "truc": {
+      "templates": ["base"],
+      "img" : "icons/svg/chest.svg",
+      "quantity": 1,
+      "weight": 0,
+      "prix":0,
+      "formula": "",
+      "equipe": false,
+      "rupture": "-",
+      "cou": 0,
+      "int": 0,
+      "cha": 0,
+      "ad": 0,
+      "fo": 0,
+      "att": 0,
+      "prd": 0,
+      "pr": 0,
+      "prm":0
+    },
+    "arme": {
+      "templates": ["base"],
+      "img" : "icons/svg/sword.svg",
+      "quantity": 1,
+      "weight": 0,
+      "prix":0,
+      "formula": "d6",
+      "equipe": false,
+      "rupture": "0",
+      "cou": 0,
+      "int": 0,
+      "cha": 0,
+      "ad": 0,
+      "fo": 0,
+      "att": 0,
+      "prd": 0,
+      "pr": 0,
+      "prm":0,
+      "lancerarme":"-",
+      "lancerarmedegat":0,
+      "autre":""
+    },
+    "armure": {
+      "templates": ["base"],
+      "img" : "icons/svg/shield.svg",
+      "quantity": 1,
+      "weight": 0,
+      "prix":0,
+      "formula": "",
+      "equipe": false,
+      "rupture": "0",
+      "cou": 0,
+      "int": 0,
+      "cha": 0,
+      "ad": 0,
+      "fo": 0,
+      "att": 0,
+      "prd": 0,
+      "pr": 0,
+      "prm":0
+    },
+    "sac": {
+      "templates": ["base"],
+      "img" : "",
+      "quantity": 1,
+      "weight": 0,
+      "prix":0,
+      "equipe": false,
+      "type": "sac à dos",
+      "place": 0,
+      "cou": 0,
+      "int": 0,
+      "cha": 0,
+      "ad": 0,
+      "fo": 0,
+      "att": 0,
+      "prd": 0,
+      "pr": 0,
+      "prm":0
+    },
+    "etat": {
+      "templates": ["base"],
+      "img" : "icons/svg/stoned.svg",
+      "formula": "",
+      "equipe": false,
+      "cou": 0,
+      "int": 0,
+      "cha": 0,
+      "ad": 0,
+      "fo": 0,
+      "att": 0,
+      "prd": 0,
+      "pr": 0,
+      "prm":0
+    },
+    "competence": {
+      "templates": ["base"],
+      "img" : "icons/svg/statue.svg",
+      "formula": "",
+      "diff":"",
+      "choix": true
+    },
+    "metier": {
+      "templates": ["base"],
+      "img" : "icons/svg/hanging-sign.svg",
+      "magie": false
+    },
+    "origine": {
+      "templates": ["base"],
+      "img" : "icons/svg/blood.svg"
+    },
+    "sort": {
+      "templates": ["base"],
+      "img" : "icons/svg/book.svg",
+      "spellLevel": 1,
+      "type":"generaliste",
+      "cout":0,
+      "incantation":0,
+      "duree":0,
+      "portee":0,
+      "epreuve":"d20",
+      "degat":"d20",
+      "effet":""
+    }
+  }
+}

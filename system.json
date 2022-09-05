@@ -2,51 +2,459 @@
   "name": "naheulbeuk",
   "title": "Naheulbeuk",
   "description": "The Naheulbeuk system for FoundryVTT!",
-  "version": "1.1.1",
+  "version": "1.1.1.06",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "9",
-  "author": "Asacolips",
+  "author": "Dipes",
   "esmodules": ["module/naheulbeuk.mjs"],
   "styles": ["css/naheulbeuk.css"],
   "scripts": [],
   "packs": [
     {
+      "name": "accessoires-magiques",
+      "label": "Équipements : accessoires magiques",
+      "system": "naheulbeuk",
+      "path": "./packs/accessoires-magiques.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "all",
+      "label": "Équipements : global",
+      "system": "naheulbeuk",
+      "path": "./packs/all.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "ape",
+      "label": "Système : aptitudes parfois étranges",
+      "system": "naheulbeuk",
+      "path": "./packs/ape.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
       "name": "armes",
-      "label": "Armes",
+      "label": "Équipements : armement",
       "system": "naheulbeuk",
       "path": "./packs/armes.db",
       "type": "Item",
       "tag": "item"
     },
     {
-        "name": "competences-h",
-        "label": "Compétences héritées",
-        "system": "naheulbeuk",
-        "path": "./packs/competences-h.db",
-        "type": "Item",
-        "tag": "item"
+      "name": "armures",
+      "label": "Équipements : protections",
+      "system": "naheulbeuk",
+      "path": "./packs/armures.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "bestiaire",
+      "label": "Bestiaire",
+      "system": "naheulbeuk",
+      "path": "./packs/bestiaire.db",
+      "type": "Actor",
+      "tag": "Actor"
+    },
+    {
+      "name": "bestiaire-items",
+      "label": "Système : bestiaire données",
+      "system": "naheulbeuk",
+      "path": "./packs/bestiaire-items.db",
+      "type": "Item",
+      "tag": "Item"
+    },
+    {
+      "name": "blessures-graves",
+      "label": "États : blessures graves",
+      "system": "naheulbeuk",
+      "path": "./packs/blessures-graves.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "competences-b",
+      "label": "Compétences : de base",
+      "system": "naheulbeuk",
+      "path": "./packs/competences-b.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "competences-h",
+      "label": "Compétences : héritées",
+      "system": "naheulbeuk",
+      "path": "./packs/competences-h.db",
+      "type": "Item",
+      "tag": "item"
     },
     {
       "name": "competences-a",
-      "label": "Compétences choisies",
+      "label": "Compétences : choisies",
       "system": "naheulbeuk",
       "path": "./packs/competences-a.db",
       "type": "Item",
       "tag": "item"
     },
     {
+      "name": "coups-speciaux",
+      "label": "Compétences : les coups spéciaux",
+      "system": "naheulbeuk",
+      "path": "./packs/coups-speciaux.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "couvre-chefs",
+      "label": "Équipements : couvres-chefs",
+      "system": "naheulbeuk",
+      "path": "./packs/couvre-chefs.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "equipements-pour-mages",
+      "label": "Équipements : mages",
+      "system": "naheulbeuk",
+      "path": "./packs/equipements-pour-mages.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "equipements-pour-pretres",
+      "label": "Équipements : clerc (prêtres/paladins)",
+      "system": "naheulbeuk",
+      "path": "./packs/equipements-pour-pretres.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "folies",
+      "label": "États : folies",
+      "system": "naheulbeuk",
+      "path": "./packs/folies.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "immobilier",
+      "label": "Divers : immobilier",
+      "system": "naheulbeuk",
+      "path": "./packs/immobilier.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "ingredients",
+      "label": "Équipements : ingrédients",
+      "system": "naheulbeuk",
+      "path": "./packs/ingredients.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "livres",
+      "label": "Équipements : livres",
+      "system": "naheulbeuk",
+      "path": "./packs/livres.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "maladies",
+      "label": "États : maladies et empoisonnement",
+      "system": "naheulbeuk",
+      "path": "./packs/maladies.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "macros",
+      "label": "Macros",
+      "system": "naheulbeuk",
+      "path": "./packs/macros.db",
+      "type": "Macro",
+      "tag": "macro"
+    },
+    {
       "name": "metiers",
-      "label": "Métiers",
+      "label": "Divers : métiers",
       "system": "naheulbeuk",
       "path": "./packs/metiers.db",
       "type": "Item",
       "tag": "item"
     },
     {
+      "name": "mutations",
+      "label": "États : mutations",
+      "system": "naheulbeuk",
+      "path": "./packs/mutations.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "notes",
+      "label": "Notes",
+      "system": "naheulbeuk",
+      "path": "./packs/notes.db",
+      "type": "JournalEntry",
+      "tag": "journalentry"
+    },
+    {
+      "name": "objets-exclusifs",
+      "label": "Équipements : objets exclusifs",
+      "system": "naheulbeuk",
+      "path": "./packs/objets-exclusifs.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
       "name": "origines",
-      "label": "Origines",
+      "label": "Divers : origines",
       "system": "naheulbeuk",
       "path": "./packs/origines.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "pieges",
+      "label": "Divers : pièges",
+      "system": "naheulbeuk",
+      "path": "./packs/pieges.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "potions-poisons",
+      "label": "Équipements : potions et poisons",
+      "system": "naheulbeuk",
+      "path": "./packs/potions-poisons.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-pretres-adathie",
+      "label": "Prières : prêtre d'Adathie",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-pretres-adathie.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-paladins-braav",
+      "label": "Prières : paladin de Braav",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-paladins-braav.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-paladins-niourgl",
+      "label": "Prières : paladin de Niourgl",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-paladins-niourgl.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-pretres-niourgl",
+      "label": "Prières : prêtre de Niourgl",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-pretres-niourgl.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-paladin-dlul",
+      "label": "Prières : paladin de Dlul",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-paladin-dlul.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-paladin-khornettoh",
+      "label": "Prières : paladin de Khornettoh",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-paladin-khornettoh.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-paladin-slanoush",
+      "label": "Prières : paladin de Slanoush",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-paladin-slanoush.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-pretre-dlul",
+      "label": "Prières : prêtre de Dlul",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-pretre-dlul.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-pretre-slanoush",
+      "label": "Prières : prêtre de Slanoush",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-pretre-slanoush.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "prieres-pretre-youclidh",
+      "label": "Prières : prêtre de Youclidh",
+      "system": "naheulbeuk",
+      "path": "./packs/prieres-pretre-youclidh.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "services",
+      "label": "Divers :  services",
+      "system": "naheulbeuk",
+      "path": "./packs/services.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-air",
+      "label": "Magie : air",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-air.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-combat",
+      "label": "Magie : combat",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-combat.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-eau",
+      "label": "Magie : eau et glace",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-eau.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts et prières non triés",
+      "label": "Magie et Prière : non triés",
+      "system": "naheulbeuk",
+      "path": "./packs/non-tries.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-feu",
+      "label": "Magie : feu",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-feu.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-generaliste",
+      "label": "Magie : généraliste",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-generaliste.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-invocateur",
+      "label": "Magie : invocation",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-invocateur.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-item",
+      "label": "Système : sorts données",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-item.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-meta",
+      "label": "Magie : métamorphose",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-meta.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-necro",
+      "label": "Magie : nécromancie",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-necro.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-terre",
+      "label": "Magie : terre",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-terre.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-thermo",
+      "label": "Magie : thermodynamique",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-thermo.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "sorts-tzinntch",
+      "label": "Magie : Tzinntch",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-tzinntch.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
+      "name": "tableauxcritiquesmaladresses",
+      "label": "Tableaux : critiques et maladresses",
+      "system": "naheulbeuk",
+      "path": "./packs/tableauxcritiquesmaladresses.db",
+      "type": "RollTable",
+      "tag": "table"
+    },
+    {
+      "name": "tableaux",
+      "label": "Tableaux : divers",
+      "system": "naheulbeuk",
+      "path": "./packs/tableaux.db",
+      "type": "RollTable",
+      "tag": "table"
+    },
+    {
+      "name": "tableauxape",
+      "label": "Tableaux : APE",
+      "system": "naheulbeuk",
+      "path": "./packs/tableauxape.db",
+      "type": "RollTable",
+      "tag": "table"
+    },
+    {
+      "name": "trucs",
+      "label": "Équipements : materiel",
+      "system": "naheulbeuk",
+      "path": "./packs/trucs.db",
       "type": "Item",
       "tag": "item"
     }
@@ -58,12 +466,26 @@
       "path": "lang/en.json"
     }
   ],
-  "gridDistance": 5,
-  "gridUnits": "ft",
+  "dependencies": [
+    {
+      "name": "pdfoundry",
+      "manifest": "https://raw.githubusercontent.com/Djphoenix719/PDFoundry/master/module.json"
+    },
+    {
+      "name": "popout",
+      "manifest": "https://github.com/League-of-Foundry-Developers/fvtt-module-popout/blob/master/module.json"
+    },
+    {
+      "name": "statuscounter",
+      "manifest": "https://gitlab.com/woodentavern/status-icon-counters/-/raw/master/src/module.json"
+    }
+    ],
+  "gridDistance": 1,
+  "gridUnits": "m",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
-  "url": "",
-  "manifest": "",
-  "download": "",
+  "url": "https://github.com/Dipess/naheulbeuk",
+  "manifest": "https://github.com/Dipess/naheulbeuk/releases/latest/download/system.json",
+  "download": "https://github.com/Dipess/naheulbeuk/releases/download/1.1.1.06/system.zip",
   "license": "LICENSE.txt"
 }

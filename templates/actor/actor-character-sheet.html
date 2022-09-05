@@ -6,11 +6,17 @@
     <a class="item" data-tab="carac">Caractéristiques</a>
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="features">Compétences</a>
+    {{#if (equalsnot coups.length 0)}}
+      <a class="item" data-tab="features2">Coups spéciaux</a>
+    {{/if}}
+    {{#if (equalsnot apes.length 0)}}
+      <a class="item" data-tab="ape">APE</a>
+    {{/if}}
     <a class="item" data-tab="items">Inventaire</a>
     {{#if (equals data.attributes.magie.value true)}}
       <a class="item" data-tab="spells">Magie</a>
     {{/if}}
-    <a class="item" data-tab="effects">Effets</a>
+    {{!--<a class="item" data-tab="effects">Effets</a>--}}
   </nav>
 
   {{!-- Sheet Body --}}
@@ -59,12 +65,76 @@
             <div class="resource-label" style="padding-bottom: 5px;"><span>Signes particuliers :</span></div>
             <input type="text" name="data.attributes.signe.value" value="{{data.attributes.signe.value}}"/>
           </div>
-          {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
+           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
         </div>
       </header>
       <hr>
+      <div id="hide" style="display:none">
+        <div style="margin-bottom: 10px;">
+          <li class="item flexrow" data-item-id="{{item._id}}">
+            <span style="text-overflow: ellipsis;flex:0.6;"><strong>Objets</strong></span>
+            <div class=""><strong>Commentaires</strong></div>
+          </li>
+        </div>
+        {{#each armures as |item id|}}
+        {{#if (equals item.data.equipe true)}}
+          {{#if (equals item.data.autre "")}}
+          {{else}}
+          <li class="item flexrow" data-item-id="{{item._id}}">
+            <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
+            <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+          </li> 
+          {{/if}}
+        {{/if}}
+        {{/each}}
+        {{#each armes as |item id|}}
+        {{#if (equals item.data.equipe true)}}
+          {{#if (equals item.data.autre "")}}
+          {{else}}
+          <li class="item flexrow" data-item-id="{{item._id}}">
+            <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
+            <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+          </li> 
+          {{/if}}
+        {{/if}}
+        {{/each}}
+        {{#each etats as |item id|}}
+        {{#if (equals item.data.equipe true)}}
+          {{#if (equals item.data.autre "")}}
+          {{else}}
+          <li class="item flexrow" data-item-id="{{item._id}}">
+            <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
+            <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+          </li> 
+          {{/if}}
+        {{/if}}
+        {{/each}}
+        {{#each trucs as |item id|}}
+        {{#if (equals item.data.equipe true)}}
+          {{#if (equals item.data.autre "")}}
+          {{else}}
+          <li class="item flexrow" data-item-id="{{item._id}}">
+            <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
+            <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+          </li> 
+          {{/if}}
+        {{/if}}
+        {{/each}}
+        {{#each sacs as |item id|}}
+        {{#if (equals item.data.equipe true)}}
+          {{#if (equals item.data.autre "")}}
+          {{else}}
+          <li class="item flexrow" data-item-id="{{item._id}}">
+            <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
+            <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+          </li> 
+          {{/if}}
+        {{/if}}
+        {{/each}}
+        <hr>
+      </div>
       <section class="grid grid-2col">
         <aside class="sidebar">
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
@@ -72,9 +142,9 @@
           from 1 to 12 and will create that number of columns.  --}}
           <div class="abilities flexcol">
             <div class="ability flexrow flex-group-center" style="padding-bottom: 0.5em;">
-              <label class="resource-label flexlarge align-left">Carac&nbsp;<i class="fas fa-dice-d20 rollable2" data-name="Initialisation" data-dice="d6+7" data-diff=""></i></label>
+              <label class="resource-label flexlarge align-left">Carac&nbsp;<i class="fas fa-dice-d20 rollable2" data-name="Initialisation" data-dice="d6+7" data-diff=""></i>&nbsp;<i class="fas fa-eye hide cliquable"></i></label>
               <label class="resource-label">Base</label>
-              <label class="resource-label">Modif</label>
+              <label class="resource-label">Bonus</label>
               <label class="resource-label">Total</label>
             </div>
             {{#each data.abilities as |ability key|}}
@@ -99,34 +169,55 @@
               and it will add a small amount of padding, a border, and will
               center all of its child elements content and text. --}}
               <div class="xp">
-                <label for="data.attributes.xp.value" class="resource-label">Points d'xp</label>
+                <label for="data.attributes.xp.value" class="resource-label">Experience</label>
                 <input type="text" name="data.attributes.xp.value" value="{{data.attributes.xp.value}}" data-dtype="Number"/>
               </div>
               <div class="resource">
-                <label for="data.attributes.level.value" class="resource-label">Level</label>
+                <label for="data.attributes.level.value" class="resource-label">Niveau</label>
                 <div class="resource-content flexrow flex-center flex-between">
                   <input type="text" name="data.attributes.level.value" value="{{data.attributes.level.value}}" data-dtype="Number" readonly/>
                 </div>
               </div>
             </div>
-            <div class="res-mag" style="margin-bottom: 8px;">
-              <label class="resource-label">Résistance magique&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Résistance magique" data-diff='{{data.attributes.rm.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Résistance magique" data-diff='{{data.attributes.rm.value}}'></i></label>
-              <input type="text" name="res-mag" value='{{data.attributes.rm.value}}' data-dtype="Number" readonly/>
+            <div class="res-mag grid grid-2col" style="margin-bottom: 8px;">
+              <div>
+                <label class="resource-label">Résistance mag.&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Résistance magique" data-diff='{{math data.attributes.rm.value "+" data.attributes.rm.bonus}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Résistance magique" data-diff='{{math data.attributes.rm.value "+" data.attributes.rm.bonus}}'></i></label>
+                <div class="ability flexrow flex-group-center">
+                  Base :&nbsp;<input type="text" name="res-mag" value='{{data.attributes.rm.value}}' data-dtype="Number" readonly/>
+                  &nbsp;Bonus :&nbsp;<input type="text" name="data.attributes.rm.bonus" value='{{data.attributes.rm.bonus}}' data-dtype="Number"/>
+                </div>
+              </div>
+              <div class="esquive">
+                <label class="resource-label">Esquive&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Esquive" data-diff='{{math data.attributes.esq.value "+" data.attributes.esq.bonus}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Esquive" data-diff='{{math data.attributes.esq.value "+" data.attributes.esq.bonus}}'></i></label>
+                <div class="ability flexrow flex-group-center"> 
+                  Base :&nbsp;<input type="text" name="esq" value='{{data.attributes.esq.value}}' data-dtype="Number" readonly/>
+                  &nbsp;Bonus :&nbsp;<input type="text" name="data.attributes.esq.bonus" value='{{data.attributes.esq.bonus}}' data-dtype="Number"/>
+                </div>
+              </div>
             </div>
             <div class="resources grid grid-2col">
               <div class="protection">
-                <label class="resource-label">Protection <em style="font-weight: lighter;">{{deplacement data.attributes.pr.bonus "+" data.attributes.pr.value}}</em></label>
-                <input type="text" name="protection" value='{{math (math data.attributes.pr.bonus "+" data.attributes.pr.value) "+" data.attributes.pr.bonus-ss--encombrement}}' data-dtype="Number" readonly/>
+                <label class="resource-label armuredetail"><span class="cliquable">Protection</span><em style="font-weight: lighter;">{{deplacement data.attributes.pr.bonus data.attributes.pr.value data.attributes.mvt.value}}</em></label>
+                <div class="ability flexrow flex-group-center"> 
+                  Base :&nbsp;<input type="text" name="pr" value='{{math (math data.attributes.pr.value "+" data.attributes.pr.bonusSsEncombrement) "+" data.attributes.pr.trucdemauviette}}' data-dtype="Number" readonly/>
+                  &nbsp;Bonus :&nbsp;<input type="text" name="data.attributes.pr.bonus" value='{{data.attributes.pr.bonus}}' data-dtype="Number"/>
+                </div>
               </div>
               <div class="protection">
                 <label class="resource-label">Protection magique</label>
-                <input type="text" name="protection" value='{{math data.attributes.prm.bonus "+" data.attributes.prm.value}}' data-dtype="Number" readonly/>
+                <div class="resource-content flexrow flex-center flex-between"> 
+                  <input type="text" name="data.attributes.prm.bonus" value='{{data.attributes.prm.bonus}}' data-dtype="Number"/>
+                </div>
               </div>
             </div>
             <div class="resources grid grid-2col">
-              <div class="esquive">
-                <label class="resource-label">Esquive&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Esquive" data-diff='{{data.attributes.esq.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Esquive" data-diff='{{data.attributes.esq.value}}'></i></label>
-                <input type="text" name="esquive" value='{{data.attributes.esq.value}}' data-dtype="Number" readonly/>
+              <div class="resource">
+                <label class="resource-label">Charge</label>
+                <div class="resource-content flexrow flex-center flex-between">
+                  <input type="text" name="data.attributes.charge.value" value="{{arrondi charge}}" readonly/>&nbsp;kg
+                  <span style="flex:0.5">&nbsp;/ </span>
+                  <input type="text" name="data.attributes.charge.max" value="{{data.attributes.charge.max}}"/>&nbsp;kg
+                </div>
               </div>
               <div class="destin">
                 <label for="data.attributes.destin.value" class="resource-label">Points de destin&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d4-1" data-name="Points de destin" data-diff=""></i></i></label>
@@ -136,7 +227,31 @@
           </aside>
         </section>
       </section>
-
+      <hr>
+      {{#if (equals data.attributes.magie.value true)}}
+      <div class="grid grid-3col" style="gap:60px;">
+          <div class="resource flex-group-center">
+            <label for="data.pa.value" class="resource-label">Energie Astrale</label>
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="data.pa.value" value="{{data.pa.value}}" data-dtype="Number"/>
+              <span> / </span>
+              <input type="text" name="data.pa.max" value="{{data.pa.max}}" data-dtype="Number"/>
+            </div>
+          </div>
+          <div class="resource flex-group-center">
+            <div class="res-mag">
+              <label class="resource-label">MagiePhys&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="MagiePhys" data-diff='{{data.attributes.mphy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePhys" data-diff='{{data.attributes.mphy.value}}'></i></label>
+              <input type="text" name="res-mag" value='{{data.attributes.mphy.value}}' data-dtype="Number" readonly/>
+            </div>
+          </div>
+          <div class="resource flex-group-center">
+            <div class="res-mag">
+              <label class="resource-label">MagiePsy&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="MagiePsy" data-diff='{{data.attributes.mpsy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePsy" data-diff='{{data.attributes.mpsy.value}}'></i></label>
+              <input type="text" name="res-mag" value='{{data.attributes.mpsy.value}}' data-dtype="Number" readonly/>
+            </div>
+          </div>
+      </div>
+    {{/if}}
       <section class="grid grid-3col" style="gap:60px;">
         <aside class="sidebar">
           <div class="abilities flexcol">
@@ -160,10 +275,17 @@
                 <li class="item flexrow" data-item-id="{{item._id}}">
                   <label>
                   {{item.name}}
-                  {{#if (equals item.data.formula "")}}
+                  {{#if (equalsor item.data.formula "" item.data.formula "-")}}
+                    {{#if (equals item.data.epreuvecustom true)}}
+                      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}" data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}" data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}" data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}" data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}" data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+                    {{/if}}
                   {{else}}
-                    <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff=""></i>
-                    &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff=""></i>
+                    {{#if (equals item.data.epreuvecustom true)}}
+                      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}" data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}" data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}" data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}" data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}" data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+                    {{else}}
+                      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff=""></i>
+                      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff=""></i>
+                    {{/if}}
                   {{/if}}
                 </label>
                   <div class="item-controls" style="align-items: center;">
@@ -182,31 +304,6 @@
           </aside>
         </section>
       </section>
-      {{#if (equals data.attributes.magie.value true)}}
-        <hr>
-        <div class="grid grid-3col" style="gap:60px;">
-            <div class="resource flex-group-center">
-              <label for="data.pa.value" class="resource-label">Energie Astrale</label>
-              <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="data.pa.value" value="{{data.pa.value}}" data-dtype="Number"/>
-                <span> / </span>
-                <input type="text" name="data.pa.max" value="{{data.pa.max}}" data-dtype="Number"/>
-              </div>
-            </div>
-            <div class="resource flex-group-center">
-              <div class="res-mag">
-                <label class="resource-label">MagiePhys&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="MagiePhys" data-diff='{{data.attributes.mphy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePhys" data-diff='{{data.attributes.mphy.value}}'></i></label>
-                <input type="text" name="res-mag" value='{{data.attributes.mphy.value}}' data-dtype="Number" readonly/>
-              </div>
-            </div>
-            <div class="resource flex-group-center">
-              <div class="res-mag">
-                <label class="resource-label">MagiePsy&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="MagiePsy" data-diff='{{data.attributes.mpsy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePsy" data-diff='{{data.attributes.mpsy.value}}'></i></label>
-                <input type="text" name="res-mag" value='{{data.attributes.mpsy.value}}' data-dtype="Number" readonly/>
-              </div>
-            </div>
-        </div>
-      {{/if}}
     </div>
 
     {{!-- Biography Tab --}}
@@ -218,6 +315,17 @@
     <div class="tab items" data-group="primary" data-tab="features">
       {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
       {{> "systems/naheulbeuk/templates/actor/parts/actor-features.html"}}
+    </div>
+
+    {{!-- Owned Features2 Tab --}}
+    <div class="tab items" data-group="primary" data-tab="features2">
+      {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
+      {{> "systems/naheulbeuk/templates/actor/parts/actor-features2.html"}}
+    </div>
+
+    {{!-- Active Effects Tab --}}
+    <div class="tab effects flexcol" data-group="primary" data-tab="ape">
+      {{> "systems/naheulbeuk/templates/actor/parts/actor-ape.html"}}
     </div>
 
     {{!-- Owned Items Tab --}}

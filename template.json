@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character"],
+    "types": ["character","npc"],
     "templates": {
       "base": {
         "health": {
@@ -13,8 +13,7 @@
           "min": 0,
           "max": 5
         },
-        "biography": ""
-      }
+        "biography": ""}
     },
     "character": {
       "templates": ["base"],
@@ -49,16 +48,22 @@
         "pr": {
           "value": 0,
           "bonus": 0,
-          "bonus-ss--encombrement":0
+          "bonusSsEncombrement":0,
+          "trucdemauviette":0
         },
         "prm": {
           "value": 0,
           "bonus": 0
         },
         "rm": {
-          "value":0
+          "value":0,
+          "bonus":0
         },
         "esq": {
+          "value":0,
+          "bonus":0
+        },
+        "mvt": {
           "value":0
         },
         "mphy": {
@@ -77,6 +82,10 @@
           "max": 0
         },
         "sac": {
+          "value": 0,
+          "max": 0
+        },
+        "charge":{
           "value": 0,
           "max": 0
         },
@@ -151,7 +160,16 @@
         },
         "pa-khornettoh": {
           "value": false
-        }
+        },
+        "hidespeciaux": false,
+        "hidelivres": false,
+        "hidefioles": false,
+        "hideingredients": false,
+        "hidearmes": false,
+        "hideprotections": false,
+        "hidenourritures": false,
+        "hiderichesses": false,
+        "hideperso": false
       },
       "abilities": {
         "cou": {
@@ -164,7 +182,8 @@
         },
         "cha": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "ignorempsy": 0
         },
         "ad": {
           "value": 0,
@@ -186,11 +205,77 @@
     },
     "npc": {
       "templates": ["base"],
-      "cr": 0
+      "attributes": {
+        "level": {
+          "value": 1
+        },
+        "bioCombat": "",
+        "moreStats": false,
+        "categorie":"",
+        "xp":{
+          "value":0
+        },
+        "pr": {
+          "value": 0,
+          "bonus": 0
+        },
+        "prm": {
+          "value": 0,
+          "bonus": 0
+        },
+        "rm": {
+          "value":0,
+          "bonus":0
+        },
+        "esq": {
+          "value":0,
+          "bonus":0
+        },
+        "mvt": {
+          "value":0
+        },
+        "mphy": {
+          "value":0
+        },
+        "mpsy": {
+          "value":0
+        }
+      },
+      "abilities": {
+        "cou": {
+          "value": 0,
+          "bonus": 0
+        },
+        "prd": {
+          "value": 0,
+          "bonus": 0
+        },
+        "int": {
+          "value": 0,
+          "bonus": 0
+        },
+        "cha": {
+          "value": 0,
+          "bonus": 0,
+          "ignorempsy": 0
+        },
+        "ad": {
+          "value": 0,
+          "bonus": 0
+        },
+        "fo": {
+          "value": 0,
+          "bonus": 0
+        },
+        "att": {
+          "value": 0,
+          "bonus": 0
+        }
+      }
     }
   },
   "Item": {
-    "types": ["truc", "arme", "armure", "sac", "competence", "metier", "origine", "sort","etat"],
+    "types": ["ape", "arme", "armure", "attaque", "competence", "coup", "etat", "gemme", "metier", "origine", "piege", "region", "sac", "sort", "trait", "truc"],
     "templates": {
       "base": {
         "description": ""
@@ -213,7 +298,13 @@
       "att": 0,
       "prd": 0,
       "pr": 0,
-      "prm":0
+      "prm":0,
+      "mvt": 0,
+      "rm": 0,
+      "autre":"",
+      "custom":"",
+      "ignorePoidSac":false,
+      "categorie":""
     },
     "arme": {
       "templates": ["base"],
@@ -224,6 +315,7 @@
       "formula": "d6",
       "equipe": false,
       "rupture": "0",
+      "enmain": false,
       "cou": 0,
       "int": 0,
       "cha": 0,
@@ -233,9 +325,34 @@
       "prd": 0,
       "pr": 0,
       "prm":0,
+      "mvt": 0,
+      "rm": 0,
       "lancerarme":"-",
       "lancerarmedegat":0,
-      "autre":""
+      "autre":"",
+      "name1":"",
+      "name2":"",
+      "name3":"",
+      "name4":"",
+      "name5":"",
+      "epreuve1":"",
+      "epreuve2":"",
+      "epreuve3":"",
+      "epreuve4":"",
+      "epreuve5":"",
+      "jet1":"",
+      "jet2":"",
+      "jet3":"",
+      "jet4":"",
+      "jet5":"",
+      "epreuvecustom":false,
+      "custom":"",
+      "ignorePoidSac":false,
+      "prbouclier":false,
+      "enchantement":false,
+      "relique":false,
+      "limitporteur":"tous sauf indications contraires",
+      "categorie":"Armes"
     },
     "armure": {
       "templates": ["base"],
@@ -254,7 +371,22 @@
       "att": 0,
       "prd": 0,
       "pr": 0,
-      "prm":0
+      "prm":0,
+      "mvt": 0,
+      "rm": 0,
+      "autre":"",
+      "custom":"",
+      "ignorePoidSac":false,
+      "prtete": false,
+      "prbras": false,
+      "prtorse": false,
+      "prmains": false,
+      "prjambes": false,
+      "prpieds": false,
+      "enchantement":false,
+      "relique":false,
+      "limitporteur":"tous sauf indications contraires",
+      "categorie":"Armures"
     },
     "sac": {
       "templates": ["base"],
@@ -273,7 +405,11 @@
       "att": 0,
       "prd": 0,
       "pr": 0,
-      "prm":0
+      "prm":0,
+      "mvt": 0,
+      "autre":"",
+      "custom":"",
+      "ignorePoidSac":false
     },
     "etat": {
       "templates": ["base"],
@@ -288,14 +424,37 @@
       "att": 0,
       "prd": 0,
       "pr": 0,
-      "prm":0
+      "prm":0,
+      "mvt": 0,
+      "rm": 0,
+      "autre":"",
+      "name1":"",
+      "name2":"",
+      "name3":"",
+      "name4":"",
+      "name5":"",
+      "epreuve1":"",
+      "epreuve2":"",
+      "epreuve3":"",
+      "epreuve4":"",
+      "epreuve5":"",
+      "jet1":"",
+      "jet2":"",
+      "jet3":"",
+      "jet4":"",
+      "jet5":"",
+      "epreuvecustom":false,
+      "custom":""
     },
     "competence": {
       "templates": ["base"],
       "img" : "icons/svg/statue.svg",
       "formula": "",
       "diff":"",
-      "choix": true
+      "choix": true,
+      "base" : false,
+      "gagne": false,
+      "gagneSource":""
     },
     "metier": {
       "templates": ["base"],
@@ -317,7 +476,109 @@
       "portee":0,
       "epreuve":"d20",
       "degat":"d20",
-      "effet":""
-    }
+      "effet":"",
+      "name1":"",
+      "name2":"",
+      "name3":"",
+      "name4":"",
+      "name5":"",
+      "epreuve1":"",
+      "epreuve2":"",
+      "epreuve3":"",
+      "epreuve4":"",
+      "epreuve5":"",
+      "jet1":"",
+      "jet2":"",
+      "jet3":"",
+      "jet4":"",
+      "jet5":"",
+      "epreuvecustom":false
+    },
+    "coup": {
+      "templates": ["base"],
+      "img" : "icons/svg/combat.svg",
+      "type":"",
+      "duree":"",
+      "condition":"",
+      "epreuve":"",
+      "degat":"",
+      "effet":"",
+      "reussite":"",
+      "echec":"",
+      "xp":"",
+      "attaque":"",
+      "bourrepif":"false",
+      "apprentissage": "au choix du MJ",
+      "niveau": "1"
+    },
+    "attaque": {
+      "templates": ["base"],
+      "img" : "icons/svg/sword.svg",
+      "formula": "d6",
+      "attaque": "10",
+      "lancerarme":"-",
+      "lancerarmedegat":0,
+      "autre":"",
+      "name1":"",
+      "name2":"",
+      "name3":"",
+      "name4":"",
+      "name5":"",
+      "epreuve1":"",
+      "epreuve2":"",
+      "epreuve3":"",
+      "epreuve4":"",
+      "epreuve5":"",
+      "jet1":"",
+      "jet2":"",
+      "jet3":"",
+      "jet4":"",
+      "jet5":"",
+      "epreuvecustom":false,
+      "custom":""
+    },
+    "trait": {
+      "templates": ["base"],
+      "img" : "icons/svg/target.svg",
+      "epreuvecustom":false,
+      "desc":""
+    },
+    "region": {
+      "templates": ["base"],
+      "img" : "icons/svg/oak.svg"
+    },
+    "ape": {
+      "templates": ["base"],
+      "img" : "icons/svg/book.svg",
+      "description" : "",
+      "effet" : "",
+      "niveau" : ""
+    },
+    "gemme": {
+      "templates": ["base"],
+      "img" : "icons/svg/chest.svg",
+      "quantity": 1,
+      "weight": 0,
+      "taille": "brute",
+      "prix":0,
+      "ug":"1",
+      "note":"",
+      "note2":"<p>➢ &Eacute;valuation ou d&eacute;couverte d'une pierre brute : NAIN, MARCHAND<br />➢ &Eacute;valuation pr&eacute;cise de la raret&eacute; et du poids : NAIN, MARCHAND, VOLEUR (humain ou elfe)<br />➢ &Eacute;valuation approximative raret&eacute;/poids : VOLEUR, NOBLE, PIRATE, HAUT-ELFE, ELFE NOIR<br />➢ &Eacute;valuation li&eacute;e au poids, vague id&eacute;e pour la raret&eacute; : MAGE, PR&Ecirc;TRE, RANGER, ING&Eacute;NIEUR<br />➢ &Eacute;valuation tr&egrave;s laborieuse : BARBARE, GUERRIER, ELFE SYLVAIN, DEMI-ELFE, HOBBIT<br />➢ Aucune &eacute;valuation : ORQUE, DEMI-ORQUE, GOBELIN, GNOME, OGRE</p>\n<p><strong>Type de pierre/gemme - Valeur U.G. (brut) - Valeur U.G. (taill&eacute;e) - Notes</strong><br />Barbonate Chatoyante 70 P.O. 210 P.O. Jaune luminescent<br />Diamant bleu 60 P.O. 160 P.O. L&eacute;g&egrave;rement bleut&eacute;<br />Diamant blanc 50 P.O. 130 P.O. Rien &agrave; signaler<br />Klokolium 35 P.O. 150 P.O. Jaune opaque, iris&eacute;<br />Saphir 35 P.O. 100 P.O. Bleu assez profond<br />Rubis 30 P.O. 95 P.O. Rouge/rose<br />Zacorite 25 p.O. 90 P.O. Mauve translucide, iris&eacute;<br />&Eacute;meraude 25 P.O. 70 P.O. Vert profond<br />Ambre 22 P.O. 65 P.O. Orang&eacute;/jaune translucide<br />Opale noire 20 P.O. 60 P.O. Noire, iris&eacute;e<br />Spinelle 18 P.O. 60 P.O. Rouge<br />Jaspe 18 P.O. 55 P.O. Attention, couleurs vari&eacute;es<br />Grenat 18 P.O. 50 P.O. Rouge-brun<br />B&eacute;ryl rouge 15 P.O. 45 P.O. Rouge<br />Cornaline 8 P.O. 20 P.O. Rouge orang&eacute; sombre<br />Kunzite 8 P.O. 15 P.O. Gris l&eacute;g&egrave;rement teint&eacute;<br />Perle rose Sans objet 12 P.O. Ronde, rose p&acirc;le, iris&eacute;e<br />Perle blanche Sans objet 10 P.O. Ronde, blanche, iris&eacute;e<br />Serpentine 3 P.O. 5 P.O. G&eacute;n&eacute;ralement verte/turquoise<br />Sardonyx 2 P.O. 4 P.O. Couleurs vari&eacute;es ou noir</p>\n<p>&nbsp;</p>",
+      "equipe": false,
+      "ignorePoidSac":false,
+      "categorie":"",
+      "formula":""
+    },
+    "piege": {
+        "img" : "icons/svg/trap.svg",
+        "categorie":"",
+        "detecter":"",
+        "desamorcer":"",
+        "contourner":"",
+        "esquiver":"",
+        "zone":"",
+        "effets":"",
+        "degat":""
+      }
   }
 }

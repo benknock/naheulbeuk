@@ -7,211 +7,9 @@
         <div class="resource flexrow" style="align-items: center;">
           <label class="resource-label" style="flex:0.35">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type</label>
           <select name="data.type" style="width: calc(100% - 2px);font-family: Naheulbeuk;font-size: 15px;">
-            {{#if (equals data.type "generaliste")}}
+            <option value="{{data.type}}">{{data.type}}</option>
             <option value="generaliste">Généraliste</option>
             <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "combat")}}
-            <option value="combat">Combat</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "domestique")}}
-            <option value="domestique">Domestique</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "feu")}}
-            <option value="feu">Feu</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "metamorphose")}}
-            <option value="metamorphose">Métamorphose</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "thermodynamique")}}
-            <option value="thermodynamique">Thermo.</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "invocation")}}
-            <option value="invocation">Invocation</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "necromancie")}}
-            <option value="necromancie">Nécromancie</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "illusion")}}
-            <option value="illusion">Illusion</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
             <option value="feu">Feu</option>
             <option value="metamorphose">Métamorphose</option>
             <option value="thermodynamique">Thermo.</option>
@@ -231,357 +29,6 @@
             <option value="pa-dlul">Paladin de Dlul</option>
             <option value="pa-braav">Paladin de Braav</option>
             <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "eau")}}
-            <option value="eau">Eau et glace</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "terre")}}
-            <option value="terre">Terre</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "air")}}
-            <option value="air">Air</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "tzinntch")}}
-            <option value="tzinntch">Tzinntch</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pr-niourgl")}}
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pr-dlul")}}
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pr-youclidh")}}
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pr-slanoush")}}
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pr-adathie")}}
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pa-niourgl")}}
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pa-slanoush")}}
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pa-dlul")}}
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pa-braav")}}
-            <option value="pa-braav">Paladin de Braav</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            {{/if}}
-            {{#if (equals data.type "pa-khornettoh")}}
-            <option value="pa-khornettoh">Paladin de Khornettoh</option>
-            <option value="generaliste">Généraliste</option>
-            <option value="combat">Combat</option>
-            <option value="domestique">Domestique</option>
-            <option value="feu">Feu</option>
-            <option value="metamorphose">Métamorphose</option>
-            <option value="thermodynamique">Thermo.</option>
-            <option value="invocation">Invocation</option>
-            <option value="necromancie">Nécromancie</option>
-            <option value="illusion">Illusion</option>
-            <option value="eau">Eau et glace</option>
-            <option value="terre">Terre</option>
-            <option value="air">Air</option>
-            <option value="tzinntch">Tzinntch</option>
-            <option value="pr-niourgl">Prêtre de Niourgl</option>
-            <option value="pr-dlul">Prêtre de Dlul</option>
-            <option value="pr-youclidh">Prêtre de Youclidh</option>
-            <option value="pr-slanoush">Prêtre de Slanoush</option>
-            <option value="pr-adathie">Prêtre d'Adathie</option>
-            <option value="pa-niourgl">Paladin de Niourgl</option>
-            <option value="pa-slanoush">Paladin de Slanoush</option>
-            <option value="pa-dlul">Paladin de Dlul</option>
-            <option value="pa-braav">Paladin de Braav</option>
-            {{/if}}
           </select>
         </div>
       </div>
@@ -591,7 +38,7 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="attributes">Attributes</a>
+    <a class="item" data-tab="attributes">Détails</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -631,13 +78,61 @@
       </div>
       <div class="grid grid-2col">
         <div class="resource">
-          <label class="resource-label">Épreuve</label>
+          <label class="resource-label">Épreuve&nbsp;<span class="epreuves cliquable">+</span></label>
           <input type="text" name="data.epreuve" value="{{data.epreuve}}" data-dtype="String"/>
         </div>
         <div class="resource">
           <label class="resource-label">Dégâts</label>
           <input type="text" name="data.degat" value="{{data.degat}}" data-dtype="String"/>
         </div>
+      </div>
+      {{#if (equals data.epreuvecustom false)}}
+      <div style="display:none">
+      {{else}}
+      <div style="display:block">
+      {{/if}}
+        <hr>
+        <div class="flexrow">
+          <label class="resource-label">Nom</label>
+          <input type="text" name="data.name1" value="{{data.name1}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+          <input type="text" name="data.epreuve1" value="{{data.epreuve1}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+          <input type="text" name="data.jet1" value="{{data.jet1}}" data-dtype="String"/>
+        </div>
+        <div class="flexrow">
+          <label class="resource-label">Nom</label>
+          <input type="text" name="data.name2" value="{{data.name2}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+          <input type="text" name="data.epreuve2" value="{{data.epreuve2}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+          <input type="text" name="data.jet2" value="{{data.jet2}}" data-dtype="String"/>
+        </div>
+        <div class="flexrow">
+          <label class="resource-label">Nom</label>
+          <input type="text" name="data.name3" value="{{data.name3}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+          <input type="text" name="data.epreuve3" value="{{data.epreuve3}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+          <input type="text" name="data.jet3" value="{{data.jet3}}" data-dtype="String"/>
+        </div>
+        <div class="flexrow">
+          <label class="resource-label">Nom</label>
+          <input type="text" name="data.name4" value="{{data.name4}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+          <input type="text" name="data.epreuve4" value="{{data.epreuve4}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+          <input type="text" name="data.jet4" value="{{data.jet4}}" data-dtype="String"/>
+        </div>
+        <div class="flexrow">
+          <label class="resource-label">Nom</label>
+          <input type="text" name="data.name5" value="{{data.name5}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+          <input type="text" name="data.epreuve5" value="{{data.epreuve5}}" data-dtype="String"/>
+          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+          <input type="text" name="data.jet5" value="{{data.jet5}}" data-dtype="String"/>
+        </div>
+        <hr>
       </div>
       <div class="resource">
         <label class="resource-label">Effet</label>

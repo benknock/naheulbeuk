@@ -308,6 +308,13 @@
   padding: 0px;
   margin: 5px 0;
   border-bottom: 0;
+  /*PCH*/
+  height: 45px;
+}
+
+.icon-inventaire {
+  height: 28px;
+  width: 28px;
 }
 
 .naheulbeuk .sheet-header h1.charname input {
@@ -320,11 +327,41 @@
   -webkit-box-flex: 0;
   -ms-flex: 0;
   flex: 0;
+  background: rgba(0, 0, 0, 0.1);
+  padding-bottom: 4px !important;
+  padding-top: 4px !important;
+  margin-bottom: 10px !important;
+}
+
+
+.profile-img {
+  margin-top: 2px;
+}
+
+.item .window-content,
+.actor .window-content {
+  padding: 0px !important;
+}
+.window-content .sheet-header {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.paddingcustom {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.window-content section {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .naheulbeuk .sheet-body,
 .naheulbeuk .sheet-body .tab,
 .naheulbeuk .sheet-body .tab .editor {
+  height: 100%;
+}
+
+.naheulbeuk .bestiaire .editor {
   height: 100%;
 }
 
@@ -502,4 +539,12 @@
 
 .naheulbeuk .effects .item .effect-controls {
   border: none;
+}
+
+.hideSort:hover {
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 1.3em;
 }

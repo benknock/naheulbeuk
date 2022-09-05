@@ -4,11 +4,28 @@
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
       <div class="ability flexrow" style="align-items: center;">   
-        <div style="flex:0.33;font-size: 17px;"><span>Compétence choisie</span></div>
+        <div style="flex:0.35;font-size: 17px;"><span>Compétence choisie</span></div>
         {{#if (equals data.choix true)}}
           <input type="checkbox" name="data.choix" checked/>
         {{else}}
-          <input type="checkbox" name="data.choix"/>
+          <input class="majcomp" type="checkbox" data-name="data.choix" data-item={{item}}/>
+        {{/if}}
+      </div>
+      <div class="ability flexrow" style="align-items: center;">   
+        <div style="flex:0.55;font-size: 17px;"><span>Compétence gagnée</span></div>
+        {{#if (equals data.gagne true)}}
+          <input type="checkbox" name="data.gagne" checked/>
+        {{else}}
+          <input class="majcomp" type="checkbox" data-name="data.gagne"/>
+        {{/if}}
+        <input type="text" name="data.gagneSource" value="{{data.gagneSource}}" data-dtype="String"/>
+      </div>
+      <div class="ability flexrow" style="align-items: center;">   
+        <div style="flex:0.35;font-size: 17px;"><span>Compétence de base</span></div>
+        {{#if (equals data.base true)}}
+          <input type="checkbox" name="data.base" checked/>
+        {{else}}
+          <input class="majcomp" type="checkbox" data-name="data.base"/>
         {{/if}}
       </div>
     </div>

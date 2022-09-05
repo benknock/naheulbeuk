@@ -1,0 +1,78 @@
+<ol class="items-list">
+  <br/>
+  <div class="tab features" style="height: auto;font-size: 16px;">
+    {{#each coups as |item id|}}
+      {{#if (equals data.bourrepif true)}}
+      <li class="item flexrow " data-item-id="{{item._id}}">
+        <div style="margin-bottom: 5px;margin-top: 5px;">
+          <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+          <strong><u>{{item.name}}</u></strong>
+          {{#if (equalsor item.data.epreuve "" item.data.epreuve "-")}}
+          {{else}}
+            &nbsp;- épreuve : {{item.data.epreuve}}
+            <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve d'attaque - {{item.name}}" data-diff="{{item.data.epreuve}}"></i>
+            <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}" data-diff="{{item.data.epreuve}}"></i> 
+          {{/if}}
+          {{#if (equalsor item.data.degat "" item.data.degat "-")}}
+          {{else}}
+            &nbsp;- dégâts : {{item.data.degat}}
+            <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.degat}}" data-name="Dégâts - {{item.name}}" data-diff=""></i>
+            <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.degat}}" data-name="Épreuve - {{item.name}}" data-diff=""></i> 
+          {{/if}}
+          {{#if (equals item.data.attaque "")}}
+          {{else}}
+            {{#if (equals item.data.attaque "-")}}
+            {{else}}
+              &nbsp;- spéciale : {{item.data.attaque}}
+              <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve spéciale - {{item.name}}" data-diff="{{item.data.attaque}}"></i>
+              <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}" data-diff="{{item.data.attaque}}"></i> 
+            {{/if}}
+          {{/if}}
+        </div>
+      </li>
+      <li class="item flexrow">
+        <div>Effet : {{item.data.effet}}</div>
+      </li>
+    {{else}}
+        <li class="item flexrow " data-item-id="{{item._id}}">
+          <div style="margin-bottom: 5px; margin-top: 5px;">
+            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            <strong><u>{{item.name}}</u></strong>
+            {{#if (equalsor item.data.epreuve "" item.data.epreuve "-")}}
+            {{else}}
+              {{#if (equalsnot (first item.data.epreuve) "*")}}
+                &nbsp;- épreuve : {{item.data.epreuve}}
+                <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}" data-diff="{{item.data.epreuve}}"></i>
+                <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}" data-diff="{{item.data.epreuve}}"></i>
+              {{else}}
+                &nbsp;- épreuve : {{first2 item.data.epreuve}}
+              {{/if}}
+            {{/if}}
+            {{#if (equalsor item.data.degat "" item.data.degat "-")}}
+            {{else}}
+              {{#if (equalsnot (first item.data.degat) "*")}}
+                &nbsp;- dégâts : {{item.data.degat}}
+                <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}" data-diff="{{item.data.degat}}"></i>
+                <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}" data-diff="{{item.data.degat}}"></i>
+              {{else}}
+                &nbsp;- dégâts : {{first2 item.data.degat}}
+              {{/if}}
+            {{/if}}
+          </div>
+        </li>
+        <li class="item flexrow">
+          <div>Condition : {{item.data.condition}}</div>
+        </li>
+        <li class="item flexrow">
+          <div>Utilisation : {{item.data.duree}}</div>
+        </li>
+        <li class="item flexrow">
+          <div>Effet : {{item.data.effet}}</div>
+        </li>
+
+      {{/if}}
+    {{/each}}
+  </div>
+</ol>

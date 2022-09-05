@@ -4,7 +4,7 @@ export const NAHEULBEUK = {};
  * The set of Ability Scores used within the sytem.
  * @type {Object}
  */
- NAHEULBEUK.abilities = {
+NAHEULBEUK.abilities = {
   "cou": "NAHEULBEUK.AbilityCou",
   "int": "NAHEULBEUK.AbilityInt",
   "cha": "NAHEULBEUK.AbilityCha",

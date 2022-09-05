@@ -1,6 +1,9 @@
 {
   "Actor": {
-    "types": ["character","npc"],
+    "types": [
+      "character",
+      "npc"
+    ],
     "templates": {
       "base": {
         "health": {
@@ -13,10 +16,13 @@
           "min": 0,
           "max": 5
         },
-        "biography": ""}
+        "biography": ""
+      }
     },
     "character": {
-      "templates": ["base"],
+      "templates": [
+        "base"
+      ],
       "attributes": {
         "level": {
           "value": 1
@@ -37,7 +43,7 @@
           "value": 0
         },
         "po": {
-          "value":0
+          "value": 0
         },
         "lt": {
           "value": 0
@@ -48,34 +54,34 @@
         "pr": {
           "value": 0,
           "bonus": 0,
-          "bonusSsEncombrement":0,
-          "trucdemauviette":0
+          "bonusSsEncombrement": 0,
+          "trucdemauviette": 0
         },
         "prm": {
           "value": 0,
           "bonus": 0
         },
         "rm": {
-          "value":0,
-          "bonus":0
+          "value": 0,
+          "bonus": 0
         },
         "esq": {
-          "value":0,
-          "bonus":0
+          "value": 0,
+          "bonus": 0
         },
         "mvt": {
-          "value":0
+          "value": 0
         },
         "mphy": {
-          "value":0
+          "value": 0
         },
         "mpsy": {
-          "value":0
+          "value": 0
         },
         "lancerarme": {
-          "value":0,
-          "bonus":0,
-          "degat":0
+          "value": 0,
+          "bonus": 0,
+          "degat": 0
         },
         "bourse": {
           "value": 0,
@@ -85,11 +91,11 @@
           "value": 0,
           "max": 0
         },
-        "charge":{
+        "charge": {
           "value": 0,
           "max": 0
         },
-        "magie":{
+        "magie": {
           "value": false
         },
         "generaliste": {
@@ -204,16 +210,18 @@
       }
     },
     "npc": {
-      "templates": ["base"],
+      "templates": [
+        "base"
+      ],
       "attributes": {
         "level": {
           "value": 1
         },
         "bioCombat": "",
         "moreStats": false,
-        "categorie":"",
-        "xp":{
-          "value":0
+        "categorie": "",
+        "xp": {
+          "value": 0
         },
         "pr": {
           "value": 0,
@@ -224,21 +232,21 @@
           "bonus": 0
         },
         "rm": {
-          "value":0,
-          "bonus":0
+          "value": 0,
+          "bonus": 0
         },
         "esq": {
-          "value":0,
-          "bonus":0
+          "value": 0,
+          "bonus": 0
         },
         "mvt": {
-          "value":0
+          "value": 0
         },
         "mphy": {
-          "value":0
+          "value": 0
         },
         "mpsy": {
-          "value":0
+          "value": 0
         }
       },
       "abilities": {
@@ -275,18 +283,37 @@
     }
   },
   "Item": {
-    "types": ["ape", "arme", "armure", "attaque", "competence", "coup", "etat", "gemme", "metier", "origine", "piege", "region", "sac", "sort", "trait", "truc"],
+    "types": [
+      "ape",
+      "arme",
+      "armure",
+      "attaque",
+      "competence",
+      "coup",
+      "etat",
+      "gemme",
+      "metier",
+      "origine",
+      "piege",
+      "region",
+      "sac",
+      "sort",
+      "trait",
+      "truc"
+    ],
     "templates": {
       "base": {
         "description": ""
       }
     },
     "truc": {
-      "templates": ["base"],
-      "img" : "icons/svg/chest.svg",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/chest.svg",
       "quantity": 1,
       "weight": 0,
-      "prix":0,
+      "prix": 0,
       "formula": "",
       "equipe": false,
       "rupture": "-",
@@ -298,20 +325,22 @@
       "att": 0,
       "prd": 0,
       "pr": 0,
-      "prm":0,
+      "prm": 0,
       "mvt": 0,
       "rm": 0,
-      "autre":"",
-      "custom":"",
-      "ignorePoidSac":false,
-      "categorie":""
+      "autre": "",
+      "custom": "",
+      "ignorePoidSac": false,
+      "categorie": ""
     },
     "arme": {
-      "templates": ["base"],
-      "img" : "icons/svg/sword.svg",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/sword.svg",
       "quantity": 1,
       "weight": 0,
-      "prix":0,
+      "prix": 0,
       "formula": "d6",
       "equipe": false,
       "rupture": "0",
@@ -324,42 +353,44 @@
       "att": 0,
       "prd": 0,
       "pr": 0,
-      "prm":0,
+      "prm": 0,
       "mvt": 0,
       "rm": 0,
-      "lancerarme":"-",
-      "lancerarmedegat":0,
-      "autre":"",
-      "name1":"",
-      "name2":"",
-      "name3":"",
-      "name4":"",
-      "name5":"",
-      "epreuve1":"",
-      "epreuve2":"",
-      "epreuve3":"",
-      "epreuve4":"",
-      "epreuve5":"",
-      "jet1":"",
-      "jet2":"",
-      "jet3":"",
-      "jet4":"",
-      "jet5":"",
-      "epreuvecustom":false,
-      "custom":"",
-      "ignorePoidSac":false,
-      "prbouclier":false,
-      "enchantement":false,
-      "relique":false,
-      "limitporteur":"tous sauf indications contraires",
-      "categorie":"Armes"
+      "lancerarme": "-",
+      "lancerarmedegat": 0,
+      "autre": "",
+      "name1": "",
+      "name2": "",
+      "name3": "",
+      "name4": "",
+      "name5": "",
+      "epreuve1": "",
+      "epreuve2": "",
+      "epreuve3": "",
+      "epreuve4": "",
+      "epreuve5": "",
+      "jet1": "",
+      "jet2": "",
+      "jet3": "",
+      "jet4": "",
+      "jet5": "",
+      "epreuvecustom": false,
+      "custom": "",
+      "ignorePoidSac": false,
+      "prbouclier": false,
+      "enchantement": false,
+      "relique": false,
+      "limitporteur": "tous sauf indications contraires",
+      "categorie": "Armes"
     },
     "armure": {
-      "templates": ["base"],
-      "img" : "icons/svg/shield.svg",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/shield.svg",
       "quantity": 1,
       "weight": 0,
-      "prix":0,
+      "prix": 0,
       "formula": "",
       "equipe": false,
       "rupture": "0",
@@ -371,29 +402,31 @@
       "att": 0,
       "prd": 0,
       "pr": 0,
-      "prm":0,
+      "prm": 0,
       "mvt": 0,
       "rm": 0,
-      "autre":"",
-      "custom":"",
-      "ignorePoidSac":false,
+      "autre": "",
+      "custom": "",
+      "ignorePoidSac": false,
       "prtete": false,
       "prbras": false,
       "prtorse": false,
       "prmains": false,
       "prjambes": false,
       "prpieds": false,
-      "enchantement":false,
-      "relique":false,
-      "limitporteur":"tous sauf indications contraires",
-      "categorie":"Armures"
+      "enchantement": false,
+      "relique": false,
+      "limitporteur": "tous sauf indications contraires",
+      "categorie": "Armures"
     },
     "sac": {
-      "templates": ["base"],
-      "img" : "",
+      "templates": [
+        "base"
+      ],
+      "img": "",
       "quantity": 1,
       "weight": 0,
-      "prix":0,
+      "prix": 0,
       "equipe": false,
       "type": "sac à dos",
       "place": 0,
@@ -405,15 +438,17 @@
       "att": 0,
       "prd": 0,
       "pr": 0,
-      "prm":0,
+      "prm": 0,
       "mvt": 0,
-      "autre":"",
-      "custom":"",
-      "ignorePoidSac":false
+      "autre": "",
+      "custom": "",
+      "ignorePoidSac": false
     },
     "etat": {
-      "templates": ["base"],
-      "img" : "icons/svg/stoned.svg",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/stoned.svg",
       "formula": "",
       "equipe": false,
       "cou": 0,
@@ -424,161 +459,181 @@
       "att": 0,
       "prd": 0,
       "pr": 0,
-      "prm":0,
+      "prm": 0,
       "mvt": 0,
       "rm": 0,
-      "autre":"",
-      "name1":"",
-      "name2":"",
-      "name3":"",
-      "name4":"",
-      "name5":"",
-      "epreuve1":"",
-      "epreuve2":"",
-      "epreuve3":"",
-      "epreuve4":"",
-      "epreuve5":"",
-      "jet1":"",
-      "jet2":"",
-      "jet3":"",
-      "jet4":"",
-      "jet5":"",
-      "epreuvecustom":false,
-      "custom":""
+      "autre": "",
+      "name1": "",
+      "name2": "",
+      "name3": "",
+      "name4": "",
+      "name5": "",
+      "epreuve1": "",
+      "epreuve2": "",
+      "epreuve3": "",
+      "epreuve4": "",
+      "epreuve5": "",
+      "jet1": "",
+      "jet2": "",
+      "jet3": "",
+      "jet4": "",
+      "jet5": "",
+      "epreuvecustom": false,
+      "custom": ""
     },
     "competence": {
-      "templates": ["base"],
-      "img" : "icons/svg/statue.svg",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/statue.svg",
       "formula": "",
-      "diff":"",
+      "diff": "",
       "choix": true,
-      "base" : false,
+      "base": false,
       "gagne": false,
-      "gagneSource":""
+      "gagneSource": ""
     },
     "metier": {
-      "templates": ["base"],
-      "img" : "icons/svg/hanging-sign.svg",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/hanging-sign.svg",
       "magie": false
     },
     "origine": {
-      "templates": ["base"],
-      "img" : "icons/svg/blood.svg"
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/blood.svg"
     },
     "sort": {
-      "templates": ["base"],
-      "img" : "icons/svg/book.svg",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/book.svg",
       "spellLevel": 1,
-      "type":"generaliste",
-      "cout":0,
-      "incantation":0,
-      "duree":0,
-      "portee":0,
-      "epreuve":"d20",
-      "degat":"d20",
-      "effet":"",
-      "name1":"",
-      "name2":"",
-      "name3":"",
-      "name4":"",
-      "name5":"",
-      "epreuve1":"",
-      "epreuve2":"",
-      "epreuve3":"",
-      "epreuve4":"",
-      "epreuve5":"",
-      "jet1":"",
-      "jet2":"",
-      "jet3":"",
-      "jet4":"",
-      "jet5":"",
-      "epreuvecustom":false
+      "type": "generaliste",
+      "cout": 0,
+      "incantation": 0,
+      "duree": 0,
+      "portee": 0,
+      "epreuve": "d20",
+      "degat": "d20",
+      "effet": "",
+      "name1": "",
+      "name2": "",
+      "name3": "",
+      "name4": "",
+      "name5": "",
+      "epreuve1": "",
+      "epreuve2": "",
+      "epreuve3": "",
+      "epreuve4": "",
+      "epreuve5": "",
+      "jet1": "",
+      "jet2": "",
+      "jet3": "",
+      "jet4": "",
+      "jet5": "",
+      "epreuvecustom": false
     },
     "coup": {
-      "templates": ["base"],
-      "img" : "icons/svg/combat.svg",
-      "type":"",
-      "duree":"",
-      "condition":"",
-      "epreuve":"",
-      "degat":"",
-      "effet":"",
-      "reussite":"",
-      "echec":"",
-      "xp":"",
-      "attaque":"",
-      "bourrepif":"false",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/combat.svg",
+      "type": "",
+      "duree": "",
+      "condition": "",
+      "epreuve": "",
+      "degat": "",
+      "effet": "",
+      "reussite": "",
+      "echec": "",
+      "xp": "",
+      "attaque": "",
+      "bourrepif": "false",
       "apprentissage": "au choix du MJ",
       "niveau": "1"
     },
     "attaque": {
-      "templates": ["base"],
-      "img" : "icons/svg/sword.svg",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/sword.svg",
       "formula": "d6",
       "attaque": "10",
-      "lancerarme":"-",
-      "lancerarmedegat":0,
-      "autre":"",
-      "name1":"",
-      "name2":"",
-      "name3":"",
-      "name4":"",
-      "name5":"",
-      "epreuve1":"",
-      "epreuve2":"",
-      "epreuve3":"",
-      "epreuve4":"",
-      "epreuve5":"",
-      "jet1":"",
-      "jet2":"",
-      "jet3":"",
-      "jet4":"",
-      "jet5":"",
-      "epreuvecustom":false,
-      "custom":""
+      "lancerarme": "-",
+      "lancerarmedegat": 0,
+      "autre": "",
+      "name1": "",
+      "name2": "",
+      "name3": "",
+      "name4": "",
+      "name5": "",
+      "epreuve1": "",
+      "epreuve2": "",
+      "epreuve3": "",
+      "epreuve4": "",
+      "epreuve5": "",
+      "jet1": "",
+      "jet2": "",
+      "jet3": "",
+      "jet4": "",
+      "jet5": "",
+      "epreuvecustom": false,
+      "custom": ""
     },
     "trait": {
-      "templates": ["base"],
-      "img" : "icons/svg/target.svg",
-      "epreuvecustom":false,
-      "desc":""
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/target.svg",
+      "epreuvecustom": false,
+      "desc": ""
     },
     "region": {
-      "templates": ["base"],
-      "img" : "icons/svg/oak.svg"
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/oak.svg"
     },
     "ape": {
-      "templates": ["base"],
-      "img" : "icons/svg/book.svg",
-      "description" : "",
-      "effet" : "",
-      "niveau" : ""
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/book.svg",
+      "description": "",
+      "effet": "",
+      "niveau": ""
     },
     "gemme": {
-      "templates": ["base"],
-      "img" : "icons/svg/chest.svg",
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/chest.svg",
       "quantity": 1,
       "weight": 0,
       "taille": "brute",
-      "prix":0,
-      "ug":"1",
-      "note":"",
-      "note2":"<p>➢ &Eacute;valuation ou d&eacute;couverte d'une pierre brute : NAIN, MARCHAND<br />➢ &Eacute;valuation pr&eacute;cise de la raret&eacute; et du poids : NAIN, MARCHAND, VOLEUR (humain ou elfe)<br />➢ &Eacute;valuation approximative raret&eacute;/poids : VOLEUR, NOBLE, PIRATE, HAUT-ELFE, ELFE NOIR<br />➢ &Eacute;valuation li&eacute;e au poids, vague id&eacute;e pour la raret&eacute; : MAGE, PR&Ecirc;TRE, RANGER, ING&Eacute;NIEUR<br />➢ &Eacute;valuation tr&egrave;s laborieuse : BARBARE, GUERRIER, ELFE SYLVAIN, DEMI-ELFE, HOBBIT<br />➢ Aucune &eacute;valuation : ORQUE, DEMI-ORQUE, GOBELIN, GNOME, OGRE</p>\n<p><strong>Type de pierre/gemme - Valeur U.G. (brut) - Valeur U.G. (taill&eacute;e) - Notes</strong><br />Barbonate Chatoyante 70 P.O. 210 P.O. Jaune luminescent<br />Diamant bleu 60 P.O. 160 P.O. L&eacute;g&egrave;rement bleut&eacute;<br />Diamant blanc 50 P.O. 130 P.O. Rien &agrave; signaler<br />Klokolium 35 P.O. 150 P.O. Jaune opaque, iris&eacute;<br />Saphir 35 P.O. 100 P.O. Bleu assez profond<br />Rubis 30 P.O. 95 P.O. Rouge/rose<br />Zacorite 25 p.O. 90 P.O. Mauve translucide, iris&eacute;<br />&Eacute;meraude 25 P.O. 70 P.O. Vert profond<br />Ambre 22 P.O. 65 P.O. Orang&eacute;/jaune translucide<br />Opale noire 20 P.O. 60 P.O. Noire, iris&eacute;e<br />Spinelle 18 P.O. 60 P.O. Rouge<br />Jaspe 18 P.O. 55 P.O. Attention, couleurs vari&eacute;es<br />Grenat 18 P.O. 50 P.O. Rouge-brun<br />B&eacute;ryl rouge 15 P.O. 45 P.O. Rouge<br />Cornaline 8 P.O. 20 P.O. Rouge orang&eacute; sombre<br />Kunzite 8 P.O. 15 P.O. Gris l&eacute;g&egrave;rement teint&eacute;<br />Perle rose Sans objet 12 P.O. Ronde, rose p&acirc;le, iris&eacute;e<br />Perle blanche Sans objet 10 P.O. Ronde, blanche, iris&eacute;e<br />Serpentine 3 P.O. 5 P.O. G&eacute;n&eacute;ralement verte/turquoise<br />Sardonyx 2 P.O. 4 P.O. Couleurs vari&eacute;es ou noir</p>\n<p>&nbsp;</p>",
+      "prix": 0,
+      "ug": "1",
+      "note": "",
+      "note2": "<p>➢ &Eacute;valuation ou d&eacute;couverte d'une pierre brute : NAIN, MARCHAND<br />➢ &Eacute;valuation pr&eacute;cise de la raret&eacute; et du poids : NAIN, MARCHAND, VOLEUR (humain ou elfe)<br />➢ &Eacute;valuation approximative raret&eacute;/poids : VOLEUR, NOBLE, PIRATE, HAUT-ELFE, ELFE NOIR<br />➢ &Eacute;valuation li&eacute;e au poids, vague id&eacute;e pour la raret&eacute; : MAGE, PR&Ecirc;TRE, RANGER, ING&Eacute;NIEUR<br />➢ &Eacute;valuation tr&egrave;s laborieuse : BARBARE, GUERRIER, ELFE SYLVAIN, DEMI-ELFE, HOBBIT<br />➢ Aucune &eacute;valuation : ORQUE, DEMI-ORQUE, GOBELIN, GNOME, OGRE</p>\n<p><strong>Type de pierre/gemme - Valeur U.G. (brut) - Valeur U.G. (taill&eacute;e) - Notes</strong><br />Barbonate Chatoyante 70 P.O. 210 P.O. Jaune luminescent<br />Diamant bleu 60 P.O. 160 P.O. L&eacute;g&egrave;rement bleut&eacute;<br />Diamant blanc 50 P.O. 130 P.O. Rien &agrave; signaler<br />Klokolium 35 P.O. 150 P.O. Jaune opaque, iris&eacute;<br />Saphir 35 P.O. 100 P.O. Bleu assez profond<br />Rubis 30 P.O. 95 P.O. Rouge/rose<br />Zacorite 25 p.O. 90 P.O. Mauve translucide, iris&eacute;<br />&Eacute;meraude 25 P.O. 70 P.O. Vert profond<br />Ambre 22 P.O. 65 P.O. Orang&eacute;/jaune translucide<br />Opale noire 20 P.O. 60 P.O. Noire, iris&eacute;e<br />Spinelle 18 P.O. 60 P.O. Rouge<br />Jaspe 18 P.O. 55 P.O. Attention, couleurs vari&eacute;es<br />Grenat 18 P.O. 50 P.O. Rouge-brun<br />B&eacute;ryl rouge 15 P.O. 45 P.O. Rouge<br />Cornaline 8 P.O. 20 P.O. Rouge orang&eacute; sombre<br />Kunzite 8 P.O. 15 P.O. Gris l&eacute;g&egrave;rement teint&eacute;<br />Perle rose Sans objet 12 P.O. Ronde, rose p&acirc;le, iris&eacute;e<br />Perle blanche Sans objet 10 P.O. Ronde, blanche, iris&eacute;e<br />Serpentine 3 P.O. 5 P.O. G&eacute;n&eacute;ralement verte/turquoise<br />Sardonyx 2 P.O. 4 P.O. Couleurs vari&eacute;es ou noir</p>\n<p>&nbsp;</p>",
       "equipe": false,
-      "ignorePoidSac":false,
-      "categorie":"",
-      "formula":""
+      "ignorePoidSac": false,
+      "categorie": "",
+      "formula": ""
     },
     "piege": {
-        "img" : "icons/svg/trap.svg",
-        "categorie":"",
-        "detecter":"",
-        "desamorcer":"",
-        "contourner":"",
-        "esquiver":"",
-        "zone":"",
-        "effets":"",
-        "degat":""
-      }
+      "img": "icons/svg/trap.svg",
+      "categorie": "",
+      "detecter": "",
+      "desamorcer": "",
+      "contourner": "",
+      "esquiver": "",
+      "zone": "",
+      "effets": "",
+      "degat": ""
+    }
   }
 }

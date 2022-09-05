@@ -1,47 +1,57 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header" style="margin-bottom: 0px">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
-      <h1 class="charname"><input {{#if (equals data.equipe true)}}readonly{{/if}} name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <h1 class="charname"><input {{#if (equals data.equipe true)}}readonly{{/if}} name="name" type="text"
+          value="{{item.name}}" placeholder="Name" /></h1>
       <div class="grid grid-2col">
         <div class="resource">
           <label class="resource-label">Quantité</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.quantity"
+            value="{{data.quantity}}" data-dtype="Number" />
         </div>
         <div class="resource">
           <label class="resource-label">
             Poids (kg) <em style="font-weight: normal;">- ignorer pour le sac</em>
             {{#if (equals data.ignorePoidSac true)}}
-              <input type="checkbox" name="data.ignorePoidSac" checked style="width: 11px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.ignorePoidSac" checked
+              style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
             {{else}}
-              <input type="checkbox" name="data.ignorePoidSac" style="width: 11px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.ignorePoidSac"
+              style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.weight" value="{{data.weight}}" data-dtype="Number"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.weight" value="{{data.weight}}"
+            data-dtype="Number" />
         </div>
       </div>
       <div class="grid grid-2col">
         <div class="resource">
           <label class="resource-label">Prix (po)</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prix" value="{{data.prix}}" data-dtype="Number"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prix" value="{{data.prix}}"
+            data-dtype="Number" />
         </div>
         <div class="resource">
-          <br/>
+          <br />
           <label class="resource-label">
             &nbsp;Enchanté : &nbsp;
             {{#if (equals data.enchantement true)}}
-              <input type="checkbox" name="data.enchantement" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.enchantement" checked
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{else}}
-              <input type="checkbox" name="data.enchantement" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.enchantement"
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
           /
           <label class="resource-label">
             Relique : &nbsp;&nbsp;
             {{#if (equals data.relique true)}}
-              <input type="checkbox" name="data.relique" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.relique" checked
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{else}}
-              <input type="checkbox" name="data.relique" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.relique"
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
         </div>
@@ -53,61 +63,74 @@
     <label>
       Tête
       {{#if (equals data.prtete true)}}
-        <input type="checkbox" name="data.prtete" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prtete" checked
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{else}}
-        <input type="checkbox" name="data.prtete" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prtete"
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{/if}}
     </label>
     &nbsp;&nbsp;
     <label>
       Bras
       {{#if (equals data.prbras true)}}
-        <input type="checkbox" name="data.prbras" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prbras" checked
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{else}}
-        <input type="checkbox" name="data.prbras" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prbras"
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{/if}}
     </label>
     &nbsp;&nbsp;
     <label>
       Torse
       {{#if (equals data.prtorse true)}}
-        <input type="checkbox" name="data.prtorse" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prtorse" checked
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{else}}
-        <input type="checkbox" name="data.prtorse" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prtorse"
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{/if}}
     </label>
     &nbsp;&nbsp;
     <label>
       Mains
       {{#if (equals data.prmains true)}}
-        <input type="checkbox" name="data.prmains" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prmains" checked
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{else}}
-        <input type="checkbox" name="data.prmains" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prmains"
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{/if}}
     </label>
     &nbsp;&nbsp;
     <label>
       Jambes
       {{#if (equals data.prjambes true)}}
-        <input type="checkbox" name="data.prjambes" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prjambes" checked
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{else}}
-        <input type="checkbox" name="data.prjambes" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prjambes"
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{/if}}
     </label>
     &nbsp;&nbsp;
     <label>
       Pieds
       {{#if (equals data.prpieds true)}}
-        <input type="checkbox" name="data.prpieds" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prpieds" checked
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{else}}
-        <input type="checkbox" name="data.prpieds" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+      <input type="checkbox" name="data.prpieds"
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{/if}}
     </label>
   </div>
 
   <div class="resource flexrow paddingcustom" style="align-items: center; margin-bottom: 10px">
     <label class="resource-label" style="flex:0.42;">Origine/métier compatibles :</label>
-    <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.limitporteur" value="{{data.limitporteur}}" data-dtype="String"/>
+    <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.limitporteur"
+      value="{{data.limitporteur}}" data-dtype="String" />
   </div>
 
   {{!-- Sheet Tab Navigation --}}
@@ -121,15 +144,18 @@
 
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="description">
-      {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the rollData prop. --}}
-      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
+      {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
+      rollData prop. --}}
+      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner
+      editable=editable}}
     </div>
-    
+
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       <div class="resource" id="hidecategorie" style="display:none;">
         <label class="resource-label">Catégorie</label>
-        <select name="data.categorie" style="width: calc(100% - 2px);font-family: Naheulbeuk;font-size: 15px;margin-bottom: 5px;">
+        <select name="data.categorie"
+          style="width: calc(100% - 2px);font-family: Naheulbeuk;font-size: 15px;margin-bottom: 5px;">
           <option value="{{data.categorie}}">{{data.categorie}}</option>
           <option value="Divers">Divers</option>
           <option value="Livres">Livres</option>
@@ -149,52 +175,67 @@
         <h2><label class="resource-label">Rupture </label></h2>
       </div>
       <div class="resource grid grid-2col">
-        <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.formula" value="{{data.formula}}" data-dtype="String"/>
-        <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.rupture" value="{{data.rupture}}" data-dtype="String"/>
+        <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.formula" value="{{data.formula}}"
+          data-dtype="String" />
+        <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.rupture" value="{{data.rupture}}"
+          data-dtype="String" />
       </div>
       <div class="resource" style="margin-top: 10px;">
         <h2><label class="resource-label">Bonus / Malus :</label></h2>
         <div class="resources flexrow" style="margin-bottom: 10px;">
           <label class="resource-label">Courage</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.cou" value="{{data.cou}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.cou" value="{{data.cou}}"
+            data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Intelligence</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.int" value="{{data.int}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.int" value="{{data.int}}"
+            data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Charisme</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.cha" value="{{data.cha}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.cha" value="{{data.cha}}"
+            data-dtype="Number" style="flex:0.2" />
         </div>
         <div class="resources flexrow" style="margin-bottom: 10px;">
           <label class="resource-label">Adresse</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.ad" value="{{data.ad}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.ad" value="{{data.ad}}"
+            data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Force</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.fo" value="{{data.fo}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.fo" value="{{data.fo}}"
+            data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Attaque</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.att" value="{{data.att}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.att" value="{{data.att}}"
+            data-dtype="Number" style="flex:0.2" />
         </div>
         <div class="resources flexrow" style="margin-bottom: 10px;">
           <label class="resource-label">Parade</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prd" value="{{data.prd}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prd" value="{{data.prd}}"
+            data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.pr" value="{{data.pr}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.pr" value="{{data.pr}}"
+            data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection Magique</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prm" value="{{data.prm}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prm" value="{{data.prm}}"
+            data-dtype="Number" style="flex:0.2" />
         </div>
         <div class="resources flexrow" style="margin-bottom: 10px;">
           <label class="resource-label">Mouvement (%)</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.mvt" value="{{data.mvt}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.mvt" value="{{data.mvt}}"
+            data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Résistance magique</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.rm" value="{{data.rm}}" data-dtype="Number" style="flex:0.2"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.rm" value="{{data.rm}}"
+            data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
           <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
         </div>
         <div class="resources flexrow">
           <label class="resource-label">Autre</label>
-          <textarea {{#if (equals data.equipe true)}}readonly{{/if}} name="data.autre" rows="2" style="flex:2.76;min-height: auto; height: 42px;">{{data.autre}}</textarea>
+          <textarea {{#if (equals data.equipe true)}}readonly{{/if}} name="data.autre" rows="2"
+            style="flex:2.76;min-height: auto; height: 42px;">{{data.autre}}</textarea>
         </div>
         <hr class="hideItem">
         <div id="hideItem" style="display:none">
           <div class="resources flexrow">
             <label class="resource-label">Custom</label>
-            <textarea {{#if (equals data.equipe true)}}readonly{{/if}} name="data.custom" rows="2" style="flex:2.76;min-height: auto; height: 42px;">{{data.custom}}</textarea>
+            <textarea {{#if (equals data.equipe true)}}readonly{{/if}} name="data.custom" rows="2"
+              style="flex:2.76;min-height: auto; height: 42px;">{{data.custom}}</textarea>
           </div>
         </div>
       </div>

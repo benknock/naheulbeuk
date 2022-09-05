@@ -2,7 +2,7 @@
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
- export class NaheulbeukItemSheet extends ItemSheet {
+export class NaheulbeukItemSheet extends ItemSheet {
 
   /** @override */
   static get defaultOptions() {
@@ -47,8 +47,8 @@
     context.flags = itemData.flags;
 
     //modif de l'image de base
-    if (context.item.data.data.img!=""){
-      context.item.update({"img":context.item.data.data.img,"data.img":""});
+    if (context.item.data.data.img != "") {
+      context.item.update({ "img": context.item.data.data.img, "data.img": "" });
     }
 
     return context;
@@ -65,20 +65,20 @@
 
     // Roll handlers, click handlers, etc. would go here.
     //PCH afficher ou masquer les épreuves avancées sur un objets
-    html.find('.epreuves').click(ev=>{
-      if (super.getData().item.data.data.epreuvecustom==true){
-        super.getData().item.update({"data.epreuvecustom": false});
+    html.find('.epreuves').click(ev => {
+      if (super.getData().item.data.data.epreuvecustom == true) {
+        super.getData().item.update({ "data.epreuvecustom": false });
       } else {
-        super.getData().item.update({"data.epreuvecustom": true});
-      } 
+        super.getData().item.update({ "data.epreuvecustom": true });
+      }
     });
 
     //PCH afficher ou masquer le champs caché
-    html.find('.hideItem').click(ev=>{
-      if (document.getElementById("hideItem").style.display=="none"){
-        document.getElementById("hideItem").style.display="block"
+    html.find('.hideItem').click(ev => {
+      if (document.getElementById("hideItem").style.display == "none") {
+        document.getElementById("hideItem").style.display = "block"
       } else {
-        document.getElementById("hideItem").style.display="none"
+        document.getElementById("hideItem").style.display = "none"
       }
     });
 
@@ -86,37 +86,37 @@
     html.find('.rollable2').click(this._onRollCustom.bind(this));
 
     //PCH afficher ou masquer la catégorie d'une arme/armure
-    html.find('.hidecategorie').dblclick(ev=>{
-      if (document.getElementById("hidecategorie").style.display=="none"){
-        document.getElementById("hidecategorie").style.display="block"
+    html.find('.hidecategorie').dblclick(ev => {
+      if (document.getElementById("hidecategorie").style.display == "none") {
+        document.getElementById("hidecategorie").style.display = "block"
       } else {
-        document.getElementById("hidecategorie").style.display="none"
+        document.getElementById("hidecategorie").style.display = "none"
       }
     });
 
     //PCH permet d'avoir un choix de type de compétence unique
-    html.find('.majcomp').click(ev=>{
+    html.find('.majcomp').click(ev => {
       var compchoix = ev.currentTarget.dataset.name
       var dataset
-      if (compchoix=="data.choix") {
-        dataset={
-          "data.choix":true,
-          "data.gagne":false,
-          "data.base":false
+      if (compchoix == "data.choix") {
+        dataset = {
+          "data.choix": true,
+          "data.gagne": false,
+          "data.base": false
         }
       }
-      if (compchoix=="data.gagne") {
-        dataset={
-          "data.choix":false,
-          "data.gagne":true,
-          "data.base":false
+      if (compchoix == "data.gagne") {
+        dataset = {
+          "data.choix": false,
+          "data.gagne": true,
+          "data.base": false
         }
       }
-      if (compchoix=="data.base") {
-        dataset={
-          "data.choix":false,
-          "data.gagne":false,
-          "data.base":true
+      if (compchoix == "data.base") {
+        dataset = {
+          "data.choix": false,
+          "data.gagne": false,
+          "data.base": true
         }
       }
       super.getData().item.update(dataset)
@@ -124,7 +124,7 @@
   }
 
   //PCH roll custom avec label et description
-  async _onRollCustom(event){
+  async _onRollCustom(event) {
     event.preventDefault();
     //récupération des données du html
     const element = event.currentTarget;
@@ -133,26 +133,26 @@
     var dice = dataset.dice;
     const name = dataset.name;
     var diff = dataset.diff;
-    if (dice.substr(0, 8)=="épreuve:"){ //lancement d'épreuve quand il y'a juste jet de dés
-      diff=dice;
-      dice="d20";
+    if (dice.substr(0, 8) == "épreuve:") { //lancement d'épreuve quand il y'a juste jet de dés
+      diff = dice;
+      dice = "d20";
     }
 
     //def du format de message dans le chat
     const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
-    if(dice!="") {
+    if (dice != "") {
       //on initialise les variables
       let r = new Roll(dice);
-      await r.roll({"async": true});
-      var tplData={};
+      await r.roll({ "async": true });
+      var tplData = {};
       var reussite = "Réussite !   ";
       //si on n'a pas la difficulté
-      if (diff==""){
+      if (diff == "") {
         tplData = {
           diff: "",
-          name : name,
-          hasDescription : desc && desc.length > 0,
-          desc : desc       
+          name: name,
+          hasDescription: desc && desc.length > 0,
+          desc: desc
         };
         //création du message
         renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -162,16 +162,16 @@
           });
         });
       } else { //si on a la difficulté
-        diff=new Roll(diff);
-        diff.roll({"async": true}).then(diff =>{
+        diff = new Roll(diff);
+        diff.roll({ "async": true }).then(diff => {
           //calcule de la réussite ou l'échec suivant si on est sur un jet de rupture ou non
-          if (r.total>diff.total && name!="Rupture"){reussite="Echec !   "};
-          if (r.total<=diff.total && name=="Rupture"){reussite="Echec !   "};
+          if (r.total > diff.total && name != "Rupture") { reussite = "Echec !   " };
+          if (r.total <= diff.total && name == "Rupture") { reussite = "Echec !   " };
           tplData = {
-            diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + Math.abs(diff.total-r.total),
-            name : name,
-            hasDescription : desc && desc.length > 0,
-            desc : desc       
+            diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + Math.abs(diff.total - r.total),
+            name: name,
+            hasDescription: desc && desc.length > 0,
+            desc: desc
           };
           //création du message
           renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {

@@ -1,56 +1,67 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header" style="margin-bottom: 0px">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
-      <h1 class="charname"><input {{#if (equals data.equipe true)}}readonly{{/if}} name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <h1 class="charname"><input {{#if (equals data.equipe true)}}readonly{{/if}} name="name" type="text"
+          value="{{item.name}}" placeholder="Name" /></h1>
       <div class="grid grid-2col">
         <div class="resource">
           <label class="resource-label">Quantité</label>
-          <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number"/>
+          <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number" />
         </div>
         <div class="resource">
           <label class="resource-label">
             Poids (kg) <em style="font-weight: normal;">- ignorer pour le sac</em>
             {{#if (equals data.ignorePoidSac true)}}
-              <input type="checkbox" name="data.ignorePoidSac" checked style="width: 11px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.ignorePoidSac" checked
+              style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
             {{else}}
-              <input type="checkbox" name="data.ignorePoidSac" style="width: 11px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.ignorePoidSac"
+              style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.weight" value="{{data.weight}}" data-dtype="Number"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.weight" value="{{data.weight}}"
+            data-dtype="Number" />
         </div>
       </div>
       <div class="grid grid-2col">
         <div class="resource">
           <label class="resource-label">Prix (po)</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prix" value="{{data.prix}}" data-dtype="Number"/>
+          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prix" value="{{data.prix}}"
+            data-dtype="Number" />
         </div>
         <div class="resource">
           <div style="height: 12px;"></div>
           <label class="resource-label">
             Bouclier : &nbsp;
             {{#if (equals data.prbouclier true)}}
-              <input type="checkbox" name="data.prbouclier" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.prbouclier" checked
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{else}}
-              <input type="checkbox" name="data.prbouclier" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.prbouclier"
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
           /
           <label class="resource-label">
             &nbsp;Enchanté : &nbsp;
             {{#if (equals data.enchantement true)}}
-              <input type="checkbox" name="data.enchantement" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.enchantement" checked
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{else}}
-              <input type="checkbox" name="data.enchantement" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.enchantement"
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
-          <br/>
+          <br />
           <label class="resource-label">
             Relique : &nbsp;&nbsp;
             {{#if (equals data.relique true)}}
-              <input type="checkbox" name="data.relique" checked style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.relique" checked
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{else}}
-              <input type="checkbox" name="data.relique" style="width: 15px; height: auto; margin: auto;vertical-align: middle;"/>
+            <input type="checkbox" name="data.relique"
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
         </div>
@@ -60,7 +71,8 @@
 
   <div class="resource flexrow paddingcustom" style="align-items: center; margin-bottom: 10px">
     <label class="resource-label" style="flex:0.42;">Origine/métier compatibles :</label>
-    <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.limitporteur" value="{{data.limitporteur}}" data-dtype="String"/>
+    <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.limitporteur"
+      value="{{data.limitporteur}}" data-dtype="String" />
   </div>
 
   {{!-- Sheet Tab Navigation --}}
@@ -74,14 +86,17 @@
 
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="description">
-      {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the rollData prop. --}}
-      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
+      {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
+      rollData prop. --}}
+      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner
+      editable=editable}}
     </div>
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       <div class="resource" id="hidecategorie" style="display:none;">
         <label class="resource-label">Catégorie</label>
-        <select name="data.categorie" style="width: calc(100% - 2px);font-family: Naheulbeuk;font-size: 15px;margin-bottom: 5px;">
+        <select name="data.categorie"
+          style="width: calc(100% - 2px);font-family: Naheulbeuk;font-size: 15px;margin-bottom: 5px;">
           <option value="{{data.categorie}}">{{data.categorie}}</option>
           <option value="Divers">Divers</option>
           <option value="Livres">Livres</option>
@@ -101,111 +116,143 @@
         <h2><label class="resource-label">Rupture </label></h2>
       </div>
       <div class="resource grid grid-2col">
-        <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.formula" value="{{data.formula}}" data-dtype="String"/>
-        <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.rupture" value="{{data.rupture}}" data-dtype="String"/>
+        <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.formula" value="{{data.formula}}"
+          data-dtype="String" />
+        <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.rupture" value="{{data.rupture}}"
+          data-dtype="String" />
       </div>
       {{#if (equals data.epreuvecustom false)}}
       <div style="display:none">
-      {{else}}
-      <div style="display:block">
-      {{/if}}
-        <hr>
-        <div class="flexrow">
-          <label class="resource-label">Nom</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name1" value="{{data.name1}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve1" value="{{data.epreuve1}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet1" value="{{data.jet1}}" data-dtype="String"/>
+        {{else}}
+        <div style="display:block">
+          {{/if}}
+          <hr>
+          <div class="flexrow">
+            <label class="resource-label">Nom</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name1" value="{{data.name1}}"
+              data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve1"
+              value="{{data.epreuve1}}" data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet1" value="{{data.jet1}}"
+              data-dtype="String" />
+          </div>
+          <div class="flexrow">
+            <label class="resource-label">Nom</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name2" value="{{data.name2}}"
+              data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve2"
+              value="{{data.epreuve2}}" data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet2" value="{{data.jet2}}"
+              data-dtype="String" />
+          </div>
+          <div class="flexrow">
+            <label class="resource-label">Nom</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name3" value="{{data.name3}}"
+              data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve3"
+              value="{{data.epreuve3}}" data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet3" value="{{data.jet3}}"
+              data-dtype="String" />
+          </div>
+          <div class="flexrow">
+            <label class="resource-label">Nom</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name4" value="{{data.name4}}"
+              data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve4"
+              value="{{data.epreuve4}}" data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet4" value="{{data.jet4}}"
+              data-dtype="String" />
+          </div>
+          <div class="flexrow">
+            <label class="resource-label">Nom</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name5" value="{{data.name5}}"
+              data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve5"
+              value="{{data.epreuve5}}" data-dtype="String" />
+            <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet5" value="{{data.jet5}}"
+              data-dtype="String" />
+          </div>
+          <hr>
         </div>
-        <div class="flexrow">
-          <label class="resource-label">Nom</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name2" value="{{data.name2}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve2" value="{{data.epreuve2}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet2" value="{{data.jet2}}" data-dtype="String"/>
-        </div>
-        <div class="flexrow">
-          <label class="resource-label">Nom</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name3" value="{{data.name3}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve3" value="{{data.epreuve3}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet3" value="{{data.jet3}}" data-dtype="String"/>
-        </div>
-        <div class="flexrow">
-          <label class="resource-label">Nom</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name4" value="{{data.name4}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve4" value="{{data.epreuve4}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet4" value="{{data.jet4}}" data-dtype="String"/>
-        </div>
-        <div class="flexrow">
-          <label class="resource-label">Nom</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.name5" value="{{data.name5}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.epreuve5" value="{{data.epreuve5}}" data-dtype="String"/>
-          <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.jet5" value="{{data.jet5}}" data-dtype="String"/>
-        </div>
-        <hr>
-      </div>
-      <div class="resource" style="margin-top: 10px;">
-        <h2><label class="resource-label">Bonus / Malus :</label></h2>
-        <div class="resources flexrow" style="margin-bottom: 10px;">
-          <label class="resource-label">Courage</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.cou" value="{{data.cou}}" data-dtype="Number" style="flex:0.2"/>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Intelligence</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.int" value="{{data.int}}" data-dtype="Number"style="flex:0.2"/>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Charisme</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.cha" value="{{data.cha}}" data-dtype="Number"style="flex:0.2"/>
-        </div>
-        <div class="resources flexrow" style="margin-bottom: 10px;">
-          <label class="resource-label">Adresse</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.ad" value="{{data.ad}}" data-dtype="Number"style="flex:0.2"/>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Force</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.fo" value="{{data.fo}}" data-dtype="Number"style="flex:0.2"/>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Attaque</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.att" value="{{data.att}}" data-dtype="Number"style="flex:0.2"/>
-        </div>
-        <div class="resources flexrow" style="margin-bottom: 10px;">
-          <label class="resource-label">Parade</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prd" value="{{data.prd}}" data-dtype="String"style="flex:0.2"/>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.pr" value="{{data.pr}}" data-dtype="Number"style="flex:0.2"/>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection Magique</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prm" value="{{data.prm}}" data-dtype="Number"style="flex:0.2"/>
-        </div>
-        <div class="resources flexrow" style="margin-bottom: 10px;">
-          <label class="resource-label">Adresse à distance</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.lancerarme" value="{{data.lancerarme}}" data-dtype="String"style="flex:0.2"/>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Dégâts à distance</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.lancerarmedegat" value="{{data.lancerarmedegat}}" data-dtype="String"style="flex:0.2"/>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Résistance magique</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.rm" value="{{data.rm}}" data-dtype="Number" style="flex:0.2"/>
-        </div>
-        <div class="resources flexrow" style="margin-bottom: 10px;">
-          <label class="resource-label">Mouvement (%)</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.mvt" value="{{data.mvt}}" data-dtype="Number" style="flex:0.2"/>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
-          <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
-          <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
-        </div>
-        <div class="resources flexrow">
-          <label class="resource-label">Autre</label>
-          <textarea {{#if (equals data.equipe true)}}readonly{{/if}} name="data.autre" rows="2" style="flex:2.76;min-height: auto; height: 42px;">{{data.autre}}</textarea>
-        </div>
-        <hr class="hideItem">
-        <div id="hideItem" style="display:none">
+        <div class="resource" style="margin-top: 10px;">
+          <h2><label class="resource-label">Bonus / Malus :</label></h2>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Courage</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.cou" value="{{data.cou}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Intelligence</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.int" value="{{data.int}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Charisme</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.cha" value="{{data.cha}}"
+              data-dtype="Number" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Adresse</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.ad" value="{{data.ad}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Force</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.fo" value="{{data.fo}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Attaque</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.att" value="{{data.att}}"
+              data-dtype="Number" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Parade</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prd" value="{{data.prd}}"
+              data-dtype="String" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.pr" value="{{data.pr}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection Magique</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prm" value="{{data.prm}}"
+              data-dtype="Number" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Adresse à distance</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.lancerarme"
+              value="{{data.lancerarme}}" data-dtype="String" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Dégâts à distance</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.lancerarmedegat"
+              value="{{data.lancerarmedegat}}" data-dtype="String" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Résistance magique</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.rm" value="{{data.rm}}"
+              data-dtype="Number" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Mouvement (%)</label>
+            <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.mvt" value="{{data.mvt}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
+            <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
+            <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
+          </div>
           <div class="resources flexrow">
-            <label class="resource-label">Custom</label>
-            <textarea {{#if (equals data.equipe true)}}readonly{{/if}} name="data.custom" rows="2" style="flex:2.76;min-height: auto; height: 42px;">{{data.custom}}</textarea>
+            <label class="resource-label">Autre</label>
+            <textarea {{#if (equals data.equipe true)}}readonly{{/if}} name="data.autre" rows="2"
+              style="flex:2.76;min-height: auto; height: 42px;">{{data.autre}}</textarea>
+          </div>
+          <hr class="hideItem">
+          <div id="hideItem" style="display:none">
+            <div class="resources flexrow">
+              <label class="resource-label">Custom</label>
+              <textarea {{#if (equals data.equipe true)}}readonly{{/if}} name="data.custom" rows="2"
+                style="flex:2.76;min-height: auto; height: 42px;">{{data.custom}}</textarea>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </section>
 </form>

@@ -1,20 +1,20 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header" style="margin-bottom: 0px;">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" style="height: 100px;"/>
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" style="height: 100px;" />
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
       <div class="ability flexrow" style="align-items: center;">
         <div class="ability flexrow" style="align-items: center;flex:0.4;">
           <label class="resource-label">Niveau :</label>
-          <input type="text" name="data.niveau" value="{{data.niveau}}" data-dtype="String" style="max-width: 23px;"/>
+          <input type="text" name="data.niveau" value="{{data.niveau}}" data-dtype="String" style="max-width: 23px;" />
         </div>
         <div class="ability flexrow" style="align-items: center;flex:0.5;">
-            <span class="resource-label">&nbsp;&nbsp;&nbsp;&nbsp;Bourre-pif</span>
-            {{#if (equals data.bourrepif true)}}
-              <input type="checkbox" name="data.bourrepif" checked/>
-            {{else}}
-              <input type="checkbox" name="data.bourrepif"/>
-            {{/if}}
+          <span class="resource-label">&nbsp;&nbsp;&nbsp;&nbsp;Bourre-pif</span>
+          {{#if (equals data.bourrepif true)}}
+          <input type="checkbox" name="data.bourrepif" checked />
+          {{else}}
+          <input type="checkbox" name="data.bourrepif" />
+          {{/if}}
         </div>
         <label class="resource-label" style="flex:1.3;"></label>
       </div>
@@ -23,79 +23,79 @@
 
   {{!-- Sheet Body --}}
   <section class="sheet-body" style="max-height: 500px;">
-    <br/>
+    <br />
     {{#if (equals data.bourrepif true)}}
-      <div class="resource" style="margin-bottom: 8px;">
-        <label class="resource-label">Epreuve d'attaque :</label>
-        <input type="text" name="data.epreuve" value="{{data.epreuve}}" data-dtype="String"/>
-      </div>
-      <div class="resource" style="margin-bottom: 8px;">
-        <label class="resource-label">Dégâts en PI :</label>
-        <input type="text" name="data.degat" value="{{data.degat}}" data-dtype="String"/>
-      </div>
-      <div class="resource" style="margin-bottom: 8px;">
-        <label class="resource-label">Effet spécial :</label>
-        <input type="text" name="data.effet" value="{{data.effet}}" data-dtype="String"/>
+    <div class="resource" style="margin-bottom: 8px;">
+      <label class="resource-label">Epreuve d'attaque :</label>
+      <input type="text" name="data.epreuve" value="{{data.epreuve}}" data-dtype="String" />
+    </div>
+    <div class="resource" style="margin-bottom: 8px;">
+      <label class="resource-label">Dégâts en PI :</label>
+      <input type="text" name="data.degat" value="{{data.degat}}" data-dtype="String" />
+    </div>
+    <div class="resource" style="margin-bottom: 8px;">
+      <label class="resource-label">Effet spécial :</label>
+      <input type="text" name="data.effet" value="{{data.effet}}" data-dtype="String" />
+    </div>
+    <div class="resource">
+      <label class="resource-label">Epreuve effet spécial :</label>
+      <input type="text" name="data.attaque" value="{{data.attaque}}" data-dtype="String" />
+    </div>
+    {{else}}
+    <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
+      <label class="resource-label">Apprentissage :</label>
+      <input type="text" name="data.apprentissage" value="{{data.apprentissage}}" data-dtype="String" />
+    </div>
+    <div class="grid grid-2col" style="margin-bottom: 5px;margin-top: 0px;">
+      <div class="resource">
+        <label class="resource-label">Utilisable par :</label>
+        <input type="text" name="data.type" value="{{data.type}}" data-dtype="String" />
       </div>
       <div class="resource">
-        <label class="resource-label">Epreuve effet spécial :</label>
-        <input type="text" name="data.attaque" value="{{data.attaque}}" data-dtype="String"/>
+        <label class="resource-label">Utilisation :</label>
+        <input type="text" name="data.duree" value="{{data.duree}}" data-dtype="String" />
       </div>
-    {{else}}
-      <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
-        <label class="resource-label">Apprentissage :</label>
-        <input type="text" name="data.apprentissage" value="{{data.apprentissage}}" data-dtype="String"/>
+    </div>
+    <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
+      <label class="resource-label">Effet :</label>
+      <br />
+      <input type="text" name="data.effet" value="{{data.effet}}" data-dtype="String" />
+    </div>
+    <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
+      <label class="resource-label">Épreuve :</label>
+      <br />
+      <input type="text" name="data.epreuve" value="{{data.epreuve}}" data-dtype="String" />
+    </div>
+    <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
+      <label class="resource-label">Condition :</label>
+      <br />
+      <input type="text" name="data.condition" value="{{data.condition}}" data-dtype="String" />
+    </div>
+    <div class="resource" style="margin-bottom: 5px;margin-top: 0px;" style="margin-bottom: 10px;">
+      <label class="resource-label">Dégâts :</label>
+      <br />
+      <input type="text" name="data.degat" value="{{data.degat}}" data-dtype="String" />
+    </div>
+    <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
+      <label class="resource-label">Réussite critique :</label>
+      <br />
+      <input type="text" name="data.reussite" value="{{data.reussite}}" data-dtype="String" />
+    </div>
+    <div class="resource" style="margin-bottom: 5px;margin-top: 0px;" style="margin-bottom: 10px;">
+      <label class="resource-label">Echec critique :</label>
+      <br />
+      <input type="text" name="data.echec" value="{{data.echec}}" data-dtype="String" />
+    </div>
+    <div class="grid grid-2col" style="margin-bottom: 0px;margin-top: 0px;">
+      <div class="resource">
+        <label class="resource-label">XP si réussi :</label>
+        <input type="text" name="data.xp" value="{{data.xp}}" data-dtype="String" />
       </div>
-      <div class="grid grid-2col" style="margin-bottom: 5px;margin-top: 0px;">
-        <div class="resource">
-          <label class="resource-label">Utilisable par :</label>
-          <input type="text" name="data.type" value="{{data.type}}" data-dtype="String"/>
-        </div>
-        <div class="resource">
-          <label class="resource-label">Utilisation :</label>
-          <input type="text" name="data.duree" value="{{data.duree}}" data-dtype="String"/>
-        </div>
+      <div class="resource">
+        <label class="resource-label">Type :</label>
+        <input type="text" name="data.attaque" value="{{data.attaque}}" data-dtype="String" />
       </div>
-      <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
-        <label class="resource-label">Effet :</label>
-        <br/>
-        <input type="text" name="data.effet" value="{{data.effet}}" data-dtype="String"/>
-      </div>
-      <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
-        <label class="resource-label">Épreuve :</label>
-        <br/>
-        <input type="text" name="data.epreuve" value="{{data.epreuve}}" data-dtype="String"/>
-      </div>
-      <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
-        <label class="resource-label">Condition :</label>
-        <br/>
-        <input type="text" name="data.condition" value="{{data.condition}}" data-dtype="String"/>
-      </div>
-      <div class="resource" style="margin-bottom: 5px;margin-top: 0px;" style="margin-bottom: 10px;">
-        <label class="resource-label">Dégâts :</label>
-        <br/>
-        <input type="text" name="data.degat" value="{{data.degat}}" data-dtype="String"/>
-      </div>
-      <div class="resource" style="margin-bottom: 5px;margin-top: 0px;">
-        <label class="resource-label">Réussite critique :</label>
-        <br/>
-        <input type="text" name="data.reussite" value="{{data.reussite}}" data-dtype="String"/>
-      </div>
-      <div class="resource" style="margin-bottom: 5px;margin-top: 0px;" style="margin-bottom: 10px;">
-        <label class="resource-label">Echec critique :</label>
-        <br/>
-        <input type="text" name="data.echec" value="{{data.echec}}" data-dtype="String"/>
-      </div>
-      <div class="grid grid-2col" style="margin-bottom: 0px;margin-top: 0px;">
-        <div class="resource">
-          <label class="resource-label">XP si réussi :</label>
-          <input type="text" name="data.xp" value="{{data.xp}}" data-dtype="String"/>
-        </div>
-        <div class="resource">
-          <label class="resource-label">Type :</label>
-          <input type="text" name="data.attaque" value="{{data.attaque}}" data-dtype="String"/>
-        </div>
-      </div>
+    </div>
     {{/if}}
   </section>
 </form>

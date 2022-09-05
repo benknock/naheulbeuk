@@ -1,14 +1,18 @@
 <ol class="items-list">
-  <h2><div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences héritées</span></div></h2>
+  <h2>
+    <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences héritées</span></div>
+  </h2>
   {{#each skillsNonchoisis as |item id|}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <h4 class="item-control flex-group-center">{{item.name}}&nbsp;</h4>
       {{#if (equalsor item.data.formula "" item.data.formula "-")}}
       {{else}}
-        <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff="{{item.data.diff}}"></i>
-        &nbsp;
-        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff="{{item.data.diff}}"></i>  
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+        data-diff="{{item.data.diff}}"></i>
+      &nbsp;
+      <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+        data-diff="{{item.data.diff}}"></i>
       {{/if}}
     </div>
     <div class="item-controls">
@@ -17,63 +21,75 @@
     </div>
   </li>
   {{/each}}
-  <h2><div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences choisies</span></div></h2>
+  <h2>
+    <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences choisies</span></div>
+  </h2>
   {{#each skillsChoisis as |item id|}}
-    <li class="item flexrow" data-item-id="{{item._id}}">
-      <div class="item-name">
-        <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
-        {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-        {{else}}
-        <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff="{{item.data.diff}}"></i>
-        &nbsp;
-        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff="{{item.data.diff}}"></i>  
-        {{/if}}
-      </div>
-      <div class="item-controls">
-        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-      </div>
-    </li>
+  <li class="item flexrow" data-item-id="{{item._id}}">
+    <div class="item-name">
+      <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
+      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
+      {{else}}
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+        data-diff="{{item.data.diff}}"></i>
+      &nbsp;
+      <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+        data-diff="{{item.data.diff}}"></i>
+      {{/if}}
+    </div>
+    <div class="item-controls">
+      <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+      <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+    </div>
+  </li>
   {{/each}}
   {{#if (equals skillsGagnes.length 0)}}
   {{else}}
-    <h2><div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences gagnées</span></div></h2>
-    {{#each skillsGagnes as |item id|}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
-        <div class="item-name">
-          <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
-          {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-          {{else}}
-          <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff="{{item.data.diff}}"></i>
-          &nbsp;
-          <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff="{{item.data.diff}}"></i>  
-          {{/if}}
-        </div>
-        <div class="item-controls">
-          <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-        </div>
-      </li>
-    {{/each}}
+  <h2>
+    <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences gagnées</span></div>
+  </h2>
+  {{#each skillsGagnes as |item id|}}
+  <li class="item flexrow" data-item-id="{{item._id}}">
+    <div class="item-name">
+      <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
+      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
+      {{else}}
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+        data-diff="{{item.data.diff}}"></i>
+      &nbsp;
+      <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+        data-diff="{{item.data.diff}}"></i>
+      {{/if}}
+    </div>
+    <div class="item-controls">
+      <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+      <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+    </div>
+  </li>
+  {{/each}}
   {{/if}}
   {{#if (equalsnot skillsBases.length 0)}}
-    <h2><div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences de base</span></div></h2>
-    {{#each skillsBases as |item id|}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
-        <div class="item-name">
-          <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
-          {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-          {{else}}
-          <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff="{{item.data.diff}}"></i>
-          &nbsp;
-          <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}" data-diff="{{item.data.diff}}"></i>  
-          {{/if}}
-        </div>
-        <div class="item-controls">
-          <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-        </div>
-      </li>
-    {{/each}}
+  <h2>
+    <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences de base</span></div>
+  </h2>
+  {{#each skillsBases as |item id|}}
+  <li class="item flexrow" data-item-id="{{item._id}}">
+    <div class="item-name">
+      <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
+      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
+      {{else}}
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+        data-diff="{{item.data.diff}}"></i>
+      &nbsp;
+      <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+        data-diff="{{item.data.diff}}"></i>
+      {{/if}}
+    </div>
+    <div class="item-controls">
+      <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+      <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+    </div>
+  </li>
+  {{/each}}
   {{/if}}
 </ol>

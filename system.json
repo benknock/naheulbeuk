@@ -2,12 +2,16 @@
   "name": "naheulbeuk",
   "title": "Naheulbeuk",
   "description": "The Naheulbeuk system for FoundryVTT!",
-  "version": "1.1.1.06",
+  "version": "1.1.1.07",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "9",
   "author": "Dipes",
-  "esmodules": ["module/naheulbeuk.mjs"],
-  "styles": ["css/naheulbeuk.css"],
+  "esmodules": [
+    "module/naheulbeuk.mjs"
+  ],
+  "styles": [
+    "css/naheulbeuk.css"
+  ],
   "scripts": [],
   "packs": [
     {
@@ -466,26 +470,13 @@
       "path": "lang/en.json"
     }
   ],
-  "dependencies": [
-    {
-      "name": "pdfoundry",
-      "manifest": "https://raw.githubusercontent.com/Djphoenix719/PDFoundry/master/module.json"
-    },
-    {
-      "name": "popout",
-      "manifest": "https://github.com/League-of-Foundry-Developers/fvtt-module-popout/blob/master/module.json"
-    },
-    {
-      "name": "statuscounter",
-      "manifest": "https://gitlab.com/woodentavern/status-icon-counters/-/raw/master/src/module.json"
-    }
-    ],
+  "dependencies": [],
   "gridDistance": 1,
   "gridUnits": "m",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
   "url": "https://github.com/Dipess/naheulbeuk",
   "manifest": "https://github.com/Dipess/naheulbeuk/releases/latest/download/system.json",
-  "download": "https://github.com/Dipess/naheulbeuk/releases/download/1.1.1.06/system.zip",
+  "download": "https://github.com/Dipess/naheulbeuk/releases/download/1.1.1.07/system.zip",
   "license": "LICENSE.txt"
 }

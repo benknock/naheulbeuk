@@ -159,6 +159,14 @@
       "tag": "item"
     },
     {
+      "name": "instruments",
+      "label": "Équipements : instruments",
+      "system": "naheulbeuk",
+      "path": "./packs/instruments.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
       "name": "livres",
       "label": "Équipements : livres",
       "system": "naheulbeuk",

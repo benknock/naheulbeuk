@@ -327,6 +327,14 @@
       "tag": "item"
     },
     {
+      "name": "reliques",
+      "label": "Équipements : reliques",
+      "system": "naheulbeuk",
+      "path": "./packs/reliques.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
       "name": "services",
       "label": "Divers :  services",
       "system": "naheulbeuk",
@@ -392,7 +400,7 @@
     },
     {
       "name": "sorts-item",
-      "label": "Système : sorts données",
+      "label": "Système : états données",
       "system": "naheulbeuk",
       "path": "./packs/sorts-item.db",
       "type": "Item",

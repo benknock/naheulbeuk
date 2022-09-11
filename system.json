@@ -47,6 +47,14 @@
       "tag": "item"
     },
     {
+      "name": "armespoudre",
+      "label": "Équipements : armes à poudre",
+      "system": "naheulbeuk",
+      "path": "./packs/armespoudre.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
       "name": "armures",
       "label": "Équipements : protections",
       "system": "naheulbeuk",

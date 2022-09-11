@@ -429,7 +429,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
     html.find('.armuredetail').click(this._armuredetail.bind(this));
 
     //PCH diminuer quantité d'objet
-    html.find('.item-quantity').click(this._quantity.bind(this));
+    html.find('.item-quantity-moins').click(this._quantitymoins.bind(this));
+    html.find('.item-quantity-plus').click(this._quantityplus.bind(this));
 
     //PCH more stats NPC
     html.find('.moreStats').click(ev => {
@@ -735,6 +736,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     const desc = dataset.desc;
     var dice = dataset.dice;
     const name = dataset.name;
+    const armefeu = dataset.af;
     var diff = dataset.diff;
     if (dice.substr(0, 8) == "épreuve:") { //lancement d'épreuve quand il y'a juste jet de dés
       diff = dice;
@@ -743,13 +745,18 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //récupération de l'objet si besoin
     const li = $(event.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
+    const armefeu2 = item.data.data.armefeu
     //ajout du bonus de dégâts fo>12 si c'est une arme
     if (item) {
       if (item.data.type == "arme" && (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        dice = dice + "+" + Math.max(0, (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) - 12)
+        if (item.data.data.armefeu!=true) {
+          dice = dice + "+" + Math.max(0, (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) - 12)
+        }
       };
       if (item.data.type == "arme" && (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) < 9 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        dice = dice + "-1"
+        if (item.data.data.armefeu!=true) {
+          dice = dice + "-1"
+        }
       };
       if (item.data.type == "arme" && item.data.data.lancerarme != "-" && this.actor.data.data.attributes.lancerarme.degat != 0 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
         dice = dice + this.actor.data.data.attributes.lancerarme.degat
@@ -770,6 +777,14 @@ export class NaheulbeukActorSheet extends ActorSheet {
       diff = game.naheulbeuk.macros.replaceAttr(diff, game.naheulbeuk.macros.getSpeakersTarget());
     } else {
       diff = game.naheulbeuk.macros.replaceAttr(diff, this.actor);
+    }
+    if (armefeu == "true") {
+      let flagTirerCorrectement=0
+      for (let actoritem of this.actor.items){
+        if (actoritem.data.name == "TIRER CORRECTEMENT" ) {flagTirerCorrectement=1}
+      }
+      if (flagTirerCorrectement == 0) {diff=(parseInt(diff)+5).toString()}
+      if (flagTirerCorrectement == 1) {diff=(parseInt(diff)+1).toString()}
     }
     //def du format de message dans le chat
     const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
@@ -827,6 +842,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     var dice = dataset.dice;
     var name = dataset.name;
     var diff = dataset.diff;
+    const armefeu = dataset.af;
     if (dice.substr(0, 8) == "épreuve:") { //lancement d'épreuve quand il y'a juste jet de dés
       diff = dice;
       dice = "d20";
@@ -837,10 +853,14 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //ajout du bonus de dégâts fo>12 si c'est une arme
     if (item) {
       if (item.data.type == "arme" && (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        dice = dice + "+" + Math.max(0, (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) - 12)
+        if (item.data.data.armefeu!=true) {
+          dice = dice + "+" + Math.max(0, (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) - 12)
+        }
       };
       if (item.data.type == "arme" && (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) < 9 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        dice = dice + "-1"
+        if (item.data.data.armefeu!=true) {
+          dice = dice + "-1"
+        }
       };
       if (item.data.type == "arme" && item.data.data.lancerarme != "-" && this.actor.data.data.attributes.lancerarme.degat != 0 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
         dice = dice + this.actor.data.data.attributes.lancerarme.degat
@@ -863,7 +883,14 @@ export class NaheulbeukActorSheet extends ActorSheet {
     }
     dice = dice.replace(/ /g, "");
     diff = diff.replace(/ /g, "");
-
+    if (armefeu == "true") {
+      let flagTirerCorrectement=0
+      for (let actoritem of this.actor.items){
+        if (actoritem.data.name == "TIRER CORRECTEMENT" ) {flagTirerCorrectement=1}
+      }
+      if (flagTirerCorrectement == 0) {diff=(parseInt(diff)+5).toString()}
+      if (flagTirerCorrectement == 1) {diff=(parseInt(diff)+1).toString()}
+    }
     let d = new Dialog({
       title: name,
       content: `
@@ -1365,17 +1392,36 @@ export class NaheulbeukActorSheet extends ActorSheet {
   }
 
   //PCH - diminue la quantité d'un objet
-  async _quantity(ev) {
+  async _quantitymoins(ev) {
+    let option="moins"
     ev.preventDefault();
     //on récupère l'objet
     const li = $(ev.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
     const quantity = item.data.data.quantity
-    //avant d'équiper un sac, on vérifie s'il n'y en pas déjà un équipé
-    if (quantity > 0) {
+    if (quantity > 0 && option=="moins") {
       item.update({ "data.quantity": quantity - 1 });
     }
+    if (option=="plus") {
+      item.update({ "data.quantity": quantity + 1 });
+    }
   }
+
+    //PCH - diminue la quantité d'un objet
+    async _quantityplus(ev) {
+      let option="plus"
+      ev.preventDefault();
+      //on récupère l'objet
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      const quantity = item.data.data.quantity
+      if (quantity > 0 && option=="moins") {
+        item.update({ "data.quantity": quantity - 1 });
+      }
+      if (option=="plus") {
+        item.update({ "data.quantity": quantity + 1 });
+      }
+    }
 
   //PCH calcule niveau
   _level() {

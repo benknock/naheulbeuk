@@ -381,7 +381,8 @@
       "enchantement": false,
       "relique": false,
       "limitporteur": "tous sauf indications contraires",
-      "categorie": "Armes"
+      "categorie": "Armes",
+      "armefeu": false
     },
     "armure": {
       "templates": [

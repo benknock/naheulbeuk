@@ -138,10 +138,12 @@ export class Macros {
     expr = expr.replace(/@esq/g, esq);
     expr = expr.replace(/@pr/g, pr);
     expr = expr.replace(/ /g, "");
-    expr = expr.replace(/.@bonusfo/g, bonusfo);
+    expr = expr.replace(/@bonusfo/g, bonusfo);
     expr = expr.replace(/@lvl/g, lvl);
     expr = expr.replace(/\+\-/g, "-");
-
+    expr = expr.replace(/\-\+/g, "-");
+    expr = expr.replace(/\-\-/g, "+");
+    expr = expr.replace(/\+\+/g, "+");
     if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
     return expr;
   }

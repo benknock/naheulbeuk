@@ -44,12 +44,12 @@
           </label>
           /
           <label class="resource-label">
-            &nbsp;Enchanté : &nbsp;
-            {{#if (equals data.enchantement true)}}
-            <input type="checkbox" name="data.enchantement" checked
+            &nbsp;Arme à feu :
+            {{#if (equals data.armefeu true)}}
+            <input type="checkbox" name="data.armefeu" checked
               style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{else}}
-            <input type="checkbox" name="data.enchantement"
+            <input type="checkbox" name="data.armefeu"
               style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
@@ -61,6 +61,17 @@
               style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{else}}
             <input type="checkbox" name="data.relique"
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
+            {{/if}}
+          </label>
+          /
+          <label class="resource-label">
+            &nbsp;Enchanté : &nbsp;&nbsp;
+            {{#if (equals data.enchantement true)}}
+            <input type="checkbox" name="data.enchantement" checked
+              style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
+            {{else}}
+            <input type="checkbox" name="data.enchantement"
               style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>

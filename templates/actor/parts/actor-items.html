@@ -97,7 +97,7 @@
   </h2>
   <div style="margin-bottom: 4px;">
     <li class="item flexrow">
-      <div class="">Nom</div>
+      <div class="" style="flex: 2;">Nom</div>
       <h4 class="rollable" data-roll-type="item"></h4>
       <div class="flex-group-center">Dégâts</div>
       <div class="flex-group-center" style="flex:0.7">ATT</div>
@@ -114,11 +114,21 @@
   <hr>
   {{#each armes as |item id|}}
   <li class="item flexrow" data-item-id="{{item._id}}">
-    <div class="item-name">
+    <div class="item-name" style="flex: 3.2;">
       <div class="item-image">
         <img class="icon-inventaire " src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
       </div>
-      <h4 style="text-overflow: ellipsis;">{{item.name}}</h4>
+
+      {{#if (equalsand (equalsand item.data.prd "-" item.data.formula "-") true (equalsnot item.data.lancerarme "-") true)}}
+      <h4 style="text-overflow: ellipsis;">
+        {{item.data.quantity}}&nbsp;-&nbsp;{{item.name}}&nbsp;
+      </h4>
+      <div class="flex-group-center"><i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+      {{else}}
+      <h4 style="text-overflow: ellipsis;">
+        {{item.name}}&nbsp;
+      </h4>
+      {{/if}}
       {{#if (equalsand item.data.epreuvecustom true item.data.enmain true)}}
       &nbsp;<i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
         data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
@@ -149,8 +159,9 @@
       {{else}}
       {{#if (equals item.data.enmain true)}}
       <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
-        data-diff="@att+{{item.data.att}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
-        data-name="{{item.name}}" data-diff="@att+{{item.data.att}}"></i>
+        data-diff="@att+{{item.data.att}}" data-af="{{item.data.armefeu}}"></i>
+        &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
+        data-name="{{item.name}}" data-diff="@att+{{item.data.att}}" data-af="{{item.data.armefeu}}"></i>
       {{else}}
       -
       {{/if}}
@@ -161,8 +172,9 @@
       {{else}}
       {{#if (equals item.data.enmain true)}}
       <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
-        data-diff="@att-distance"></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
-        data-name="{{item.name}}" data-diff="@att-distance"></i>
+        data-diff="@att-distance" data-af="{{item.data.armefeu}}"></i>
+        &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
+        data-name="{{item.name}}" data-diff="@att-distance" data-af="{{item.data.armefeu}}"></i>
       {{else}}
       -
       {{/if}}
@@ -294,7 +306,7 @@
       {{/if}}
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="fas fa-minus item-quantity"></i></div>
+    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
       {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
     </div>
@@ -360,7 +372,7 @@
       {{/if}}
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="fas fa-minus item-quantity"></i></div>
+    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
       {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
     </div>
@@ -422,7 +434,7 @@
       {{/if}}
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="fas fa-minus item-quantity"></i></div>
+    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
       {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
     </div>
@@ -484,7 +496,7 @@
       {{/if}}
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="fas fa-minus item-quantity"></i></div>
+    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
       {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
     </div>
@@ -546,7 +558,7 @@
       {{/if}}
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="fas fa-minus item-quantity"></i></div>
+    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
       {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
     </div>
@@ -608,7 +620,7 @@
       {{/if}}
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="fas fa-minus item-quantity"></i></div>
+    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
       {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
     </div>
@@ -670,7 +682,7 @@
       {{/if}}
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="fas fa-minus item-quantity"></i></div>
+    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
       {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
     </div>
@@ -732,7 +744,7 @@
       {{/if}}
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="fas fa-minus item-quantity"></i></div>
+    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
       {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
     </div>
@@ -794,7 +806,7 @@
       {{/if}}
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="fas fa-minus item-quantity"></i></div>
+    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
       {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
     </div>

@@ -745,7 +745,6 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //récupération de l'objet si besoin
     const li = $(event.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
-    const armefeu2 = item.data.data.armefeu
     //ajout du bonus de dégâts fo>12 si c'est une arme
     if (item) {
       if (item.data.type == "arme" && (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
@@ -977,22 +976,48 @@ export class NaheulbeukActorSheet extends ActorSheet {
   async _onRollCustomSpell(event) {
     const element = event.currentTarget;
     const dataset = element.dataset;
-    var dice1 = dataset.dice1;
-    var dice2 = dataset.dice2;
-    var dice3 = dataset.dice3;
-    var dice4 = dataset.dice4;
-    var dice5 = dataset.dice5;
-    var name1 = dataset.name1;
-    var name2 = dataset.name2;
-    var name3 = dataset.name3;
-    var name4 = dataset.name4;
-    var name5 = dataset.name5;
-    var diff1 = dataset.diff1;
-    var diff2 = dataset.diff2;
-    var diff3 = dataset.diff3;
-    var diff4 = dataset.diff4;
-    var diff5 = dataset.diff5;
-
+    var dice1 = "";
+    var dice2 = "";
+    var dice3 = "";
+    var dice4 = "";
+    var dice5 = "";
+    var dice6 = "";
+    var dice7 = "";
+    var name1 = "";
+    var name2 = "";
+    var name3 = "";
+    var name4 = "";
+    var name5 = "";
+    var name6 = "";
+    var name7 = "";
+    var diff1 = "";
+    var diff2 = "";
+    var diff3 = "";
+    var diff4 = "";
+    var diff5 = "";
+    var diff6 = "";
+    var diff7 = "";
+    if (dataset.dice1!=undefined) {dice1 = dataset.dice1;}
+    if (dataset.dice2!=undefined) {dice2 = dataset.dice2;}
+    if (dataset.dice3!=undefined) {dice3 = dataset.dice3;}
+    if (dataset.dice4!=undefined) {dice4 = dataset.dice4;}
+    if (dataset.dice5!=undefined) {dice5 = dataset.dice5;}
+    if (dataset.dice6!=undefined) {dice6 = dataset.dice6;}
+    if (dataset.dice7!=undefined) {dice7 = dataset.dice7;}
+    if (dataset.name1!=undefined) {name1 = dataset.name1;}
+    if (dataset.name2!=undefined) {name2 = dataset.name2;}
+    if (dataset.name3!=undefined) {name3 = dataset.name3;}
+    if (dataset.name4!=undefined) {name4 = dataset.name4;}
+    if (dataset.name5!=undefined) {name5 = dataset.name5;}
+    if (dataset.name6!=undefined) {name6 = dataset.name6;}
+    if (dataset.name7!=undefined) {name7 = dataset.name7;}
+    if (dataset.diff1!=undefined) {diff1 = dataset.diff1;}
+    if (dataset.diff2!=undefined) {diff2 = dataset.diff2;}
+    if (dataset.diff3!=undefined) {diff3 = dataset.diff3;}
+    if (dataset.diff4!=undefined) {diff4 = dataset.diff4;}
+    if (dataset.diff5!=undefined) {diff5 = dataset.diff5;}
+    if (dataset.diff6!=undefined) {diff6 = dataset.diff6;}
+    if (dataset.diff7!=undefined) {diff7 = dataset.diff7;}
     //récupération de l'objet si besoin
     const li = $(event.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
@@ -1002,11 +1027,15 @@ export class NaheulbeukActorSheet extends ActorSheet {
     dice3 = dice3.replace(/ /g, "");
     dice4 = dice4.replace(/ /g, "");
     dice5 = dice5.replace(/ /g, "");
+    dice6 = dice6.replace(/ /g, "");
+    dice7 = dice7.replace(/ /g, "");
     diff1 = diff1.replace(/ /g, "");
     diff2 = diff2.replace(/ /g, "");
     diff3 = diff3.replace(/ /g, "");
     diff4 = diff4.replace(/ /g, "");
     diff5 = diff5.replace(/ /g, "");
+    diff6 = diff6.replace(/ /g, "");
+    diff7 = diff7.replace(/ /g, "");
 
     var content = `
     <em style="font-size: 15px;">Raccourcis :</em>
@@ -1016,52 +1045,126 @@ export class NaheulbeukActorSheet extends ActorSheet {
     `
     if (name1 != "") {
       content = content + `
-      <label style="font-size: 15px;"1>Formule `+ name1 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputFormule1" value="`+ dice1 + `">
-      <label style="font-size: 15px;"1>Difficulté `+ name1 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputDiff1" value=`+ diff1 + `></li>
-      <br/><br/>
+      <div style="display: flex;">
+        <label style="font-size: 15px; flex:1;">`+ name1 + `</label>
+        <div style="flex:0.1;"></div>
+        <label style="font-size: 15px; flex:1;">Difficulté</label>
+        <div style="flex:0.1;"></div>
+      </div>
+      <div style="display: flex;">
+        <input style="font-size: 15px; flex:1;" type="text" name="inputFormule1" value="`+ dice1 + `">
+        <div style="flex:0.1;"></div>
+        <input style="font-size: 15px; flex:1;" type="text" name="inputDiff1" value=`+ diff1 + `></li>
+        <div style="flex:0.1;"></div>
+      </div>
+      <br/>
       `
     }
     if (name2 != "") {
       content = content + `
-      <label style="font-size: 15px;"1>Formule `+ name2 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputFormule2" value="`+ dice2 + `">
-      <label style="font-size: 15px;"1>Difficulté `+ name2 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputDiff2" value=`+ diff2 + `></li>
-      <br/><br/>
+      <div style="display: flex;">
+        <label style="font-size: 15px; flex:1;">`+ name2 + `</label>
+        <div style="flex:0.1;"></div>
+        <label style="font-size: 15px; flex:1;">Difficulté</label>
+        <div style="flex:0.1;"></div>
+      </div>
+      <div style="display: flex;">
+        <input style="font-size: 15px; flex:1;" type="text" name="inputFormule2" value="`+ dice2 + `">
+        <div style="flex:0.1;"></div>
+        <input style="font-size: 15px; flex:1;" type="text" name="inputDiff2" value=`+ diff2 + `></li>
+        <div style="flex:0.1;"></div>
+      </div>
+      <br/>
       `
     }
     if (name3 != "") {
       content = content + `
-      <label style="font-size: 15px;"1>Formule `+ name3 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputFormule3" value="`+ dice3 + `">
-      <label style="font-size: 15px;"1>Difficulté `+ name3 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputDiff3" value=`+ diff3 + `></li>
-      <br/><br/>
+      <div style="display: flex;">
+        <label style="font-size: 15px; flex:1;">`+ name3 + `</label>
+        <div style="flex:0.1;"></div>
+        <label style="font-size: 15px; flex:1;">Difficulté</label>
+        <div style="flex:0.1;"></div>
+      </div>
+      <div style="display: flex;">
+        <input style="font-size: 15px; flex:1;" type="text" name="inputFormule3" value="`+ dice3 + `">
+        <div style="flex:0.1;"></div>
+        <input style="font-size: 15px; flex:1;" type="text" name="inputDiff3" value=`+ diff3 + `></li>
+        <div style="flex:0.1;"></div>
+      </div>
+      <br/>
       `
     }
     if (name4 != "") {
       content = content + `
-      <label style="font-size: 15px;"1>Formule `+ name4 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputFormule4" value="`+ dice4 + `">
-      <label style="font-size: 15px;"1>Difficulté `+ name4 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputDiff4" value=`+ diff4 + `></li>
-      <br/><br/>
+      <div style="display: flex;">
+        <label style="font-size: 15px; flex:1;">`+ name4 + `</label>
+        <div style="flex:0.1;"></div>
+        <label style="font-size: 15px; flex:1;">Difficulté</label>
+        <div style="flex:0.1;"></div>
+      </div>
+      <div style="display: flex;">
+        <input style="font-size: 15px; flex:1;" type="text" name="inputFormule4" value="`+ dice4 + `">
+        <div style="flex:0.1;"></div>
+        <input style="font-size: 15px; flex:1;" type="text" name="inputDiff4" value=`+ diff4 + `></li>
+        <div style="flex:0.1;"></div>
+      </div>
+      <br/>
       `
     }
     if (name5 != "") {
       content = content + `
-      <label style="font-size: 15px;"1>Formule `+ name5 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputFormule5" value="`+ dice5 + `">
-      <label style="font-size: 15px;"1>Difficulté `+ name5 + ` :</label>
-      <input style="font-size: 15px;" type="text" name="inputDiff5" value=`+ diff5 + `></li>
+      <div style="display: flex;">
+        <label style="font-size: 15px; flex:1;">`+ name5 + `</label>
+        <div style="flex:0.1;"></div>
+        <label style="font-size: 15px; flex:1;">Difficulté</label>
+        <div style="flex:0.1;"></div>
+      </div>
+      <div style="display: flex;">
+        <input style="font-size: 15px; flex:1;" type="text" name="inputFormule5" value="`+ dice5 + `">
+        <div style="flex:0.1;"></div>
+        <input style="font-size: 15px; flex:1;" type="text" name="inputDiff5" value=`+ diff5 + `></li>
+        <div style="flex:0.1;"></div>
+      </div>
+      <br/>
+      `
+    }
+    if (name6 != "") {
+      content = content + `
+      <div style="display: flex;">
+        <label style="font-size: 15px; flex:1;">`+ name6 + `</label>
+        <div style="flex:0.1;"></div>
+        <label style="font-size: 15px; flex:1;">Difficulté</label>
+        <div style="flex:0.1;"></div>
+      </div>
+      <div style="display: flex;">
+        <input style="font-size: 15px; flex:1;" type="text" name="inputFormule6" value="`+ dice6 + `">
+        <div style="flex:0.1;"></div>
+        <input style="font-size: 15px; flex:1;" type="text" name="inputDiff6" value=`+ diff6 + `></li>
+        <div style="flex:0.1;"></div>
+      </div>
+      <br/>
+      `
+    }
+    if (name7 != "") {
+      content = content + `
+      <div style="display: flex;">
+        <label style="font-size: 15px; flex:1;">`+ name7 + `</label>
+        <div style="flex:0.1;"></div>
+        <label style="font-size: 15px; flex:1;">Difficulté</label>
+        <div style="flex:0.1;"></div>
+      </div>
+      <div style="display: flex;">
+        <input style="font-size: 15px; flex:1;" type="text" name="inputFormule7" value="`+ dice7 + `">
+        <div style="flex:0.1;"></div>
+        <input style="font-size: 15px; flex:1;" type="text" name="inputDiff7" value=`+ diff7 + `></li>
+        <div style="flex:0.1;"></div>
+      </div>
       <br/><br/>
       `
     }
     var buttons = []
     var one = {
-      label: name1,
+      label: '<span style="font-size: 12px;">'+name1+'</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule1"').val();
         let diff = html.find('input[name="inputDiff1"').val();
@@ -1124,7 +1227,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     }
     var two = {
-      label: name2,
+      label: '<span style="font-size: 12px;">'+name2+'</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule2"').val();
         let diff = html.find('input[name="inputDiff2"').val();
@@ -1187,7 +1290,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     }
     var three = {
-      label: name3,
+      label: '<span style="font-size: 12px;">'+name3+'</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule3"').val();
         let diff = html.find('input[name="inputDiff3"').val();
@@ -1250,7 +1353,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     }
     var four = {
-      label: name4,
+      label: '<span style="font-size: 12px;">'+name4+'</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule4"').val();
         let diff = html.find('input[name="inputDiff4"').val();
@@ -1313,7 +1416,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     }
     var five = {
-      label: name5,
+      label: '<span style="font-size: 12px;">'+name5+'</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule5"').val();
         let diff = html.find('input[name="inputDiff5"').val();
@@ -1359,7 +1462,133 @@ export class NaheulbeukActorSheet extends ActorSheet {
                 if (r.total > diff.total) { reussite = "Echec !   " };
                 tplData = {
                   diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                  name: name4 + " - " + item.name
+                  name: name5 + " - " + item.name
+                };
+                renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
+                  r.toMessage({
+                    user: game.user.id,
+                    flavor: msgFlavor,
+                    speaker: ChatMessage.getSpeaker({ actor: this.actor })
+                  });
+                });
+              });
+            };
+          });
+        }
+        return false;
+      }
+    }
+    var six = {
+      label: '<span style="font-size: 12px;">'+name6+'</span>',
+      callback: (html) => {
+        let dice = html.find('input[name="inputFormule6"').val();
+        let diff = html.find('input[name="inputDiff6"').val();
+        const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
+        //dice=game.naheulbeuk.macros.replaceAttr(dice,this.actor);
+        //diff=game.naheulbeuk.macros.replaceAttr(diff,this.actor);
+        if (dice.substr(0, 6) == "cible:" || diff.substr(0, 6) == "cible:") {
+          if (game.naheulbeuk.macros.getSpeakersTarget() == null) { return }
+        }
+        if (dice.substr(0, 6) == "cible:") {
+          dice = game.naheulbeuk.macros.replaceAttr(dice, game.naheulbeuk.macros.getSpeakersTarget());
+        } else {
+          dice = game.naheulbeuk.macros.replaceAttr(dice, this.actor);
+        }
+        if (diff.substr(0, 6) == "cible:") {
+          diff = game.naheulbeuk.macros.replaceAttr(diff, game.naheulbeuk.macros.getSpeakersTarget());
+        } else {
+          diff = game.naheulbeuk.macros.replaceAttr(diff, this.actor);
+        }
+        if (dice != "") {
+          let r = new Roll(dice);
+          //await r.roll({"async": true});
+          r.roll({ "async": true }).then(r => {
+            var result = 0;
+            var tplData = {};
+            var reussite = "Réussite !   ";
+            if (diff == "") {
+              tplData = {
+                diff: "",
+                name: name6 + " - " + item.name
+              }
+              renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
+                r.toMessage({
+                  user: game.user.id,
+                  flavor: msgFlavor,
+                  speaker: ChatMessage.getSpeaker({ actor: this.actor })
+                });
+              });
+            } else {
+              diff = new Roll(diff);
+              diff.roll({ "async": true }).then(diff => {
+                result = Math.abs(diff.total - r.total);
+                if (r.total > diff.total) { reussite = "Echec !   " };
+                tplData = {
+                  diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                  name: name6 + " - " + item.name
+                };
+                renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
+                  r.toMessage({
+                    user: game.user.id,
+                    flavor: msgFlavor,
+                    speaker: ChatMessage.getSpeaker({ actor: this.actor })
+                  });
+                });
+              });
+            };
+          });
+        }
+        return false;
+      }
+    }
+    var seven = {
+      label: '<span style="font-size: 12px;">'+name7+'</span>',
+      callback: (html) => {
+        let dice = html.find('input[name="inputFormule5"').val();
+        let diff = html.find('input[name="inputDiff5"').val();
+        const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
+        //dice=game.naheulbeuk.macros.replaceAttr(dice,this.actor);
+        //diff=game.naheulbeuk.macros.replaceAttr(diff,this.actor);
+        if (dice.substr(0, 6) == "cible:" || diff.substr(0, 6) == "cible:") {
+          if (game.naheulbeuk.macros.getSpeakersTarget() == null) { return }
+        }
+        if (dice.substr(0, 6) == "cible:") {
+          dice = game.naheulbeuk.macros.replaceAttr(dice, game.naheulbeuk.macros.getSpeakersTarget());
+        } else {
+          dice = game.naheulbeuk.macros.replaceAttr(dice, this.actor);
+        }
+        if (diff.substr(0, 6) == "cible:") {
+          diff = game.naheulbeuk.macros.replaceAttr(diff, game.naheulbeuk.macros.getSpeakersTarget());
+        } else {
+          diff = game.naheulbeuk.macros.replaceAttr(diff, this.actor);
+        }
+        if (dice != "") {
+          let r = new Roll(dice);
+          //await r.roll({"async": true});
+          r.roll({ "async": true }).then(r => {
+            var result = 0;
+            var tplData = {};
+            var reussite = "Réussite !   ";
+            if (diff == "") {
+              tplData = {
+                diff: "",
+                name: name7 + " - " + item.name
+              }
+              renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
+                r.toMessage({
+                  user: game.user.id,
+                  flavor: msgFlavor,
+                  speaker: ChatMessage.getSpeaker({ actor: this.actor })
+                });
+              });
+            } else {
+              diff = new Roll(diff);
+              diff.roll({ "async": true }).then(diff => {
+                result = Math.abs(diff.total - r.total);
+                if (r.total > diff.total) { reussite = "Echec !   " };
+                tplData = {
+                  diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                  name: name7 + " - " + item.name
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                   r.toMessage({
@@ -1380,8 +1609,10 @@ export class NaheulbeukActorSheet extends ActorSheet {
     if (name3 != "") { buttons.push(three) }
     if (name4 != "") { buttons.push(four) }
     if (name5 != "") { buttons.push(five) }
+    if (name6 != "") { buttons.push(six) }
+    if (name7 != "") { buttons.push(seven) }
     const myDialogOptions = {
-      width: 500
+      width: 700
     };
     let d = new CustomDialog({
       title: "Avancé",

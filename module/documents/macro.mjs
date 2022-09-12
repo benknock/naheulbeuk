@@ -122,7 +122,14 @@ export class Macros {
     if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
       bonusfo = "-1"
     };
+    let flagTirerCorrectement=5
+    for (let actoritem of actor.items){
+      if (actoritem.data.name == "TIRER CORRECTEMENT" ) {
+        flagTirerCorrectement=1
+      }
+    }
     expr = expr.replace(/épreuve:/g, "");
+    expr = expr.replace(/@armefeu/g, flagTirerCorrectement);
     expr = expr.replace(/cible:/g, "");
     expr = expr.replace(/@prm/g, prm);
     expr = expr.replace(/@cou/g, cou);

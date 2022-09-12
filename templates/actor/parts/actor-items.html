@@ -119,7 +119,7 @@
         <img class="icon-inventaire " src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
       </div>
 
-      {{#if (equalsand (equalsand item.data.prd "-" item.data.formula "-") true (equalsnot item.data.lancerarme "-") true)}}
+      {{#if (equalsand (equalsand (equalsand item.data.prd "-" item.data.formula "-") true (equalsnot item.data.lancerarme "-") true) true item.data.epreuvecustom false)}}
       <h4 style="text-overflow: ellipsis;">
         {{item.data.quantity}}&nbsp;-&nbsp;{{item.name}}&nbsp;
       </h4>
@@ -130,12 +130,15 @@
       </h4>
       {{/if}}
       {{#if (equalsand item.data.epreuvecustom true item.data.enmain true)}}
-      &nbsp;<i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-        data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-        data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-        data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-        data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-        data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      &nbsp;<i class="fas fa-dice-d6 rollable4 cliquable" 
+        data-dice1="{{item.data.jet1}}" data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" 
+        data-dice2="{{item.data.jet2}}" data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}"
+        data-dice3="{{item.data.jet3}}" data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" 
+        data-dice4="{{item.data.jet4}}" data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}"
+        data-dice5="{{item.data.jet5}}" data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"
+        data-dice6="{{item.data.jet6}}" data-name6="{{item.data.name6}}" data-diff6="{{item.data.epreuve6}}" 
+        data-dice7="{{item.data.jet7}}" data-name7="{{item.data.name7}}" data-diff7="{{item.data.epreuve7}}">
+      </i>
       {{/if}}
     </div>
     <div class="flex-group-center">

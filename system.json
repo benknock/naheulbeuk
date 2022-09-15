@@ -351,6 +351,14 @@
       "tag": "item"
     },
     {
+      "name": "soldats",
+      "label": "Extension :  soldats",
+      "system": "naheulbeuk",
+      "path": "./packs/soldats.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
       "name": "sorts-air",
       "label": "Magie : air",
       "system": "naheulbeuk",

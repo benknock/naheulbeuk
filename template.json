@@ -55,7 +55,8 @@
           "value": 0,
           "bonus": 0,
           "bonusSsEncombrement": 0,
-          "trucdemauviette": 0
+          "trucdemauviette": 0,
+          "prignorepoid": 0
         },
         "prm": {
           "value": 0,

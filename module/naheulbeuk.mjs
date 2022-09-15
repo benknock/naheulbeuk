@@ -176,8 +176,8 @@ Handlebars.registerHelper('bonus', function (val1, val2, val3, val4, val5, val6,
 });
 
 //PCH - déplacement
-Handlebars.registerHelper('deplacement', function (val1, val2, val3) {
-  var calc = val1 + val2;
+Handlebars.registerHelper('deplacement', function (val1, val2, val3, val4) {
+  var calc = val1 + val2 - val3;
   var calc1 = 0;
   var calc2 = 0;
   if (calc <= 1) {
@@ -202,8 +202,8 @@ Handlebars.registerHelper('deplacement', function (val1, val2, val3) {
     calc1 = 1;
     calc2 = 2;
   }
-  calc1 = Math.max(0, Math.ceil(calc1 + (calc1 * val3 / 100)))
-  calc2 = Math.max(0, Math.ceil(calc2 + (calc2 * val3 / 100)))
+  calc1 = Math.max(0, Math.ceil(calc1 + (calc1 * val4 / 100)))
+  calc2 = Math.max(0, Math.ceil(calc2 + (calc2 * val4 / 100)))
   calc = "(" + calc1 + "m/" + calc2 + "m)"
   return calc;
 });

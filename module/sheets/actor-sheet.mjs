@@ -1697,7 +1697,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
   //PCH calcule esquive
   _esq() {
     var val1 = this.actor.data.data.abilities.ad.value + this.actor.data.data.abilities.ad.bonus
-    var val2 = this.actor.data.data.attributes.pr.value + this.actor.data.data.attributes.pr.bonus
+    var val2 = this.actor.data.data.attributes.pr.value + this.actor.data.data.attributes.pr.bonus - this.actor.data.data.attributes.pr.prignorepoid
     if (val2 <= 1) {
       val2 = 1;
     } else if (val2 == 2) {

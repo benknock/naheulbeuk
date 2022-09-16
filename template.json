@@ -399,7 +399,7 @@
       "quantity": 1,
       "weight": 0,
       "prix": 0,
-      "formula": "",
+      "formula": "-",
       "equipe": false,
       "rupture": "0",
       "cou": 0,
@@ -457,7 +457,7 @@
         "base"
       ],
       "img": "icons/svg/stoned.svg",
-      "formula": "",
+      "formula": "-",
       "equipe": false,
       "cou": 0,
       "int": 0,
@@ -494,7 +494,7 @@
         "base"
       ],
       "img": "icons/svg/statue.svg",
-      "formula": "",
+      "formula": "-",
       "diff": "",
       "choix": true,
       "base": false,
@@ -630,7 +630,7 @@
       "equipe": false,
       "ignorePoidSac": false,
       "categorie": "",
-      "formula": ""
+      "formula": "-"
     },
     "piege": {
       "img": "icons/svg/trap.svg",

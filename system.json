@@ -351,8 +351,16 @@
       "tag": "item"
     },
     {
+      "name": "soldats-items",
+      "label": "Extension soldat : équipement",
+      "system": "naheulbeuk",
+      "path": "./packs/soldats-items.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
       "name": "soldats",
-      "label": "Extension :  soldats",
+      "label": "Extension soldat : métiers/C.S./stages",
       "system": "naheulbeuk",
       "path": "./packs/soldats.db",
       "type": "Item",

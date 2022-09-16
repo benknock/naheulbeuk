@@ -228,9 +228,9 @@
               <div class="esquive">
                 <label class="resource-label">Esquive&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="Esquive"
-                    data-diff='{{math data.attributes.esq.value "+" data.attributes.esq.bonus}}'></i>&nbsp;<i
-                    class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Esquive"
-                    data-diff='{{math data.attributes.esq.value "+" data.attributes.esq.bonus}}'></i></label>
+                    data-diff='{{math (math data.attributes.esq.value "+" data.attributes.esq.bonus) "+" data.abilities.ad.bonus}}'></i>
+                    &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Esquive"
+                    data-diff='{{math (math data.attributes.esq.value "+" data.attributes.esq.bonus) "+" data.abilities.ad.bonus}}'></i></label>
                 <input type="text" name="data.attributes.esq.bonus" value='{{data.attributes.esq.bonus}}'
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
@@ -395,7 +395,7 @@
             {{else}}
             {{item.data.attaque}}
             &nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Attaque {{item.name}}"
-              data-diff="{{item.data.attaque}}"></i>&nbsp;
+              data-diff="{{item.data.attaque}}{{read_actor " .abilities.att.bonus"}}"></i>&nbsp;
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Dégâts {{item.name}}"
               data-diff="{{item.data.attaque}}{{read_actor " .abilities.att.bonus"}}"></i>
             {{/if}}

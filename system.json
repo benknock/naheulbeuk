@@ -352,7 +352,7 @@
     },
     {
       "name": "soldats-items",
-      "label": "Extension soldat : équipement",
+      "label": "Système : équipement soldat",
       "system": "naheulbeuk",
       "path": "./packs/soldats-items.db",
       "type": "Item",
@@ -360,7 +360,7 @@
     },
     {
       "name": "soldats",
-      "label": "Extension soldat : métiers/C.S./stages",
+      "label": "Système : C.S./stages soldat",
       "system": "naheulbeuk",
       "path": "./packs/soldats.db",
       "type": "Item",

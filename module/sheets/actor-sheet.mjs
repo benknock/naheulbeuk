@@ -356,6 +356,13 @@ export class NaheulbeukActorSheet extends ActorSheet {
       };
       this.actor.update(actorData);
     });
+        //PCH hide catégorie d'inventaire
+    html.find('.hidemonture').click(ev => {
+      const actorData = {
+        "data.attributes.hidemonture": !this.actor.data.data.attributes.hidemonture
+      };
+      this.actor.update(actorData);
+    });
     //PCH hide catégorie d'inventaire
     html.find('.hidespeciaux').click(ev => {
       const actorData = {

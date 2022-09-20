@@ -98,10 +98,13 @@ export class Macros {
       const ad = actor.data.data.abilities.ad.value + actor.data.data.abilities.ad.bonus;
       const lancer = actor.data.data.attributes.lancerarme.value + actor.data.data.attributes.lancerarme.bonus + ad;
       const bonusint = Math.max(0, (actor.data.data.abilities.int.value + actor.data.data.abilities.int.bonus) - 12)
+      var lancerdegat = actor.data.data.attributes.lancerarme.degat
+      if (lancerdegat==""){lancerdegat=0}
       expr = expr.replace(/@att-distance/g, lancer);
       expr = expr.replace(/@bonusint/g, bonusint);
+      expr = expr.replace(/@degat-distance/g, lancerdegat);
     }
-    const pr = actor.data.data.attributes.pr.value + actor.data.data.attributes.pr.bonus + actor.data.data.attributes.pr.bonusSsEncombrement;
+    const pr = actor.data.data.attributes.pr.value + actor.data.data.attributes.pr.bonus + actor.data.data.attributes.pr.bonusSsEncombrement + actor.data.data.attributes.pr.trucdemauviette;
     const prm = actor.data.data.attributes.prm.value + actor.data.data.attributes.prm.bonus;
     const cou = actor.data.data.abilities.cou.value + actor.data.data.abilities.cou.bonus;
     const int = actor.data.data.abilities.int.value + actor.data.data.abilities.int.bonus;
@@ -144,9 +147,9 @@ export class Macros {
     expr = expr.replace(/@rm/g, rm);
     expr = expr.replace(/@esq/g, esq);
     expr = expr.replace(/@pr/g, pr);
-    expr = expr.replace(/ /g, "");
     expr = expr.replace(/@bonusfo/g, bonusfo);
     expr = expr.replace(/@lvl/g, lvl);
+    expr = expr.replace(/ /g, "");
     expr = expr.replace(/\+\-/g, "-");
     expr = expr.replace(/\-\+/g, "-");
     expr = expr.replace(/\-\-/g, "+");

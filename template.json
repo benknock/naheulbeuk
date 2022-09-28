@@ -226,7 +226,10 @@
         },
         "pr": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonusSsEncombrement": 0,
+          "trucdemauviette": 0,
+          "prignorepoid": 0
         },
         "prm": {
           "value": 0,
@@ -296,6 +299,7 @@
       "metier",
       "origine",
       "piege",
+      "recette",
       "region",
       "sac",
       "sort",
@@ -658,6 +662,22 @@
       "zone": "",
       "effets": "",
       "degat": ""
+    },
+    "recette": {
+      "img": "systems/naheulbeuk/assets/from-rexard-icons/Sorts/sort%20(1018).webp",
+      "quantity": 1,
+      "weight": 0,
+      "categorie": "Ingrédients",
+      "specialites": "",
+      "niveau": "",
+      "materiaux": "",
+      "temps": "",
+      "outils": "",
+      "difficulte": "",
+      "xp": "",
+      "prix":"",
+      "malus":"",
+      "remarque":""
     }
   }
 }

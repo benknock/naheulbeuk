@@ -37,7 +37,7 @@
       <div class="flexrow flex-group-center">
         Charge de la bourse &nbsp;&nbsp;&nbsp;&nbsp;
         <input type="text" name="data.attributes.bourse.value"
-          value='{{ arrondi (math (math (math (math data.attributes.pa.value "+" data.attributes.po.value) "+" (math data.attributes.lb.value "*" 5)) "+" (math data.attributes.lt.value "*" 3)) "*" 0.01)}}'
+          value='{{ arrondi (math (math (math (math data.attributes.pa.value "+" data.attributes.po.value) "+" (math data.attributes.lb.value "*" 5)) "+" (math data.attributes.lt.value "*" 3)) "*" 0.1)}}'
           data-dtype="Number" readonly />&nbsp;kg
         {{#each sacs as |item id|}}
         {{#if (equals item.data.type "bourse")}}
@@ -326,6 +326,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -410,6 +418,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -427,7 +443,8 @@
       <input class="item-equipe" type="checkbox" />
       {{/if}}
       {{/if}}
-      {{else}}
+      {{/if}}
+      {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
       {{#if (equals item.data.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
@@ -490,6 +507,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -507,7 +532,8 @@
       <input class="item-equipe" type="checkbox" />
       {{/if}}
       {{/if}}
-      {{else}}
+      {{/if}}
+      {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
       {{#if (equals item.data.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
@@ -536,6 +562,7 @@
       <a class="item-control item-delete" title="Delete Item"></a>
     </div>
   </li>
+  {{save_actor}}
   {{#each trucs as |item id|}}
   {{#if (equals item.data.categorie "Ingrédients")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
@@ -570,6 +597,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -587,7 +622,8 @@
       <input class="item-equipe" type="checkbox" />
       {{/if}}
       {{/if}}
-      {{else}}
+      {{/if}}
+      {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
       {{#if (equals item.data.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
@@ -650,6 +686,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -667,7 +711,8 @@
       <input class="item-equipe" type="checkbox" />
       {{/if}}
       {{/if}}
-      {{else}}
+      {{/if}}
+      {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
       {{#if (equals item.data.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
@@ -730,6 +775,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -747,7 +800,8 @@
       <input class="item-equipe" type="checkbox" />
       {{/if}}
       {{/if}}
-      {{else}}
+      {{/if}}
+      {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
       {{#if (equals item.data.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
@@ -810,6 +864,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -827,7 +889,8 @@
       <input class="item-equipe" type="checkbox" />
       {{/if}}
       {{/if}}
-      {{else}}
+      {{/if}}
+      {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
       {{#if (equals item.data.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
@@ -890,6 +953,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -907,7 +978,8 @@
       <input class="item-equipe" type="checkbox" />
       {{/if}}
       {{/if}}
-      {{else}}
+      {{/if}}
+      {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
       {{#if (equals item.data.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
@@ -970,6 +1042,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -987,7 +1067,8 @@
       <input class="item-equipe" type="checkbox" />
       {{/if}}
       {{/if}}
-      {{else}}
+      {{/if}}
+      {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
       {{#if (equals item.data.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
@@ -1050,6 +1131,14 @@
       {{/if}}
       {{/if}}
       {{/if}}
+      {{#if (equals item.type "recette")}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name3="" data-diff3="" data-dice4=""
+      data-name4="" data-diff4="" data-dice5=""
+      data-name5="" data-diff5=""></i>
+      {{/if}}
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
@@ -1067,7 +1156,8 @@
       <input class="item-equipe" type="checkbox" />
       {{/if}}
       {{/if}}
-      {{else}}
+      {{/if}}
+      {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
       {{#if (equals item.data.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}

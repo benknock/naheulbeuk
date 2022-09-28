@@ -244,6 +244,9 @@ export class NaheulbeukActorSheet extends ActorSheet {
         if (i.data.ignorePoidSac != true) { poid = poid + i.data.weight * i.data.quantity * 100 }
         charge = charge + i.data.weight * i.data.quantity
       }
+      else if (i.type === 'recette') {
+        trucs.push(i);
+      }
     }
 
     //update PR truc de mauviette et bonus tirer correctement pour les PJ

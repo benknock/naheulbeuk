@@ -229,6 +229,32 @@ Handlebars.registerHelper("read_actor", function (value) {
   }
 });
 
+Handlebars.registerHelper("ingeniositeMalus", function (difficulte,malus) {
+  console.log(actor_data)
+  var actor_ad = actor_data.data.root.data.abilities.ad.value+actor_data.data.root.data.abilities.ad.bonus
+  var actor_int = actor_data.data.root.data.abilities.int.value+actor_data.data.root.data.abilities.int.bonus
+  var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
+  var actor_diff = actor_ingeniosite - difficulte
+  if (Math.sign(actor_diff)==-1){
+    actor_ingeniosite=actor_ingeniosite+actor_diff
+  }
+  if (malus.substring(0,1)=="-"){
+    actor_ingeniosite=actor_ingeniosite+parseInt(malus)
+  } else {
+    actor_ingeniosite = 0
+  }
+  return actor_ingeniosite
+});
+
+Handlebars.registerHelper("ingeniosite", function (difficulte) {
+  var actor_ad = actor_data.data.root.data.abilities.ad.value+actor_data.data.root.data.abilities.ad.bonus
+  var actor_int = actor_data.data.root.data.abilities.int.value+actor_data.data.root.data.abilities.int.bonus
+  var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
+  var actor_diff = actor_ingeniosite - difficulte
+  actor_ingeniosite=actor_ingeniosite+actor_diff
+  return actor_ingeniosite
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
@@ -255,7 +281,7 @@ async function createItemMacro(data, slot) {
   const item = data.data;
 
   // Create the macro command
-  const command = `game.naheulbeuk.rollItemMacro("${item.name}");`;
+  const command = `game.naheulbeuk.rollItemMacro("${item.name}",1);`;
   let macro = game.macros.find(m => (m.name === item.name) && (m.command === command));
   if (!macro) {
     macro = await Macro.create({
@@ -276,7 +302,7 @@ async function createItemMacro(data, slot) {
  * @param {string} itemName
  * @return {Promise}
  */
-function rollItemMacro(itemName) {
+function rollItemMacro(itemName,param) {
   const speaker = ChatMessage.getSpeaker();
   let actor;
   if (speaker.token) actor = game.actors.tokens[speaker.token];
@@ -284,273 +310,464 @@ function rollItemMacro(itemName) {
   const item = actor ? actor.items.find(i => i.name === itemName) : null;
   if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
 
-  if (item.type == "sort") {
-    let d = new Dialog({
-      title: item.name,
-      content: `
-      <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
-      <br/>
-      `,
-      buttons: {
-        one: {
-          label: "Voir l'objet",
-          callback: (html) => {
-            item.sheet.render(true);
+  if (param==1){
+    //Macro pour un sort
+    if (item.type == "sort") {
+      let d = new Dialog({
+        title: item.name,
+        content: `
+        <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
+        <br/>
+        `,
+        buttons: {
+          one: {
+            label: "Voir l'objet",
+            callback: (html) => {
+              item.sheet.render(true);
+            }
+          },
+          two: {
+            label: "Utiliser l'objet",
+            callback: (html) => {
+              if (item.data.data.epreuvecustom == true) {
+                var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5 };
+                var currentTarget = { "dataset": dataset };
+                var event = { "currentTarget": currentTarget };
+                onRollCustomSpell(event)
+              } else {
+                if (item.data.data.degat == "") {
+                  var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": "", "name2": "", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+                } else {
+                  var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": item.data.data.degat, "name2": "Dégâts", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+                }
+                var currentTarget = { "dataset": dataset };
+                var event = { "currentTarget": currentTarget };
+                onRollCustomSpell(event)
+              }
+            }
           }
-        },
-        two: {
-          label: "Utiliser l'objet",
-          callback: (html) => {
-            if (item.data.data.epreuvecustom == true) {
+        }
+      });
+      d.render(true);
+
+    //Macro pour une arme ou un bouclier (ignore les flèches et autre projectile/combustibles) sans épreuve custom
+    } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == false) {
+      let d = new Dialog({
+        title: item.name,
+        content: `
+        <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
+        <br/>
+        `,
+        buttons: {
+          one: {
+            label: "Voir l'objet",
+            callback: (html) => {
+              item.sheet.render(true);
+            }
+          },
+          two: {
+            label: "Utiliser l'objet",
+            callback: (html) => {
+              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+                return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
+              } else {
+                if (item.data.data.prd == "-") {
+                  var prd = "";
+                  var prdname = "";
+                } else {
+                  var prd = "@prd+" + item.data.data.prd;
+                  var prdname = "Parade";
+                }
+                if (item.data.data.formula == "-" || item.data.data.formula == "") {
+                  var attaque = "";
+                  var attname = "";
+                  var degat = "";
+                  var degatname = "";
+                } else {
+                  var attname = "Attaque";
+                  var degatname = "Dégâts";
+                  if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
+                  var degat = item.data.data.formula;
+                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
+                    degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
+                  };
+                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
+                    degat = degat + "-1"
+                  };
+                  if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
+                    degat = degat + actor.data.data.attributes.lancerarme.degat
+                  };
+                }
+
+                var dataset = { "actor": actor, "dice1": "d20", "name1": attname, "diff1": attaque, "dice2": degat, "name2": degatname, "diff2": "", "dice3": "d20", "name3": prdname, "diff3": prd, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+                var currentTarget = { "dataset": dataset };
+                var event = { "currentTarget": currentTarget };
+                onRollCustomSpell(event)
+              }
+            }
+          }
+        }
+      });
+      d.render(true);
+    //Macro pour une arme ou un bouclier (ignore les flèches et autre projectile/combustibles) avec épreuve custom
+    } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == true) {
+      let d = new Dialog({
+        title: item.name,
+        content: `
+        <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
+        <br/>
+        `,
+        buttons: {
+          one: {
+            label: "Voir l'objet",
+            callback: (html) => {
+              item.sheet.render(true);
+            }
+          },
+          two: {
+            label: "Utiliser l'objet",
+            callback: (html) => {
+              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+                return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
+              } else {
+                if (item.data.data.prd == "-") {
+                  var prd = "";
+                  var prdname = "";
+                } else {
+                  var prd = "@prd+" + item.data.data.prd;
+                  var prdname = "Parade";
+                }
+                if (item.data.data.formula == "-" || item.data.data.formula == "") {
+                  var attaque = "";
+                  var attname = "";
+                  var degat = "";
+                  var degatname = "";
+                } else {
+                  var attname = "Attaque";
+                  var degatname = "Dégâts";
+                  if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
+                  var degat = item.data.data.formula;
+                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
+                    degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
+                  };
+                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
+                    degat = degat + "-1"
+                  };
+                  if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
+                    degat = degat + actor.data.data.attributes.lancerarme.degat
+                  };
+                }
+
+                var dataset = { "actor": actor, "dice1": "d20", "name1": attname, "diff1": attaque, "dice2": degat, "name2": degatname, "diff2": "", "dice3": "d20", "name3": prdname, "diff3": prd, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+                var currentTarget = { "dataset": dataset };
+                var event = { "currentTarget": currentTarget };
+                onRollCustomSpell(event)
+              }
+            }
+          },
+          three: {
+            label: "Épreuve(s) custom",
+            callback: (html) => {
+              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+                return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
+              }
               var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5 };
               var currentTarget = { "dataset": dataset };
               var event = { "currentTarget": currentTarget };
               onRollCustomSpell(event)
-            } else {
-              if (item.data.data.degat == "") {
-                var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": "", "name2": "", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
-              } else {
-                var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": item.data.data.degat, "name2": "Dégâts", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+            }
+          },
+        }
+      });
+      d.render(true);
+    //Macro pour une autre arme (sans dégâts donc) avec une épreuve custom (comme une arme à feu)
+    } else if (item.type == "arme" && item.data.data.epreuvecustom == true) {
+      let d = new Dialog({
+        title: item.name,
+        content: `
+        <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
+        <br/>
+        `,
+        buttons: {
+          one: {
+            label: "Voir l'objet",
+            callback: (html) => {
+              item.sheet.render(true);
+            }
+          },
+          three: {
+            label: "Épreuve(s)",
+            callback: (html) => {
+              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+                return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
               }
+              var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5, "dice6": item.data.data.jet6, "name6": item.data.data.name6, "diff6": item.data.data.epreuve6, "dice7": item.data.data.jet7, "name7": item.data.data.name7, "diff7": item.data.data.epreuve7 };
               var currentTarget = { "dataset": dataset };
               var event = { "currentTarget": currentTarget };
               onRollCustomSpell(event)
+            }
+          },
+        }
+      });
+      d.render(true);
+    //Macro pour un coup spécial - désactivé pour le moment
+    /*} else if (item.type == "coup" && ((item.data.data.epreuve != "" && item.data.data.bourrepif == false) || item.data.data.bourrepif == true)) {
+      let d = new Dialog({
+        title: item.name,
+        content: `
+        <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
+        <br/>
+        `,
+        buttons: {
+          one: {
+            label: "Voir l'objet",
+            callback: (html) => {
+              item.sheet.render(true);
+            }
+          },
+          two: {
+            label: "Utiliser l'objet",
+            callback: (html) => {
+              if (item.data.data.bourrepif == false) {
+                var name1 = "";
+                var name2 = "";
+                var diff1 = "";
+                var dice1 = "";
+                var dice2 = "";
+                if (item.data.data.epreuve.substring(0, 1) != "*") {
+                  name1 = "Epreuve"
+                  diff1 = item.data.data.epreuve
+                  dice1 = "d20"
+                }
+                if (item.data.data.degat.substring(0, 1) != "*") {
+                  name2 = "Dégâts"
+                  dice2 = item.data.data.degat
+                }
+                var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+                var currentTarget = { "dataset": dataset };
+                var event = { "currentTarget": currentTarget };
+                onRollCustomSpell(event)
+              } else {
+                var name1 = "";
+                var name2 = "";
+                var name3 = "";
+                var diff1 = "";
+                var diff3 = "";
+                var dice1 = "";
+                var dice2 = "";
+                var dice3 = "";
+                if (item.data.data.epreuve != "" && item.data.data.epreuve != "-") {
+                  name1 = "Epreuve d'attaque";
+                  diff1 = item.data.data.epreuve;
+                  dice1 = "d20";
+                }
+                if (item.data.data.degat != "" && item.data.data.degat != "-") {
+                  name2 = "Dégâts";
+                  dice2 = item.data.data.degat;
+                }
+                if (item.data.data.attaque != "" && item.data.data.attaque != "-") {
+                  name3 = "Epreuve spéciale";
+                  diff3 = item.data.data.attaque;
+                  dice3 = "d20";
+                }
+                var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": dice3, "name3": name3, "diff3": diff3, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+                var currentTarget = { "dataset": dataset };
+                var event = { "currentTarget": currentTarget };
+                onRollCustomSpell(event)
+              }
             }
           }
         }
-      }
-    });
-    d.render(true);
+      });
+      d.render(true);*/
+    } else {
+      item.sheet.render(true);
+    }
+  }
 
-  } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == false) {
-    let d = new Dialog({
-      title: item.name,
-      content: `
-      <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
-      <br/>
-      `,
-      buttons: {
-        one: {
-          label: "Voir l'objet",
-          callback: (html) => {
-            item.sheet.render(true);
-          }
-        },
-        two: {
-          label: "Utiliser l'objet",
-          callback: (html) => {
-            if (item.data.data.equipe == false || item.data.data.enmain == false) {
-              return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
-            } else {
-              if (item.data.data.prd == "-") {
-                var prd = "";
-                var prdname = "";
-              } else {
-                var prd = "@prd+" + item.data.data.prd;
-                var prdname = "Parade";
-              }
-              if (item.data.data.formula == "-" || item.data.data.formula == "") {
-                var attaque = "";
-                var attname = "";
-                var degat = "";
-                var degatname = "";
-              } else {
-                var attname = "Attaque";
-                var degatname = "Dégâts";
-                if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
-                var degat = item.data.data.formula;
-                if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
-                  degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
-                };
-                if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
-                  degat = degat + "-1"
-                };
-                if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
-                  degat = degat + actor.data.data.attributes.lancerarme.degat
-                };
-              }
-
-              var dataset = { "actor": actor, "dice1": "d20", "name1": attname, "diff1": attaque, "dice2": degat, "name2": degatname, "diff2": "", "dice3": "d20", "name3": prdname, "diff3": prd, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
-              var currentTarget = { "dataset": dataset };
-              var event = { "currentTarget": currentTarget };
-              onRollCustomSpell(event)
-            }
-          }
+  if (param==0){
+    //sort
+    if (item.type == "sort") {
+      if (item.data.data.epreuvecustom == true) {
+        var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5 };
+        var currentTarget = { "dataset": dataset };
+        var event = { "currentTarget": currentTarget };
+        onRollCustomSpell(event)
+      } else {
+        if (item.data.data.degat == "") {
+          var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": "", "name2": "", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+        } else {
+          var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": item.data.data.degat, "name2": "Dégâts", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
         }
+        var currentTarget = { "dataset": dataset };
+        var event = { "currentTarget": currentTarget };
+        onRollCustomSpell(event)
       }
-    });
-    d.render(true);
+    //arme sans épreuve custom
+    } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == false) {
+        if (item.data.data.equipe == false || item.data.data.enmain == false) {
+          return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
+        } else {
+          if (item.data.data.prd == "-") {
+            var prd = "";
+            var prdname = "";
+          } else {
+            var prd = "@prd+" + item.data.data.prd;
+            var prdname = "Parade";
+          }
+          if (item.data.data.formula == "-" || item.data.data.formula == "") {
+            var attaque = "";
+            var attname = "";
+            var degat = "";
+            var degatname = "";
+          } else {
+            var attname = "Attaque";
+            var degatname = "Dégâts";
+            if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
+            var degat = item.data.data.formula;
+            if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
+              degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
+            };
+            if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
+              degat = degat + "-1"
+            };
+            if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
+              degat = degat + actor.data.data.attributes.lancerarme.degat
+            };
+          }
 
-  } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == true) {
-    let d = new Dialog({
-      title: item.name,
-      content: `
-      <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
-      <br/>
-      `,
-      buttons: {
-        one: {
-          label: "Voir l'objet",
-          callback: (html) => {
-            item.sheet.render(true);
-          }
-        },
-        two: {
-          label: "Utiliser l'objet",
-          callback: (html) => {
-            if (item.data.data.equipe == false || item.data.data.enmain == false) {
-              return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
-            } else {
-              if (item.data.data.prd == "-") {
-                var prd = "";
-                var prdname = "";
-              } else {
-                var prd = "@prd+" + item.data.data.prd;
-                var prdname = "Parade";
-              }
-              if (item.data.data.formula == "-" || item.data.data.formula == "") {
-                var attaque = "";
-                var attname = "";
-                var degat = "";
-                var degatname = "";
-              } else {
-                var attname = "Attaque";
-                var degatname = "Dégâts";
-                if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
-                var degat = item.data.data.formula;
-                if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
-                  degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
-                };
-                if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
-                  degat = degat + "-1"
-                };
-                if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
-                  degat = degat + actor.data.data.attributes.lancerarme.degat
-                };
-              }
-
-              var dataset = { "actor": actor, "dice1": "d20", "name1": attname, "diff1": attaque, "dice2": degat, "name2": degatname, "diff2": "", "dice3": "d20", "name3": prdname, "diff3": prd, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
-              var currentTarget = { "dataset": dataset };
-              var event = { "currentTarget": currentTarget };
-              onRollCustomSpell(event)
-            }
-          }
-        },
-        three: {
-          label: "Épreuve(s) custom",
-          callback: (html) => {
-            if (item.data.data.equipe == false || item.data.data.enmain == false) {
-              return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
-            }
-            var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5 };
-            var currentTarget = { "dataset": dataset };
-            var event = { "currentTarget": currentTarget };
-            onRollCustomSpell(event)
-          }
-        },
-      }
-    });
-    d.render(true);
-  } else if (item.type == "arme" && item.data.data.epreuvecustom == true) {
-    let d = new Dialog({
-      title: item.name,
-      content: `
-      <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
-      <br/>
-      `,
-      buttons: {
-        one: {
-          label: "Voir l'objet",
-          callback: (html) => {
-            item.sheet.render(true);
-          }
-        },
-        three: {
-          label: "Épreuve(s)",
-          callback: (html) => {
-            if (item.data.data.equipe == false || item.data.data.enmain == false) {
-              return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
-            }
-            var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5, "dice6": item.data.data.jet6, "name6": item.data.data.name6, "diff6": item.data.data.epreuve6, "dice7": item.data.data.jet7, "name7": item.data.data.name7, "diff7": item.data.data.epreuve7 };
-            var currentTarget = { "dataset": dataset };
-            var event = { "currentTarget": currentTarget };
-            onRollCustomSpell(event)
-          }
-        },
-      }
-    });
-    d.render(true);
-  } else if (item.type == "coup" && ((item.data.data.epreuve != "" && item.data.data.bourrepif == false) || item.data.data.bourrepif == true)) {
-    let d = new Dialog({
-      title: item.name,
-      content: `
-      <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
-      <br/>
-      `,
-      buttons: {
-        one: {
-          label: "Voir l'objet",
-          callback: (html) => {
-            item.sheet.render(true);
-          }
-        },
-        two: {
-          label: "Utiliser l'objet",
-          callback: (html) => {
-            if (item.data.data.bourrepif == false) {
-              var name1 = "";
-              var name2 = "";
-              var diff1 = "";
-              var dice1 = "";
-              var dice2 = "";
-              if (item.data.data.epreuve.substring(0, 1) != "*") {
-                name1 = "Epreuve"
-                diff1 = item.data.data.epreuve
-                dice1 = "d20"
-              }
-              if (item.data.data.degat.substring(0, 1) != "*") {
-                name2 = "Dégâts"
-                dice2 = item.data.data.degat
-              }
-              var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
-              var currentTarget = { "dataset": dataset };
-              var event = { "currentTarget": currentTarget };
-              onRollCustomSpell(event)
-            } else {
-              var name1 = "";
-              var name2 = "";
-              var name3 = "";
-              var diff1 = "";
-              var diff3 = "";
-              var dice1 = "";
-              var dice2 = "";
-              var dice3 = "";
-              if (item.data.data.epreuve != "" && item.data.data.epreuve != "-") {
-                name1 = "Epreuve d'attaque";
-                diff1 = item.data.data.epreuve;
-                dice1 = "d20";
-              }
-              if (item.data.data.degat != "" && item.data.data.degat != "-") {
-                name2 = "Dégâts";
-                dice2 = item.data.data.degat;
-              }
-              if (item.data.data.attaque != "" && item.data.data.attaque != "-") {
-                name3 = "Epreuve spéciale";
-                diff3 = item.data.data.attaque;
-                dice3 = "d20";
-              }
-              var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": dice3, "name3": name3, "diff3": diff3, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
-              var currentTarget = { "dataset": dataset };
-              var event = { "currentTarget": currentTarget };
-              onRollCustomSpell(event)
-            }
-          }
+          var dataset = { "actor": actor, "dice1": "d20", "name1": attname, "diff1": attaque, "dice2": degat, "name2": degatname, "diff2": "", "dice3": "d20", "name3": prdname, "diff3": prd, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+          var currentTarget = { "dataset": dataset };
+          var event = { "currentTarget": currentTarget };
+          onRollCustomSpell(event)
         }
-      }
-    });
-    d.render(true);
-  } else {
-    item.sheet.render(true);
+    //arme avec épreuve custom
+    } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == true) {
+      let d = new Dialog({
+        title: item.name,
+        content: `
+        <label style="font-size: 15px;">Que souhaitez vous faire ?</label>
+        <br/>
+        `,
+        buttons: {
+          two: {
+            label: "Utiliser l'objet",
+            callback: (html) => {
+              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+                return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
+              } else {
+                if (item.data.data.prd == "-") {
+                  var prd = "";
+                  var prdname = "";
+                } else {
+                  var prd = "@prd+" + item.data.data.prd;
+                  var prdname = "Parade";
+                }
+                if (item.data.data.formula == "-" || item.data.data.formula == "") {
+                  var attaque = "";
+                  var attname = "";
+                  var degat = "";
+                  var degatname = "";
+                } else {
+                  var attname = "Attaque";
+                  var degatname = "Dégâts";
+                  if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
+                  var degat = item.data.data.formula;
+                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
+                    degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
+                  };
+                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
+                    degat = degat + "-1"
+                  };
+                  if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
+                    degat = degat + actor.data.data.attributes.lancerarme.degat
+                  };
+                }
+
+                var dataset = { "actor": actor, "dice1": "d20", "name1": attname, "diff1": attaque, "dice2": degat, "name2": degatname, "diff2": "", "dice3": "d20", "name3": prdname, "diff3": prd, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+                var currentTarget = { "dataset": dataset };
+                var event = { "currentTarget": currentTarget };
+                onRollCustomSpell(event)
+              }
+            }
+          },
+          three: {
+            label: "Épreuve(s) custom",
+            callback: (html) => {
+              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+                return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
+              }
+              var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5 };
+              var currentTarget = { "dataset": dataset };
+              var event = { "currentTarget": currentTarget };
+              onRollCustomSpell(event)
+            }
+          },
+        }
+      });
+      d.render(true);
+    //arme sans dégâts, juste avec épreuve custom
+    } else if (item.type == "arme" && item.data.data.epreuvecustom == true) {
+        if (item.data.data.equipe == false || item.data.data.enmain == false) {
+          return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
+        }
+        var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5, "dice6": item.data.data.jet6, "name6": item.data.data.name6, "diff6": item.data.data.epreuve6, "dice7": item.data.data.jet7, "name7": item.data.data.name7, "diff7": item.data.data.epreuve7 };
+        var currentTarget = { "dataset": dataset };
+        var event = { "currentTarget": currentTarget };
+        onRollCustomSpell(event)
+    //coup spécial, désactivé pour le moment
+    /*
+    } else if (item.type == "coup" && ((item.data.data.epreuve != "" && item.data.data.bourrepif == false) || item.data.data.bourrepif == true)) {
+        if (item.data.data.bourrepif == false) {
+          var name1 = "";
+          var name2 = "";
+          var diff1 = "";
+          var dice1 = "";
+          var dice2 = "";
+          if (item.data.data.epreuve.substring(0, 1) != "*") {
+            name1 = "Epreuve"
+            diff1 = item.data.data.epreuve
+            dice1 = "d20"
+          }
+          if (item.data.data.degat.substring(0, 1) != "*") {
+            name2 = "Dégâts"
+            dice2 = item.data.data.degat
+          }
+          var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+          var currentTarget = { "dataset": dataset };
+          var event = { "currentTarget": currentTarget };
+          onRollCustomSpell(event)
+        } else {
+          var name1 = "";
+          var name2 = "";
+          var name3 = "";
+          var diff1 = "";
+          var diff3 = "";
+          var dice1 = "";
+          var dice2 = "";
+          var dice3 = "";
+          if (item.data.data.epreuve != "" && item.data.data.epreuve != "-") {
+            name1 = "Epreuve d'attaque";
+            diff1 = item.data.data.epreuve;
+            dice1 = "d20";
+          }
+          if (item.data.data.degat != "" && item.data.data.degat != "-") {
+            name2 = "Dégâts";
+            dice2 = item.data.data.degat;
+          }
+          if (item.data.data.attaque != "" && item.data.data.attaque != "-") {
+            name3 = "Epreuve spéciale";
+            diff3 = item.data.data.attaque;
+            dice3 = "d20";
+          }
+          var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": dice3, "name3": name3, "diff3": diff3, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+          var currentTarget = { "dataset": dataset };
+          var event = { "currentTarget": currentTarget };
+          onRollCustomSpell(event)
+        }*/
+    } else {
+      item.sheet.render(true);
+    }
   }
 }
 

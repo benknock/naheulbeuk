@@ -2,7 +2,7 @@
   "name": "naheulbeuk",
   "title": "Naheulbeuk",
   "description": "The Naheulbeuk system for FoundryVTT!",
-  "version": "1.1.2.2",
+  "version": "1.1.2.3",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "9",
   "author": "Dipes",
@@ -19,14 +19,6 @@
       "label": "Équipements : accessoires magiques",
       "system": "naheulbeuk",
       "path": "./packs/accessoires-magiques.db",
-      "type": "Item",
-      "tag": "item"
-    },
-    {
-      "name": "all",
-      "label": "Équipements : global",
-      "system": "naheulbeuk",
-      "path": "./packs/all.db",
       "type": "Item",
       "tag": "item"
     },
@@ -549,6 +541,6 @@
   "secondaryTokenAttribute": "power",
   "url": "https://github.com/Dipess/naheulbeuk",
   "manifest": "https://github.com/Dipess/naheulbeuk/releases/latest/download/system.json",
-  "download": "https://github.com/Dipess/naheulbeuk/releases/download/1.1.2.2/system.zip",
+  "download": "https://github.com/Dipess/naheulbeuk/releases/download/1.1.2.3/system.zip",
   "license": "LICENSE.txt"
 }

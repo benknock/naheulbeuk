@@ -230,7 +230,6 @@ Handlebars.registerHelper("read_actor", function (value) {
 });
 
 Handlebars.registerHelper("ingeniositeMalus", function (difficulte,malus) {
-  console.log(actor_data)
   var actor_ad = actor_data.data.root.data.abilities.ad.value+actor_data.data.root.data.abilities.ad.bonus
   var actor_int = actor_data.data.root.data.abilities.int.value+actor_data.data.root.data.abilities.int.bonus
   var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)

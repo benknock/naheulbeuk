@@ -37,7 +37,7 @@
       <div class="flexrow flex-group-center">
         Charge de la bourse &nbsp;&nbsp;&nbsp;&nbsp;
         <input type="text" name="data.attributes.bourse.value"
-          value='{{ arrondi (math (math (math (math data.attributes.pa.value "+" data.attributes.po.value) "+" (math data.attributes.lb.value "*" 5)) "+" (math data.attributes.lt.value "*" 3)) "*" 0.1)}}'
+          value='{{ arrondi (math (math (math (math data.attributes.pa.value "+" data.attributes.po.value) "+" (math data.attributes.lb.value "*" 50)) "+" (math data.attributes.lt.value "*" 30)) "*" 0.01)}}'
           data-dtype="Number" readonly />&nbsp;kg
         {{#each sacs as |item id|}}
         {{#if (equals item.data.type "bourse")}}
@@ -279,6 +279,7 @@
   <h2>
     <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Equipement et Trucs</span></div>
   </h2>
+  {{save_actor}}
   <li class="hidespeciaux item flexrow items-header">Divers</li>
   {{#if (equals data.attributes.hidespeciaux true)}}
   <li class="item flexrow">
@@ -562,7 +563,6 @@
       <a class="item-control item-delete" title="Delete Item"></a>
     </div>
   </li>
-  {{save_actor}}
   {{#each trucs as |item id|}}
   {{#if (equals item.data.categorie "Ingrédients")}}
   <li class="item flexrow" data-item-id="{{item._id}}">

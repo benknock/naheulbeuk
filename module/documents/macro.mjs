@@ -100,12 +100,26 @@ export class Macros {
       const lancer = actor.data.data.attributes.lancerarme.value + actor.data.data.attributes.lancerarme.bonus + ad;
       const bonusint = Math.max(0, (actor.data.data.abilities.int.value + actor.data.data.abilities.int.bonus) - 12)
       var lancerdegat = actor.data.data.attributes.lancerarme.degat
-      if (lancerdegat==""){lancerdegat=0}
+      if (lancerdegat == "") { lancerdegat = 0 }
       expr = expr.replace(/@att-distance/g, lancer);
       expr = expr.replace(/@bonusint/g, bonusint);
       expr = expr.replace(/@degat-distance/g, lancerdegat);
     }
     const pr = actor.data.data.attributes.pr.value + actor.data.data.attributes.pr.bonus + actor.data.data.attributes.pr.bonusSsEncombrement + actor.data.data.attributes.pr.trucdemauviette;
+    var malusmvtpr
+    if (pr > 7) {
+      malusmvtpr = 20
+    } else if (pr > 6) {
+      malusmvtpr = 6
+    } else if (pr > 5){
+      malusmvtpr = 5
+    } else if (pr > 4){
+      malusmvtpr = 4
+    } else if (pr > 2){
+      malusmvtpr = 2
+    } else {
+      malusmvtpr = 0
+    }
     const prm = actor.data.data.attributes.prm.value + actor.data.data.attributes.prm.bonus;
     const cou = actor.data.data.abilities.cou.value + actor.data.data.abilities.cou.bonus;
     const int = actor.data.data.abilities.int.value + actor.data.data.abilities.int.bonus;
@@ -118,7 +132,7 @@ export class Macros {
     const mpsy = actor.data.data.attributes.mpsy.value;
     const rm = actor.data.data.attributes.rm.value + actor.data.data.attributes.rm.bonus;
     var esq = actor.data.data.attributes.esq.value + actor.data.data.attributes.esq.bonus;
-    if (actor.data.type == "npc") {esq=esq+actor.data.data.abilities.ad.bonus}
+    if (actor.data.type == "npc") { esq = esq + actor.data.data.abilities.ad.bonus }
     const lvl = actor.data.data.attributes.level.value;
     var bonusfo = "";
     if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
@@ -127,12 +141,13 @@ export class Macros {
     if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
       bonusfo = "-1"
     };
-    let flagTirerCorrectement=5
-    for (let actoritem of actor.items){
-      if (actoritem.data.name == "TIRER CORRECTEMENT" ) {
-        flagTirerCorrectement=1
+    let flagTirerCorrectement = 5
+    for (let actoritem of actor.items) {
+      if (actoritem.data.name == "TIRER CORRECTEMENT") {
+        flagTirerCorrectement = 1
       }
     }
+    expr = expr.replace(/@malus-mvt-pr/g, malusmvtpr);
     expr = expr.replace(/épreuve:/g, "");
     expr = expr.replace(/@armefeu/g, flagTirerCorrectement);
     expr = expr.replace(/cible:/g, "");
@@ -1339,11 +1354,11 @@ export class Macros {
     d.render(true);
   }
 
-  static async magic_search(){
+  static async magic_search() {
     let all = all_items_search;
     var raw_arr = all.split("\n");
     var arr = []
-    for (let entry of raw_arr){
+    for (let entry of raw_arr) {
       arr.push(JSON.parse(entry))
     }
     const myDialogOptions = {
@@ -1442,24 +1457,24 @@ export class Macros {
             let flag1 = true
             for (let valentry of vals) {
               let valss = valentry.split("||");
-              if (valss.length==1){
-                let flag2=false
-                if(entry.name.toLowerCase().indexOf(valentry.trim()) !== -1){flag2=true}
+              if (valss.length == 1) {
+                let flag2 = false
+                if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
                 for (let e in entry.data) {
-                  if((""+entry.data[e]).toLowerCase().indexOf(valentry.trim()) !== -1){flag2=true}
+                  if (("" + entry.data[e]).toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
                 }
-                if (flag2==false){flag1=false}
+                if (flag2 == false) { flag1 = false }
               } else {
                 let flag3 = false
-                for (let valssentry of valss){
-                  let flag2=false
-                  if(entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1){flag2=true}
+                for (let valssentry of valss) {
+                  let flag2 = false
+                  if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
                   for (let e in entry.data) {
-                    if((""+entry.data[e]).toLowerCase().indexOf(valssentry.trim()) !== -1){flag2=true}
+                    if (("" + entry.data[e]).toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
                   }
-                  if (flag2==true){flag3=true}
+                  if (flag2 == true) { flag3 = true }
                 }
-                if (flag3==false){flag1=false}
+                if (flag3 == false) { flag1 = false }
               }
             }
             return flag1
@@ -1467,7 +1482,7 @@ export class Macros {
         } else { result = arr }
 
         //Recherche type
-        var typeObj=[]
+        var typeObj = []
         for (let env = 1; env < 15; env++) {
           if (document.getElementById("type" + env).checked) {
             typeObj.push(document.getElementById("type" + env).name)
@@ -1475,28 +1490,28 @@ export class Macros {
         }
         if (typeObj.length != 0) {
           for (let r of result) {
-            for (let typeO of typeObj){
-              if (r.type==typeO) {result2.push(r)}
+            for (let typeO of typeObj) {
+              if (r.type == typeO) { result2.push(r) }
             }
           }
         } else {
           result2 = result
         }
-        result=[]
+        result = []
 
         //Recherche prix
-        if (pomin!="" || pomax!=""){
+        if (pomin != "" || pomax != "") {
           for (let r of result2) {
-            let flag1=false
-            let flag2=false
-            if (r.data.prix!=undefined){
-              if (pomin!=""){
-                if (r.data.prix >= parseFloat(pomin)){flag1=true}
-              } else {flag1=true}
-              if (pomax!=""){
-                if (r.data.prix <= parseFloat(pomax)){flag2=true}
-              } else {flag2=true}
-              if (flag1==true && flag2==true){result.push(r)}
+            let flag1 = false
+            let flag2 = false
+            if (r.data.prix != undefined) {
+              if (pomin != "") {
+                if (r.data.prix >= parseFloat(pomin)) { flag1 = true }
+              } else { flag1 = true }
+              if (pomax != "") {
+                if (r.data.prix <= parseFloat(pomax)) { flag2 = true }
+              } else { flag2 = true }
+              if (flag1 == true && flag2 == true) { result.push(r) }
             }
           }
         } else {
@@ -1505,7 +1520,7 @@ export class Macros {
         result2 = []
 
         //Recherche catégorie
-        var catObj=[]
+        var catObj = []
         for (let env = 1; env < 11; env++) {
           if (document.getElementById("cat" + env).checked) {
             catObj.push(document.getElementById("cat" + env).name)
@@ -1513,91 +1528,233 @@ export class Macros {
         }
         if (catObj.length != 0) {
           for (let r of result) {
-            for (let catO of catObj){
-              if (r.data.categorie==catO) {result2.push(r)}
+            for (let catO of catObj) {
+              if (r.data.categorie == catO) { result2.push(r) }
             }
           }
         } else {
           result2 = result
         }
-        result=[]
+        result = []
 
         //Recherche arme/armure enchantée
-        let search_arme_armure=false
+        let search_arme_armure = false
         for (let env = 1; env < 11; env++) {
-          if (document.getElementById("ench" +env).checked) {search_arme_armure=true}
+          if (document.getElementById("ench" + env).checked) { search_arme_armure = true }
         }
-        if (search_arme_armure==true) {
+        if (search_arme_armure == true) {
           for (let r of result2) {
             let flag = true
-            if (r.data.enchantement==undefined) {flag = false}
-            if (r.data.enchantement==false && document.getElementById("ench" +1).checked) { flag = false}
-            if (r.data.relique==false && document.getElementById("ench" +2).checked) { flag=false}
-            if ((r.data.armefeu==undefined || r.data.armefeu==false) && document.getElementById("ench" +3).checked) { flag=false}
-            if ((r.data.prbouclier==undefined || r.data.prbouclier==false) && document.getElementById("ench" +4).checked) { flag=false}
-            if ((r.data.prtete==undefined || r.data.prtete==false) && document.getElementById("ench" +5).checked) { flag=false}
-            if ((r.data.prbras==undefined || r.data.prbras==false) && document.getElementById("ench" +6).checked) { flag=false}
-            if ((r.data.prtorse==undefined || r.data.prtorse==false) && document.getElementById("ench" +7).checked) { flag=false}
-            if ((r.data.prmains==undefined || r.data.prmains==false) && document.getElementById("ench" +8).checked) { flag=false}
-            if ((r.data.prjambes==undefined || r.data.prjambes==false) && document.getElementById("ench" +9).checked) { flag=false}
-            if ((r.data.prpieds==undefined || r.data.prpieds==false) && document.getElementById("ench" +10).checked) { flag=false}
-            if (flag==true){result.push(r)}
+            if (r.data.enchantement == undefined) { flag = false }
+            if (r.data.enchantement == false && document.getElementById("ench" + 1).checked) { flag = false }
+            if (r.data.relique == false && document.getElementById("ench" + 2).checked) { flag = false }
+            if ((r.data.armefeu == undefined || r.data.armefeu == false) && document.getElementById("ench" + 3).checked) { flag = false }
+            if ((r.data.prbouclier == undefined || r.data.prbouclier == false) && document.getElementById("ench" + 4).checked) { flag = false }
+            if ((r.data.prtete == undefined || r.data.prtete == false) && document.getElementById("ench" + 5).checked) { flag = false }
+            if ((r.data.prbras == undefined || r.data.prbras == false) && document.getElementById("ench" + 6).checked) { flag = false }
+            if ((r.data.prtorse == undefined || r.data.prtorse == false) && document.getElementById("ench" + 7).checked) { flag = false }
+            if ((r.data.prmains == undefined || r.data.prmains == false) && document.getElementById("ench" + 8).checked) { flag = false }
+            if ((r.data.prjambes == undefined || r.data.prjambes == false) && document.getElementById("ench" + 9).checked) { flag = false }
+            if ((r.data.prpieds == undefined || r.data.prpieds == false) && document.getElementById("ench" + 10).checked) { flag = false }
+            if (flag == true) { result.push(r) }
           }
         } else {
           result = result2
         }
-        result2=[]
+        result2 = []
 
         //Recherche dans un compendium
-        if (compe!=''){
+        if (compe != '') {
           for (let r of result) {
             let compendium = game.packs.find(p => p.metadata.name === r.compendium);
-            if (compendium.metadata.label.toLowerCase().indexOf(compe) !== -1){result2.push(r)}
+            if (compendium.metadata.label.toLowerCase().indexOf(compe) !== -1) { result2.push(r) }
           }
         } else {
-          result2=result
+          result2 = result
         }
-        var magasinObj="vide"
-        if (magasin!=""){
-          for (const journal of game.journal){
-            if (journal.data.name==magasin){
-              magasinObj=journal
+        result = []
+
+        //classe par prix
+        let result_sans_prix = []
+        let result_avec_prix = []
+        for (let r of result2) {
+          if (r.data.prix == undefined) {
+            result_sans_prix.push(r)
+          } else {
+            result_avec_prix.push(r)
+          }
+        }
+        while (result_avec_prix.length != 0) {
+          let i = 0
+          let j = 0
+          let minprix = result_avec_prix[0]
+          for (let r of result_avec_prix) {
+            if (r.data.prix < minprix.data.prix) {
+              minprix = r
+              j = i
+            }
+            i++
+          }
+          result.push(minprix)
+          result_avec_prix.splice(j, 1)
+        }
+        for (let r of result_sans_prix) { result.push(r) }
+
+
+        var magasinObj = "vide"
+        if (magasin != "") {
+          for (const journal of game.journal) {
+            if (journal.data.name == magasin) {
+              magasinObj = journal
             }
           }
         }
-        for (let r of result2) {
+
+        for (let r of result) {
           let compendium = game.packs.find(p => p.metadata.name === r.compendium);
-          var prix=""
-          var prix2=""
-          if (r.data.prix!=undefined && r.data.prix.length==undefined){
-            prix=r.data.prix+" PO - "
-            prix2=r.data.prix
+          var prix = ""
+          var prix2 = ""
+          if (r.data.prix != undefined && r.data.prix.length == undefined) {
+            prix = r.data.prix + " PO - "
+            prix2 = r.data.prix
           }
-          if (magasinObj=="vide"){
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + compendium.metadata.label+'</li>';
+          if (magasinObj == "vide") {
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + compendium.metadata.label + '</li>';
           } else {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i></a><input style="width: 280px;"id="'+r._id+r._id+'" type="text" value="'+r.name+'" />&nbsp;-&nbsp;<input style="width: 50px;"id="'+r._id+'" type="text" value="'+prix2+'" />&nbsp;PO&nbsp;-&nbsp;' + compendium.metadata.label+'&nbsp;&nbsp;<button style="width: 140px;" class="magasin" name="'+r.name+'" type="button">Ajouter au magasin</button></li>';
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i></a><input style="width: 280px;"id="' + r._id + r._id + '" type="text" value="' + r.name + '" />&nbsp;-&nbsp;<input style="width: 50px;"id="' + r._id + '" type="text" value="' + prix2 + '" />&nbsp;PO&nbsp;-&nbsp;' + compendium.metadata.label + '&nbsp;&nbsp;<button style="width: 140px;" class="magasin" name="' + r.name + '" type="button">Ajouter au magasin</button></li>';
           }
         }
         res[0].innerHTML = '<ul>' + list + '</ul>';
         document.getElementById("app-" + d.appId).style.height = "auto"
         $("[class=magasin]").click(ev2 => {
-          for (let r of result2){
-            if (r.name==ev2.currentTarget.name){
-              let prixObj=$('[id='+r._id+']').val()
-              let nameObj=$('[id='+r._id+r._id+']').val()
+          for (let r of result2) {
+            if (r.name == ev2.currentTarget.name) {
+              let prixObj = $('[id=' + r._id + ']').val()
+              let nameObj = $('[id=' + r._id + r._id + ']').val()
               let content = magasinObj.data.content
-              let content2=content+'<p>Article : '+nameObj
-              if (prixObj!=""){
-                content2=content2+" - vendu pour "+prixObj+" PO"
+              let content2 = content + '<p>Article : ' + nameObj
+              if (prixObj != "") {
+                content2 = content2 + " - vendu pour " + prixObj + " PO"
               }
-              content2=content2+'</p>\n<section class="secret">\n<p><a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a></p>\n</section>'
-              magasinObj.update({"content":content2})
+              content2 = content2 + '</p>\n<section class="secret">\n<p><a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a></p>\n</section>'
+              magasinObj.update({ "content": content2 })
             }
           }
         });
       })
     });
+  }
+
+  static async competence_display() {
+    var content = ''
+    var competences = []
+    const source = game.naheulbeuk.macros.getSpeakersActor();
+    for (let item of source.data.items) {
+      if (item.type == "competence") {
+        competences.push(item)
+      }
+    }
+    let i = 0
+    for (let competence of competences) {
+      if (competence.data.data.diff != "-") {
+        var expr = game.naheulbeuk.macros.replaceAttr(competence.data.data.diff, source)
+        expr = expr.replace(/ceil/g, "Math.ceil");
+        expr = expr.replace(/max/g, "Math.max");
+        expr = eval(expr)
+      } else {
+        expr = "-"
+      }
+      var affichage = '<div style="display:flex"><div style="flex:1.5"><label class="competence" id=' + i + '><label class="cliquable">' + competence.data.name + '</label></label></div>' + '<div style="flex:0.5"><label class="cliquable"><label class="competencejet" name="' + competence.data.name + '">' + expr + '</label></label></div></div>'
+      content = content + affichage
+      i = i + 1
+    }
+    content = content + '<br/>'
+    const myDialogOptions = {
+      width: 300
+    };
+    let d = new Dialog({
+      title: "Compétences",
+      content: content,
+      buttons: {
+        one: {
+          label: "Fermer",
+          callback: (html) => {
+          }
+        }
+      }
+    }, myDialogOptions);
+    d.render(true)
+    $(document).ready(function () {
+      $("[class=competence]").click(ev => {
+        let id = ev.currentTarget.id
+        competences[id].sheet.render(true)
+      })
+      $("[class=competencejet]").click(ev => {
+        var diffcomp = ev.currentTarget.childNodes[0].data
+        if (diffcomp!="-") {
+          var namecomp = ev.currentTarget.attributes.name.value;
+          let e = new Dialog({
+            title: namecomp,
+            content: `
+            <label style="font-size: 15px;">Formule :</label>
+            <input style="font-size: 15px;" type="text" name="inputFormule" value="d20">
+            <br/><br/>
+            <label style="font-size: 15px;">Difficulté :</label>
+            <input style="font-size: 15px;" type="text" name="inputDiff" value="`+ diffcomp + `"></li>
+            <br/><br/>
+            `,
+            buttons: {
+              one: {
+                label: "Lancer",
+                callback: (html) => {
+                  let dice = html.find('input[name="inputFormule"').val();
+                  let diff = html.find('input[name="inputDiff"').val();
+                  const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
+                  if (dice != "") {
+                    let r = new Roll(dice);
+                    //await r.roll({"async": true});
+                    r.roll({ "async": true }).then(r => {
+                      var result = 0;
+                      var tplData = {};
+                      var reussite = "Réussite !   ";
+                      if (diff == "") {
+                        tplData = {
+                          diff: "",
+                          name: namecomp
+                        }
+                        renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
+                          r.toMessage({
+                            user: game.user.id,
+                            flavor: msgFlavor,
+                          });
+                        });
+                      } else {
+                        diff = new Roll(diff);
+                        diff.roll({ "async": true }).then(diff => {
+                          result = Math.abs(diff.total - r.total);
+                          if (r.total > diff.total) { reussite = "Echec !   " };
+                          tplData = {
+                            diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                            name: namecomp
+                          };
+                          renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
+                            r.toMessage({
+                              user: game.user.id,
+                              flavor: msgFlavor,
+                            });
+                          });
+                        });
+                      };
+                    });
+                  }
+                }
+              }
+            }
+          });
+          e.render(true);
+        }
+      })
+    })
   }
 }
 

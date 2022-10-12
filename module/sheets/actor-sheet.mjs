@@ -78,11 +78,24 @@ export class NaheulbeukActorSheet extends ActorSheet {
    *
    * @return {undefined}
    */
-  _prepareCharacterData(context, actor) {
+  async _prepareCharacterData(context, actor) {
     // Handle ability scores.
     for (let [k, v] of Object.entries(context.data.abilities)) {
       v.label = game.i18n.localize(CONFIG.NAHEULBEUK.abilities[k]) ?? k;
     }
+
+    //PCH check bonus malus AD
+    
+    if (document.getElementById("bonus_malus_ad")==null) {
+      await this._bonus_malus_ad()
+    }
+
+    if (document.getElementById("level_up")==null) {
+      if (this.actor.data.data.attributes.level.value!=this._level()) {
+        await this._level_up()
+      }
+    }
+
     //PCH maj actor (PJ)
     if (actor.data.type == "character") {
       const actorData = {
@@ -287,7 +300,13 @@ export class NaheulbeukActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-
+    //fenetre bonus ad et level up au premier plan
+    if(document.getElementById("bonus_malus_ad")!=null){
+      document.getElementById("bonus_malus_ad").offsetParent.style["z-index"]=document.getElementById("bonus_malus_ad").offsetParent.style["z-index"]+1
+    }
+    if(document.getElementById("level_up")!=null){
+      document.getElementById("level_up").offsetParent.style["z-index"]=document.getElementById("level_up").offsetParent.style["z-index"]+1
+    }
     //PCH - sur tag item-equipe, on équipe l'objet
     html.find('.item-equipe').click(ev => this._onItemEquipe(ev, this.actor));
 
@@ -310,6 +329,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       };
       this.actor.update(actorData);
     });
+
     //PCH hide catégorie d'inventaire
     html.find('.hidefioles').click(ev => {
       const actorData = {
@@ -1849,6 +1869,176 @@ export class NaheulbeukActorSheet extends ActorSheet {
       buttons: {
       }
     }, myDialogOptions);
+    d.render(true);
+  }
+
+  //PCH calcule bonus/malus AD
+  _bonus_malus_ad() {
+    let ad_value = this.actor.data.data.abilities.ad.value + this.actor.data.data.abilities.ad.bonus
+    let bonus_malus_AD = this.actor.data.data.abilities.ad.bonus_malus_AD
+    let d
+    if ((ad_value<9) && (bonus_malus_AD==0)){
+      d = new Dialog({
+        title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
+        content: `
+        <form>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer en dessous de 9, mets -1 en parade ou en attaque.</label>
+          <br/><br/>
+        </form>
+        `,
+        buttons: {
+          one: {
+            label: "C'est fait",
+            callback: (html) => {
+              const actorData = {
+                "data.abilities.ad.bonus_malus_AD": -1
+              };
+              this.actor.update(actorData);
+            }
+          }
+        }
+      });
+      d.render(true);
+    } else if ((ad_value>12) && (bonus_malus_AD==0)){
+      d = new Dialog({
+        title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
+        content: `
+        <form>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 11, mets +1 en parade ou en attaque.</label>
+          <br/><br/>
+        </form>
+        `,
+        buttons: {
+          one: {
+            label: "C'est fait",
+            callback: (html) => {
+              const actorData = {
+                "data.abilities.ad.bonus_malus_AD": 1
+              };
+              this.actor.update(actorData);
+            }
+          }
+        }
+      });
+      d.render(true);
+    } else if ((ad_value>12) && (bonus_malus_AD==-1)){
+      d = new Dialog({
+        title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
+        content: `
+        <form>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 11, enlève le malus de -1 en attaque ou parade que tu avais mis, puis mets +1 en parade ou en attaque.</label>
+          <br/><br/>
+        </form>
+        `,
+        buttons: {
+          one: {
+            label: "C'est fait",
+            callback: (html) => {
+              const actorData = {
+                "data.abilities.ad.bonus_malus_AD": 1
+              };
+              this.actor.update(actorData);
+            }
+          }
+        }
+      });
+      d.render(true);
+    } else if ((ad_value<9) && (bonus_malus_AD==1)){
+      d = new Dialog({
+        title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
+        content: `
+        <form>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessous de 9, enlève le bonus de +1 en attaque ou parade que tu avais mis, puis mets -1 en parade ou en attaque.</label>
+          <br/><br/>
+        </form>
+        `,
+        buttons: {
+          one: {
+            label: "C'est fait",
+            callback: (html) => {
+              const actorData = {
+                "data.abilities.ad.bonus_malus_AD": -1
+              };
+              this.actor.update(actorData);
+            }
+          }
+        }
+      });
+      d.render(true);
+    } else if ((ad_value>8 && ad_value<13) && (bonus_malus_AD==-1)){
+      d = new Dialog({
+        title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
+        content: `
+        <form>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 8, enlève le malus de -1 en attaque ou parade que tu avais mis.</label>
+          <br/><br/>
+        </form>
+        `,
+        buttons: {
+          one: {
+            label: "C'est fait",
+            callback: (html) => {
+              const actorData = {
+                "data.abilities.ad.bonus_malus_AD": 0
+              };
+              this.actor.update(actorData);
+            }
+          }
+        }
+      });
+      d.render(true);
+    } else if ((ad_value>8 && ad_value<13) && (bonus_malus_AD==1)){
+      d = new Dialog({
+        title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
+        content: `
+        <form>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessous de 12, enlève le bonus de +1 en attaque ou parade que tu avais mis.</label>
+          <br/><br/>
+        </form>
+        `,
+        buttons: {
+          one: {
+            label: "C'est fait",
+            callback: (html) => {
+              const actorData = {
+                "data.abilities.ad.bonus_malus_AD": 0
+              };
+              this.actor.update(actorData);
+            }
+          }
+        }
+      });
+      d.render(true);
+    }
+    return d
+  }
+
+  //PCH calcule level up
+  _level_up() {
+    let niveau = this._level()
+    let d = new Dialog({
+      title: "Level UP",
+      content: `
+      <form>
+        <label id="level_up">Bravo, tu viens de passer niveau `+niveau+` !!<br/><br/>
+        Voila la liste des modifications à apporter.<br/>
+        <em>(Attention, ton personnage peut avoir des règles spécifiques !)</em><br/><br/>
+          - Tous les niveaux : +1d6 PV ou PA<br/>
+          - Niveaux pairs : +1 à FO ou AD ou COU ou INT<br/>
+          - Niveaux impairs : +1 à l'attaque ou la parade<br/>
+          - Niveau 3, 6 et 10 : +1 compétence<br/>
+          - Niveau 5 et 10 : +1 spécialité pour le mage</label>
+        <br/><br/>
+      </form>
+      `,
+      buttons: {
+        one: {
+          label: "ok !",
+          callback: (html) => {
+          }
+        }
+      }
+    });
     d.render(true);
   }
 }

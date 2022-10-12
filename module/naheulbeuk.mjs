@@ -207,7 +207,7 @@ Handlebars.registerHelper('deplacement', function (val1, val2, val3, val4) {
   calc = "(" + calc1 + "m/" + calc2 + "m)"
   return calc;
 });
-//PCH - opération mathématique
+//PCH - log
 Handlebars.registerHelper("log", function (value) {
   console.log(value)
 });

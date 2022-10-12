@@ -194,7 +194,8 @@
         },
         "ad": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_malus_AD":0
         },
         "fo": {
           "value": 0,

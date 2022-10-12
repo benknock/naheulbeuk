@@ -1904,7 +1904,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 11, mets +1 en parade ou en attaque.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 12, mets +1 en parade ou en attaque.</label>
           <br/><br/>
         </form>
         `,
@@ -1926,7 +1926,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 11, enlève le malus de -1 en attaque ou parade que tu avais mis, puis mets +1 en parade ou en attaque.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 12, enlève le malus de -1 en attaque ou parade que tu avais mis, puis mets +1 en parade ou en attaque.</label>
           <br/><br/>
         </form>
         `,
@@ -1948,7 +1948,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessous de 9, enlève le bonus de +1 en attaque ou parade que tu avais mis, puis mets -1 en parade ou en attaque.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer en dessous de 9, enlève le bonus de +1 en attaque ou parade que tu avais mis, puis mets -1 en parade ou en attaque.</label>
           <br/><br/>
         </form>
         `,
@@ -1992,7 +1992,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessous de 12, enlève le bonus de +1 en attaque ou parade que tu avais mis.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer en dessous de 13, enlève le bonus de +1 en attaque ou parade que tu avais mis.</label>
           <br/><br/>
         </form>
         `,

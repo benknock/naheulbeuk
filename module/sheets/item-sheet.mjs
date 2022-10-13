@@ -64,6 +64,10 @@ export class NaheulbeukItemSheet extends ItemSheet {
     if (!this.isEditable) return;
 
     // Roll handlers, click handlers, etc. would go here.
+    //PCH afficher ou masquer les stats
+    html.find('.masquerstats').dblclick(ev => {
+      super.getData().item.update({ "data.cacher": !super.getData().item.data.data.cacher });
+    })
     //PCH afficher ou masquer les épreuves avancées sur un objets
     html.find('.epreuves').click(ev => {
       if (super.getData().item.data.data.epreuvecustom == true) {

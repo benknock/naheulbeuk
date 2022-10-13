@@ -353,7 +353,8 @@
       "jet4": "",
       "jet5": "",
       "epreuvecustom": false,
-      "categorie": "Divers"
+      "categorie": "Divers",
+      "cacher": false
     },
     "arme": {
       "templates": [
@@ -410,7 +411,8 @@
       "relique": false,
       "limitporteur": "tous sauf indications contraires",
       "categorie": "Armes",
-      "armefeu": false
+      "armefeu": false,
+      "cacher": false
     },
     "armure": {
       "templates": [
@@ -446,7 +448,8 @@
       "enchantement": false,
       "relique": false,
       "limitporteur": "tous sauf indications contraires",
-      "categorie": "Armures"
+      "categorie": "Armures",
+      "cacher": false
     },
     "sac": {
       "templates": [
@@ -471,7 +474,8 @@
       "mvt": 0,
       "autre": "",
       "custom": "",
-      "ignorePoidSac": false
+      "ignorePoidSac": false,
+      "cacher": false
     },
     "etat": {
       "templates": [
@@ -651,7 +655,8 @@
       "equipe": false,
       "ignorePoidSac": false,
       "categorie": "Richesses",
-      "formula": "-"
+      "formula": "-",
+      "cacher": false
     },
     "piege": {
       "img": "icons/svg/trap.svg",

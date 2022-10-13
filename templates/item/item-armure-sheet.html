@@ -6,7 +6,7 @@
           value="{{item.name}}" placeholder="Name" /></h1>
       <div class="grid grid-2col">
         <div class="resource">
-          <label class="resource-label">Quantité</label>
+          <label class="resource-label masquerstats">Quantité</label>
           <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.quantity"
             value="{{data.quantity}}" data-dtype="Number" />
         </div>
@@ -26,11 +26,13 @@
         </div>
       </div>
       <div class="grid grid-2col">
+        {{#if (equals data.cacher false)}}
         <div class="resource">
           <label class="resource-label">Prix (po)</label>
           <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prix" value="{{data.prix}}"
             data-dtype="Number" />
         </div>
+        {{/if}}
         <div class="resource">
           <br />
           <label class="resource-label">
@@ -126,6 +128,8 @@
       {{/if}}
     </label>
   </div>
+
+  {{#if (equals data.cacher false)}}
 
   <div class="resource flexrow paddingcustom" style="align-items: center; margin-bottom: 10px">
     <label class="resource-label" style="flex:0.42;">Origine/métier compatibles :</label>
@@ -242,4 +246,5 @@
       </div>
     </div>
   </section>
+  {{/if}}
 </form>

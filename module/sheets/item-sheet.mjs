@@ -10,7 +10,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
       classes: ["naheulbeuk", "sheet", "item"],
       width: 600,
       height: 650,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "attributes" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "attributes" }]      
     });
   }
 
@@ -65,8 +65,16 @@ export class NaheulbeukItemSheet extends ItemSheet {
 
     // Roll handlers, click handlers, etc. would go here.
     //PCH afficher ou masquer les stats
-    html.find('.masquerstats').dblclick(ev => {
-      super.getData().item.update({ "data.cacher": !super.getData().item.data.data.cacher });
+    html.find('.masquerstats').click(ev => {
+      if (game.users.current.role==4){
+        console.log(super.getData().item)
+        let nom = super.getData().item.data.name
+        super.getData().item.update({ 
+          "data.cacher": !super.getData().item.data.data.cacher,
+          "name" : super.getData().item.data.data.nomcacher,
+          "data.nomcacher": nom,
+        });
+      }
     })
     //PCH afficher ou masquer les épreuves avancées sur un objets
     html.find('.epreuves').click(ev => {

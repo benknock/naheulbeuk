@@ -2,8 +2,11 @@
   <header class="sheet-header">
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
-      <h1 class="charname"><input {{#if (equals data.equipe true)}}readonly{{/if}} name="name" type="text"
+      <div class="flexrow" style="align-items: center;">
+        <h1 class="charname" style="flex:1"><input {{#if (equals data.equipe true)}}readonly{{/if}} name="name" type="text"
           value="{{item.name}}" placeholder="Name" /></h1>
+        <i class="fas fa-eye masquerstats cliquable" style="flex:0.01;padding-left:3px"></i>
+      </div>
       <div class="grid grid-2col">
         <div class="resource">
           <label class="resource-label">Place (kg)</label>
@@ -38,7 +41,7 @@
           </select>
         </div>
         <div class="resource">
-          <label class="resource-label masquerstats">Quantité</label>
+          <label class="resource-label">Quantité</label>
           <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.quantity"
             value="{{data.quantity}}" data-dtype="Number" />
         </div>
@@ -67,6 +70,46 @@
   <section class="sheet-body">
 
     {{!-- Description Tab --}}
+   
+    
+    <li class="item flexrow">
+      <div class="">Nom</div>
+      <h4 class="rollable" data-roll-type="item"></h4>
+      <div class="flex-group-center">Quantité</div>
+      <div class="flex-group-center">Poids</div>
+      <div class="flex-group-center">Equiper/Appliquer</div>
+      <div class="item-controls">
+        <a class="item-control item-edit" title="Edit Item"></a>
+        <a class="item-control item-delete" title="Delete Item"></a>
+      </div>
+    </li>
+    {{#each item.data.data.items as |item id|}}
+    {{log item}}
+    <li class="item flexrow" data-item-id="{{item._id}}">
+      <div class="item-name">
+        <div class="item-image">
+          <img class="icon-inventaire " src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
+        </div>
+        <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
+    </li>
+    {{/each}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="tab" data-group="primary" data-tab="attributes">
       {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
       rollData prop. --}}
@@ -131,6 +174,16 @@
             style="flex:2.76;min-height: auto; height: 42px;">{{data.autre}}</textarea>
         </div>
       </div>
+    </div>
+  </section>
+  {{else}}
+  <section class="sheet-body">
+    <hr>
+    <div class="bestiaire" style="height:500px">
+      {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
+      rollData prop. --}}
+      {{editor content=data.desccacher target="data.desccacher" rollData=rollData button=true owner=owner
+      editable=editable}}
     </div>
   </section>
   {{/if}}

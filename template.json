@@ -354,7 +354,9 @@
       "jet5": "",
       "epreuvecustom": false,
       "categorie": "Divers",
-      "cacher": false
+      "cacher": false,
+      "desccacher": "",
+      "nomcacher": "Nom de l'objet caché"
     },
     "arme": {
       "templates": [
@@ -412,7 +414,9 @@
       "limitporteur": "tous sauf indications contraires",
       "categorie": "Armes",
       "armefeu": false,
-      "cacher": false
+      "cacher": false,
+      "desccacher": "",
+      "nomcacher": "Nom de l'objet caché"
     },
     "armure": {
       "templates": [
@@ -449,7 +453,9 @@
       "relique": false,
       "limitporteur": "tous sauf indications contraires",
       "categorie": "Armures",
-      "cacher": false
+      "cacher": false,
+      "desccacher": "",
+      "nomcacher": "Nom de l'objet caché"
     },
     "sac": {
       "templates": [
@@ -475,7 +481,10 @@
       "autre": "",
       "custom": "",
       "ignorePoidSac": false,
-      "cacher": false
+      "cacher": false,
+      "desccacher": "",
+      "nomcacher": "Nom de l'objet caché",
+      "items": []
     },
     "etat": {
       "templates": [
@@ -656,7 +665,9 @@
       "ignorePoidSac": false,
       "categorie": "Richesses",
       "formula": "-",
-      "cacher": false
+      "cacher": false,
+      "desccacher": "",
+      "nomcacher": "Nom de l'objet caché"
     },
     "piege": {
       "img": "icons/svg/trap.svg",

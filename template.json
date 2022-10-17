@@ -483,8 +483,7 @@
       "ignorePoidSac": false,
       "cacher": false,
       "desccacher": "",
-      "nomcacher": "Nom de l'objet caché",
-      "items": []
+      "nomcacher": "Nom de l'objet caché"
     },
     "etat": {
       "templates": [

@@ -254,6 +254,29 @@ Handlebars.registerHelper("ingeniosite", function (difficulte) {
   return actor_ingeniosite
 });
 
+//PCH - lire l'acteur dans la variable précédente
+Handlebars.registerHelper("read_items_actor", function (value) {
+  let compteur = 0
+  for (let itemActor of actor_data.data.root.items){
+    if (itemActor.data.stockage!=undefined){
+      if (value=="sac" && itemActor.data.stockage=="sac") {compteur++}
+      if (value=="nosac" && itemActor.data.stockage=="nosac") {compteur++}
+      if (value=="bourse" && itemActor.data.stockage=="bourse") {compteur++}
+      if (value=="divers" && itemActor.data.stockage=="sac" && (itemActor.type=="sac" || itemActor.data.categorie=="Divers" || itemActor.data.categorie=="")) {compteur++}
+      if (value=="livres" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Livres") {compteur++}
+      if (value=="potions" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Potions") {compteur++}
+      if (value=="ingredients" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Ingrédients") {compteur++}
+      if (value=="armes" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Armes" && itemActor.data.equipe==false) {compteur++}
+      if (value=="armures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Armures" && itemActor.data.equipe==false) {compteur++}
+      if (value=="nourritures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Nourritures") {compteur++}
+      if (value=="richesses" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Richesses") {compteur++}
+      if (value=="perso" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Objets personnels") {compteur++}
+      if (value=="montures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Montures") {compteur++}
+    }
+  }
+  return compteur
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */

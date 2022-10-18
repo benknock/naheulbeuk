@@ -146,7 +146,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
       15: []
     };
     const etats = [];
-    var poid = 0;
+    var poidssac = 0;
+    var poidsbourse = 0;
     var charge = 0;
     var compteurMetier = 0;
     var compteurOrigine = 0;
@@ -164,7 +165,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
       // Append to trucs.
       if (i.type === 'truc') {
         trucs.push(i);
-        if (i.data.ignorePoidSac != true) { poid = poid + i.data.weight * i.data.quantity * 100 }
+        if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
+        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
         charge = charge + i.data.weight * i.data.quantity
       }
       // Append to armes --> si pas équipée, on la considère comme un truc
@@ -172,7 +174,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
         if (i.data.equipe == true) { armes.push(i) }
         else {
           trucs.push(i);
-          if (i.data.ignorePoidSac != true) { poid = poid + i.data.weight * i.data.quantity * 100 }
+          if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
+        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
         };
         charge = charge + i.data.weight * i.data.quantity
       }
@@ -181,17 +184,16 @@ export class NaheulbeukActorSheet extends ActorSheet {
         if (i.data.equipe == true) { armures.push(i) }
         else {
           trucs.push(i);
-          if (i.data.ignorePoidSac != true) { poid = poid + i.data.weight * i.data.quantity * 100 }
+          if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
+        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
         };
         charge = charge + i.data.weight * i.data.quantity
       }
       // Append to sacs --> si pas équipé, on la considère comme un truc
       else if (i.type === 'sac') {
-        if (i.data.equipe == true) { sacs.push(i) }
-        else {
-          trucs.push(i);
-          if (i.data.ignorePoidSac != true) { poid = poid + i.data.weight * i.data.quantity * 100 }
-        };
+        trucs.push(i);
+        if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
+        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
         charge = charge + i.data.weight * i.data.quantity
       }
       // Append to skills  --> on définit si le skill est appris ou hérité
@@ -254,7 +256,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
       else if (i.type === 'gemme') {
         trucs.push(i);
-        if (i.data.ignorePoidSac != true) { poid = poid + i.data.weight * i.data.quantity * 100 }
+        if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
+        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
         charge = charge + i.data.weight * i.data.quantity
       }
       else if (i.type === 'recette') {
@@ -285,7 +288,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
     context.spells = spells;
     context.coups = coups;
     context.etats = etats;
-    context.poid = poid / 100;
+    context.poidssac = poidssac / 100;
+    context.poidsbourse = poidsbourse / 100;
     if (this.actor.data.type == "character") {
       context.charge = (charge * 100 + this.actor.data.data.attributes.pa.value + this.actor.data.data.attributes.po.value + this.actor.data.data.attributes.lb.value * 5 + this.actor.data.data.attributes.lt.value * 3) / 100;
     }
@@ -393,6 +397,27 @@ export class NaheulbeukActorSheet extends ActorSheet {
       };
       this.actor.update(actorData);
     });
+      //PCH hide catégorie d'inventaire
+    html.find('.hidebourse').click(ev => {
+      const actorData = {
+        "data.attributes.hidebourse": !this.actor.data.data.attributes.hidebourse
+      };
+      this.actor.update(actorData);
+    });
+      //PCH hide catégorie d'inventaire
+    html.find('.hidenosac').click(ev => {
+      const actorData = {
+        "data.attributes.hidenosac": !this.actor.data.data.attributes.hidenosac
+      };
+      this.actor.update(actorData);
+    });
+    //PCH hide catégorie d'inventaire
+    html.find('.hidesac').click(ev => {
+      const actorData = {
+        "data.attributes.hidesac": !this.actor.data.data.attributes.hidesac
+      };
+      this.actor.update(actorData);
+    });
 
     //PCH afficher ou masquer les sorts
     html.find('.hideSort').click(ev => {
@@ -444,6 +469,26 @@ export class NaheulbeukActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
+    // Item changer stockage
+    html.find('.item-nosac').click(ev => {
+      console.log("nosac")
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      item.update({"data.stockage":"nosac"})
+    });
+    html.find('.item-sac').click(ev => {
+      console.log("sac")
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      item.update({"data.stockage":"sac"})
+    });
+    html.find('.item-bourse').click(ev => {
+      console.log("bourse")
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      item.update({"data.stockage":"bourse"})
+    });
+    
     // Active Effect management
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
 
@@ -548,18 +593,33 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //on récupère l'objet
     const li = $(ev.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
-    //avant d'équiper un sac, on vérifie s'il n'y en pas déjà un équipé
-    if (item.data.type == "sac" && item.data.data.equipe == false) {
-      for (let i of super.getData().items) {
-        if (i.type === 'sac') {
-          if (i.data.equipe == true && i.data.type == item.data.data.type) {
-            ui.notifications.error("Ce type de sac est déjà équipé !");
-            return
-          }
-        }
+
+    //Maj poid max sac et bourse
+    if (item.data.data.equipe == false && item.type == "sac" && actor.type == "character") {
+      if (item.type == "sac" && item.data.data.type == "sac à dos") {
+        var poidsac = Number(actor.data.data.attributes.sac.max) + Number(item.data.data.place);
+        await actor.update({"data.attributes.sac.max": poidsac});
+        await item.update({"data.stockage":"nosac"})
+      }
+      if (item.type == "sac" && item.data.data.type == "bourse") {
+        var poidbourse = Number(actor.data.data.attributes.bourse.max) + Number(item.data.data.place);
+        await actor.update({"data.attributes.bourse.max": poidbourse});
+        await item.update({"data.stockage":"nosac"})
+      }
+    } else if (item.data.data.equipe == true && item.type == "sac" && actor.type == "character") {
+      if (item.type == "sac" && item.data.data.type == "sac à dos") {
+        var poidsac = Number(actor.data.data.attributes.sac.max) - Number(item.data.data.place);
+        await actor.update({"data.attributes.sac.max": poidsac});
+        await item.update({"data.stockage":"sac"})
+      }
+      if (item.type == "sac" && item.data.data.type == "bourse") {
+        var poidbourse = Number(actor.data.data.attributes.bourse.max) - Number(item.data.data.place);
+        await actor.update({"data.attributes.bourse.max": poidbourse});
+        await item.update({"data.stockage":"sac"})
       }
     }
-    //si l'objet n'est pas équipé 
+
+    //si l'objet n'est pas équipé
     if (item.data.data.equipe == false) {
       var cou = Number(actor.data.data.abilities.cou.bonus) + Number(item.data.data.cou);
       var int = Number(actor.data.data.abilities.int.bonus) + Number(item.data.data.int);
@@ -572,8 +632,10 @@ export class NaheulbeukActorSheet extends ActorSheet {
       var prm = Number(actor.data.data.attributes.prm.bonus) + Number(item.data.data.prm);
       var rm = Number(actor.data.data.attributes.rm.bonus) + Number(item.data.data.rm);
       var mvt = Number(actor.data.data.attributes.mvt.value) + Number(item.data.data.mvt);
+      
       //on construit les datas
       var actorData = {};
+
       if (item.type != "arme") { //pour autre chose qu'une arme
         actorData = {
           "data.abilities.cou.bonus": cou,
@@ -624,6 +686,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       var prm = Number(actor.data.data.attributes.prm.bonus) - Number(item.data.data.prm);
       var rm = Number(actor.data.data.attributes.rm.bonus) - Number(item.data.data.rm);
       var mvt = Number(actor.data.data.attributes.mvt.value) - Number(item.data.data.mvt);
+
       var actorData = {};
       if (item.type != "arme") {
         actorData = {
@@ -637,7 +700,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
           "data.attributes.pr.bonus": pr,
           "data.attributes.prm.bonus": prm,
           "data.attributes.mvt.value": mvt,
-          "data.attributes.rm.bonus": rm
+          "data.attributes.rm.bonus": rm,
         };
       }
       if (item.type == "arme") {

@@ -39,18 +39,6 @@
         "signe": {
           "value": ""
         },
-        "pa": {
-          "value": 0
-        },
-        "po": {
-          "value": 0
-        },
-        "lt": {
-          "value": 0
-        },
-        "lb": {
-          "value": 0
-        },
         "pr": {
           "value": 0,
           "bonus": 0,
@@ -176,7 +164,10 @@
         "hideprotections": false,
         "hidenourritures": false,
         "hiderichesses": false,
-        "hideperso": false
+        "hideperso": false,
+        "hidebourse": false,
+        "hidenosac": false,
+        "hidesac":false
       },
       "abilities": {
         "cou": {
@@ -356,7 +347,8 @@
       "categorie": "Divers",
       "cacher": false,
       "desccacher": "",
-      "nomcacher": "Nom de l'objet caché"
+      "nomcacher": "Nom de l'objet caché",
+      "stockage":"sac"
     },
     "arme": {
       "templates": [
@@ -416,7 +408,8 @@
       "armefeu": false,
       "cacher": false,
       "desccacher": "",
-      "nomcacher": "Nom de l'objet caché"
+      "nomcacher": "Nom de l'objet caché",
+      "stockage":"sac"
     },
     "armure": {
       "templates": [
@@ -455,7 +448,8 @@
       "categorie": "Armures",
       "cacher": false,
       "desccacher": "",
-      "nomcacher": "Nom de l'objet caché"
+      "nomcacher": "Nom de l'objet caché",
+      "stockage":"sac"
     },
     "sac": {
       "templates": [
@@ -483,7 +477,8 @@
       "ignorePoidSac": false,
       "cacher": false,
       "desccacher": "",
-      "nomcacher": "Nom de l'objet caché"
+      "nomcacher": "Nom de l'objet caché",
+      "stockage":"sac"
     },
     "etat": {
       "templates": [
@@ -666,7 +661,8 @@
       "formula": "-",
       "cacher": false,
       "desccacher": "",
-      "nomcacher": "Nom de l'objet caché"
+      "nomcacher": "Nom de l'objet caché",
+      "stockage":"sac"
     },
     "piege": {
       "img": "icons/svg/trap.svg",
@@ -693,7 +689,8 @@
       "xp": "",
       "prix":"",
       "malus":"",
-      "remarque":""
+      "remarque":"",
+      "stockage":"sac"
     }
   }
 }

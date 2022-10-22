@@ -175,7 +175,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         else {
           trucs.push(i);
           if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
-        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
+          if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
         };
         charge = charge + i.data.weight * i.data.quantity
       }
@@ -185,7 +185,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         else {
           trucs.push(i);
           if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
-        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
+          if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
         };
         charge = charge + i.data.weight * i.data.quantity
       }
@@ -260,6 +260,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
         if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
         charge = charge + i.data.weight * i.data.quantity
       }
+      else if (i.type === 'conteneur') {
+        trucs.push(i);
+        if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
+        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
+        charge = charge + i.data.weight * i.data.quantity
+      }
       else if (i.type === 'recette') {
         trucs.push(i);
       }
@@ -291,7 +297,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     context.poidssac = poidssac / 100;
     context.poidsbourse = poidsbourse / 100;
     if (this.actor.data.type == "character") {
-      context.charge = (charge * 100 + this.actor.data.data.attributes.pa.value + this.actor.data.data.attributes.po.value + this.actor.data.data.attributes.lb.value * 5 + this.actor.data.data.attributes.lt.value * 3) / 100;
+      context.charge = (charge * 100 ) / 100;
     }
     context.attaques = attaques;
     context.traits = traits;
@@ -463,7 +469,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       //PCH enlever effets avant suppression
       if (item.data.data.equipe == true) {
         this._onItemEquipe(ev, this.actor, context).then((value) => {
-          item.delete();;
+          item.delete();
         });
       } else { item.delete() }
       li.slideUp(200, () => this.render(false));
@@ -1940,7 +1946,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     let ad_value = this.actor.data.data.abilities.ad.value + this.actor.data.data.abilities.ad.bonus
     let bonus_malus_AD = this.actor.data.data.abilities.ad.bonus_malus_AD
     let d
-    if ((ad_value<9) && (bonus_malus_AD==0)){
+    if (this.actor.data.data.abilities.ad.value!=0 && ad_value<9 && bonus_malus_AD==0){
       d = new Dialog({
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `

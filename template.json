@@ -285,6 +285,7 @@
       "armure",
       "attaque",
       "competence",
+      "conteneur",
       "coup",
       "etat",
       "gemme",
@@ -409,7 +410,8 @@
       "cacher": false,
       "desccacher": "",
       "nomcacher": "Nom de l'objet caché",
-      "stockage":"sac"
+      "stockage":"sac",
+      "conteneur": {}
     },
     "armure": {
       "templates": [
@@ -449,7 +451,8 @@
       "cacher": false,
       "desccacher": "",
       "nomcacher": "Nom de l'objet caché",
-      "stockage":"sac"
+      "stockage":"sac",
+      "conteneur": {}
     },
     "sac": {
       "templates": [
@@ -478,7 +481,8 @@
       "cacher": false,
       "desccacher": "",
       "nomcacher": "Nom de l'objet caché",
-      "stockage":"sac"
+      "stockage":"sac",
+      "conteneur": {}
     },
     "etat": {
       "templates": [
@@ -662,7 +666,8 @@
       "cacher": false,
       "desccacher": "",
       "nomcacher": "Nom de l'objet caché",
-      "stockage":"sac"
+      "stockage":"sac",
+      "conteneur": {}
     },
     "piege": {
       "img": "icons/svg/trap.svg",
@@ -690,7 +695,28 @@
       "prix":"",
       "malus":"",
       "remarque":"",
-      "stockage":"sac"
+      "stockage":"sac",
+      "conteneur": {}
+    },
+    "conteneur": {
+      "templates": [
+        "base"
+      ],
+      "img": "icons/svg/chest.svg",
+      "quantity": 1,
+      "weight": 0,
+      "prix": 0,
+      "equipe": false,
+      "categorie": "Divers",
+      "formula": "-",
+      "cacher": false,
+      "desccacher": "",
+      "nomcacher": "Nom de l'objet caché",
+      "stockage":"sac",
+      "place": 0,
+      "poidconteneur": 0,
+      "conteneur": {},
+      "items":[]
     }
   }
 }

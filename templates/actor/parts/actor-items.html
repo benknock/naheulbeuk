@@ -252,7 +252,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -279,8 +279,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -350,7 +350,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -377,8 +377,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -448,7 +448,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -475,8 +475,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -546,7 +546,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -573,8 +573,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -644,7 +644,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -671,8 +671,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -742,7 +742,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -769,8 +769,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -840,7 +840,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -867,8 +867,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -938,7 +938,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -965,8 +965,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -1036,7 +1036,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -1063,8 +1063,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -1134,7 +1134,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -1161,8 +1161,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -1231,7 +1231,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -1258,8 +1258,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-nosac" title="Edit Item">X</a>
-      <a class="item-control item-sac" title="Edit Item"><i class="fas fa-suitcase"></i></a>
+      <a class="item-control item-nosac" title="Déplacer en dehors du sac et de la bourse"><i class="fas fa-times"></i></a>
+      <a class="item-control item-sac" title="Déplacer dans le sac"><i class="fas fa-suitcase"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>
@@ -1325,7 +1325,7 @@
     </div>
     <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{math (math item.data.quantity "*" (math item.data.weight "*" 100)) ":" 100}}&nbsp;kg
+      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
@@ -1352,8 +1352,8 @@
       {{/if}}
     </div>
     <div class="item-controls">
-      <a class="item-control item-sac" title="Edit Item"><i class="fas fa-suitcase"></i></a>
-      <a class="item-control item-bourse" title="Edit Item"><i class="fas fa-suitcase-rolling"></i></a>
+      <a class="item-control item-sac" title="Déplacer dans le sac"><i class="fas fa-suitcase"></i></a>
+      <a class="item-control item-bourse" title="Déplacer dans la bourse"><i class="fas fa-suitcase-rolling"></i></a>
       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
       <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
     </div>

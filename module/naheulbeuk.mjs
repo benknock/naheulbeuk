@@ -94,6 +94,13 @@ Handlebars.registerHelper("arrondi", function (lvalue) {
   return value
 });
 
+//PCH - opération mathématique arrondi le plus proche
+Handlebars.registerHelper("arrondiProche", function (lvalue) {
+  lvalue = parseFloat(lvalue);
+  var value = Math.round(lvalue * 1000) / 1000
+  return value
+});
+
 //PCH - égalité
 Handlebars.registerHelper('equals', function (val1, val2) {
   var val1 = val1;
@@ -275,6 +282,14 @@ Handlebars.registerHelper("read_items_actor", function (value) {
     }
   }
   return compteur
+});
+
+Handlebars.registerHelper("poidconteneur", function (item) {
+ var poid = item.data.data.poidconteneur
+ for (let itemFind of item.data.data.items){
+  poid = poid + itemFind.data.weight*itemFind.data.quantity
+ }
+  return poid
 });
 
 /* -------------------------------------------- */

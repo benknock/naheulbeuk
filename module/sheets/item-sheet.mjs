@@ -67,11 +67,6 @@ export class NaheulbeukItemSheet extends ItemSheet {
       //on permet le Drag and Drop depuis l'objet (DragStart) et vers l'objet (Drop)
       this.form.ondragstart = (event) => this._onDragStart(event);
       this.form.ondrop = (event) => this._onDrop(event);
-      //On vérifie qu'un acteur "system est présent"
-      let actorSystem = game.actors.find(entry => entry.name==="system");
-      //S'il n'y en a pas, on dit qu'il faut le créer
-      if (actorSystem==undefined){ui.notifications.error('Créer l\'acteur de type NPC avec le nom "system" pour que les conteneurs fonctionnent.');}
-      
     }
 
     // Suppression d'un objet d'un conteneur
@@ -90,28 +85,15 @@ export class NaheulbeukItemSheet extends ItemSheet {
     // Edition d'un objet de conteneur
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item"); //on sauve l'ID de l'objet à éditer
-      var ownerSystem = game.actors.find(entry => entry.name==="system");
-      if (ownerSystem!=undefined) {
-        for (let item of ownerSystem.items){ //On supprime tous les objets de cet acteur, pour éviter l'accumulation inutile
-          item.delete();
-        }
-        const items = this.object.data.data.items //On récupère la liste des objets du conteneur
-        //on cherche l'objet à éditer dans la liste
-        let itemFind = items.find(entry => entry._id===li.data("itemId"));
-        const index = items.indexOf(itemFind) //on sauve son index
-        if (index > -1) {items.splice(index,1)} //on l'enlève de la liste des objets contenu
-        Item.create(itemFind, { parent: ownerSystem }).then (ev =>{ //on crée une copie de l'objet à éditer sur l'objet
-          const itemActor = ev //On récupère l'objet correspondant 
-          const newitemData = ev.data//On sauve l'objet créé sur l'acteur à l'étape précédente
-          const data = {}
-          data._id=this.object.data._id
-          itemActor.update({"data.conteneur":data})//On sauvegarde dans son attribut "conteneur" le conteneur auquel il est lié
-          items.push(newitemData) //On rajoute ce nouvel objet à la liste des objets du conteneur précédement sauvegardés
-          this.object.update({"data.items":items})//on met à jour le conteneur
-          itemActor.sheet.render(true)//on affiche la fiche de l'objet créé dans le conteneur
-          //  IL SERA MIS A JOUR PAR LA SURCHARGE DE _onSubmit
-        })
-      }
+      const items = this.object.data.data.items //On récupère la liste des objets du conteneur
+      //on cherche l'objet à éditer dans la liste
+      let itemFind = items.find(entry => entry._id===li.data("itemId"));
+      let new_Item = duplicate(itemFind)
+      let cont_id={}
+      cont_id._id=this.object.data._id
+      new_Item.data.conteneur=cont_id
+      let itemFinal = new Item(new_Item)
+      itemFinal.sheet.render(true)
     });
 
 
@@ -274,16 +256,24 @@ export class NaheulbeukItemSheet extends ItemSheet {
       if (this.object.data.type=="conteneur"){ //On vérifie qu'on est bien sur un conteur
         const itemData = duplicate(item.data); //On sauvegarde les datas de l'objet drop
         if (itemData.data.stockage!=undefined){ //On vérifie que c'est un objet qu'on peut drag and drop dans un conteneur
-          //On cherche l'acteur système qui gère les objets des conteneurs
-          var ownerSystem = game.actors.find(entry => entry.name==="system");
-          Item.create(itemData, { parent: ownerSystem }).then (ev =>{ //On crée l'objet sur le conteneur
-            let newitemData = ownerSystem.data.items._source[ownerSystem.data.items._source.length-1] //On récupère son id...
-            const itemActor = ownerSystem.items.get(newitemData._id);//...pour pouvoir récupérer l'objet
-            itemActor.update({"data.conteneur":this.object.data})//On met à jour son conteneur associé
-            let itemsFinal = this.object.data.data.items //On stock la liste des objets contenus par le conteneur
-            itemsFinal.push(newitemData) // On rajoute le nouvel objet drop
-            this.object.update({"data.items":itemsFinal}) // On met à jour le conteneur
-          })
+          // on sauvegarde l'ID du conteneur dans l'objet contenu
+          let cont_id={} 
+          cont_id._id=this.object.data._id
+          itemData.data.conteneur=cont_id
+          //On génère un ID unique
+          let j = 100
+          let item_id="pch"+itemData._id.substr(3,7)+"PCH"+j
+          while (this.object.data.data.items.find(entry => entry._id===item_id)!=undefined){
+            j++
+            item_id="pch"+itemData._id.substr(3,7)+"PCH"+j
+          }
+          itemData._id=item_id
+          itemData.data.equipe=false
+          //on met à jour la liste d'objet
+          let itemsFinal = this.object.data.data.items
+          itemsFinal.push(itemData)
+          //on update la liste d'objet du conteneur
+          this.object.update({"data.items":itemsFinal})
         }
       }
     });
@@ -298,6 +288,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
     let dragData = {} //On crée les data pour la création la ou on va drop
     dragData.type = "Item";
     dragData.data = itemFind;
+    dragData.data.data.conteneur = {};
     // On initie le drop avec la création de l'objet
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
@@ -306,7 +297,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
   //permet la mise à jour d'un objet contenu par un conteneur
   async _onSubmit(event, {updateData=null, preventClose=false, preventRender=false}={}) {
     event.preventDefault();
-
+  
     // Prevent double submission
     const states = this.constructor.RENDER_STATES;
     if ( (this._state === states.NONE) || !this.isEditable || this._submitting ) return false;
@@ -321,23 +312,29 @@ export class NaheulbeukItemSheet extends ItemSheet {
     if ( preventRender ) this._state = states.RENDERING;
     if ( closeForm ) this._state = states.CLOSING;
 
-    // Trigger the object update
-    try {
-      await this._updateObject(event, formData);
-    }
-    catch (err) {
-      console.error(err);
-      closeForm = false;
-      this._state = priorState;
-    }
-    // Restore flags and optionally close the form
-    this._submitting = false;
-    if ( preventRender ) this._state = priorState;
-    if ( closeForm ) await this.close({submit: false, force: true});
-
     // !!!!!!!!!!!!!!!!!!! petite modif pour mettre à jour le conteneur
-    if (this.object.data.data.conteneur!=undefined){ //Si l'objet à mettre à jour vient peut être ajouté à un conteneur...
-      if (this.object.data.data.conteneur._id!=undefined){ //... et que ce conteneur n'est pas vide --> L'objet est donc lié à un conteneur
+    if (this.object.data.data.conteneur==undefined){
+      // Trigger the object update
+      try {
+        await this._updateObject(event, formData);
+      }
+      catch (err) {
+        console.error(err);
+        closeForm = false;
+        this._state = priorState;
+      }
+    } else {
+      if (this.object.data.data.conteneur._id==undefined){
+        // Trigger the object update
+        try {
+          await this._updateObject(event, formData);
+        }
+        catch (err) {
+          console.error(err);
+          closeForm = false;
+          this._state = priorState;
+        }
+      } else {
         var conteneur_data=this.object.data.data.conteneur //On récupère les data du conteneur qui le contient
         var ownerConteneur = {}
         for (let actor of game.actors){
@@ -354,11 +351,42 @@ export class NaheulbeukItemSheet extends ItemSheet {
         let itemFind = items.find(entry => entry._id===this.object.data._id);
         const index = items.indexOf(itemFind) // On retire l'objet trouvé (puisqu'on vient de le mettre à jour)
         if (index > -1) {items.splice(index,1)}
-        items.push(this.object.data) //et on le remplace par l'objet mis à jour
-        conteneurAupdate.update(({"data.items":items}))
+        let new_ItemData=duplicate(this.object.data)
+
+        //Mettre à jour newItemData en fonction de formData puis pousser newItemData dans items
+        let key_new_ItemData=Object.keys(new_ItemData)
+        let key_new_ItemData_Datas=Object.keys(new_ItemData.data)
+        let key_formData=Object.keys(formData)
+        let value_formData=Object.values(formData)
+        let i = 0
+        for (let key of key_new_ItemData){
+            for (let key2 of key_formData){
+              if (key2.substring(0,5)=="data." && key=="data") {
+                let dataForm = key2.substring(5,(key2.length))
+                for (let key3 of key_new_ItemData_Datas){
+                  if (key3==dataForm){
+                    new_ItemData.data[key3]=value_formData[i]
+                  }
+                }
+              } else if (key==key2){
+                  new_ItemData[key]=value_formData[i]
+              }
+              i++
+            }
+            i=0
+        }
+        items.push(new_ItemData) //et on le remplace par l'objet mis à jour
+        conteneurAupdate.update({"data.items":items})
       }
     }
     //fin de la petite modif pour mettre à jour le conteneur
+
+
+
+    // Restore flags and optionally close the form
+    this._submitting = false;
+    if ( preventRender ) this._state = priorState;
+    if ( closeForm ) await this.close({submit: false, force: true});
 
     return formData;
   }

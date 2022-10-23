@@ -477,19 +477,16 @@ export class NaheulbeukActorSheet extends ActorSheet {
 
     // Item changer stockage
     html.find('.item-nosac').click(ev => {
-      console.log("nosac")
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       item.update({"data.stockage":"nosac"})
     });
     html.find('.item-sac').click(ev => {
-      console.log("sac")
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       item.update({"data.stockage":"sac"})
     });
     html.find('.item-bourse').click(ev => {
-      console.log("bourse")
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       item.update({"data.stockage":"bourse"})

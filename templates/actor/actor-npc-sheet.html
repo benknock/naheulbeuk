@@ -1,9 +1,4 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
-  {{#if (equals actor.name "system")}}
-  <header class="sheet-header">
-    <h1>Acteur dédié aux conteneurs, à ne pas supprimer</h1>
-  </header>
-  {{else}}
   {{!-- Sheet Header --}}
   <header class="sheet-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
@@ -606,5 +601,4 @@
     </div>
 
   </section>
-  {{/if}}
 </form>

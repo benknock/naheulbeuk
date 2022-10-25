@@ -487,6 +487,14 @@
       "tag": "item"
     },
     {
+      "name": "specialites",
+      "label": "Équipements : spécialités locales",
+      "system": "naheulbeuk",
+      "path": "./packs/specialites.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
       "name": "tableauxcritiquesmaladresses",
       "label": "Tableaux : critiques et maladresses",
       "system": "naheulbeuk",

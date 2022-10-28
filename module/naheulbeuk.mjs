@@ -266,19 +266,21 @@ Handlebars.registerHelper("read_items_actor", function (value) {
   let compteur = 0
   for (let itemActor of actor_data.data.root.items){
     if (itemActor.data.stockage!=undefined){
-      if (value=="sac" && itemActor.data.stockage=="sac") {compteur++}
-      if (value=="nosac" && itemActor.data.stockage=="nosac") {compteur++}
-      if (value=="bourse" && itemActor.data.stockage=="bourse") {compteur++}
-      if (value=="divers" && itemActor.data.stockage=="sac" && (itemActor.type=="sac" || itemActor.data.categorie=="Divers" || itemActor.data.categorie=="")) {compteur++}
-      if (value=="livres" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Livres") {compteur++}
-      if (value=="potions" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Potions") {compteur++}
-      if (value=="ingredients" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Ingrédients") {compteur++}
-      if (value=="armes" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Armes" && itemActor.data.equipe==false) {compteur++}
-      if (value=="armures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Armures" && itemActor.data.equipe==false) {compteur++}
-      if (value=="nourritures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Nourritures") {compteur++}
-      if (value=="richesses" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Richesses") {compteur++}
-      if (value=="perso" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Objets personnels") {compteur++}
-      if (value=="montures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Montures") {compteur++}
+      let arme_armure_pas_equipe = true
+      if ((itemActor.type=="arme" || itemActor.type=="armure") && itemActor.data.equipe==true){arme_armure_pas_equipe=false}
+      if (arme_armure_pas_equipe && value=="sac" && itemActor.data.stockage=="sac") {compteur++}
+      if (arme_armure_pas_equipe && value=="nosac" && itemActor.data.stockage=="nosac") {compteur++}
+      if (arme_armure_pas_equipe && value=="bourse" && itemActor.data.stockage=="bourse") {compteur++}
+      if (arme_armure_pas_equipe && value=="divers" && itemActor.data.stockage=="sac" && (itemActor.type=="sac" || itemActor.data.categorie=="Divers" || itemActor.data.categorie=="")) {compteur++}
+      if (arme_armure_pas_equipe && value=="livres" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Livres") {compteur++}
+      if (arme_armure_pas_equipe && value=="potions" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Potions") {compteur++}
+      if (arme_armure_pas_equipe && value=="ingredients" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Ingrédients") {compteur++}
+      if (arme_armure_pas_equipe && value=="armes" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Armes") {compteur++}
+      if (arme_armure_pas_equipe && value=="armures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Armures") {compteur++}
+      if (arme_armure_pas_equipe && value=="nourritures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Nourritures") {compteur++}
+      if (arme_armure_pas_equipe && value=="richesses" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Richesses") {compteur++}
+      if (arme_armure_pas_equipe && value=="perso" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Objets personnels") {compteur++}
+      if (arme_armure_pas_equipe && value=="montures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Montures") {compteur++}
     }
   }
   return compteur

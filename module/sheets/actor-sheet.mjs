@@ -30,7 +30,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
 
   /** @override */
   get template() {
-    return `systems/naheulbeuk/templates/actor/actor-${this.actor.data.type}-sheet.html`;
+    return `systems/naheulbeuk/templates/actor/actor-${this.actor.type}-sheet.html`;
   }
 
   /* -------------------------------------------- */
@@ -44,10 +44,10 @@ export class NaheulbeukActorSheet extends ActorSheet {
     const context = super.getData();
 
     // Use a safe clone of the actor data for further operations.
-    const actorData = this.actor.data.toObject(false);
+    const actorData = this.actor.toObject(false);
 
     // Add the actor's data to context.data for easier access, as well as flags.
-    context.data = actorData.data;
+    context.system = actorData.system;
     context.flags = actorData.flags;
 
     // Prepare character data and items.
@@ -80,7 +80,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
    */
   async _prepareCharacterData(context, actor) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.data.abilities)) {
+    for (let [k, v] of Object.entries(context.system.abilities)) {
       v.label = game.i18n.localize(CONFIG.NAHEULBEUK.abilities[k]) ?? k;
     }
 
@@ -91,19 +91,19 @@ export class NaheulbeukActorSheet extends ActorSheet {
     }
 
     if (document.getElementById("level_up")==null) {
-      if (this.actor.data.data.attributes.level.value!=this._level()) {
+      if (this.actor.system.attributes.level.value!=this._level()) {
         await this._level_up()
       }
     }
 
     //PCH maj actor (PJ)
-    if (actor.data.type == "character") {
+    if (actor.type == "character") {
       const actorData = {
-        "data.attributes.level.value": this._level(),
-        "data.attributes.rm.value": this._rm(),
-        "data.attributes.esq.value": this._esq(),
-        "data.attributes.mphy.value": this._mphy(),
-        "data.attributes.mpsy.value": this._mpsy()
+        "system.attributes.level.value": this._level(),
+        "system.attributes.rm.value": this._rm(),
+        "system.attributes.esq.value": this._esq(),
+        "system.attributes.mphy.value": this._mphy(),
+        "system.attributes.mpsy.value": this._mpsy()
       };
       actor.update(actorData);
     }
@@ -165,42 +165,42 @@ export class NaheulbeukActorSheet extends ActorSheet {
       // Append to trucs.
       if (i.type === 'truc') {
         trucs.push(i);
-        if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
-        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
-        charge = charge + i.data.weight * i.data.quantity
+        if (i.system.stockage == "sac") { poidssac = poidssac + i.system.weight * i.system.quantity * 100 }
+        if (i.system.stockage == "bourse") { poidsbourse = poidsbourse + i.system.weight * i.system.quantity * 100 }
+        charge = charge + i.system.weight * i.system.quantity
       }
       // Append to armes --> si pas équipée, on la considère comme un truc
       else if (i.type === 'arme') {
-        if (i.data.equipe == true) { armes.push(i) }
+        if (i.system.equipe == true) { armes.push(i) }
         else {
           trucs.push(i);
-          if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
-          if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
+          if (i.system.stockage == "sac") { poidssac = poidssac + i.system.weight * i.system.quantity * 100 }
+          if (i.system.stockage == "bourse") { poidsbourse = poidsbourse + i.system.weight * i.system.quantity * 100 }
         };
-        charge = charge + i.data.weight * i.data.quantity
+        charge = charge + i.system.weight * i.system.quantity
       }
       // Append to armures --> si pas équipée, on la considère comme un truc
       else if (i.type === 'armure') {
-        if (i.data.equipe == true) { armures.push(i) }
+        if (i.system.equipe == true) { armures.push(i) }
         else {
           trucs.push(i);
-          if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
-          if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
+          if (i.system.stockage == "sac") { poidssac = poidssac + i.system.weight * i.system.quantity * 100 }
+          if (i.system.stockage == "bourse") { poidsbourse = poidsbourse + i.system.weight * i.system.quantity * 100 }
         };
-        charge = charge + i.data.weight * i.data.quantity
+        charge = charge + i.system.weight * i.system.quantity
       }
       // Append to sacs --> si pas équipé, on la considère comme un truc
       else if (i.type === 'sac') {
         trucs.push(i);
-        if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
-        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
-        charge = charge + i.data.weight * i.data.quantity
+        if (i.system.stockage == "sac") { poidssac = poidssac + i.system.weight * i.system.quantity * 100 }
+        if (i.system.stockage == "bourse") { poidsbourse = poidsbourse + i.system.weight * i.system.quantity * 100 }
+        charge = charge + i.system.weight * i.system.quantity
       }
       // Append to skills  --> on définit si le skill est appris ou hérité
       else if (i.type === 'competence') {
-        if (i.data.gagne == true) { skillsGagnes.push(i) }
-        else if (i.data.choix == true) { skillsChoisis.push(i) }
-        else if (i.data.base == true) { skillsBases.push(i) }
+        if (i.system.gagne == true) { skillsGagnes.push(i) }
+        else if (i.system.choix == true) { skillsChoisis.push(i) }
+        else if (i.system.base == true) { skillsBases.push(i) }
         else { skillsNonchoisis.push(i) };
         //PCH maj actor TRUC DE MAUVIETTE
         if (i.name == "TRUC DE MAUVIETTE") { flagTrucDeMauviette = 1 }
@@ -211,7 +211,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         compteurMetier++
         if (compteurMetier == 1) {
           metiers.push(i);
-          this.actor.update({ "data.attributes.magie.value": i.data.magie })
+          this.actor.update({ "system.attributes.magie.value": i.system.magie })
         } else {
           ui.notifications.error("Vous avez déjà un métier !");
           let item = this.actor.items.get(i._id)
@@ -231,8 +231,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
       // Append to spells.
       else if (i.type === 'sort') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
+        if (i.system.spellLevel != undefined) {
+          spells[i.system.spellLevel].push(i);
         }
       }
       // Append to etats.
@@ -256,15 +256,15 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
       else if (i.type === 'gemme') {
         trucs.push(i);
-        if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
-        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
-        charge = charge + i.data.weight * i.data.quantity
+        if (i.system.stockage == "sac") { poidssac = poidssac + i.system.weight * i.system.quantity * 100 }
+        if (i.system.stockage == "bourse") { poidsbourse = poidsbourse + i.system.weight * i.system.quantity * 100 }
+        charge = charge + i.system.weight * i.system.quantity
       }
       else if (i.type === 'conteneur') {
         trucs.push(i);
-        if (i.data.stockage == "sac") { poidssac = poidssac + i.data.weight * i.data.quantity * 100 }
-        if (i.data.stockage == "bourse") { poidsbourse = poidsbourse + i.data.weight * i.data.quantity * 100 }
-        charge = charge + i.data.weight * i.data.quantity
+        if (i.system.stockage == "sac") { poidssac = poidssac + i.system.weight * i.system.quantity * 100 }
+        if (i.system.stockage == "bourse") { poidsbourse = poidsbourse + i.system.weight * i.system.quantity * 100 }
+        charge = charge + i.system.weight * i.system.quantity
       }
       else if (i.type === 'recette') {
         trucs.push(i);
@@ -272,10 +272,10 @@ export class NaheulbeukActorSheet extends ActorSheet {
     }
 
     //update PR truc de mauviette et bonus tirer correctement pour les PJ
-    if (this.actor.data.type == "character") {
+    if (this.actor.type == "character") {
       const actorData = {
-        "data.attributes.pr.trucdemauviette": flagTrucDeMauviette,
-        "data.attributes.lancerarme.value": flagTirerCorrectement * (-5)
+        "system.attributes.pr.trucdemauviette": flagTrucDeMauviette,
+        "system.attributes.lancerarme.value": flagTirerCorrectement * (-5)
       };
       this.actor.update(actorData);
     }
@@ -296,7 +296,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     context.etats = etats;
     context.poidssac = poidssac / 100;
     context.poidsbourse = poidsbourse / 100;
-    if (this.actor.data.type == "character") {
+    if (this.actor.type == "character") {
       context.charge = (charge * 100 ) / 100;
     }
     context.attaques = attaques;
@@ -335,7 +335,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //PCH hide catégorie d'inventaire
     html.find('.hidelivres').click(ev => {
       const actorData = {
-        "data.attributes.hidelivres": !this.actor.data.data.attributes.hidelivres
+        "system.attributes.hidelivres": !this.actor.system.attributes.hidelivres
       };
       this.actor.update(actorData);
     });
@@ -343,84 +343,84 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //PCH hide catégorie d'inventaire
     html.find('.hidefioles').click(ev => {
       const actorData = {
-        "data.attributes.hidefioles": !this.actor.data.data.attributes.hidefioles
+        "system.attributes.hidefioles": !this.actor.system.attributes.hidefioles
       };
       this.actor.update(actorData);
     });
     //PCH hide catégorie d'inventaire
     html.find('.hideingredients').click(ev => {
       const actorData = {
-        "data.attributes.hideingredients": !this.actor.data.data.attributes.hideingredients
+        "system.attributes.hideingredients": !this.actor.system.attributes.hideingredients
       };
       this.actor.update(actorData);
     });
     //PCH hide catégorie d'inventaire
     html.find('.hidearmes').click(ev => {
       const actorData = {
-        "data.attributes.hidearmes": !this.actor.data.data.attributes.hidearmes
+        "system.attributes.hidearmes": !this.actor.system.attributes.hidearmes
       };
       this.actor.update(actorData);
     });
     //PCH hide catégorie d'inventaire
     html.find('.hideprotections').click(ev => {
       const actorData = {
-        "data.attributes.hideprotections": !this.actor.data.data.attributes.hideprotections
+        "system.attributes.hideprotections": !this.actor.system.attributes.hideprotections
       };
       this.actor.update(actorData);
     });
     //PCH hide catégorie d'inventaire
     html.find('.hidenourritures').click(ev => {
       const actorData = {
-        "data.attributes.hidenourritures": !this.actor.data.data.attributes.hidenourritures
+        "system.attributes.hidenourritures": !this.actor.system.attributes.hidenourritures
       };
       this.actor.update(actorData);
     });
     //PCH hide catégorie d'inventaire
     html.find('.hiderichesses').click(ev => {
       const actorData = {
-        "data.attributes.hiderichesses": !this.actor.data.data.attributes.hiderichesses
+        "system.attributes.hiderichesses": !this.actor.system.attributes.hiderichesses
       };
       this.actor.update(actorData);
     });
     //PCH hide catégorie d'inventaire
     html.find('.hideperso').click(ev => {
       const actorData = {
-        "data.attributes.hideperso": !this.actor.data.data.attributes.hideperso
+        "system.attributes.hideperso": !this.actor.system.attributes.hideperso
       };
       this.actor.update(actorData);
     });
         //PCH hide catégorie d'inventaire
     html.find('.hidemonture').click(ev => {
       const actorData = {
-        "data.attributes.hidemonture": !this.actor.data.data.attributes.hidemonture
+        "system.attributes.hidemonture": !this.actor.system.attributes.hidemonture
       };
       this.actor.update(actorData);
     });
     //PCH hide catégorie d'inventaire
     html.find('.hidespeciaux').click(ev => {
       const actorData = {
-        "data.attributes.hidespeciaux": !this.actor.data.data.attributes.hidespeciaux
+        "system.attributes.hidespeciaux": !this.actor.system.attributes.hidespeciaux
       };
       this.actor.update(actorData);
     });
       //PCH hide catégorie d'inventaire
     html.find('.hidebourse').click(ev => {
       const actorData = {
-        "data.attributes.hidebourse": !this.actor.data.data.attributes.hidebourse
+        "system.attributes.hidebourse": !this.actor.system.attributes.hidebourse
       };
       this.actor.update(actorData);
     });
       //PCH hide catégorie d'inventaire
     html.find('.hidenosac').click(ev => {
       const actorData = {
-        "data.attributes.hidenosac": !this.actor.data.data.attributes.hidenosac
+        "system.attributes.hidenosac": !this.actor.system.attributes.hidenosac
       };
       this.actor.update(actorData);
     });
     //PCH hide catégorie d'inventaire
     html.find('.hidesac').click(ev => {
       const actorData = {
-        "data.attributes.hidesac": !this.actor.data.data.attributes.hidesac
+        "system.attributes.hidesac": !this.actor.system.attributes.hidesac
       };
       this.actor.update(actorData);
     });
@@ -442,7 +442,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       //PCH enlever effet et déséquiper avant edition --> plus utile car readonly si equipe
-      //if (item.data.data.equipe==true){
+      //if (item.system.equipe==true){
       //this._onItemEquipe(ev,this.actor);
       //};
       item.sheet.render(true);
@@ -467,7 +467,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       //PCH enlever effets avant suppression
-      if (item.data.data.equipe == true) {
+      if (item.system.equipe == true) {
         this._onItemEquipe(ev, this.actor, context).then((value) => {
           item.delete();
         });
@@ -479,17 +479,17 @@ export class NaheulbeukActorSheet extends ActorSheet {
     html.find('.item-nosac').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
-      item.update({"data.stockage":"nosac"})
+      item.update({"system.stockage":"nosac"})
     });
     html.find('.item-sac').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
-      item.update({"data.stockage":"sac"})
+      item.update({"system.stockage":"sac"})
     });
     html.find('.item-bourse').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
-      item.update({"data.stockage":"bourse"})
+      item.update({"system.stockage":"bourse"})
     });
     
     // Active Effect management
@@ -513,7 +513,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //PCH more stats NPC
     html.find('.moreStats').click(ev => {
       const actorData = {
-        "data.attributes.moreStats": !this.actor.data.data.attributes.moreStats
+        "system.attributes.moreStats": !this.actor.system.attributes.moreStats
       };
       this.actor.update(actorData);
     });
@@ -548,10 +548,10 @@ export class NaheulbeukActorSheet extends ActorSheet {
     const itemData = {
       name: name,
       type: type,
-      data: data
+      system: data
     };
     // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.data["type"];
+    delete itemsystem["type"];
 
     // Finally, create the item!
     return await Item.create(itemData, { parent: this.actor });
@@ -598,135 +598,135 @@ export class NaheulbeukActorSheet extends ActorSheet {
     const item = this.actor.items.get(li.data("itemId"));
 
     //Maj poid max sac et bourse
-    if (item.data.data.equipe == false && item.type == "sac" && actor.type == "character") {
-      if (item.type == "sac" && item.data.data.type == "sac à dos") {
-        var poidsac = Number(actor.data.data.attributes.sac.max) + Number(item.data.data.place);
-        await actor.update({"data.attributes.sac.max": poidsac});
-        await item.update({"data.stockage":"nosac"})
+    if (item.system.equipe == false && item.type == "sac" && actor.type == "character") {
+      if (item.type == "sac" && item.system.type == "sac à dos") {
+        var poidsac = Number(actor.system.attributes.sac.max) + Number(item.system.place);
+        await actor.update({"system.attributes.sac.max": poidsac});
+        await item.update({"system.stockage":"nosac"})
       }
-      if (item.type == "sac" && item.data.data.type == "bourse") {
-        var poidbourse = Number(actor.data.data.attributes.bourse.max) + Number(item.data.data.place);
-        await actor.update({"data.attributes.bourse.max": poidbourse});
-        await item.update({"data.stockage":"nosac"})
+      if (item.type == "sac" && item.system.type == "bourse") {
+        var poidbourse = Number(actor.system.attributes.bourse.max) + Number(item.system.place);
+        await actor.update({"system.attributes.bourse.max": poidbourse});
+        await item.update({"system.stockage":"nosac"})
       }
-    } else if (item.data.data.equipe == true && item.type == "sac" && actor.type == "character") {
-      if (item.type == "sac" && item.data.data.type == "sac à dos") {
-        var poidsac = Number(actor.data.data.attributes.sac.max) - Number(item.data.data.place);
-        await actor.update({"data.attributes.sac.max": poidsac});
-        await item.update({"data.stockage":"sac"})
+    } else if (item.system.equipe == true && item.type == "sac" && actor.type == "character") {
+      if (item.type == "sac" && item.system.type == "sac à dos") {
+        var poidsac = Number(actor.system.attributes.sac.max) - Number(item.system.place);
+        await actor.update({"system.attributes.sac.max": poidsac});
+        await item.update({"system.stockage":"sac"})
       }
-      if (item.type == "sac" && item.data.data.type == "bourse") {
-        var poidbourse = Number(actor.data.data.attributes.bourse.max) - Number(item.data.data.place);
-        await actor.update({"data.attributes.bourse.max": poidbourse});
-        await item.update({"data.stockage":"sac"})
+      if (item.type == "sac" && item.system.type == "bourse") {
+        var poidbourse = Number(actor.system.attributes.bourse.max) - Number(item.system.place);
+        await actor.update({"system.attributes.bourse.max": poidbourse});
+        await item.update({"system.stockage":"sac"})
       }
     }
 
     //si l'objet n'est pas équipé
-    if (item.data.data.equipe == false) {
-      var cou = Number(actor.data.data.abilities.cou.bonus) + Number(item.data.data.cou);
-      var int = Number(actor.data.data.abilities.int.bonus) + Number(item.data.data.int);
-      var cha = Number(actor.data.data.abilities.cha.bonus) + Number(item.data.data.cha);
-      var ad = Number(actor.data.data.abilities.ad.bonus) + Number(item.data.data.ad);
-      var fo = Number(actor.data.data.abilities.fo.bonus) + Number(item.data.data.fo);
-      var att = Number(actor.data.data.abilities.att.bonus) + Number(item.data.data.att);
-      var prd = Number(actor.data.data.abilities.prd.bonus) + Number(item.data.data.prd);
-      var pr = Number(actor.data.data.attributes.pr.bonus) + Number(item.data.data.pr);
-      var prm = Number(actor.data.data.attributes.prm.bonus) + Number(item.data.data.prm);
-      var rm = Number(actor.data.data.attributes.rm.bonus) + Number(item.data.data.rm);
-      var mvt = Number(actor.data.data.attributes.mvt.value) + Number(item.data.data.mvt);
+    if (item.system.equipe == false) {
+      var cou = Number(actor.system.abilities.cou.bonus) + Number(item.system.cou);
+      var int = Number(actor.system.abilities.int.bonus) + Number(item.system.int);
+      var cha = Number(actor.system.abilities.cha.bonus) + Number(item.system.cha);
+      var ad = Number(actor.system.abilities.ad.bonus) + Number(item.system.ad);
+      var fo = Number(actor.system.abilities.fo.bonus) + Number(item.system.fo);
+      var att = Number(actor.system.abilities.att.bonus) + Number(item.system.att);
+      var prd = Number(actor.system.abilities.prd.bonus) + Number(item.system.prd);
+      var pr = Number(actor.system.attributes.pr.bonus) + Number(item.system.pr);
+      var prm = Number(actor.system.attributes.prm.bonus) + Number(item.system.prm);
+      var rm = Number(actor.system.attributes.rm.bonus) + Number(item.system.rm);
+      var mvt = Number(actor.system.attributes.mvt.value) + Number(item.system.mvt);
       
       //on construit les datas
       var actorData = {};
 
       if (item.type != "arme") { //pour autre chose qu'une arme
         actorData = {
-          "data.abilities.cou.bonus": cou,
-          "data.abilities.int.bonus": int,
-          "data.abilities.cha.bonus": cha,
-          "data.abilities.ad.bonus": ad,
-          "data.abilities.fo.bonus": fo,
-          "data.abilities.att.bonus": att,
-          "data.abilities.prd.bonus": prd,
-          "data.attributes.pr.bonus": pr,
-          "data.attributes.prm.bonus": prm,
-          "data.attributes.mvt.value": mvt,
-          "data.attributes.rm.bonus": rm
+          "system.abilities.cou.bonus": cou,
+          "system.abilities.int.bonus": int,
+          "system.abilities.cha.bonus": cha,
+          "system.abilities.ad.bonus": ad,
+          "system.abilities.fo.bonus": fo,
+          "system.abilities.att.bonus": att,
+          "system.abilities.prd.bonus": prd,
+          "system.attributes.pr.bonus": pr,
+          "system.attributes.prm.bonus": prm,
+          "system.attributes.mvt.value": mvt,
+          "system.attributes.rm.bonus": rm
         };
       }
       if (item.type == "arme") { //Si c'est une arme on n'applique pas les bonus liés à la prise en mains
         actorData = {
-          "data.abilities.cou.bonus": cou,
-          "data.abilities.int.bonus": int,
-          "data.abilities.cha.bonus": cha,
-          "data.abilities.ad.bonus": ad,
-          "data.abilities.fo.bonus": fo
+          "system.abilities.cou.bonus": cou,
+          "system.abilities.int.bonus": int,
+          "system.abilities.cha.bonus": cha,
+          "system.abilities.ad.bonus": ad,
+          "system.abilities.fo.bonus": fo
         };
       }
-      await item.update({ "data.equipe": true }); //update de l'objet pour le passer en équipé
+      await item.update({ "system.equipe": true }); //update de l'objet pour le passer en équipé
       await actor.update(actorData);//update de l'acteur pour modifier les stats
       //ajout d'un bout spécifique pour gérer les formules custom
       //ATTENTION PEUT ËTRE A REVOIR
-      if (item.data.data.custom != "") {
-        const customS = item.data.data.custom.split(";")
+      if (item.system.custom != "") {
+        const customS = item.system.custom.split(";")
         customS.forEach(e => {
           const custom = e.split("=")
           var variable = custom[0]
           var customvaleur = Number(eval(game.naheulbeuk.macros.replaceAttr(custom[1], actor)))
-          const valeur = Number(eval("actor.data." + variable)) + customvaleur
+          const valeur = Number(eval("actor." + variable)) + customvaleur
           actor.update({ [variable]: valeur });
         })
       }
     } else { //même chose mais en retirant le bonus
-      var cou = Number(actor.data.data.abilities.cou.bonus) - Number(item.data.data.cou);
-      var int = Number(actor.data.data.abilities.int.bonus) - Number(item.data.data.int);
-      var cha = Number(actor.data.data.abilities.cha.bonus) - Number(item.data.data.cha);
-      var ad = Number(actor.data.data.abilities.ad.bonus) - Number(item.data.data.ad);
-      var fo = Number(actor.data.data.abilities.fo.bonus) - Number(item.data.data.fo);
-      var att = Number(actor.data.data.abilities.att.bonus) - Number(item.data.data.att);
-      var prd = Number(actor.data.data.abilities.prd.bonus) - Number(item.data.data.prd);
-      var pr = Number(actor.data.data.attributes.pr.bonus) - Number(item.data.data.pr);
-      var prm = Number(actor.data.data.attributes.prm.bonus) - Number(item.data.data.prm);
-      var rm = Number(actor.data.data.attributes.rm.bonus) - Number(item.data.data.rm);
-      var mvt = Number(actor.data.data.attributes.mvt.value) - Number(item.data.data.mvt);
+      var cou = Number(actor.system.abilities.cou.bonus) - Number(item.system.cou);
+      var int = Number(actor.system.abilities.int.bonus) - Number(item.system.int);
+      var cha = Number(actor.system.abilities.cha.bonus) - Number(item.system.cha);
+      var ad = Number(actor.system.abilities.ad.bonus) - Number(item.system.ad);
+      var fo = Number(actor.system.abilities.fo.bonus) - Number(item.system.fo);
+      var att = Number(actor.system.abilities.att.bonus) - Number(item.system.att);
+      var prd = Number(actor.system.abilities.prd.bonus) - Number(item.system.prd);
+      var pr = Number(actor.system.attributes.pr.bonus) - Number(item.system.pr);
+      var prm = Number(actor.system.attributes.prm.bonus) - Number(item.system.prm);
+      var rm = Number(actor.system.attributes.rm.bonus) - Number(item.system.rm);
+      var mvt = Number(actor.system.attributes.mvt.value) - Number(item.system.mvt);
 
       var actorData = {};
       if (item.type != "arme") {
         actorData = {
-          "data.abilities.cou.bonus": cou,
-          "data.abilities.int.bonus": int,
-          "data.abilities.cha.bonus": cha,
-          "data.abilities.ad.bonus": ad,
-          "data.abilities.fo.bonus": fo,
-          "data.abilities.att.bonus": att,
-          "data.abilities.prd.bonus": prd,
-          "data.attributes.pr.bonus": pr,
-          "data.attributes.prm.bonus": prm,
-          "data.attributes.mvt.value": mvt,
-          "data.attributes.rm.bonus": rm,
+          "system.abilities.cou.bonus": cou,
+          "system.abilities.int.bonus": int,
+          "system.abilities.cha.bonus": cha,
+          "system.abilities.ad.bonus": ad,
+          "system.abilities.fo.bonus": fo,
+          "system.abilities.att.bonus": att,
+          "system.abilities.prd.bonus": prd,
+          "system.attributes.pr.bonus": pr,
+          "system.attributes.prm.bonus": prm,
+          "system.attributes.mvt.value": mvt,
+          "system.attributes.rm.bonus": rm,
         };
       }
       if (item.type == "arme") {
         actorData = {
-          "data.abilities.cou.bonus": cou,
-          "data.abilities.int.bonus": int,
-          "data.abilities.cha.bonus": cha,
-          "data.abilities.ad.bonus": ad,
-          "data.abilities.fo.bonus": fo
+          "system.abilities.cou.bonus": cou,
+          "system.abilities.int.bonus": int,
+          "system.abilities.cha.bonus": cha,
+          "system.abilities.ad.bonus": ad,
+          "system.abilities.fo.bonus": fo
         };
       }
-      if (item.type == "arme" && item.data.data.enmain == true) { await this._onArmeEnMains(ev, actor) };
-      await item.update({ "data.equipe": false }); //update de l'objet pour le passer en équipé
+      if (item.type == "arme" && item.system.enmain == true) { await this._onArmeEnMains(ev, actor) };
+      await item.update({ "system.equipe": false }); //update de l'objet pour le passer en équipé
       await actor.update(actorData);
       //ajout d'un bout spécifique pour gérer les formules custom
       //ATTENTION PEUT ËTRE PAS BON
-      if (item.data.data.custom != "") {
-        const customS = item.data.data.custom.split(";")
+      if (item.system.custom != "") {
+        const customS = item.system.custom.split(";")
         customS.forEach(e => {
           const custom = e.split("=")
           var variable = custom[0]
           var customvaleur = Number(eval(game.naheulbeuk.macros.replaceAttr(custom[1], actor)))
-          const valeur = Number(eval("actor.data." + variable)) - customvaleur
+          const valeur = Number(eval("actor." + variable)) - customvaleur
           actor.update({ [variable]: valeur });
         })
       }
@@ -740,84 +740,84 @@ export class NaheulbeukActorSheet extends ActorSheet {
     const li = $(ev.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
     //si l'objet n'est pas en mains
-    if (item.data.data.enmain == false) {
+    if (item.system.enmain == false) {
       //on calcule les nouvelles stats en rajoutant les bonus
 
       //cas particulier de l'attaque baissé quand on a un bouclier
-      if (item.data.data.prd != "-" && (item.data.data.formula == "" || item.data.data.formula == "-")) {
-        var att = Number(actor.data.data.abilities.att.bonus) + Number(item.data.data.att);
+      if (item.system.prd != "-" && (item.system.formula == "" || item.system.formula == "-")) {
+        var att = Number(actor.system.abilities.att.bonus) + Number(item.system.att);
       } else {
-        var att = Number(actor.data.data.abilities.att.bonus);
+        var att = Number(actor.system.abilities.att.bonus);
       }
 
-      const prd = Number(actor.data.data.abilities.prd.bonus) + Number(item.data.data.prd);
-      const pr = Number(actor.data.data.attributes.pr.bonus) + Number(item.data.data.pr);
-      const prm = Number(actor.data.data.attributes.prm.bonus) + Number(item.data.data.prm);
-      const rm = Number(actor.data.data.attributes.rm.bonus) + Number(item.data.data.rm);
-      const mvt = Number(actor.data.data.attributes.mvt.value) + Number(item.data.data.mvt);
-      var lancer = Number(actor.data.data.attributes.lancerarme.bonus)
-      if (item.data.data.lancerarme != "-") { lancer = lancer + Number(item.data.data.lancerarme) }
-      if (actor.data.data.attributes.lancerarme.degat == 0) {
+      const prd = Number(actor.system.abilities.prd.bonus) + Number(item.system.prd);
+      const pr = Number(actor.system.attributes.pr.bonus) + Number(item.system.pr);
+      const prm = Number(actor.system.attributes.prm.bonus) + Number(item.system.prm);
+      const rm = Number(actor.system.attributes.rm.bonus) + Number(item.system.rm);
+      const mvt = Number(actor.system.attributes.mvt.value) + Number(item.system.mvt);
+      var lancer = Number(actor.system.attributes.lancerarme.bonus)
+      if (item.system.lancerarme != "-") { lancer = lancer + Number(item.system.lancerarme) }
+      if (actor.system.attributes.lancerarme.degat == 0) {
         var lancerdegat = ""
       } else {
-        var lancerdegat = actor.data.data.attributes.lancerarme.degat
+        var lancerdegat = actor.system.attributes.lancerarme.degat
       }
-      if (item.data.data.lancerarmedegat != "-" && item.data.data.lancerarmedegat != "0") {
-        if (item.data.data.lancerarmedegat.substr(0, 1) == "-" || item.data.data.lancerarmedegat.substr(0, 1) == "+") {
-          lancerdegat = lancerdegat + " " + item.data.data.lancerarmedegat + " "
+      if (item.system.lancerarmedegat != "-" && item.system.lancerarmedegat != "0") {
+        if (item.system.lancerarmedegat.substr(0, 1) == "-" || item.system.lancerarmedegat.substr(0, 1) == "+") {
+          lancerdegat = lancerdegat + " " + item.system.lancerarmedegat + " "
         } else {
-          lancerdegat = lancerdegat + " +" + item.data.data.lancerarmedegat + " "
+          lancerdegat = lancerdegat + " +" + item.system.lancerarmedegat + " "
         }
       }
       //on construit les datas
       const actorData = {
-        "data.abilities.att.bonus": att,
-        //"data.abilities.prd.bonus": prd,
-        "data.attributes.pr.bonus": pr,
-        "data.attributes.prm.bonus": prm,
-        "data.attributes.lancerarme.bonus": lancer,
-        "data.attributes.lancerarme.degat": lancerdegat,
-        "data.attributes.mvt.value": mvt,
-        "data.attributes.rm.bonus": rm
+        "system.abilities.att.bonus": att,
+        //"system.abilities.prd.bonus": prd,
+        "system.attributes.pr.bonus": pr,
+        "system.attributes.prm.bonus": prm,
+        "system.attributes.lancerarme.bonus": lancer,
+        "system.attributes.lancerarme.degat": lancerdegat,
+        "system.attributes.mvt.value": mvt,
+        "system.attributes.rm.bonus": rm
       };
-      await item.update({ "data.enmain": true }); //update de l'objet pour le passer en équipé
+      await item.update({ "system.enmain": true }); //update de l'objet pour le passer en équipé
       await actor.update(actorData);//update de l'acteur pour modifier les stats
       return
-    } else if (item.data.data.enmain == true) { //même chose mais en retirant le bonus
+    } else if (item.system.enmain == true) { //même chose mais en retirant le bonus
       //cas particulier de l'attaque baissé quand on a un bouclier
-      if (item.data.data.prd != "-" && (item.data.data.formula == "" || item.data.data.formula == "-")) {
-        var att = Number(actor.data.data.abilities.att.bonus) - Number(item.data.data.att);
+      if (item.system.prd != "-" && (item.system.formula == "" || item.system.formula == "-")) {
+        var att = Number(actor.system.abilities.att.bonus) - Number(item.system.att);
       } else {
-        var att = Number(actor.data.data.abilities.att.bonus);
+        var att = Number(actor.system.abilities.att.bonus);
       }
-      const prd = Number(actor.data.data.abilities.prd.bonus) - Number(item.data.data.prd);
-      const pr = Number(actor.data.data.attributes.pr.bonus) - Number(item.data.data.pr);
-      const prm = Number(actor.data.data.attributes.prm.bonus) - Number(item.data.data.prm);
-      const rm = Number(actor.data.data.attributes.rm.bonus) - Number(item.data.data.rm);
-      const mvt = Number(actor.data.data.attributes.mvt.value) - Number(item.data.data.mvt);
-      var lancer = Number(actor.data.data.attributes.lancerarme.bonus)
-      if (item.data.data.lancerarme != "-") { lancer = lancer - Number(item.data.data.lancerarme) }
-      var lancerdegat = actor.data.data.attributes.lancerarme.degat
-      if (item.data.data.lancerarmedegat != "-") {
-        if (item.data.data.lancerarmedegat.substr(0, 1) == "-" || item.data.data.lancerarmedegat.substr(0, 1) == "+") {
-          var replacedegat = " " + item.data.data.lancerarmedegat + " ";
-          lancerdegat = actor.data.data.attributes.lancerarme.degat.replace(replacedegat, "")
+      const prd = Number(actor.system.abilities.prd.bonus) - Number(item.system.prd);
+      const pr = Number(actor.system.attributes.pr.bonus) - Number(item.system.pr);
+      const prm = Number(actor.system.attributes.prm.bonus) - Number(item.system.prm);
+      const rm = Number(actor.system.attributes.rm.bonus) - Number(item.system.rm);
+      const mvt = Number(actor.system.attributes.mvt.value) - Number(item.system.mvt);
+      var lancer = Number(actor.system.attributes.lancerarme.bonus)
+      if (item.system.lancerarme != "-") { lancer = lancer - Number(item.system.lancerarme) }
+      var lancerdegat = actor.system.attributes.lancerarme.degat
+      if (item.system.lancerarmedegat != "-") {
+        if (item.system.lancerarmedegat.substr(0, 1) == "-" || item.system.lancerarmedegat.substr(0, 1) == "+") {
+          var replacedegat = " " + item.system.lancerarmedegat + " ";
+          lancerdegat = actor.system.attributes.lancerarme.degat.replace(replacedegat, "")
         } else {
-          var replacedegat = " +" + item.data.data.lancerarmedegat + " ";
-          lancerdegat = actor.data.data.attributes.lancerarme.degat.replace(replacedegat, "")
+          var replacedegat = " +" + item.system.lancerarmedegat + " ";
+          lancerdegat = actor.system.attributes.lancerarme.degat.replace(replacedegat, "")
         }
       }
       const actorData = {
-        "data.abilities.att.bonus": att,
-        //"data.abilities.prd.bonus": prd,
-        "data.attributes.pr.bonus": pr,
-        "data.attributes.prm.bonus": prm,
-        "data.attributes.lancerarme.bonus": lancer,
-        "data.attributes.lancerarme.degat": lancerdegat,
-        "data.attributes.mvt.value": mvt,
-        "data.attributes.rm.bonus": rm
+        "system.abilities.att.bonus": att,
+        //"system.abilities.prd.bonus": prd,
+        "system.attributes.pr.bonus": pr,
+        "system.attributes.prm.bonus": prm,
+        "system.attributes.lancerarme.bonus": lancer,
+        "system.attributes.lancerarme.degat": lancerdegat,
+        "system.attributes.mvt.value": mvt,
+        "system.attributes.rm.bonus": rm
       };
-      await item.update({ "data.enmain": false }); //update de l'objet pour le passer en équipé
+      await item.update({ "system.enmain": false }); //update de l'objet pour le passer en équipé
       await actor.update(actorData);
       return
     };
@@ -843,18 +843,18 @@ export class NaheulbeukActorSheet extends ActorSheet {
     const item = this.actor.items.get(li.data("itemId"));
     //ajout du bonus de dégâts fo>12 si c'est une arme
     if (item) {
-      if (item.data.type == "arme" && (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        if (item.data.data.armefeu!=true) {
-          dice = dice + "+" + Math.max(0, (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) - 12)
+      if (item.type == "arme" && (this.actor.system.abilities.fo.value + this.actor.system.abilities.fo.bonus) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
+        if (item.system.armefeu!=true) {
+          dice = dice + "+" + Math.max(0, (this.actor.system.abilities.fo.value + this.actor.system.abilities.fo.bonus) - 12)
         }
       };
-      if (item.data.type == "arme" && (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) < 9 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        if (item.data.data.armefeu!=true) {
+      if (item.type == "arme" && (this.actor.system.abilities.fo.value + this.actor.system.abilities.fo.bonus) < 9 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
+        if (item.system.armefeu!=true) {
           dice = dice + "-1"
         }
       };
-      if (item.data.type == "arme" && item.data.data.lancerarme != "-" && this.actor.data.data.attributes.lancerarme.degat != 0 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        dice = dice + this.actor.data.data.attributes.lancerarme.degat
+      if (item.type == "arme" && item.system.lancerarme != "-" && this.actor.system.attributes.lancerarme.degat != 0 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
+        dice = dice + this.actor.system.attributes.lancerarme.degat
       };
     };
     //dice=game.naheulbeuk.macros.replaceAttr(dice,this.actor);
@@ -876,7 +876,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     if (armefeu == "true") {
       let flagTirerCorrectement=0
       for (let actoritem of this.actor.items){
-        if (actoritem.data.name == "TIRER CORRECTEMENT" ) {flagTirerCorrectement=1}
+        if (actoritem.name == "TIRER CORRECTEMENT" ) {flagTirerCorrectement=1}
       }
       if (flagTirerCorrectement == 0) {diff=(parseInt(diff)+5).toString()}
       if (flagTirerCorrectement == 1) {diff=(parseInt(diff)+1).toString()}
@@ -947,18 +947,18 @@ export class NaheulbeukActorSheet extends ActorSheet {
     const item = this.actor.items.get(li.data("itemId"));
     //ajout du bonus de dégâts fo>12 si c'est une arme
     if (item) {
-      if (item.data.type == "arme" && (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        if (item.data.data.armefeu!=true) {
-          dice = dice + "+" + Math.max(0, (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) - 12)
+      if (item.type == "arme" && (this.actor.system.abilities.fo.value + this.actor.system.abilities.fo.bonus) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
+        if (item.system.armefeu!=true) {
+          dice = dice + "+" + Math.max(0, (this.actor.system.abilities.fo.value + this.actor.system.abilities.fo.bonus) - 12)
         }
       };
-      if (item.data.type == "arme" && (this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus) < 9 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        if (item.data.data.armefeu!=true) {
+      if (item.type == "arme" && (this.actor.system.abilities.fo.value + this.actor.system.abilities.fo.bonus) < 9 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
+        if (item.system.armefeu!=true) {
           dice = dice + "-1"
         }
       };
-      if (item.data.type == "arme" && item.data.data.lancerarme != "-" && this.actor.data.data.attributes.lancerarme.degat != 0 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        dice = dice + this.actor.data.data.attributes.lancerarme.degat
+      if (item.type == "arme" && item.system.lancerarme != "-" && this.actor.system.attributes.lancerarme.degat != 0 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
+        dice = dice + this.actor.system.attributes.lancerarme.degat
       };
     };
 
@@ -981,7 +981,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     if (armefeu == "true") {
       let flagTirerCorrectement=0
       for (let actoritem of this.actor.items){
-        if (actoritem.data.name == "TIRER CORRECTEMENT" ) {flagTirerCorrectement=1}
+        if (actoritem.name == "TIRER CORRECTEMENT" ) {flagTirerCorrectement=1}
       }
       if (flagTirerCorrectement == 0) {diff=(parseInt(diff)+5).toString()}
       if (flagTirerCorrectement == 1) {diff=(parseInt(diff)+1).toString()}
@@ -1725,12 +1725,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //on récupère l'objet
     const li = $(ev.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
-    const quantity = item.data.data.quantity
+    const quantity = item.system.quantity
     if (quantity > 0 && option=="moins") {
-      item.update({ "data.quantity": quantity - 1 });
+      item.update({ "system.quantity": quantity - 1 });
     }
     if (option=="plus") {
-      item.update({ "data.quantity": quantity + 1 });
+      item.update({ "system.quantity": quantity + 1 });
     }
   }
 
@@ -1741,18 +1741,18 @@ export class NaheulbeukActorSheet extends ActorSheet {
       //on récupère l'objet
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
-      const quantity = item.data.data.quantity
+      const quantity = item.system.quantity
       if (quantity > 0 && option=="moins") {
-        item.update({ "data.quantity": quantity - 1 });
+        item.update({ "system.quantity": quantity - 1 });
       }
       if (option=="plus") {
-        item.update({ "data.quantity": quantity + 1 });
+        item.update({ "system.quantity": quantity + 1 });
       }
     }
 
   //PCH calcule niveau
   _level() {
-    var value = this.actor.data.data.attributes.xp.value
+    var value = this.actor.system.attributes.xp.value
     if (value < 100) { return 1 }
     else if (value < 300) { return 2 }
     else if (value < 600) { return 3 }
@@ -1783,17 +1783,17 @@ export class NaheulbeukActorSheet extends ActorSheet {
 
   //PCH calcule résistance magique
   _rm() {
-    var value = this.actor.data.data.abilities.cou.value + this.actor.data.data.abilities.cou.bonus;
-    value = value + this.actor.data.data.abilities.int.value + this.actor.data.data.abilities.int.bonus;
-    value = value + this.actor.data.data.abilities.fo.value + this.actor.data.data.abilities.fo.bonus;
+    var value = this.actor.system.abilities.cou.value + this.actor.system.abilities.cou.bonus;
+    value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus;
+    value = value + this.actor.system.abilities.fo.value + this.actor.system.abilities.fo.bonus;
     value = Math.round(value / 3);
     return value;
   }
 
   //PCH calcule esquive
   _esq() {
-    var val1 = this.actor.data.data.abilities.ad.value + this.actor.data.data.abilities.ad.bonus
-    var val2 = this.actor.data.data.attributes.pr.value + this.actor.data.data.attributes.pr.bonus - this.actor.data.data.attributes.pr.prignorepoid
+    var val1 = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus
+    var val2 = this.actor.system.attributes.pr.value + this.actor.system.attributes.pr.bonus - this.actor.system.attributes.pr.prignorepoid
     if (val2 <= 1) {
       val2 = 1;
     } else if (val2 == 2) {
@@ -1815,17 +1815,17 @@ export class NaheulbeukActorSheet extends ActorSheet {
 
   //PCH calcule magie physique
   _mphy() {
-    var value = this.actor.data.data.abilities.ad.value + this.actor.data.data.abilities.ad.bonus;
-    value = value + this.actor.data.data.abilities.int.value + this.actor.data.data.abilities.int.bonus;
+    var value = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus;
+    value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus;
     value = Math.ceil(value / 2);
     return value;
   }
 
   //PCH calcule magie psychique
   _mpsy() {
-    var value = this.actor.data.data.abilities.cha.value + this.actor.data.data.abilities.cha.bonus;
-    value = value + this.actor.data.data.abilities.int.value + this.actor.data.data.abilities.int.bonus;
-    value = value - this.actor.data.data.abilities.cha.ignorempsy
+    var value = this.actor.system.abilities.cha.value + this.actor.system.abilities.cha.bonus;
+    value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus;
+    value = value - this.actor.system.abilities.cha.ignorempsy
     value = Math.ceil(value / 2);
     return value;
   }
@@ -1846,29 +1846,29 @@ export class NaheulbeukActorSheet extends ActorSheet {
     var prjambes = 0;
     var prpieds = 0;
     this.actor.items._source.forEach(element => {
-      if (element.type == "armure" && element.data.equipe) {
-        if (element.data.prtete) { prtete = prtete + element.data.pr };
-        if (element.data.prbras) { prbras = prbras + element.data.pr };
-        if (element.data.prtorse) { prtorse = prtorse + element.data.pr };
-        if (element.data.prmains) { prmains = prmains + element.data.pr };
-        if (element.data.prjambes) { prjambes = prjambes + element.data.pr };
-        if (element.data.prpieds) { prpieds = prpieds + element.data.pr };
+      if (element.type == "armure" && element.system.equipe) {
+        if (element.system.prtete) { prtete = prtete + element.system.pr };
+        if (element.system.prbras) { prbras = prbras + element.system.pr };
+        if (element.system.prtorse) { prtorse = prtorse + element.system.pr };
+        if (element.system.prmains) { prmains = prmains + element.system.pr };
+        if (element.system.prjambes) { prjambes = prjambes + element.system.pr };
+        if (element.system.prpieds) { prpieds = prpieds + element.system.pr };
       }
-      if (element.type == "arme" && element.data.equipe && element.data.enmain) {
-        if (element.data.prbouclier) { prbouclier = prbouclier + element.data.pr };
+      if (element.type == "arme" && element.system.equipe && element.system.enmain) {
+        if (element.system.prbouclier) { prbouclier = prbouclier + element.system.pr };
       }
     })
     this.actor.items._source.forEach(element => {
-      if (element.type == "armure" && element.data.equipe) {
-        if (element.data.prtete) { prtete = prtete + "*" };
-        if (element.data.prbras) { prbras = prbras + "*" };
-        if (element.data.prtorse) { prtorse = prtorse + "*" };
-        if (element.data.prmains) { prmains = prmains + "*" };
-        if (element.data.prjambes) { prjambes = prjambes + "*" };
-        if (element.data.prpieds) { prpieds = prpieds + "*" };
+      if (element.type == "armure" && element.system.equipe) {
+        if (element.system.prtete) { prtete = prtete + "*" };
+        if (element.system.prbras) { prbras = prbras + "*" };
+        if (element.system.prtorse) { prtorse = prtorse + "*" };
+        if (element.system.prmains) { prmains = prmains + "*" };
+        if (element.system.prjambes) { prjambes = prjambes + "*" };
+        if (element.system.prpieds) { prpieds = prpieds + "*" };
       }
-      if (element.type == "arme" && element.data.equipe && element.data.enmain) {
-        if (element.data.prbouclier) { prbouclier = prbouclier + "*" };
+      if (element.type == "arme" && element.system.equipe && element.system.enmain) {
+        if (element.system.prbouclier) { prbouclier = prbouclier + "*" };
       }
     })
     const myDialogOptions = {
@@ -1940,10 +1940,10 @@ export class NaheulbeukActorSheet extends ActorSheet {
 
   //PCH calcule bonus/malus AD
   _bonus_malus_ad() {
-    let ad_value = this.actor.data.data.abilities.ad.value + this.actor.data.data.abilities.ad.bonus
-    let bonus_malus_AD = this.actor.data.data.abilities.ad.bonus_malus_AD
+    let ad_value = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus
+    let bonus_malus_AD = this.actor.system.abilities.ad.bonus_malus_AD
     let d
-    if (this.actor.data.data.abilities.ad.value!=0 && ad_value<9 && bonus_malus_AD==0){
+    if (this.actor.system.abilities.ad.value!=0 && ad_value<9 && bonus_malus_AD==0){
       d = new Dialog({
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
@@ -1957,7 +1957,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
             label: "C'est fait",
             callback: (html) => {
               const actorData = {
-                "data.abilities.ad.bonus_malus_AD": -1
+                "system.abilities.ad.bonus_malus_AD": -1
               };
               this.actor.update(actorData);
             }
@@ -1979,7 +1979,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
             label: "C'est fait",
             callback: (html) => {
               const actorData = {
-                "data.abilities.ad.bonus_malus_AD": 1
+                "system.abilities.ad.bonus_malus_AD": 1
               };
               this.actor.update(actorData);
             }
@@ -2001,7 +2001,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
             label: "C'est fait",
             callback: (html) => {
               const actorData = {
-                "data.abilities.ad.bonus_malus_AD": 1
+                "system.abilities.ad.bonus_malus_AD": 1
               };
               this.actor.update(actorData);
             }
@@ -2023,7 +2023,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
             label: "C'est fait",
             callback: (html) => {
               const actorData = {
-                "data.abilities.ad.bonus_malus_AD": -1
+                "system.abilities.ad.bonus_malus_AD": -1
               };
               this.actor.update(actorData);
             }
@@ -2045,7 +2045,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
             label: "C'est fait",
             callback: (html) => {
               const actorData = {
-                "data.abilities.ad.bonus_malus_AD": 0
+                "system.abilities.ad.bonus_malus_AD": 0
               };
               this.actor.update(actorData);
             }
@@ -2067,7 +2067,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
             label: "C'est fait",
             callback: (html) => {
               const actorData = {
-                "data.abilities.ad.bonus_malus_AD": 0
+                "system.abilities.ad.bonus_malus_AD": 0
               };
               this.actor.update(actorData);
             }

@@ -29,9 +29,9 @@
         <img class="icon-inventaire " src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
       </div>
 
-      {{#if (equalsand (equalsand (equalsand item.data.prd "-" item.data.formula "-") true (equalsnot item.data.lancerarme "-") true) true item.data.epreuvecustom false)}}
+      {{#if (equalsand (equalsand (equalsand item.system.prd "-" item.system.formula "-") true (equalsnot item.system.lancerarme "-") true) true item.system.epreuvecustom false)}}
       <h4 style="text-overflow: ellipsis;">
-        {{item.data.quantity}}&nbsp;-&nbsp;{{item.name}}&nbsp;
+        {{item.system.quantity}}&nbsp;-&nbsp;{{item.name}}&nbsp;
       </h4>
       <div class="flex-group-center"><i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
       {{else}}
@@ -39,55 +39,55 @@
         {{item.name}}&nbsp;
       </h4>
       {{/if}}
-      {{#if (equalsand item.data.epreuvecustom true item.data.enmain true)}}
+      {{#if (equalsand item.system.epreuvecustom true item.system.enmain true)}}
       &nbsp;<i class="fas fa-dice-d6 rollable4 cliquable" 
-        data-dice1="{{item.data.jet1}}" data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" 
-        data-dice2="{{item.data.jet2}}" data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}"
-        data-dice3="{{item.data.jet3}}" data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" 
-        data-dice4="{{item.data.jet4}}" data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}"
-        data-dice5="{{item.data.jet5}}" data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"
-        data-dice6="{{item.data.jet6}}" data-name6="{{item.data.name6}}" data-diff6="{{item.data.epreuve6}}" 
-        data-dice7="{{item.data.jet7}}" data-name7="{{item.data.name7}}" data-diff7="{{item.data.epreuve7}}">
+        data-dice1="{{item.system.jet1}}" data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" 
+        data-dice2="{{item.system.jet2}}" data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}"
+        data-dice3="{{item.system.jet3}}" data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" 
+        data-dice4="{{item.system.jet4}}" data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}"
+        data-dice5="{{item.system.jet5}}" data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"
+        data-dice6="{{item.system.jet6}}" data-name6="{{item.system.name6}}" data-diff6="{{item.system.epreuve6}}" 
+        data-dice7="{{item.system.jet7}}" data-name7="{{item.system.name7}}" data-diff7="{{item.system.epreuve7}}">
       </i>
       {{/if}}
     </div>
     <div class="flex-group-center">
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       -
       {{else}}
-      {{#if (equals item.data.enmain true)}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="Dégâts {{item.name}}"
+      {{#if (equals item.system.enmain true)}}
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="Dégâts {{item.name}}"
         data-diff=""></i>&nbsp;
-      <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="Dégâts {{item.name}}"
+      <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="Dégâts {{item.name}}"
         data-diff=""></i>
       {{else}}
-      {{item.data.formula}}
+      {{item.system.formula}}
       {{/if}}
       {{/if}}
     </div>
     <div class="flex-group-center" style="flex:0.7">
-      {{#if (equals item.data.lancerarme "-")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
+      {{#if (equals item.system.lancerarme "-")}}
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       -
       {{else}}
-      {{#if (equals item.data.enmain true)}}
+      {{#if (equals item.system.enmain true)}}
       <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
-        data-diff="@att+{{item.data.att}}" data-af="{{item.data.armefeu}}"></i>
+        data-diff="@att+{{item.system.att}}" data-af="{{item.system.armefeu}}"></i>
         &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
-        data-name="{{item.name}}" data-diff="@att+{{item.data.att}}" data-af="{{item.data.armefeu}}"></i>
+        data-name="{{item.name}}" data-diff="@att+{{item.system.att}}" data-af="{{item.system.armefeu}}"></i>
       {{else}}
       -
       {{/if}}
       {{/if}}
       {{else}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       -
       {{else}}
-      {{#if (equals item.data.enmain true)}}
+      {{#if (equals item.system.enmain true)}}
       <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
-        data-diff="@att-distance" data-af="{{item.data.armefeu}}"></i>
+        data-diff="@att-distance" data-af="{{item.system.armefeu}}"></i>
         &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
-        data-name="{{item.name}}" data-diff="@att-distance" data-af="{{item.data.armefeu}}"></i>
+        data-name="{{item.name}}" data-diff="@att-distance" data-af="{{item.system.armefeu}}"></i>
       {{else}}
       -
       {{/if}}
@@ -95,30 +95,30 @@
       {{/if}}
     </div>
     <div class="flex-group-center" style="flex:0.7">
-      {{#if (equalsor item.data.enmain false item.data.prd "-")}}
+      {{#if (equalsor item.system.enmain false item.system.prd "-")}}
       -
       {{else}}
       <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
-        data-diff="@prd+{{item.data.prd}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
-        data-name="{{item.name}}" data-diff="@prd+{{item.data.prd}}"></i>
+        data-diff="@prd+{{item.system.prd}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
+        data-name="{{item.name}}" data-diff="@prd+{{item.system.prd}}"></i>
       {{/if}}
     </div>
-    {{#if (equalsor item.data.rupture "-" item.data.rupture "0")}}
+    {{#if (equalsor item.system.rupture "-" item.system.rupture "0")}}
     <div class="flex-group-center" style="flex:0.7">-</div>
     {{else}}
     <div class="flex-group-center" style="flex:0.7"><i class="fas fa-dice-d20 rollable2" data-dice="d6"
-        data-name="Rupture" data-diff="{{item.data.rupture}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-        data-dice="d6" data-name="Rupture" data-diff="{{item.data.rupture}}"></i></div>
+        data-name="Rupture" data-diff="{{item.system.rupture}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+        data-dice="d6" data-name="Rupture" data-diff="{{item.system.rupture}}"></i></div>
     {{/if}}
     <div class="flex-group-center" style="flex:0.7">
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="flex-group-center item-equipe" type="checkbox" checked />
       {{else}}
       <input class="flex-group-center item-equipe" type="checkbox" />
       {{/if}}
     </div>
     <div class="flex-group-center" style="flex:0.7">
-      {{#if (equals item.data.enmain true)}}
+      {{#if (equals item.system.enmain true)}}
       <input class="flex-group-center item-en-main" type="checkbox" checked />
       {{else}}
       <input class="flex-group-center item-en-main" type="checkbox" />
@@ -157,23 +157,23 @@
         <img class="icon-inventaire " src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
       </div>
       <h4 style="text-overflow: ellipsis;">{{item.name}}</h4>
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       {{else}}
-      &nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
-        data-diff=""></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}"
+      &nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
+        data-diff=""></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}"
         data-name="{{item.name}}" data-diff=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.pr}}</div>
-    {{#if (equalsor item.data.rupture "-" item.data.rupture "0")}}
+    <div class="flex-group-center">{{item.system.pr}}</div>
+    {{#if (equalsor item.system.rupture "-" item.system.rupture "0")}}
     <div class="flex-group-center">-</div>
     {{else}}
-    <div class="flex-group-center">{{item.data.rupture}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d6"
-        data-name="Rupture" data-diff="{{item.data.rupture}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-        data-dice="d6" data-name="Rupture" data-diff="{{item.data.rupture}}"></i></div>
+    <div class="flex-group-center">{{item.system.rupture}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d6"
+        data-name="Rupture" data-diff="{{item.system.rupture}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+        data-dice="d6" data-name="Rupture" data-diff="{{item.system.rupture}}"></i></div>
     {{/if}}
     <div class="flex-group-center">
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="flex-group-center item-equipe" type="checkbox" checked />
       {{else}}
       <input class="flex-group-center item-equipe" type="checkbox" />
@@ -190,11 +190,11 @@
     <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Equipement et Trucs</span></div>
   </h2>
   {{save_actor}}
-  <li class="hidesac item flexrow items-header" style="height: auto;background: rgba(0, 0, 0, 0.1);">Dans le sac ({{read_items_actor "sac"}}) :&nbsp;&nbsp;{{arrondi poidssac}} kg / {{data.attributes.sac.max}} kg</li>
-  {{#if (equals data.attributes.hidesac true)}}
+  <li class="hidesac item flexrow items-header" style="height: auto;background: rgba(0, 0, 0, 0.1);">Dans le sac ({{read_items_actor "sac"}}) :&nbsp;&nbsp;{{arrondi poidssac}} kg / {{system.attributes.sac.max}} kg</li>
+  {{#if (equals system.attributes.hidesac true)}}
   {{#if (equalsnot (read_items_actor "divers") 0)}}
   <li class="hidespeciaux item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Divers ({{read_items_actor "divers"}})</li>
-  {{#if (equals data.attributes.hidespeciaux true)}}
+  {{#if (equals system.attributes.hidespeciaux true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -207,8 +207,8 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equalsor (equalsor item.data.categorie "Divers" item.type "sac") true item.data.categorie "")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equalsor (equalsor item.system.categorie "Divers" item.type "sac") true item.system.categorie "")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -216,51 +216,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -268,7 +268,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -295,7 +295,7 @@
   {{/if}}
   {{#if (equalsnot (read_items_actor "livres") 0)}}
   <li class="hidelivres item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Livres ({{read_items_actor "livres"}})</li>
-  {{#if (equals data.attributes.hidelivres true)}}
+  {{#if (equals system.attributes.hidelivres true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -308,8 +308,8 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equals item.data.categorie "Livres")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equals item.system.categorie "Livres")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -317,51 +317,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -369,7 +369,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -396,7 +396,7 @@
   {{/if}}
   {{#if (equalsnot (read_items_actor "potions") 0)}}
   <li class="hidefioles item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Potions et Poisons ({{read_items_actor "potions"}})</li>
-  {{#if (equals data.attributes.hidefioles true)}}
+  {{#if (equals system.attributes.hidefioles true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -409,8 +409,8 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equals item.data.categorie "Potions")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equals item.system.categorie "Potions")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -418,51 +418,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -470,7 +470,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -497,7 +497,7 @@
   {{/if}}
   {{#if (equalsnot (read_items_actor "ingredients") 0)}}
   <li class="hideingredients item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Ingrédients ({{read_items_actor "ingredients"}})</li>
-  {{#if (equals data.attributes.hideingredients true)}}
+  {{#if (equals system.attributes.hideingredients true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -510,8 +510,8 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equals item.data.categorie "Ingrédients")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equals item.system.categorie "Ingrédients")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -519,51 +519,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -571,7 +571,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -598,7 +598,7 @@
   {{/if}}
   {{#if (equalsnot (read_items_actor "armes") 0)}}
   <li class="hidearmes item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Armes et objets en mains ({{read_items_actor "armes"}})</li>
-  {{#if (equals data.attributes.hidearmes true)}}
+  {{#if (equals system.attributes.hidearmes true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -611,8 +611,8 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equals item.data.categorie "Armes")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equals item.system.categorie "Armes")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -620,51 +620,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -672,7 +672,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -699,7 +699,7 @@
   {{/if}}
   {{#if (equalsnot (read_items_actor "armures") 0)}}
   <li class="hideprotections item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Protections et objets portés ({{read_items_actor "armures"}})</li>
-  {{#if (equals data.attributes.hideprotections true)}}
+  {{#if (equals system.attributes.hideprotections true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -712,8 +712,8 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equals item.data.categorie "Armures")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equals item.system.categorie "Armures")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -721,51 +721,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -773,7 +773,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -800,7 +800,7 @@
   {{/if}}
   {{#if (equalsnot (read_items_actor "nourritures") 0)}}
   <li class="hidenourritures item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Nourritures ({{read_items_actor "nourritures"}})</li>
-  {{#if (equals data.attributes.hidenourritures true)}}
+  {{#if (equals system.attributes.hidenourritures true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -813,8 +813,8 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equals item.data.categorie "Nourritures")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equals item.system.categorie "Nourritures")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -822,51 +822,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -874,7 +874,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -901,7 +901,7 @@
   {{/if}}
   {{#if (equalsnot (read_items_actor "richesses") 0)}}
   <li class="hiderichesses item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Richesses ({{read_items_actor "richesses"}})</li>
-  {{#if (equals data.attributes.hiderichesses true)}}
+  {{#if (equals system.attributes.hiderichesses true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -914,8 +914,8 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equals item.data.categorie "Richesses")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equals item.system.categorie "Richesses")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -923,51 +923,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -975,7 +975,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -1002,7 +1002,7 @@
   {{/if}}
   {{#if (equalsnot (read_items_actor "perso") 0)}}
   <li class="hideperso item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Objets personnels ({{read_items_actor "perso"}})</li>
-  {{#if (equals data.attributes.hideperso true)}}
+  {{#if (equals system.attributes.hideperso true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -1015,8 +1015,8 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equals item.data.categorie "Objets personnels")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equals item.system.categorie "Objets personnels")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -1024,51 +1024,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -1076,7 +1076,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -1103,7 +1103,7 @@
   {{/if}}
   {{#if (equalsnot (read_items_actor "montures") 0)}}
   <li class="hidemonture item flexrow items-header" style="font-size: 16px; height: auto;">&nbsp;&nbsp;Montures ({{read_items_actor "montures"}})</li>
-  {{#if (equals data.attributes.hidemonture true)}}
+  {{#if (equals system.attributes.hidemonture true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -1116,60 +1116,60 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "sac")}}
-  {{#if (equals item.data.categorie "Montures")}}
+  {{#if (equals item.system.stockage "sac")}}
+  {{#if (equals item.system.categorie "Montures")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
         <img class="icon-inventaire " src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
-      {{#if (equalsand item.type "truc" item.data.equipe "true")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsand item.type "truc" item.system.equipe "true")}}
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -1177,7 +1177,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -1203,8 +1203,8 @@
   {{/if}}
   {{/if}}
   {{/if}}
-  <li class="hidebourse item flexrow items-header" style="height: auto;background: rgba(0, 0, 0, 0.1);">Dans la bourse ({{read_items_actor "bourse"}}) :&nbsp;&nbsp;{{arrondi poidsbourse}} kg / {{data.attributes.bourse.max}} kg</li>
-  {{#if (equals data.attributes.hidebourse true)}}
+  <li class="hidebourse item flexrow items-header" style="height: auto;background: rgba(0, 0, 0, 0.1);">Dans la bourse ({{read_items_actor "bourse"}}) :&nbsp;&nbsp;{{arrondi poidsbourse}} kg / {{system.attributes.bourse.max}} kg</li>
+  {{#if (equals system.attributes.hidebourse true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -1217,7 +1217,7 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "bourse")}}
+  {{#if (equals item.system.stockage "bourse")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -1225,51 +1225,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -1277,7 +1277,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -1301,7 +1301,7 @@
   {{/each}}
   {{/if}}
   <li class="hidenosac item flexrow items-header" style="height: auto;background: rgba(0, 0, 0, 0.1);">En dehors du sac ({{read_items_actor "nosac"}})</li>
-  {{#if (equals data.attributes.hidenosac true)}}
+  {{#if (equals system.attributes.hidenosac true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
     <h4 class="rollable" data-roll-type="item"></h4>
@@ -1314,7 +1314,7 @@
     </div>
   </li>
   {{#each trucs as |item id|}}
-  {{#if (equals item.data.stockage "nosac")}}
+  {{#if (equals item.system.stockage "nosac")}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
@@ -1322,51 +1322,51 @@
       </div>
       <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equals item.type "truc")}}
-      {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{/if}}
       {{else}}
-      {{#if (equals item.data.epreuvecustom true)}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-      data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-      data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-      data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-      data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-      data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+      {{#if (equals item.system.epreuvecustom true)}}
+      <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+      data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+      data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+      data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+      data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+      data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
-      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+      &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
       data-diff=""></i>
       {{/if}}
       {{/if}}
       {{/if}}
       {{#if (equals item.type "recette")}}
       <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="d20"
-      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.data.difficulte}}" data-dice2="d20"
-      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.data.difficulte item.data.malus}}" data-dice3=""
+      data-name1="Confection spécialiste" data-diff1="{{ingeniosite item.system.difficulte}}" data-dice2="d20"
+      data-name2="Confection non spécialiste" data-diff2="{{ingeniositeMalus item.system.difficulte item.system.malus}}" data-dice3=""
       data-name3="" data-diff3="" data-dice4=""
       data-name4="" data-diff4="" data-dice5=""
       data-name5="" data-diff5=""></i>
       {{/if}}
     </div>
-    <div class="flex-group-center">{{item.data.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
+    <div class="flex-group-center">{{item.system.quantity}}&nbsp;&nbsp;<i class="cliquable item-quantity-moins" style="font-weight: bold;font-style: normal">-</i>&nbsp;<i class="cliquable item-quantity-plus" style="font-weight: bold;font-style:normal">+</i></div>
     <div class="flex-group-center">
-      {{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg
+      {{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.data.cou item.data.int item.data.cha item.data.ad item.data.fo item.data.att item.data.prd
-      item.data.pr item.data.prm item.data.mvt item.data.rm item.data.autre)}}
+      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
+      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
       <label>-</label>
       {{else}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />
@@ -1374,7 +1374,7 @@
       {{/if}}
       {{else}}
       {{#if (equalsor (equalsor item.type "arme" item.type "armure") true item.type "sac")}}
-      {{#if (equals item.data.equipe true)}}
+      {{#if (equals item.system.equipe true)}}
       <input class="item-equipe" type="checkbox" checked />
       {{else}}
       <input class="item-equipe" type="checkbox" />

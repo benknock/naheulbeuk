@@ -3,19 +3,19 @@
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <div class="flexrow" style="align-items: center;">
-        <h1 class="charname" style="flex:1"><input {{#if (equals data.equipe true)}}readonly{{/if}} name="name" type="text"
+        <h1 class="charname" style="flex:1"><input {{#if (equals system.equipe true)}}readonly{{/if}} name="name" type="text"
           value="{{item.name}}" placeholder="Name" /></h1>
         <i class="fas fa-eye masquerstats cliquable" style="flex:0.01;padding-left:3px"></i>
       </div>
       <div class="grid grid-2col">
         <div class="resource">
           <label class="resource-label">Quantité</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.quantity"
-            value="{{data.quantity}}" data-dtype="Number" />
+          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.quantity"
+            value="{{system.quantity}}" data-dtype="Number" />
         </div>
         <div class="resource">
           <label class="resource-label">Place (kg)</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.place" value="{{data.place}}"
+          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.place" value="{{system.place}}"
             data-dtype="Number" />
         </div>
       </div>
@@ -24,28 +24,28 @@
           <label class="resource-label">
             Poids du conteneur (kg)
           </label>
-          <input type="text" name="data.poidconteneur" value="{{data.poidconteneur}}" data-dtype="Number" />
+          <input type="text" name="system.poidconteneur" value="{{system.poidconteneur}}" data-dtype="Number" />
         </div>
         <div class="resource">
           <label class="resource-label">
             Poids avec les objets (kg)
           </label>
-          <input readonly type="text" name="data.weight" value="{{arrondiProche (poidconteneur item)}}" data-dtype="Number" />
+          <input readonly type="text" name="system.weight" value="{{arrondiProche (poidconteneur item)}}" data-dtype="Number" />
         </div>
       </div>
       <div class="grid grid-2col">
-        {{#if (equals data.cacher false)}}
+        {{#if (equals system.cacher false)}}
         <div class="resource">
           <label class="resource-label">Prix (po)</label>
-          <input {{#if (equals data.equipe true)}}readonly{{/if}} type="text" name="data.prix" value="{{data.prix}}"
+          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.prix" value="{{system.prix}}"
             data-dtype="Number" />
         </div>
         {{/if}}
         <div class="resource">
           <label class="resource-label">Catégorie</label>
-          <select name="data.categorie"
+          <select name="system.categorie"
             style="width: calc(100% - 2px);font-family: Naheulbeuk;font-size: 15px;margin-bottom: 5px;">
-            <option value="{{data.categorie}}">{{data.categorie}}</option>
+            <option value="{{system.categorie}}">{{system.categorie}}</option>
             <option value="Divers">Divers</option>
             <option value="Livres">Livres</option>
             <option value="Potions">Potions</option>
@@ -61,7 +61,7 @@
       </div>
     </div>
   </header>
-  {{#if (equals data.cacher false)}}
+  {{#if (equals system.cacher false)}}
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="attributes">Détails</a>
@@ -75,7 +75,7 @@
     <div class="tab" data-group="primary" data-tab="description">
       {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
       rollData prop. --}}
-      {{editor content=data.note2 target="data.note2" rollData=rollData button=true owner=owner editable=editable}}
+      {{editor system.note2 target="system.note2" rollData=rollData button=true owner=owner editable=editable}}
     </div>
 
     {{!-- Attributes Tab --}}
@@ -91,7 +91,7 @@
         </div>
       </li>
       <hr>
-      {{#each item.data.data.items as |item id|}}
+      {{#each item.system.items as |item id|}}
       <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
         <div class="item-name flexrow" style="flex:4">
           <div class="item-image" style="flex:0.5">
@@ -99,8 +99,8 @@
           </div>
           <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;flex:4;text-align:left;">{{item.name}}</h4>
         </div>
-        <label style="flex:1;text-align:center;">{{item.data.quantity}}</label>
-        <label style="flex:1;text-align:center;">{{arrondiProche (math item.data.quantity "*" item.data.weight)}}&nbsp;kg</label>
+        <label style="flex:1;text-align:center;">{{item.system.quantity}}</label>
+        <label style="flex:1;text-align:center;">{{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg</label>
         <div style="flex:0.5">
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
@@ -115,7 +115,7 @@
     <div class="bestiaire" style="height:500px">
       {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
       rollData prop. --}}
-      {{editor content=data.desccacher target="data.desccacher" rollData=rollData button=true owner=owner
+      {{editor system.desccacher target="system.desccacher" rollData=rollData button=true owner=owner
       editable=editable}}
     </div>
   </section>

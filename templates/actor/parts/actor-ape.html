@@ -6,14 +6,14 @@
       <label>
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-        <strong><u>{{item.name}} - niveau&nbsp;</u>{{item.data.niveau}}</strong>
+        <strong><u>{{item.name}} - niveau&nbsp;</u>{{item.system.niveau}}</strong>
       </label>
     </li>
     <li>
-      <div>Description : {{item.data.description}}</div>
+      <div>Description : {{item.system.description}}</div>
     </li>
     <li>
-      <div>Effet : {{item.data.effet}}</div>
+      <div>Effet : {{item.system.effet}}</div>
     </li>
     <hr>
     {{/each}}

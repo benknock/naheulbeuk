@@ -7,6 +7,7 @@ export class Macros {
    * @returns 
    */
 
+  //Fonction pour permettre un jet custom
   static customRoll = function (dice, diff) {
     if (game.naheulbeuk.macros.getSpeakersActor() == null) { return }
     const actorSource = game.naheulbeuk.macros.getSpeakersActor()
@@ -95,17 +96,18 @@ export class Macros {
   // remplace @lvl @ad... ds un string
   static replaceAttr = function (expr, actor) {
     var expr = expr
-    if (actor.data.type == "character") {
-      const ad = actor.data.data.abilities.ad.value + actor.data.data.abilities.ad.bonus;
-      const lancer = actor.data.data.attributes.lancerarme.value + actor.data.data.attributes.lancerarme.bonus + ad;
-      const bonusint = Math.max(0, (actor.data.data.abilities.int.value + actor.data.data.abilities.int.bonus) - 12)
-      var lancerdegat = actor.data.data.attributes.lancerarme.degat
+    if (actor.type == "character") {
+      const ad = actor.system.abilities.ad.value + actor.system.abilities.ad.bonus;
+      const lancer = actor.system.attributes.lancerarme.value + actor.system.attributes.lancerarme.bonus + ad;
+      const bonusint = Math.max(0, (actor.system.abilities.int.value + actor.system.abilities.int.bonus) - 12)
+      var lancerdegat = actor.system.attributes.lancerarme.degat
       if (lancerdegat == "") { lancerdegat = 0 }
       expr = expr.replace(/@att-distance/g, lancer);
       expr = expr.replace(/@bonusint/g, bonusint);
       expr = expr.replace(/@degat-distance/g, lancerdegat);
     }
-    const pr = actor.data.data.attributes.pr.value + actor.data.data.attributes.pr.bonus + actor.data.data.attributes.pr.bonusSsEncombrement + actor.data.data.attributes.pr.trucdemauviette;
+
+    const pr = actor.system.attributes.pr.value + actor.system.attributes.pr.bonus + actor.system.attributes.pr.bonusSsEncombrement + actor.system.attributes.pr.trucdemauviette;
     var malusmvtpr
     if (pr > 7) {
       malusmvtpr = 20
@@ -120,30 +122,34 @@ export class Macros {
     } else {
       malusmvtpr = 0
     }
-    const prm = actor.data.data.attributes.prm.value + actor.data.data.attributes.prm.bonus;
-    const cou = actor.data.data.abilities.cou.value + actor.data.data.abilities.cou.bonus;
-    const int = actor.data.data.abilities.int.value + actor.data.data.abilities.int.bonus;
-    const cha = actor.data.data.abilities.cha.value + actor.data.data.abilities.cha.bonus;
-    const ad = actor.data.data.abilities.ad.value + actor.data.data.abilities.ad.bonus;
-    const fo = actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus;
-    const att = actor.data.data.abilities.att.value + actor.data.data.abilities.att.bonus;
-    const prd = actor.data.data.abilities.prd.value + actor.data.data.abilities.prd.bonus;
-    const mphy = actor.data.data.attributes.mphy.value;
-    const mpsy = actor.data.data.attributes.mpsy.value;
-    const rm = actor.data.data.attributes.rm.value + actor.data.data.attributes.rm.bonus;
-    var esq = actor.data.data.attributes.esq.value + actor.data.data.attributes.esq.bonus;
-    if (actor.data.type == "npc") { esq = esq + actor.data.data.abilities.ad.bonus }
-    const lvl = actor.data.data.attributes.level.value;
+    const prm = actor.system.attributes.prm.value + actor.system.attributes.prm.bonus;
+    const cou = actor.system.abilities.cou.value + actor.system.abilities.cou.bonus;
+    const int = actor.system.abilities.int.value + actor.system.abilities.int.bonus;
+    const cha = actor.system.abilities.cha.value + actor.system.abilities.cha.bonus;
+    const ad = actor.system.abilities.ad.value + actor.system.abilities.ad.bonus;
+    const fo = actor.system.abilities.fo.value + actor.system.abilities.fo.bonus;
+    const att = actor.system.abilities.att.value + actor.system.abilities.att.bonus;
+    const prd = actor.system.abilities.prd.value + actor.system.abilities.prd.bonus;
+    const mphy = actor.system.attributes.mphy.value;
+    const mpsy = actor.system.attributes.mpsy.value;
+    const rm = actor.system.attributes.rm.value + actor.system.attributes.rm.bonus;
+    var esq = actor.system.attributes.esq.value + actor.system.attributes.esq.bonus;
+
+    if (actor.type == "npc") { esq = esq + actor.system.abilities.ad.bonus }
+    
+    const lvl = actor.system.attributes.level.value;
+
     var bonusfo = "";
-    if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
-      bonusfo = "+" + (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus - 12)
+    if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
+      bonusfo = "+" + (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus - 12)
     };
-    if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
+    if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
       bonusfo = "-1"
     };
+
     let flagTirerCorrectement = 5
     for (let actoritem of actor.items) {
-      if (actoritem.data.name == "TIRER CORRECTEMENT") {
+      if (actoritem.name == "TIRER CORRECTEMENT") {
         flagTirerCorrectement = 1
       }
     }
@@ -172,9 +178,11 @@ export class Macros {
     expr = expr.replace(/\-\-/g, "+");
     expr = expr.replace(/\+\+/g, "+");
     if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
+    if (expr.substring(expr.length - 1, expr.length) == "+") { expr = expr.substring(0, expr.length - 1) }
     return expr;
   }
 
+  //Récupérer le token cible
   static getSpeakersTarget = function () {
     let targets = ([...game.user.targets].length > 0) ? [...game.user.targets] : canvas.tokens.children.filter(t => t._controlled);
     if (targets.length == 0 || targets.length > 1) {
@@ -184,6 +192,7 @@ export class Macros {
     return targets[0].actor;
   }
 
+  //Récupérer le token acteur
   static getSpeakersActor = function () {
     // Vérifie qu'un seul token est sélectionné
     const tokens = canvas.tokens.controlled;
@@ -205,20 +214,23 @@ export class Macros {
     }
   }
 
+  //Chercher un compendium
   static compendiumSearch = function () {
     var compendiums = [];
     game.packs.forEach(elem => {
-      if (elem.metadata.package == "naheulbeuk") {
+      if (elem.metadata.packageName == "naheulbeuk") {
         compendiums.push(elem.metadata.label)
       }
     })
-
     let d = new Dialog({
       title: "Rechercher un compendium du système Naheulbeuk",
       content: `
       <form>
         <label>Taper le nom du compendium à ouvrir <em>(entrée pour faire la recherche)</em></label>
         <input type="text" name="q" id="q" value="" label="Nom du compendium" />
+        <br/><br/>
+        <button name"r" id="r" type="button">Chercher</button>
+        <hr>
         <div id="result"></div>
       </form>
       `,
@@ -227,7 +239,7 @@ export class Macros {
     });
     d.render(true);
     $(document).ready(function () {
-      $("[id=q]").change(function () {
+      $("[id=r]").click(function () {
         var val = $("[id=q]").val().toLowerCase();
         var res = $("[id=result]");
         res[0].innerHTML = '';
@@ -252,6 +264,7 @@ export class Macros {
     });
   }
 
+  //Chercher une rencontre (liste)
   static async rencontre() {
     var message = "";
     var monstres = []
@@ -262,7 +275,7 @@ export class Macros {
     }
     await Promise.all(promise).then(actors => {
       for (let actor of actors) {
-        monstres.push(actor.data)
+        monstres.push(actor)
       }
     })
     let monstresClasses = []
@@ -271,7 +284,7 @@ export class Macros {
       var j = 0
       var minxp = monstres[0]
       for (let monstre of monstres) {
-        if (monstre.data.attributes.xp.value < minxp.data.attributes.xp.value) {
+        if (monstre.system.attributes.xp.value < minxp.system.attributes.xp.value) {
           minxp = monstre
           j = i
         }
@@ -361,25 +374,23 @@ export class Macros {
           <option value="Steppes du Srölnagud">Steppes du Srölnagud</option>
           <option value="Uzgueg et Gnaal">Uzgueg et Gnaal</option>
           <option value="Vallée du Birmilistan">Vallée du Birmilistan</option>
-          <option value="-Plaines-">-Plaines-</option>
-          <option value="-Forêt-">-Forêt-</option>
         </select>
         <br/>
         <label>Catégorie</label>
         <select name="c" id="c">
-        <option value=""></option>
-        <option value="Animaux">Animaux</option>
-        <option value="Végétaux">Végétaux</option>
-        <option value="Fanghiens">Fanghiens</option>
-        <option value="Pirates Mauves">Pirates Mauves</option>
-        <option value="Birmilistanais">Birmilistanais</option>
-        <option value="Sauvages du Froid">Sauvages du Froid</option>
-        <option value="Skuulnards">Skuulnards</option>
-        <option value="Vrognards">Vrognards</option>
-        <option value="Humanoïdes">Humanoïdes</option>
-        <option value="Monstres et créatures">Monstres et créatures</option>
-        <option value="Opposants légendaires">Opposants légendaires</option>
-      </select>
+          <option value=""></option>
+          <option value="Animaux">Animaux</option>
+          <option value="Végétaux">Végétaux</option>
+          <option value="Fanghiens">Fanghiens</option>
+          <option value="Pirates Mauves">Pirates Mauves</option>
+          <option value="Birmilistanais">Birmilistanais</option>
+          <option value="Sauvages du Froid">Sauvages du Froid</option>
+          <option value="Skuulnards">Skuulnards</option>
+          <option value="Vrognards">Vrognards</option>
+          <option value="Humanoïdes">Humanoïdes</option>
+          <option value="Monstres et créatures">Monstres et créatures</option>
+          <option value="Opposants légendaires">Opposants légendaires</option>
+        </select>
         <hr>
         <div id="result"></div>
       </form>
@@ -405,13 +416,13 @@ export class Macros {
           let flagGeo = false;
           let flagCategorie = false;
           monstre.items.forEach(item => {
-            if (item.data.name == trait || trait == "") { flagTrait = true }
-            if (item.data.name == geo || geo == "") { flagGeo = true }
+            if (item.name == trait || trait == "") { flagTrait = true }
+            if (item.name == geo || geo == "") { flagGeo = true }
           })
-          if (monstre.data.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
+          if (monstre.system.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
           if (flagCategorie && flagGeo && flagTrait) {
             count++;
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.data.attributes.xp.value + ' XP</li>';
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + monstre._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.system.attributes.xp.value + ' XP</li>';
           }
           //}
         });
@@ -437,13 +448,13 @@ export class Macros {
           let flagGeo = false;
           let flagCategorie = false;
           monstre.items.forEach(item => {
-            if (item.data.name == trait || trait == "") { flagTrait = true }
-            if (item.data.name == geo || geo == "") { flagGeo = true }
+            if (item.name == trait || trait == "") { flagTrait = true }
+            if (item.name == geo || geo == "") { flagGeo = true }
           })
-          if (monstre.data.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
+          if (monstre.system.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
           if (flagCategorie && flagGeo && flagTrait) {
             count++;
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.data.attributes.xp.value + ' XP</li>';
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true"data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + monstre._id + '"  data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.system.attributes.xp.value + ' XP</li>';
           }
           //}
         });
@@ -469,13 +480,13 @@ export class Macros {
           let flagGeo = false;
           let flagCategorie = false;
           monstre.items.forEach(item => {
-            if (item.data.name == trait || trait == "") { flagTrait = true }
-            if (item.data.name == geo || geo == "") { flagGeo = true }
+            if (item.name == trait || trait == "") { flagTrait = true }
+            if (item.name == geo || geo == "") { flagGeo = true }
           })
-          if (monstre.data.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
+          if (monstre.system.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
           if (flagCategorie && flagGeo && flagTrait) {
             count++;
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.data.attributes.xp.value + ' XP</li>';
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + monstre._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.system.attributes.xp.value + ' XP</li>';
           }
           //}
         });
@@ -501,13 +512,13 @@ export class Macros {
           let flagGeo = false;
           let flagCategorie = false;
           monstre.items.forEach(item => {
-            if (item.data.name == trait || trait == "") { flagTrait = true }
-            if (item.data.name == geo || geo == "") { flagGeo = true }
+            if (item.name == trait || trait == "") { flagTrait = true }
+            if (item.name == geo || geo == "") { flagGeo = true }
           })
-          if (monstre.data.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
+          if (monstre.system.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
           if (flagCategorie && flagGeo && flagTrait) {
             count++;
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.data.attributes.xp.value + ' XP</li>';
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + monstre._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.system.attributes.xp.value + ' XP</li>';
           }
           //}
         });
@@ -584,10 +595,11 @@ export class Macros {
     });
   }
 
+  //Chercher un élément aléatoire d'un compendium
   static async compendiumAlea() {
     var compendiums = [];
     game.packs.forEach(elem => {
-      if (elem.metadata.package == "naheulbeuk") {
+      if (elem.metadata.packageName == "naheulbeuk") {
         compendiums.push(elem.metadata.label)
       }
     })
@@ -598,6 +610,9 @@ export class Macros {
       <form>
         <label>Taper le nom du compendium à ouvrir <em>(entrée pour faire la recherche)</em></label>
         <input type="text" name="q" id="q" value="" label="Nom du compendium" />
+        <br/><br/>
+        <button name"r" id="r" type="button">Chercher</button>
+        <hr>
         <div id="result"></div>
       </form>
       `,
@@ -606,7 +621,7 @@ export class Macros {
     });
     d.render(true);
     $(document).ready(function () {
-      $("[id=q]").change(function () {
+      $("[id=r]").click(function () {
         var val = $("[id=q]").val().toLowerCase();
         var res = $("[id=result]");
         res[0].innerHTML = '';
@@ -626,13 +641,14 @@ export class Macros {
         $("[class=afficher]").click(ev => {
           var compendium = game.packs.find(p => p.metadata.label === ev.currentTarget.dataset.comp);
           var alea = 1 + Math.floor(Math.random() * compendium.index.size);
-          res[0].innerHTML = '<br/><a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + compendium.metadata.name + '" data-id=' + compendium.index.contents[alea]._id + '><i class="fas fa-suitcase"></i>&nbsp;' + compendium.index.contents[alea].name + '</a>';
+          res[0].innerHTML = '<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + compendium.metadata.name + '.' + compendium.index.contents[alea]._id + '" data-pack="naheulbeuk.' + compendium.metadata.name + '" data-id=' + compendium.index.contents[alea]._id + '><i class="fas fa-suitcase"></i>&nbsp;' + compendium.index.contents[alea].name + '</a>';
         });
         document.getElementById("app-" + d.appId).style.height = "auto"
       });
     });
   }
 
+  //Chercher une rencontre (générateur) étape 1
   static async listrencontreprep() {
     //---------------------------
     let list = '';
@@ -709,7 +725,7 @@ export class Macros {
     }
     await Promise.all(promise).then(actors => {
       for (let actor of actors) {
-        monstres.push(actor.data)
+        monstres.push(actor)
       }
     })
     d.render(true);
@@ -840,8 +856,6 @@ export class Macros {
             <input type="checkbox" id="zone22" name="Steppes du Srölnagud"><label>Steppes du Srölnagud</label><hr>
             <input type="checkbox" id="zone23" name="Uzgueg et Gnaal"><label>Uzgueg et Gnaal</label><hr>
             <input type="checkbox" id="zone24" name="Vallée du Birmilistan"><label>Vallée du Birmilistan</label><hr>
-            <input type="checkbox" id="zone25" name="-Plaines-"><label>-Plaines-</label><hr>
-            <input type="checkbox" id="zone26" name="-Forêt-"><label>-Forêt-</label><hr>
             <button class="validation" type="button">Ok</button>
             `,
             buttons: {
@@ -853,7 +867,7 @@ export class Macros {
             $("[class=validation]").click(ev2 => {
               let id_ev = ev.currentTarget.id
               let variable = []
-              for (let env = 1; env < 27; env++) {
+              for (let env = 1; env < 25; env++) {
                 if (document.getElementById("zone" + env).checked) {
                   variable.push(document.getElementById("zone" + env).name)
                 }
@@ -1029,8 +1043,6 @@ export class Macros {
             <input type="checkbox" id="zone22" name="Steppes du Srölnagud"><label>Steppes du Srölnagud</label><hr>
             <input type="checkbox" id="zone23" name="Uzgueg et Gnaal"><label>Uzgueg et Gnaal</label><hr>
             <input type="checkbox" id="zone24" name="Vallée du Birmilistan"><label>Vallée du Birmilistan</label><hr>
-            <input type="checkbox" id="zone25" name="-Plaines-"><label>-Plaines-</label><hr>
-            <input type="checkbox" id="zone26" name="-Forêt-"><label>-Forêt-</label><hr>
             <button class="validation" type="button">Ok</button>
             `,
             buttons: {
@@ -1042,7 +1054,7 @@ export class Macros {
             $("[class=validation]").click(ev2 => {
               let id_ev = ev.currentTarget.id
               let variable = []
-              for (let env = 1; env < 27; env++) {
+              for (let env = 1; env < 25; env++) {
                 if (document.getElementById("zone" + env).checked) {
                   variable.push(document.getElementById("zone" + env).name)
                 }
@@ -1118,8 +1130,6 @@ export class Macros {
           <input type="checkbox" id="zone22" name="Steppes du Srölnagud"><label>Steppes du Srölnagud</label><hr>
           <input type="checkbox" id="zone23" name="Uzgueg et Gnaal"><label>Uzgueg et Gnaal</label><hr>
           <input type="checkbox" id="zone24" name="Vallée du Birmilistan"><label>Vallée du Birmilistan</label><hr>
-          <input type="checkbox" id="zone25" name="-Plaines-"><label>-Plaines-</label><hr>
-          <input type="checkbox" id="zone26" name="-Forêt-"><label>-Forêt-</label><hr>
           <button class="validation" type="button">Ok</button>
           `,
           buttons: {
@@ -1131,7 +1141,7 @@ export class Macros {
           $("[class=validation]").click(ev2 => {
             let id_ev = ev.currentTarget.id
             let variable = []
-            for (let env = 1; env < 27; env++) {
+            for (let env = 1; env < 25; env++) {
               if (document.getElementById("zone" + env).checked) {
                 variable.push(document.getElementById("zone" + env).name)
               }
@@ -1243,6 +1253,7 @@ export class Macros {
     //-------------------------
   }
 
+  //Chercher une rencontre (générateur) étape 2
   static async listrencontre(monstres, level, zone, trait, type, consnom, listfamille) {
     var rencontresN = []
     var rencontresM = []
@@ -1272,19 +1283,19 @@ export class Macros {
           flag1 = 0
           flag2 = 0
           flag3 = false
-          if (monstre.data.attributes.xp.value <= xpmax && monstre.data.attributes.xp.value >= xpmin) {
+          if (monstre.system.attributes.xp.value <= xpmax && monstre.system.attributes.xp.value >= xpmin) {
             for (let zoneCust of zoneCusts) {
               monstre.items.forEach(item => {
-                if (item.data.name == zoneCust) { flag1++ }
+                if (item.name == zoneCust) { flag1++ }
               })
             }
             for (let traitCust of traitCusts) {
               monstre.items.forEach(item => {
-                if (item.data.name == traitCust) { flag2++ }
+                if (item.name == traitCust) { flag2++ }
               })
             }
             for (let typeCust of typeCusts) {
-              if (monstre.data.attributes.categorie == typeCust) { flag3 = true }
+              if (monstre.system.attributes.categorie == typeCust) { flag3 = true }
             }
             if (typeCusts.length == 0) { flag3 = true }
           }
@@ -1334,7 +1345,7 @@ export class Macros {
       if (r == "vide") {
         list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">Pas de résultat</li>';
       } else {
-        list += '<li style="padding-bottom: 5px;display: flex;align-items: center;"><img src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.bestiaire" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;' + r.data.attributes.xp.value + ' XP</li>';
+        list += '<li style="padding-bottom: 5px;display: flex;align-items: center;"><img src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + r._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;' + r.system.attributes.xp.value + ' XP</li>';
       }
     }
     list += '<hr>'
@@ -1342,7 +1353,7 @@ export class Macros {
       if (r == "vide") {
         list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">Pas de résultat</li>';
       } else {
-        list += '<li style="padding-bottom: 5px;display: flex;align-items: center;"><img src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.bestiaire" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;' + r.data.attributes.xp.value + ' XP</li>';
+        list += '<li style="padding-bottom: 5px;display: flex;align-items: center;"><img src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + r._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;' + r.system.attributes.xp.value + ' XP</li>';
       }
     }
     let ul = '<ul>' + list + '</ul>';
@@ -1354,6 +1365,7 @@ export class Macros {
     d.render(true);
   }
 
+  //Outil de recherche/création mag (--> A vérifier)
   static async magic_search() {
     let all = all_items_search;
     var raw_arr = all.split("\n");
@@ -1424,10 +1436,12 @@ export class Macros {
         </div>
         <hr>
         <div style="display: flex;align-items: center;">  
-          <label style="flex: 0.9">Mots clés compendium</em></label>
-          <input style="flex: 2" type="text" name="compe" id="compe" value="" label="Nom de compendium" />
-          <label style="flex: 1.1">&nbsp;&nbsp;Magasin (nom du journal)</em></label>
-          <input style="flex: 2" type="text" name="magasin" id="magasin" value="" label="Nom de magasin" />
+          <label style="flex: 0.6">Mots clés compendium</em></label>
+          <input style="flex: 1" type="text" name="compe" id="compe" value="" label="Nom de compendium" />
+          <label style="flex: 1.1">&nbsp;&nbsp;Magasin (nom du journal et de la page)</em></label>
+          <input style="flex: 0.7" type="text" name="magasin" id="magasin" value="" label="Nom de magasin" />
+          <label style="flex:0.02"></label>
+          <input style="flex: 0.7" type="text" name="page" id="page" value="" label="Nom de la page" />
         </div>
         <br/>
         <button class="validation" type="button">Rechercher</button>
@@ -1444,6 +1458,7 @@ export class Macros {
         var vals = val.split("&&");
         var compe = $("[id=compe]").val().toLowerCase();
         var magasin = $("[id=magasin]").val();
+        var page = $("[id=page]").val();
         var pomin = $("[id=pomin]").val()
         var pomax = $("[id=pomax]").val()
         var res = $("[id=result]");
@@ -1460,8 +1475,8 @@ export class Macros {
               if (valss.length == 1) {
                 let flag2 = false
                 if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
-                for (let e in entry.data) {
-                  if (("" + entry.data[e]).toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
+                for (let e in entry.system) {
+                  if (("" + entry.system[e]).toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
                 }
                 if (flag2 == false) { flag1 = false }
               } else {
@@ -1469,8 +1484,8 @@ export class Macros {
                 for (let valssentry of valss) {
                   let flag2 = false
                   if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
-                  for (let e in entry.data) {
-                    if (("" + entry.data[e]).toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
+                  for (let e in entry.system) {
+                    if (("" + entry.system[e]).toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
                   }
                   if (flag2 == true) { flag3 = true }
                 }
@@ -1504,12 +1519,12 @@ export class Macros {
           for (let r of result2) {
             let flag1 = false
             let flag2 = false
-            if (r.data.prix != undefined) {
+            if (r.system.prix != undefined) {
               if (pomin != "") {
-                if (r.data.prix >= parseFloat(pomin)) { flag1 = true }
+                if (r.system.prix >= parseFloat(pomin)) { flag1 = true }
               } else { flag1 = true }
               if (pomax != "") {
-                if (r.data.prix <= parseFloat(pomax)) { flag2 = true }
+                if (r.system.prix <= parseFloat(pomax)) { flag2 = true }
               } else { flag2 = true }
               if (flag1 == true && flag2 == true) { result.push(r) }
             }
@@ -1529,7 +1544,7 @@ export class Macros {
         if (catObj.length != 0) {
           for (let r of result) {
             for (let catO of catObj) {
-              if (r.data.categorie == catO) { result2.push(r) }
+              if (r.system.categorie == catO) { result2.push(r) }
             }
           }
         } else {
@@ -1545,17 +1560,17 @@ export class Macros {
         if (search_arme_armure == true) {
           for (let r of result2) {
             let flag = true
-            if (r.data.enchantement == undefined) { flag = false }
-            if (r.data.enchantement == false && document.getElementById("ench" + 1).checked) { flag = false }
-            if (r.data.relique == false && document.getElementById("ench" + 2).checked) { flag = false }
-            if ((r.data.armefeu == undefined || r.data.armefeu == false) && document.getElementById("ench" + 3).checked) { flag = false }
-            if ((r.data.prbouclier == undefined || r.data.prbouclier == false) && document.getElementById("ench" + 4).checked) { flag = false }
-            if ((r.data.prtete == undefined || r.data.prtete == false) && document.getElementById("ench" + 5).checked) { flag = false }
-            if ((r.data.prbras == undefined || r.data.prbras == false) && document.getElementById("ench" + 6).checked) { flag = false }
-            if ((r.data.prtorse == undefined || r.data.prtorse == false) && document.getElementById("ench" + 7).checked) { flag = false }
-            if ((r.data.prmains == undefined || r.data.prmains == false) && document.getElementById("ench" + 8).checked) { flag = false }
-            if ((r.data.prjambes == undefined || r.data.prjambes == false) && document.getElementById("ench" + 9).checked) { flag = false }
-            if ((r.data.prpieds == undefined || r.data.prpieds == false) && document.getElementById("ench" + 10).checked) { flag = false }
+            if (r.system.enchantement == undefined) { flag = false }
+            if (r.system.enchantement == false && document.getElementById("ench" + 1).checked) { flag = false }
+            if (r.system.relique == false && document.getElementById("ench" + 2).checked) { flag = false }
+            if ((r.system.armefeu == undefined || r.system.armefeu == false) && document.getElementById("ench" + 3).checked) { flag = false }
+            if ((r.system.prbouclier == undefined || r.system.prbouclier == false) && document.getElementById("ench" + 4).checked) { flag = false }
+            if ((r.system.prtete == undefined || r.system.prtete == false) && document.getElementById("ench" + 5).checked) { flag = false }
+            if ((r.system.prbras == undefined || r.system.prbras == false) && document.getElementById("ench" + 6).checked) { flag = false }
+            if ((r.system.prtorse == undefined || r.system.prtorse == false) && document.getElementById("ench" + 7).checked) { flag = false }
+            if ((r.system.prmains == undefined || r.system.prmains == false) && document.getElementById("ench" + 8).checked) { flag = false }
+            if ((r.system.prjambes == undefined || r.system.prjambes == false) && document.getElementById("ench" + 9).checked) { flag = false }
+            if ((r.system.prpieds == undefined || r.system.prpieds == false) && document.getElementById("ench" + 10).checked) { flag = false }
             if (flag == true) { result.push(r) }
           }
         } else {
@@ -1578,7 +1593,7 @@ export class Macros {
         let result_sans_prix = []
         let result_avec_prix = []
         for (let r of result2) {
-          if (r.data.prix == undefined) {
+          if (r.system.prix == undefined) {
             result_sans_prix.push(r)
           } else {
             result_avec_prix.push(r)
@@ -1589,7 +1604,7 @@ export class Macros {
           let j = 0
           let minprix = result_avec_prix[0]
           for (let r of result_avec_prix) {
-            if (r.data.prix < minprix.data.prix) {
+            if (r.system.prix < minprix.system.prix) {
               minprix = r
               j = i
             }
@@ -1602,10 +1617,16 @@ export class Macros {
 
 
         var magasinObj = "vide"
+        var pageObj = "vide"
         if (magasin != "") {
           for (const journal of game.journal) {
-            if (journal.data.name == magasin) {
+            if (journal.name == magasin) {
               magasinObj = journal
+              for (let pageFind of magasinObj.pages) {
+                if (pageFind.name==page){
+                  pageObj=pageFind
+                }
+              }
             }
           }
         }
@@ -1614,14 +1635,14 @@ export class Macros {
           let compendium = game.packs.find(p => p.metadata.name === r.compendium);
           var prix = ""
           var prix2 = ""
-          if (r.data.prix != undefined && r.data.prix.length == undefined) {
-            prix = r.data.prix + " PO - "
-            prix2 = r.data.prix
+          if (r.system.prix != undefined && r.system.prix.length == undefined) {
+            prix = r.system.prix + " PO - "
+            prix2 = r.system.prix
           }
-          if (magasinObj == "vide") {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + compendium.metadata.label + '</li>';
+          if (pageObj == "vide") {
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + compendium.metadata.label + '</li>';
           } else {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i></a><input style="width: 280px;"id="' + r._id + r._id + '" type="text" value="' + r.name + '" />&nbsp;-&nbsp;<input style="width: 50px;"id="' + r._id + '" type="text" value="' + prix2 + '" />&nbsp;PO&nbsp;-&nbsp;' + compendium.metadata.label + '&nbsp;&nbsp;<button style="width: 140px;" class="magasin" name="' + r.name + '" type="button">Ajouter au magasin</button></li>';
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i></a><input style="width: 280px;"id="' + r._id + r._id + '" type="text" value="' + r.name + '" />&nbsp;-&nbsp;<input style="width: 50px;"id="' + r._id + '" type="text" value="' + prix2 + '" />&nbsp;PO&nbsp;-&nbsp;' + compendium.metadata.label + '&nbsp;&nbsp;<button style="width: 140px;" class="magasin" name="' + r.name + '" type="button">Ajouter au magasin</button></li>';
           }
         }
         res[0].innerHTML = '<ul>' + list + '</ul>';
@@ -1631,13 +1652,13 @@ export class Macros {
             if (r.name == ev2.currentTarget.name) {
               let prixObj = $('[id=' + r._id + ']').val()
               let nameObj = $('[id=' + r._id + r._id + ']').val()
-              let content = magasinObj.data.content
+              let content = pageObj.text.content
               let content2 = content + '<p>Article : ' + nameObj
               if (prixObj != "") {
                 content2 = content2 + " - vendu pour " + prixObj + " PO"
               }
-              content2 = content2 + '</p>\n<section class="secret">\n<p><a class="entity-link content-link" draggable="true" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a></p>\n</section>'
-              magasinObj.update({ "content": content2 })
+              content2 = content2 + '</p>\n<section class="secret">\n<p><a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a></p>\n</section>'
+              pageObj.update({"text": {"content":content2}})
             }
           }
         });
@@ -1645,26 +1666,27 @@ export class Macros {
     });
   }
 
+  //chercher les compétence (--> à vérifier)
   static async competence_display() {
     var content = ''
     var competences = []
     const source = game.naheulbeuk.macros.getSpeakersActor();
-    for (let item of source.data.items) {
+    for (let item of source.items) {
       if (item.type == "competence") {
         competences.push(item)
       }
     }
     let i = 0
     for (let competence of competences) {
-      if (competence.data.data.diff != "-") {
-        var expr = game.naheulbeuk.macros.replaceAttr(competence.data.data.diff, source)
+      if (competence.system.diff != "-") {
+        var expr = game.naheulbeuk.macros.replaceAttr(competence.system.diff, source)
         expr = expr.replace(/ceil/g, "Math.ceil");
         expr = expr.replace(/max/g, "Math.max");
         expr = eval(expr)
       } else {
         expr = "-"
       }
-      var affichage = '<div style="display:flex"><div style="flex:1.5"><label class="competence" id=' + i + '><label class="cliquable">' + competence.data.name + '</label></label></div>' + '<div style="flex:0.5"><label class="cliquable"><label class="competencejet" name="' + competence.data.name + '">' + expr + '</label></label></div></div>'
+      var affichage = '<div style="display:flex"><div style="flex:1.5"><label class="competence" id=' + i + '><label class="cliquable">' + competence.name + '</label></label></div>' + '<div style="flex:0.5"><label class="cliquable"><label class="competencejet" name="' + competence.name + '">' + expr + '</label></label></div></div>'
       content = content + affichage
       i = i + 1
     }

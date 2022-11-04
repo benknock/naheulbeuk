@@ -22,7 +22,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
 
     // Alternatively, you could use the following return statement to do a
     // unique item sheet by type, like `weapon-sheet.html`.
-    return `${path}/item-${this.item.data.type}-sheet.html`;
+    return `${path}/item-${this.item.type}-sheet.html`;
   }
 
   /* -------------------------------------------- */
@@ -33,7 +33,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
     const context = super.getData();
 
     // Use a safe clone of the item data for further operations.
-    const itemData = context.item.data;
+    const itemData = context.item;
 
     // Retrieve the roll data for TinyMCE editors.
     context.rollData = {};
@@ -43,12 +43,12 @@ export class NaheulbeukItemSheet extends ItemSheet {
     }
 
     // Add the actor's data to context.data for easier access, as well as flags.
-    context.data = itemData.data;
+    context.system = itemData.system;
     context.flags = itemData.flags;
 
     //modif de l'image de base
-    if (context.item.data.data.img != "") {
-      context.item.update({ "img": context.item.data.data.img, "data.img": "" });
+    if (context.item.system.img != "") {
+      context.item.update({ "img": context.item.system.img, "system.img": "" });
     }
 
     return context;
@@ -72,26 +72,26 @@ export class NaheulbeukItemSheet extends ItemSheet {
     // Suppression d'un objet d'un conteneur
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item"); //on récupère l'ID de l'objet à supprimer
-      const items = this.object.data.data.items //on récupère la liste des objets contenu par le conteneur
+      const items = this.object.system.items //on récupère la liste des objets contenu par le conteneur
       let itemFind
       for (let item of items){ //on cherche l'objet à supprimer
         if (item._id==li.data("itemId")){itemFind=item}
       }
       const index = items.indexOf(itemFind) //on sauve son index
       if (index > -1) {items.splice(index,1)} // on retire l'objet
-      this.object.update({"data.items":items}) // on met à jour le conteneur
+      this.object.update({"system.items":items}) // on met à jour le conteneur
     });
 
     // Edition d'un objet de conteneur
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item"); //on sauve l'ID de l'objet à éditer
-      const items = this.object.data.data.items //On récupère la liste des objets du conteneur
+      const items = this.object.system.items //On récupère la liste des objets du conteneur
       //on cherche l'objet à éditer dans la liste
       let itemFind = items.find(entry => entry._id===li.data("itemId"));
       let new_Item = duplicate(itemFind)
       let cont_id={}
-      cont_id._id=this.object.data._id
-      new_Item.data.conteneur=cont_id
+      cont_id._id=this.object._id
+      new_Item.system.conteneur=cont_id
       let itemFinal = new Item(new_Item)
       itemFinal.sheet.render(true)
     });
@@ -101,20 +101,20 @@ export class NaheulbeukItemSheet extends ItemSheet {
     //PCH afficher ou masquer les stats
     html.find('.masquerstats').click(ev => {
       if (game.users.current.role==4){
-        let nom = this.object.data.name
+        let nom = this.object.name
         this.object.update({ 
-          "data.cacher": !this.object.data.data.cacher,
-          "name" : this.object.data.data.nomcacher,
-          "data.nomcacher": nom,
+          "system.cacher": !this.object.system.cacher,
+          "name" : this.object.system.nomcacher,
+          "system.nomcacher": nom,
         });
       }
     })
     //PCH afficher ou masquer les épreuves avancées sur un objets
     html.find('.epreuves').click(ev => {
-      if (this.object.data.data.epreuvecustom == true) {
-        this.object.update({ "data.epreuvecustom": false });
+      if (this.object.system.epreuvecustom == true) {
+        this.object.update({ "system.epreuvecustom": false });
       } else {
-        this.object.update({ "data.epreuvecustom": true });
+        this.object.update({ "system.epreuvecustom": true });
       }
     });
 
@@ -143,25 +143,25 @@ export class NaheulbeukItemSheet extends ItemSheet {
     html.find('.majcomp').click(ev => {
       var compchoix = ev.currentTarget.dataset.name
       var dataset
-      if (compchoix == "data.choix") {
+      if (compchoix == "system.choix") {
         dataset = {
-          "data.choix": true,
-          "data.gagne": false,
-          "data.base": false
+          "system.choix": true,
+          "system.gagne": false,
+          "system.base": false
         }
       }
-      if (compchoix == "data.gagne") {
+      if (compchoix == "system.gagne") {
         dataset = {
-          "data.choix": false,
-          "data.gagne": true,
-          "data.base": false
+          "system.choix": false,
+          "system.gagne": true,
+          "system.base": false
         }
       }
-      if (compchoix == "data.base") {
+      if (compchoix == "system.base") {
         dataset = {
-          "data.choix": false,
-          "data.gagne": false,
-          "data.base": true
+          "system.choix": false,
+          "system.gagne": false,
+          "system.base": true
         }
       }
       this.object.update(dataset)
@@ -253,27 +253,27 @@ export class NaheulbeukItemSheet extends ItemSheet {
   //Action qui suit le drop de l'objet
   async _onDropItem(event, data) {
     Item.fromDropData(data).then(item => {
-      if (this.object.data.type=="conteneur"){ //On vérifie qu'on est bien sur un conteur
-        const itemData = duplicate(item.data); //On sauvegarde les datas de l'objet drop
-        if (itemData.data.stockage!=undefined){ //On vérifie que c'est un objet qu'on peut drag and drop dans un conteneur
+      if (this.object.type=="conteneur"){ //On vérifie qu'on est bien sur un conteur
+        const itemData = duplicate(item); //On sauvegarde les datas de l'objet drop
+        if (itemData.system.stockage!=undefined){ //On vérifie que c'est un objet qu'on peut drag and drop dans un conteneur
           // on sauvegarde l'ID du conteneur dans l'objet contenu
           let cont_id={} 
-          cont_id._id=this.object.data._id
-          itemData.data.conteneur=cont_id
+          cont_id._id=this.object._id
+          itemData.system.conteneur=cont_id
           //On génère un ID unique
           let j = 100
           let item_id="pch"+itemData._id.substr(3,7)+"PCH"+j
-          while (this.object.data.data.items.find(entry => entry._id===item_id)!=undefined){
+          while (this.object.system.items.find(entry => entry._id===item_id)!=undefined){
             j++
             item_id="pch"+itemData._id.substr(3,7)+"PCH"+j
           }
           itemData._id=item_id
-          itemData.data.equipe=false
+          itemData.system.equipe=false
           //on met à jour la liste d'objet
-          let itemsFinal = this.object.data.data.items
+          let itemsFinal = this.object.system.items
           itemsFinal.push(itemData)
           //on update la liste d'objet du conteneur
-          this.object.update({"data.items":itemsFinal})
+          this.object.update({"system.items":itemsFinal})
         }
       }
     });
@@ -281,14 +281,16 @@ export class NaheulbeukItemSheet extends ItemSheet {
 
   //Création de la fonction lorsqu'on drag l'objet en dehors du conteneur
   _onDragStart(event) {
-    let itemDatas=this.object.data.data.items //On stock la liste des objets contenus par le conteneur
+    let itemDatas=this.object.system.items //On stock la liste des objets contenus par le conteneur
     // On cherche l'objet dans la liste précédente
     let itemFind = itemDatas.find(entry => entry._id===event.originalTarget.dataset.itemId);
     if ( event.target.classList.contains("content-link") ) return;
     let dragData = {} //On crée les data pour la création la ou on va drop
     dragData.type = "Item";
     dragData.data = itemFind;
-    dragData.data.data.conteneur = {};
+    dragData.data.system.conteneur = {};
+    console.log(itemFind)
+    console.log(event)
     // On initie le drop avec la création de l'objet
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
@@ -313,7 +315,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
     if ( closeForm ) this._state = states.CLOSING;
 
     // !!!!!!!!!!!!!!!!!!! petite modif pour mettre à jour le conteneur
-    if (this.object.data.data.conteneur==undefined){
+    if (this.object.system.conteneur==undefined){
       // Trigger the object update
       try {
         await this._updateObject(event, formData);
@@ -324,7 +326,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
         this._state = priorState;
       }
     } else {
-      if (this.object.data.data.conteneur._id==undefined){
+      if (this.object.system.conteneur._id==undefined){
         // Trigger the object update
         try {
           await this._updateObject(event, formData);
@@ -335,7 +337,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
           this._state = priorState;
         }
       } else {
-        var conteneur_data=this.object.data.data.conteneur //On récupère les data du conteneur qui le contient
+        var conteneur_data=this.object.system.conteneur //On récupère les data du conteneur qui le contient
         var ownerConteneur = {}
         for (let actor of game.actors){
           if (actor.items.get(conteneur_data._id)!=undefined){ownerConteneur=actor}
@@ -347,25 +349,25 @@ export class NaheulbeukItemSheet extends ItemSheet {
           //Sinon on prend l'objet dans les objets de base de foundry
           conteneurAupdate = game.items.get(conteneur_data._id)
         }
-        const items = conteneurAupdate.data.data.items //on sauve la liste des objets
-        let itemFind = items.find(entry => entry._id===this.object.data._id);
+        const items = conteneurAupdate.system.items //on sauve la liste des objets
+        let itemFind = items.find(entry => entry._id===this.object._id);
         const index = items.indexOf(itemFind) // On retire l'objet trouvé (puisqu'on vient de le mettre à jour)
         if (index > -1) {items.splice(index,1)}
-        let new_ItemData=duplicate(this.object.data)
+        let new_ItemData=duplicate(this.object)
 
         //Mettre à jour newItemData en fonction de formData puis pousser newItemData dans items
         let key_new_ItemData=Object.keys(new_ItemData)
-        let key_new_ItemData_Datas=Object.keys(new_ItemData.data)
+        let key_new_ItemData_Datas=Object.keys(new_ItemData.system)
         let key_formData=Object.keys(formData)
         let value_formData=Object.values(formData)
         let i = 0
         for (let key of key_new_ItemData){
             for (let key2 of key_formData){
-              if (key2.substring(0,5)=="data." && key=="data") {
-                let dataForm = key2.substring(5,(key2.length))
+              if (key2.substring(0,7)=="system." && key=="system") {
+                let dataForm = key2.substring(7,(key2.length))
                 for (let key3 of key_new_ItemData_Datas){
                   if (key3==dataForm){
-                    new_ItemData.data[key3]=value_formData[i]
+                    new_ItemData.system[key3]=value_formData[i]
                   }
                 }
               } else if (key==key2){
@@ -375,8 +377,9 @@ export class NaheulbeukItemSheet extends ItemSheet {
             }
             i=0
         }
+        console.log(new_ItemData)
         items.push(new_ItemData) //et on le remplace par l'objet mis à jour
-        conteneurAupdate.update({"data.items":items})
+        conteneurAupdate.update({"system.items":items})
       }
     }
     //fin de la petite modif pour mettre à jour le conteneur

@@ -5,27 +5,27 @@
       <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
       <div class="ability flexrow" style="align-items: center;">
         <div style="flex:0.35;font-size: 17px;"><span>Compétence choisie</span></div>
-        {{#if (equals data.choix true)}}
-        <input type="checkbox" name="data.choix" checked />
+        {{#if (equals system.choix true)}}
+        <input type="checkbox" name="system.choix" checked />
         {{else}}
-        <input class="majcomp" type="checkbox" data-name="data.choix" data-item={{item}} />
+        <input class="majcomp" type="checkbox" data-name="system.choix" data-item={{item}} />
         {{/if}}
       </div>
       <div class="ability flexrow" style="align-items: center;">
         <div style="flex:0.55;font-size: 17px;"><span>Compétence gagnée</span></div>
-        {{#if (equals data.gagne true)}}
-        <input type="checkbox" name="data.gagne" checked />
+        {{#if (equals system.gagne true)}}
+        <input type="checkbox" name="system.gagne" checked />
         {{else}}
-        <input class="majcomp" type="checkbox" data-name="data.gagne" />
+        <input class="majcomp" type="checkbox" data-name="system.gagne" />
         {{/if}}
-        <input type="text" name="data.gagneSource" value="{{data.gagneSource}}" data-dtype="String" />
+        <input type="text" name="system.gagneSource" value="{{system.gagneSource}}" data-dtype="String" />
       </div>
       <div class="ability flexrow" style="align-items: center;">
         <div style="flex:0.35;font-size: 17px;"><span>Compétence de base</span></div>
-        {{#if (equals data.base true)}}
-        <input type="checkbox" name="data.base" checked />
+        {{#if (equals system.base true)}}
+        <input type="checkbox" name="system.base" checked />
         {{else}}
-        <input class="majcomp" type="checkbox" data-name="data.base" />
+        <input class="majcomp" type="checkbox" data-name="system.base" />
         {{/if}}
       </div>
     </div>
@@ -42,7 +42,7 @@
 
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="attributes">
-      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner
+      {{editor system.description target="system.description" rollData=rollData button=true owner=owner
       editable=editable}}
     </div>
 
@@ -51,12 +51,12 @@
       {{!-- As you add new fields, add them in here! --}}
       <div class="resource">
         <h2><label class="resource-label">Jet de dés</label></h2>
-        <input type="text" name="data.formula" value="{{data.formula}}" data-dtype="String" />
+        <input type="text" name="system.formula" value="{{system.formula}}" data-dtype="String" />
       </div>
       <br />
       <div class="resource">
         <h2><label class="resource-label">Difficulté</label></h2>
-        <input type="text" name="data.diff" value="{{data.diff}}" data-dtype="String" />
+        <input type="text" name="system.diff" value="{{system.diff}}" data-dtype="String" />
       </div>
     </div>
   </section>

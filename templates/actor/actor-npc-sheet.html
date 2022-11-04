@@ -6,9 +6,9 @@
       <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
       <div class="resource">
         <label class="resource-label">Catégorie</label>
-        <select name="data.attributes.categorie"
+        <select name="system.attributes.categorie"
           style="width: calc(100% - 2px);font-family: Naheulbeuk;font-size: 15px;margin-bottom: 5px;">
-          <option value="{{data.attributes.categorie}}">{{data.attributes.categorie}}</option>
+          <option value="{{system.attributes.categorie}}">{{system.attributes.categorie}}</option>
           <option value=""></option>
           <option value="Animaux">Animaux</option>
           <option value="Végétaux">Végétaux</option>
@@ -64,56 +64,56 @@
       </li>
     </div>
     {{#each armures as |item id|}}
-    {{#if (equals item.data.equipe true)}}
-    {{#if (equals item.data.autre "")}}
+    {{#if (equals item.system.equipe true)}}
+    {{#if (equals item.system.autre "")}}
     {{else}}
     <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
     {{/if}}
     {{/if}}
     {{/each}}
     {{#each armes as |item id|}}
-    {{#if (equals item.data.equipe true)}}
-    {{#if (equals item.data.autre "")}}
+    {{#if (equals item.system.equipe true)}}
+    {{#if (equals item.system.autre "")}}
     {{else}}
     <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
     {{/if}}
     {{/if}}
     {{/each}}
     {{#each etats as |item id|}}
-    {{#if (equals item.data.equipe true)}}
-    {{#if (equals item.data.autre "")}}
+    {{#if (equals item.system.equipe true)}}
+    {{#if (equals item.system.autre "")}}
     {{else}}
     <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
     {{/if}}
     {{/if}}
     {{/each}}
     {{#each trucs as |item id|}}
-    {{#if (equals item.data.equipe true)}}
-    {{#if (equals item.data.autre "")}}
+    {{#if (equals item.system.equipe true)}}
+    {{#if (equals item.system.autre "")}}
     {{else}}
     <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
     {{/if}}
     {{/if}}
     {{/each}}
     {{#each sacs as |item id|}}
-    {{#if (equals item.data.equipe true)}}
-    {{#if (equals item.data.autre "")}}
+    {{#if (equals item.system.equipe true)}}
+    {{#if (equals item.system.autre "")}}
     {{else}}
     <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="data.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{data.autre}}</textarea>
+      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
     {{/if}}
     {{/if}}
@@ -147,45 +147,45 @@
               <label class="resource-label">Bonus</label>
               <label class="resource-label">Total</label>
             </div>
-            {{#if data.attributes.moreStats}}
-            {{#each data.abilities as |ability key|}}
+            {{#if system.attributes.moreStats}}
+            {{#each system.abilities as |ability key|}}
             <div class="ability flexrow flex-group-center ">
-              <label for="data.abilities.{{key}}.value"
+              <label for="system.abilities.{{key}}.value"
                 class="resource-label flexlarge align-left">{{ability.label}}&nbsp;<i class="fas fa-dice-d20 rollable2"
                   data-dice="d20" data-name="{{ability.label}}"
                   data-diff='{{math ability.bonus "+" ability.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
                   data-dice="d20" data-name="{{ability.label}}"
                   data-diff='{{math ability.bonus "+" ability.value}}'></i></label>
-              <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-              <input type="text" name="data.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
+              <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
+              <input type="text" name="system.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
               <span class="ability-mod ">{{math ability.bonus "+" ability.value}}</span>
             </div>
             {{/each}}
             {{else}}
-            {{#each data.abilities as |ability key|}}
+            {{#each system.abilities as |ability key|}}
             {{#if (equals key "cou")}}
             <div class="ability flexrow flex-group-center" style="margin-bottom: 8px;">
-              <label for="data.abilities.{{key}}.value"
+              <label for="system.abilities.{{key}}.value"
                 class="resource-label flexlarge align-left">{{ability.label}}&nbsp;<i class="fas fa-dice-d20 rollable2"
                   data-dice="d20" data-name="{{ability.label}}"
                   data-diff='{{math ability.bonus "+" ability.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
                   data-dice="d20" data-name="{{ability.label}}"
                   data-diff='{{math ability.bonus "+" ability.value}}'></i></label>
-              <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-              <input type="text" name="data.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
+              <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
+              <input type="text" name="system.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
               <span class="ability-mod ">{{math ability.bonus "+" ability.value}}</span>
             </div>
             {{/if}}
             {{#if (equals key "prd")}}
             <div class="ability flexrow flex-group-center">
-              <label for="data.abilities.{{key}}.value"
+              <label for="system.abilities.{{key}}.value"
                 class="resource-label flexlarge align-left">{{ability.label}}&nbsp;<i class="fas fa-dice-d20 rollable2"
                   data-dice="d20" data-name="{{ability.label}}"
                   data-diff='{{math ability.bonus "+" ability.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
                   data-dice="d20" data-name="{{ability.label}}"
                   data-diff='{{math ability.bonus "+" ability.value}}'></i></label>
-              <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-              <input type="text" name="data.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
+              <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
+              <input type="text" name="system.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
               <span class="ability-mod ">{{math ability.bonus "+" ability.value}}</span>
             </div>
             {{/if}}
@@ -198,18 +198,18 @@
           <aside class="sidebar">
             <div class="res-mag grid grid-2col" style="margin-bottom: 3px;">
               <div class="xp">
-                <label for="data.attributes.xp.value" class="resource-label">Classe / XP</label>
-                <input type="text" name="data.attributes.xp.value" value="{{data.attributes.xp.value}}"
+                <label for="system.attributes.xp.value" class="resource-label">Classe / XP</label>
+                <input type="text" name="system.attributes.xp.value" value="{{system.attributes.xp.value}}"
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
               <div class="abilities flexcol">
                 <div class="resource">
-                  <label for="data.health.value" class="resource-label">Energie vitale</label>
+                  <label for="system.health.value" class="resource-label">Energie vitale</label>
                   <div class="resource-content flexrow flex-center flex-between flex-group-center"
                     style="width: calc(100% - 30px);">
-                    <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number" />
+                    <input type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number" />
                     <span> / </span>
-                    <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number" />
+                    <input type="text" name="system.health.max" value="{{system.health.max}}" data-dtype="Number" />
                   </div>
                 </div>
               </div>
@@ -218,68 +218,68 @@
               <div>
                 <label class="resource-label">Résistance mag.&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="Résistance magique"
-                    data-diff='{{math data.attributes.rm.value "+" data.attributes.rm.bonus}}'></i>&nbsp;<i
+                    data-diff='{{math system.attributes.rm.value "+" system.attributes.rm.bonus}}'></i>&nbsp;<i
                     class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Résistance magique"
-                    data-diff='{{math data.attributes.rm.value "+" data.attributes.rm.bonus}}'></i></label>
-                <input type="text" name="data.attributes.rm.bonus" value='{{data.attributes.rm.bonus}}'
+                    data-diff='{{math system.attributes.rm.value "+" system.attributes.rm.bonus}}'></i></label>
+                <input type="text" name="system.attributes.rm.bonus" value='{{system.attributes.rm.bonus}}'
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
               <div class="esquive">
                 <label class="resource-label">Esquive&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="Esquive"
-                    data-diff='{{math (math data.attributes.esq.value "+" data.attributes.esq.bonus) "+" data.abilities.ad.bonus}}'></i>
+                    data-diff='{{math (math system.attributes.esq.value "+" system.attributes.esq.bonus) "+" system.abilities.ad.bonus}}'></i>
                     &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Esquive"
-                    data-diff='{{math (math data.attributes.esq.value "+" data.attributes.esq.bonus) "+" data.abilities.ad.bonus}}'></i></label>
-                <input type="text" name="data.attributes.esq.bonus" value='{{data.attributes.esq.bonus}}'
+                    data-diff='{{math (math system.attributes.esq.value "+" system.attributes.esq.bonus) "+" system.abilities.ad.bonus}}'></i></label>
+                <input type="text" name="system.attributes.esq.bonus" value='{{system.attributes.esq.bonus}}'
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
             </div>
             <div class="resources grid grid-2col" style="margin-bottom: 3px;margin-top: 3px;">
               <div class="protection">
                 <label class="resource-label">Protection</label>
-                <input type="text" name="data.attributes.pr.bonus" value='{{data.attributes.pr.bonus}}'
+                <input type="text" name="system.attributes.pr.bonus" value='{{system.attributes.pr.bonus}}'
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
               <div class="protection">
                 <label class="resource-label">Protection magique</label>
-                <input type="text" name="data.attributes.prm.bonus" value='{{data.attributes.prm.bonus}}'
+                <input type="text" name="system.attributes.prm.bonus" value='{{system.attributes.prm.bonus}}'
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
             </div>
-            {{#if data.attributes.moreStats}}
+            {{#if system.attributes.moreStats}}
             <div class="resources grid grid-2col" style="margin-bottom: 3px;margin-top: 3px;">
               <div class="mpsy">
-                <label for="data.attributes.mpsy.value" class="resource-label">Mpsy&nbsp;<i
+                <label for="system.attributes.mpsy.value" class="resource-label">Mpsy&nbsp;<i
                     class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Mpsy"
-                    data-diff='{{data.attributes.mpsy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-                    data-dice="d20" data-name="Mpsy" data-diff='{{data.attributes.mpsy.value}}'></i></label>
-                <input type="text" name="data.attributes.mpsy.value" value="{{data.attributes.mpsy.value}}"
+                    data-diff='{{system.attributes.mpsy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+                    data-dice="d20" data-name="Mpsy" data-diff='{{system.attributes.mpsy.value}}'></i></label>
+                <input type="text" name="system.attributes.mpsy.value" value="{{system.attributes.mpsy.value}}"
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
               <div class="mphy">
-                <label for="data.attributes.mphy.value" class="resource-label">Mphy&nbsp;<i
+                <label for="system.attributes.mphy.value" class="resource-label">Mphy&nbsp;<i
                     class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Mphy"
-                    data-diff='{{data.attributes.mphy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-                    data-dice="d20" data-name="Mphy" data-diff='{{data.attributes.mphy.value}}'></i></label>
-                <input type="text" name="data.attributes.mphy.value" value="{{data.attributes.mphy.value}}"
+                    data-diff='{{system.attributes.mphy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+                    data-dice="d20" data-name="Mphy" data-diff='{{system.attributes.mphy.value}}'></i></label>
+                <input type="text" name="system.attributes.mphy.value" value="{{system.attributes.mphy.value}}"
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
             </div>
             <div class="resources grid grid-2col" style="margin-bottom: 3px;margin-top: 3px;">
               <div class="abilities flexcol">
                 <div class="resource">
-                  <label for="data.pa.value" class="resource-label">Energie astrale</label>
+                  <label for="system.pa.value" class="resource-label">Energie astrale</label>
                   <div class="resource-content flexrow flex-center flex-between flex-group-center"
                     style="width: calc(100% - 30px);">
-                    <input type="text" name="data.pa.value" value="{{data.pa.value}}" data-dtype="Number" />
+                    <input type="text" name="system.pa.value" value="{{system.pa.value}}" data-dtype="Number" />
                     <span> / </span>
-                    <input type="text" name="data.pa.max" value="{{data.pa.max}}" data-dtype="Number" />
+                    <input type="text" name="system.pa.max" value="{{system.pa.max}}" data-dtype="Number" />
                   </div>
                 </div>
               </div>
               <div class="resource">
-                <label for="data.pa.value" class="resource-label">Niveau</label>
-                <input type="text" name="data.attributes.level.value" value="{{data.attributes.level.value}}"
+                <label for="system.pa.value" class="resource-label">Niveau</label>
+                <input type="text" name="system.attributes.level.value" value="{{system.attributes.level.value}}"
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
             </div>
@@ -298,36 +298,36 @@
         <li class="item flexrow" data-item-id="{{item._id}}">
           <label>
             {{item.name}}
-            {{#if (equalsor item.data.formula "" item.data.formula "-")}}
-            {{#if (equals item.data.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-              data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-              data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-              data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-              data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-              data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+            {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+            {{#if (equals item.system.epreuvecustom true)}}
+            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
             {{/if}}
             {{else}}
-            {{#if (equals item.data.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-              data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-              data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-              data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-              data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-              data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+            {{#if (equals item.system.epreuvecustom true)}}
+            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
             {{else}}
-            <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+            <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
               data-diff=""></i>
-            &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="{{item.name}}"
+            &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
               data-diff=""></i>
             {{/if}}
             {{/if}}
           </label>
           <div class="item-controls" style="align-items: center;">
-            {{#if (equals item.data.equipe true)}}
-            <input class="item-equipe" type="checkbox" name="item.data.equipe" checked />
+            {{#if (equals item.system.equipe true)}}
+            <input class="item-equipe" type="checkbox" name="item.system.equipe" checked />
             {{else}}
-            <input class="item-equipe" type="checkbox" name="item.data.equipe" />
+            <input class="item-equipe" type="checkbox" name="item.system.equipe" />
             {{/if}}
             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
             <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
@@ -340,7 +340,7 @@
       {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to
       the rollData property. --}}
       <span style="font-size: 16px;">
-        {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner
+        {{editor system.biography target="system.biography" rollData=rollData button=true owner=owner
         editable=editable}}
       </span>
     </div>
@@ -372,59 +372,59 @@
             <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
           </div>
           <div class="flex-group-center">
-            {{#if (equals item.data.attaque "-")}}
-            {{#if (equals item.data.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-              data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-              data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-              data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-              data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-              data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+            {{#if (equals item.system.attaque "-")}}
+            {{#if (equals item.system.epreuvecustom true)}}
+            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
             {{else}}
-            {{item.data.attaque}}
+            {{item.system.attaque}}
             {{/if}}
             {{else}}
-            {{#if (equals item.data.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-              data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-              data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-              data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-              data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-              data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+            {{#if (equals item.system.epreuvecustom true)}}
+            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
             {{else}}
-            {{item.data.attaque}}
+            {{item.system.attaque}}
             &nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Attaque {{item.name}}"
-              data-diff="{{item.data.attaque}}{{read_actor ".abilities.att.bonus"}}"></i>&nbsp;
+              data-diff="{{item.system.attaque}}{{read_actor ".abilities.att.bonus"}}"></i>&nbsp;
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Dégâts {{item.name}}"
-              data-diff="{{item.data.attaque}}{{read_actor ".abilities.att.bonus"}}"></i>
+              data-diff="{{item.system.attaque}}{{read_actor ".abilities.att.bonus"}}"></i>
             {{/if}}
             {{/if}}
           </div>
           <div class="flex-group-center">
-            {{#if (equals item.data.formula "-")}}
-            {{#if (equals item.data.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-              data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-              data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-              data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-              data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-              data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+            {{#if (equals item.system.formula "-")}}
+            {{#if (equals item.system.epreuvecustom true)}}
+            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
             {{else}}
-            {{item.data.formula}}
+            {{item.system.formula}}
             {{/if}}
             {{else}}
-            {{#if (equals item.data.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-              data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-              data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-              data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-              data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-              data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+            {{#if (equals item.system.epreuvecustom true)}}
+            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
             {{else}}
-            {{item.data.formula}}
-            &nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.formula}}"
+            {{item.system.formula}}
+            &nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}"
               data-name="Dégâts {{item.name}}" data-diff=""></i>&nbsp;
-            <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.formula}}" data-name="Dégâts {{item.name}}"
+            <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="Dégâts {{item.name}}"
               data-diff=""></i>
             {{/if}}
             {{/if}}
@@ -449,54 +449,54 @@
         </li>
         <li class="item flexrow" data-item-id="{{item._id}}">
           <div class="item-control">
-            {{#if (equals item.data.epreuve "")}}
-            {{#if (equals item.data.epreuvecustom true)}}
-            Épreuve : <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-              data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-              data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-              data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-              data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-              data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+            {{#if (equals item.system.epreuve "")}}
+            {{#if (equals item.system.epreuvecustom true)}}
+            Épreuve : <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
             {{else}}
             Épreuve : -
             {{/if}}
             {{else}}
-            Épreuve : {{item.data.epreuve}}
+            Épreuve : {{item.system.epreuve}}
             <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.data.epreuve}}"></i>
-            {{#if (equals item.data.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.data.jet1}}"
-              data-name1="{{item.data.name1}}" data-diff1="{{item.data.epreuve1}}" data-dice2="{{item.data.jet2}}"
-              data-name2="{{item.data.name2}}" data-diff2="{{item.data.epreuve2}}" data-dice3="{{item.data.jet3}}"
-              data-name3="{{item.data.name3}}" data-diff3="{{item.data.epreuve3}}" data-dice4="{{item.data.jet4}}"
-              data-name4="{{item.data.name4}}" data-diff4="{{item.data.epreuve4}}" data-dice5="{{item.data.jet5}}"
-              data-name5="{{item.data.name5}}" data-diff5="{{item.data.epreuve5}}"></i>
+              data-diff="{{item.system.epreuve}}"></i>
+            {{#if (equals item.system.epreuvecustom true)}}
+            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
             {{else}}
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.data.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}"></i>
             {{/if}}
             {{/if}}
           </div>
           <div>
-            {{#if (equals item.data.degat "")}}
+            {{#if (equals item.system.degat "")}}
             Dégâts : -
             {{else}}
-            Dégâts : {{item.data.degat}}
-            <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.degat}}" data-name="Dégat - {{item.name}}"
+            Dégâts : {{item.system.degat}}
+            <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.degat}}" data-name="Dégat - {{item.name}}"
               data-diff=""></i>
-            <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.degat}}" data-name="Dégat - {{item.name}}"
+            <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.degat}}" data-name="Dégat - {{item.name}}"
               data-diff=""></i>
             {{/if}}
           </div>
-          <div>Incantation : {{item.data.incantation}}</div>
+          <div>Incantation : {{item.system.incantation}}</div>
         </li>
         <li class="item flexrow" data-item-id="{{item._id}}">
-          <div>Durée : {{item.data.duree}}</div>
-          <div>Portée : {{item.data.portee}}</div>
-          <div>Coût : {{item.data.cout}}</div>
+          <div>Durée : {{item.system.duree}}</div>
+          <div>Portée : {{item.system.portee}}</div>
+          <div>Coût : {{item.system.cout}}</div>
         </li>
         <li class="item flexrow" data-item-id="{{item._id}}">
-          <div>Effet : {{item.data.effet}}</div>
+          <div>Effet : {{item.system.effet}}</div>
         </li>
         <hr>
         {{/each}}
@@ -504,43 +504,43 @@
       </div>
       <div class="tab features" style="height: auto;font-size: 16px;">
         {{#each coups as |item id|}}
-        {{#if (equals data.bourrepif true)}}
+        {{#if (equals system.bourrepif true)}}
         <li class="item flexrow " data-item-id="{{item._id}}">
           <div style="margin-bottom: 5px;">
             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
             <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
             <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;:
-            {{#if (equals item.data.epreuve "")}}
+            {{#if (equals item.system.epreuve "")}}
             {{else}}
             &nbsp;&nbsp;épreuve d'attaque :
             <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve d'attaque - {{item.name}}"
-              data-diff="{{item.data.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}"></i>
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.data.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}"></i>
             {{/if}}
-            {{#if (equals item.data.degat "")}}
+            {{#if (equals item.system.degat "")}}
             {{else}}
             &nbsp;&nbsp;dégâts :
-            <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.degat}}" data-name="Dégâts - {{item.name}}"
+            <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.degat}}" data-name="Dégâts - {{item.name}}"
               data-diff=""></i>
-            <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.degat}}" data-name="Épreuve - {{item.name}}"
+            <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.degat}}" data-name="Épreuve - {{item.name}}"
               data-diff=""></i>
             {{/if}}
-            {{#if (equals item.data.attaque "")}}
+            {{#if (equals item.system.attaque "")}}
             {{else}}
-            {{#if (equals item.data.attaque "-")}}
+            {{#if (equals item.system.attaque "-")}}
             {{else}}
             &nbsp;&nbsp;épreuve spéciale :
             <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve spéciale - {{item.name}}"
-              data-diff="{{item.data.attaque}}"></i>
+              data-diff="{{item.system.attaque}}"></i>
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.data.attaque}}"></i>
+              data-diff="{{item.system.attaque}}"></i>
             {{/if}}
             {{/if}}
           </div>
         </li>
         <li class="item flexrow">
-          <div>Effet : {{item.data.effet}}</div>
+          <div>Effet : {{item.system.effet}}</div>
         </li>
         <hr>
         {{else}}
@@ -549,24 +549,24 @@
             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
             <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
             <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;:
-            {{#if (equals item.data.epreuve "")}}
+            {{#if (equals item.system.epreuve "")}}
             {{else}}
-            &nbsp;&nbsp;{{item.data.epreuve}}
+            &nbsp;&nbsp;{{item.system.epreuve}}
             <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.data.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}"></i>
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.data.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}"></i>
             {{/if}}
           </div>
         </li>
         <li class="item flexrow">
-          <div>Condition : {{item.data.condition}}</div>
+          <div>Condition : {{item.system.condition}}</div>
         </li>
         <li class="item flexrow">
-          <div>Utilisation : {{item.data.duree}}</div>
+          <div>Utilisation : {{item.system.duree}}</div>
         </li>
         <li class="item flexrow">
-          <div>Effet : {{item.data.effet}}</div>
+          <div>Effet : {{item.system.effet}}</div>
         </li>
         <hr>
         {{/if}}
@@ -575,7 +575,7 @@
       {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to
       the rollData property. --}}
       <span style="font-size: 16px;">
-        {{editor content=data.attributes.bioCombat target="data.attributes.bioCombat" rollData=rollData button=true
+        {{editor system.attributes.bioCombat target="system.attributes.bioCombat" rollData=rollData button=true
         owner=owner editable=editable}}
       </span>
     </div>

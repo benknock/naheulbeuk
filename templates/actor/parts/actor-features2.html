@@ -2,43 +2,43 @@
   <br />
   <div class="tab features" style="height: auto;font-size: 16px;">
     {{#each coups as |item id|}}
-    {{#if (equals data.bourrepif true)}}
+    {{#if (equals system.bourrepif true)}}
     <li class="item flexrow " data-item-id="{{item._id}}">
       <div style="margin-bottom: 5px;margin-top: 5px;">
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         <strong><u>{{item.name}}</u></strong>
-        {{#if (equalsor item.data.epreuve "" item.data.epreuve "-")}}
+        {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
         {{else}}
-        &nbsp;- épreuve : {{item.data.epreuve}}
+        &nbsp;- épreuve : {{item.system.epreuve}}
         <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve d'attaque - {{item.name}}"
-          data-diff="{{item.data.epreuve}}"></i>
+          data-diff="{{item.system.epreuve}}"></i>
         <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-          data-diff="{{item.data.epreuve}}"></i>
+          data-diff="{{item.system.epreuve}}"></i>
         {{/if}}
-        {{#if (equalsor item.data.degat "" item.data.degat "-")}}
+        {{#if (equalsor item.system.degat "" item.system.degat "-")}}
         {{else}}
-        &nbsp;- dégâts : {{item.data.degat}}
-        <i class="fas fa-dice-d20 rollable2" data-dice="{{item.data.degat}}" data-name="Dégâts - {{item.name}}"
+        &nbsp;- dégâts : {{item.system.degat}}
+        <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.degat}}" data-name="Dégâts - {{item.name}}"
           data-diff=""></i>
-        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.data.degat}}" data-name="Épreuve - {{item.name}}"
+        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.degat}}" data-name="Épreuve - {{item.name}}"
           data-diff=""></i>
         {{/if}}
-        {{#if (equals item.data.attaque "")}}
+        {{#if (equals item.system.attaque "")}}
         {{else}}
-        {{#if (equals item.data.attaque "-")}}
+        {{#if (equals item.system.attaque "-")}}
         {{else}}
-        &nbsp;- spéciale : {{item.data.attaque}}
+        &nbsp;- spéciale : {{item.system.attaque}}
         <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve spéciale - {{item.name}}"
-          data-diff="{{item.data.attaque}}"></i>
+          data-diff="{{item.system.attaque}}"></i>
         <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-          data-diff="{{item.data.attaque}}"></i>
+          data-diff="{{item.system.attaque}}"></i>
         {{/if}}
         {{/if}}
       </div>
     </li>
     <li class="item flexrow">
-      <div>Effet : {{item.data.effet}}</div>
+      <div>Effet : {{item.system.effet}}</div>
     </li>
     {{else}}
     <li class="item flexrow " data-item-id="{{item._id}}">
@@ -46,40 +46,40 @@
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         <strong><u>{{item.name}}</u></strong>
-        {{#if (equalsor item.data.epreuve "" item.data.epreuve "-")}}
+        {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
         {{else}}
-        {{#if (equalsnot (first item.data.epreuve) "*")}}
-        &nbsp;- épreuve : {{item.data.epreuve}}
+        {{#if (equalsnot (first item.system.epreuve) "*")}}
+        &nbsp;- épreuve : {{item.system.epreuve}}
         <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}"
-          data-diff="{{item.data.epreuve}}"></i>
+          data-diff="{{item.system.epreuve}}"></i>
         <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-          data-diff="{{item.data.epreuve}}"></i>
+          data-diff="{{item.system.epreuve}}"></i>
         {{else}}
-        &nbsp;- épreuve : {{first2 item.data.epreuve}}
+        &nbsp;- épreuve : {{first2 item.system.epreuve}}
         {{/if}}
         {{/if}}
-        {{#if (equalsor item.data.degat "" item.data.degat "-")}}
+        {{#if (equalsor item.system.degat "" item.system.degat "-")}}
         {{else}}
-        {{#if (equalsnot (first item.data.degat) "*")}}
-        &nbsp;- dégâts : {{item.data.degat}}
+        {{#if (equalsnot (first item.system.degat) "*")}}
+        &nbsp;- dégâts : {{item.system.degat}}
         <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}"
-          data-diff="{{item.data.degat}}"></i>
+          data-diff="{{item.system.degat}}"></i>
         <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-          data-diff="{{item.data.degat}}"></i>
+          data-diff="{{item.system.degat}}"></i>
         {{else}}
-        &nbsp;- dégâts : {{first2 item.data.degat}}
+        &nbsp;- dégâts : {{first2 item.system.degat}}
         {{/if}}
         {{/if}}
       </div>
     </li>
     <li class="item flexrow">
-      <div>Condition : {{item.data.condition}}</div>
+      <div>Condition : {{item.system.condition}}</div>
     </li>
     <li class="item flexrow">
-      <div>Utilisation : {{item.data.duree}}</div>
+      <div>Utilisation : {{item.system.duree}}</div>
     </li>
     <li class="item flexrow">
-      <div>Effet : {{item.data.effet}}</div>
+      <div>Effet : {{item.system.effet}}</div>
     </li>
 
     {{/if}}

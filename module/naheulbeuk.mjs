@@ -16,6 +16,10 @@ import { Macros } from "./documents/macro.mjs";
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
+/* -------------------------------------------- */
+/*  Ready Hook                                  */
+/* -------------------------------------------- */
+
 
 Hooks.once('init', async function () {
 
@@ -50,6 +54,28 @@ Hooks.once('init', async function () {
   Actors.registerSheet("naheulbeuk", NaheulbeukActorSheet, { makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("naheulbeuk", NaheulbeukItemSheet, { makeDefault: true });
+
+  Hooks.on("hotbarDrop", async(bar, data, slot) => {
+    if (data.type == "Item"){
+      const item = await fromUuid(data.uuid);
+      const actor = item.actor;
+      let command = null;
+      let macroName = null;
+      command = `game.naheulbeuk.rollItemMacro("${item.name}",1);//changer le dernier 1 en 0 pour arriver directement sur l'interface de jets de dés`;
+      macroName = item.name + " (" + game.actors.get(actor.id).name + ")";
+      let macro = game.macros.contents.find(m => (m.name === macroName) && (m.command === command));
+      if (!macro) {
+        macro = await Macro.create({
+            name: macroName,
+            type: "script",
+            img: item.img,
+            command: command,
+            flags: {"naheulbeuk.macro": true}
+        }, {displaySheet: false});
+        game.user.assignHotbarMacro(macro, slot);
+      }
+    }
+  })
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
@@ -98,6 +124,7 @@ Handlebars.registerHelper("arrondi", function (lvalue) {
 Handlebars.registerHelper("arrondiProche", function (lvalue) {
   lvalue = parseFloat(lvalue);
   var value = Math.round(lvalue * 1000) / 1000
+  console.log(lvalue)
   return value
 });
 
@@ -226,7 +253,7 @@ Handlebars.registerHelper("save_actor", function (actor) {
 });
 //PCH - lire l'acteur dans la variable précédente
 Handlebars.registerHelper("read_actor", function (value) {
-  var actor_details = "actor_data.data.root.data" + value
+  var actor_details = "actor_data.data.root.actor.system" + value
   actor_details = eval(actor_details)
   if (actor_details.toString().substring(0, 1) != "-" && /^[0-9]/.test(actor_details)) { actor_details = "+" + actor_details }
   if (actor_details == "+0") {
@@ -237,8 +264,8 @@ Handlebars.registerHelper("read_actor", function (value) {
 });
 
 Handlebars.registerHelper("ingeniositeMalus", function (difficulte,malus) {
-  var actor_ad = actor_data.data.root.data.abilities.ad.value+actor_data.data.root.data.abilities.ad.bonus
-  var actor_int = actor_data.data.root.data.abilities.int.value+actor_data.data.root.data.abilities.int.bonus
+  var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus
+  var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus
   var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
   var actor_diff = actor_ingeniosite - difficulte
   if (Math.sign(actor_diff)==-1){
@@ -253,8 +280,8 @@ Handlebars.registerHelper("ingeniositeMalus", function (difficulte,malus) {
 });
 
 Handlebars.registerHelper("ingeniosite", function (difficulte) {
-  var actor_ad = actor_data.data.root.data.abilities.ad.value+actor_data.data.root.data.abilities.ad.bonus
-  var actor_int = actor_data.data.root.data.abilities.int.value+actor_data.data.root.data.abilities.int.bonus
+  var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus
+  var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus
   var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
   var actor_diff = actor_ingeniosite - difficulte
   actor_ingeniosite=actor_ingeniosite+actor_diff
@@ -264,76 +291,36 @@ Handlebars.registerHelper("ingeniosite", function (difficulte) {
 //PCH - lire l'acteur dans la variable précédente
 Handlebars.registerHelper("read_items_actor", function (value) {
   let compteur = 0
-  for (let itemActor of actor_data.data.root.items){
-    if (itemActor.data.stockage!=undefined){
+  for (let itemActor of actor_data.data.root.actor.items){
+    if (itemActor.system.stockage!=undefined){
       let arme_armure_pas_equipe = true
-      if ((itemActor.type=="arme" || itemActor.type=="armure") && itemActor.data.equipe==true){arme_armure_pas_equipe=false}
-      if (arme_armure_pas_equipe && value=="sac" && itemActor.data.stockage=="sac") {compteur++}
-      if (arme_armure_pas_equipe && value=="nosac" && itemActor.data.stockage=="nosac") {compteur++}
-      if (arme_armure_pas_equipe && value=="bourse" && itemActor.data.stockage=="bourse") {compteur++}
-      if (arme_armure_pas_equipe && value=="divers" && itemActor.data.stockage=="sac" && (itemActor.type=="sac" || itemActor.data.categorie=="Divers" || itemActor.data.categorie=="")) {compteur++}
-      if (arme_armure_pas_equipe && value=="livres" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Livres") {compteur++}
-      if (arme_armure_pas_equipe && value=="potions" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Potions") {compteur++}
-      if (arme_armure_pas_equipe && value=="ingredients" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Ingrédients") {compteur++}
-      if (arme_armure_pas_equipe && value=="armes" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Armes") {compteur++}
-      if (arme_armure_pas_equipe && value=="armures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Armures") {compteur++}
-      if (arme_armure_pas_equipe && value=="nourritures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Nourritures") {compteur++}
-      if (arme_armure_pas_equipe && value=="richesses" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Richesses") {compteur++}
-      if (arme_armure_pas_equipe && value=="perso" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Objets personnels") {compteur++}
-      if (arme_armure_pas_equipe && value=="montures" && itemActor.data.stockage=="sac" && itemActor.data.categorie=="Montures") {compteur++}
+      if ((itemActor.type=="arme" || itemActor.type=="armure") && itemActor.system.equipe==true){arme_armure_pas_equipe=false}
+      if (arme_armure_pas_equipe && value=="sac" && itemActor.system.stockage=="sac") {compteur++}
+      if (arme_armure_pas_equipe && value=="nosac" && itemActor.system.stockage=="nosac") {compteur++}
+      if (arme_armure_pas_equipe && value=="bourse" && itemActor.system.stockage=="bourse") {compteur++}
+      if (arme_armure_pas_equipe && value=="divers" && itemActor.system.stockage=="sac" && (itemActor.type=="sac" || itemActor.system.categorie=="Divers" || itemActor.system.categorie=="")) {compteur++}
+      if (arme_armure_pas_equipe && value=="livres" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Livres") {compteur++}
+      if (arme_armure_pas_equipe && value=="potions" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Potions") {compteur++}
+      if (arme_armure_pas_equipe && value=="ingredients" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Ingrédients") {compteur++}
+      if (arme_armure_pas_equipe && value=="armes" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Armes") {compteur++}
+      if (arme_armure_pas_equipe && value=="armures" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Armures") {compteur++}
+      if (arme_armure_pas_equipe && value=="nourritures" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Nourritures") {compteur++}
+      if (arme_armure_pas_equipe && value=="richesses" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Richesses") {compteur++}
+      if (arme_armure_pas_equipe && value=="perso" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Objets personnels") {compteur++}
+      if (arme_armure_pas_equipe && value=="montures" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Montures") {compteur++}
     }
   }
   return compteur
 });
 
 Handlebars.registerHelper("poidconteneur", function (item) {
- var poid = item.data.data.poidconteneur
- for (let itemFind of item.data.data.items){
-  poid = poid + itemFind.data.weight*itemFind.data.quantity
- }
+  var poid = item.system.poidconteneur
+  for (let itemFind of item.system.items){
+    poid = poid + itemFind.system.weight*itemFind.system.quantity
+  }
   return poid
 });
 
-/* -------------------------------------------- */
-/*  Ready Hook                                  */
-/* -------------------------------------------- */
-
-Hooks.once("ready", async function () {
-  // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-  Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
-});
-
-/* -------------------------------------------- */
-/*  Hotbar Macros                               */
-/* -------------------------------------------- */
-
-/**
- * Create a Macro from an Item drop.
- * Get an existing item macro if one exists, otherwise create a new one.
- * @param {Object} data     The dropped data
- * @param {number} slot     The hotbar slot to use
- * @returns {Promise}
- */
-async function createItemMacro(data, slot) {
-  if (data.type !== "Item") return;
-  if (!("data" in data)) return ui.notifications.warn("You can only create macro buttons for owned Items");
-  const item = data.data;
-
-  // Create the macro command
-  const command = `game.naheulbeuk.rollItemMacro("${item.name}",1);//changer le dernier 1 en 0 pour arriver directement sur l'interface de jets de dés`;
-  let macro = game.macros.find(m => (m.name === item.name) && (m.command === command));
-  if (!macro) {
-    macro = await Macro.create({
-      name: item.name,
-      type: "script",
-      img: item.img,
-      command: command,
-      flags: { "naheulbeuk.itemMacro": true }
-    });
-  }
-  game.user.assignHotbarMacro(macro, slot);
-  return false;
-}
 
 /**
  * Create a Macro from an Item drop.
@@ -858,9 +845,6 @@ async function onRollCustomSpell(event) {
   if (dataset.diff7!=undefined) {diff7 = dataset.diff7;}
 
   const actorCible = dataset.actor
-  //récupération de l'objet si besoin
-  //const li = $(event.currentTarget).parents(".item");
-  //const item = this.actor.items.get(li.data("itemId"));
 
   dice1 = dice1.replace(/ /g, "");
   dice2 = dice2.replace(/ /g, "");

@@ -28,7 +28,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
+  async getData() {
     // Retrieve base data structure.
     const context = super.getData();
 
@@ -50,7 +50,12 @@ export class NaheulbeukItemSheet extends ItemSheet {
     if (context.item.system.img != "") {
       context.item.update({ "img": context.item.system.img, "system.img": "" });
     }
-
+    if (this.object.system.desccacher!=undefined){context.enrichedDesccacher = await TextEditor.enrichHTML(this.object.system.desccacher, {async: true});}
+    if (this.object.system.description!=undefined){context.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, {async: true});}
+    if (this.object.system.note2!=undefined){context.enrichedNote2 = await TextEditor.enrichHTML(this.object.system.note2, {async: true});}
+    if (this.object.system.attributes!=undefined){
+      if (this.object.system.attributes.desc!=undefined){context.enrichedDesc = await TextEditor.enrichHTML(this.object.system.attributes.desc, {async: true});}
+    }
     return context;
   }
 
@@ -65,7 +70,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
     //Si l'objet est un conteneur
     if (this.object.type == 'conteneur') {
       //on permet le Drag and Drop depuis l'objet (DragStart) et vers l'objet (Drop)
-      this.form.ondragstart = (event) => this._onDragStart(event);
+      //this.form.ondragstart = (event) => this._onDragStart(event);
       this.form.ondrop = (event) => this._onDrop(event);
     }
 
@@ -80,6 +85,27 @@ export class NaheulbeukItemSheet extends ItemSheet {
       const index = items.indexOf(itemFind) //on sauve son index
       if (index > -1) {items.splice(index,1)} // on retire l'objet
       this.object.update({"system.items":items}) // on met à jour le conteneur
+    });
+
+    // Enlever un objet d'un conteneur
+    html.find('.item-out').click(ev => {
+      const li = $(ev.currentTarget).parents(".item"); //on récupère l'ID de l'objet à supprimer
+      const items = this.object.system.items //on récupère la liste des objets contenu par le conteneur
+      let itemFind
+      for (let item of items){ //on cherche l'objet à supprimer
+        if (item._id==li.data("itemId")){itemFind=item}
+      }
+      const index = items.indexOf(itemFind) //on sauve son index
+      if (index > -1) {items.splice(index,1)} // on retire l'objet
+      this.object.update({"system.items":items}) // on met à jour le conteneur
+      let new_Item = duplicate(itemFind)
+      new_Item.system.conteneur={}
+      if (this.object.parent!=null){
+        Item.create(new_Item, { parent: this.object.parent });
+      } else {
+        Item.create(new_Item);
+      }
+      
     });
 
     // Edition d'un objet de conteneur
@@ -256,46 +282,35 @@ export class NaheulbeukItemSheet extends ItemSheet {
       if (this.object.type=="conteneur"){ //On vérifie qu'on est bien sur un conteur
         const itemData = duplicate(item); //On sauvegarde les datas de l'objet drop
         if (itemData.system.stockage!=undefined){ //On vérifie que c'est un objet qu'on peut drag and drop dans un conteneur
-          // on sauvegarde l'ID du conteneur dans l'objet contenu
-          let cont_id={} 
-          cont_id._id=this.object._id
-          itemData.system.conteneur=cont_id
-          //On génère un ID unique
-          let j = 100
-          let item_id="pch"+itemData._id.substr(3,7)+"PCH"+j
-          while (this.object.system.items.find(entry => entry._id===item_id)!=undefined){
-            j++
-            item_id="pch"+itemData._id.substr(3,7)+"PCH"+j
+          if (item.system.equipe==true){ //on vérifie que l'objet n'est pas équipé
+            ui.notifications.error("L'objet ne doit pas être équipé/activé pour aller dans un conteneur.");
+          } else {
+            // on sauvegarde l'ID du conteneur dans l'objet contenu
+            let cont_id={} 
+            cont_id._id=this.object._id
+            itemData.system.conteneur=cont_id
+            //On génère un ID unique
+            let j = 100
+            let item_id="pch"+itemData._id.substr(3,7)+"PCH"+j
+            while (this.object.system.items.find(entry => entry._id===item_id)!=undefined){
+              j++
+              item_id="pch"+itemData._id.substr(3,7)+"PCH"+j
+            }
+            itemData._id=item_id
+            itemData.system.equipe=false
+            //on met à jour la liste d'objet
+            let itemsFinal = this.object.system.items
+            itemsFinal.push(itemData)
+            //on update la liste d'objet du conteneur
+            this.object.update({"system.items":itemsFinal})
+            item.delete()
           }
-          itemData._id=item_id
-          itemData.system.equipe=false
-          //on met à jour la liste d'objet
-          let itemsFinal = this.object.system.items
-          itemsFinal.push(itemData)
-          //on update la liste d'objet du conteneur
-          this.object.update({"system.items":itemsFinal})
         }
       }
     });
   }
 
-  //Création de la fonction lorsqu'on drag l'objet en dehors du conteneur
-  _onDragStart(event) {
-    let itemDatas=this.object.system.items //On stock la liste des objets contenus par le conteneur
-    // On cherche l'objet dans la liste précédente
-    let itemFind = itemDatas.find(entry => entry._id===event.originalTarget.dataset.itemId);
-    if ( event.target.classList.contains("content-link") ) return;
-    let dragData = {} //On crée les data pour la création la ou on va drop
-    dragData.type = "Item";
-    dragData.data = itemFind;
-    dragData.data.system.conteneur = {};
-    console.log(itemFind)
-    console.log(event)
-    // On initie le drop avec la création de l'objet
-    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
-  }
-
-    //copié collé du _onSubmit présent dans foundry.js avec une petite modif (identifiée plus bas) pour mettre à jour un conteneur
+  //copié collé du _onSubmit présent dans foundry.js avec une petite modif (identifiée plus bas) pour mettre à jour un conteneur
   //permet la mise à jour d'un objet contenu par un conteneur
   async _onSubmit(event, {updateData=null, preventClose=false, preventRender=false}={}) {
     event.preventDefault();
@@ -377,7 +392,6 @@ export class NaheulbeukItemSheet extends ItemSheet {
             }
             i=0
         }
-        console.log(new_ItemData)
         items.push(new_ItemData) //et on le remplace par l'objet mis à jour
         conteneurAupdate.update({"system.items":items})
       }

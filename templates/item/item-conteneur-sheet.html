@@ -75,13 +75,13 @@
     <div class="tab" data-group="primary" data-tab="description">
       {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
       rollData prop. --}}
-      {{editor system.note2 target="system.note2" rollData=rollData button=true owner=owner editable=editable}}
+      {{editor enrichedNote2 target="system.note2" button=true editable=editable}}
     </div>
 
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       {{!-- As you add new fields, add them in here! --}}
-      <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-name flexrow" style="flex:4;text-align:left;">
           Nom
         </div>
@@ -92,18 +92,19 @@
       </li>
       <hr>
       {{#each item.system.items as |item id|}}
-      <li class="item flexrow" data-item-id="{{item._id}}" draggable="true">
-        <div class="item-name flexrow" style="flex:4">
+      <li class="flexrow" data-item-id="{{item._id}}" style="align-items: center;">
+        <div class="item-name flexrow" style="flex:4;align-items: center;">
           <div class="item-image" style="flex:0.5">
             <img class="icon-inventaire " src="{{item.img}}" title="&nbsp;{{item.name}}" width="24" height="24" />
           </div>
-          <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;flex:4;text-align:left;">{{item.name}}</h4>
+          <label class="item-control flex-group-center" style="text-overflow: ellipsis;flex:4;text-align:left;">{{item.name}}</label>
         </div>
         <label style="flex:1;text-align:center;">{{item.system.quantity}}</label>
         <label style="flex:1;text-align:center;">{{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg</label>
-        <div style="flex:0.5">
-          <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-          <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+        <div style="flex:0.5;font-size: 14px;">
+          <a class="item-control item-edit" title="Editer l'objet"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Supprimer l'objet"><i class="fas fa-trash"></i></a>
+          <a class="item-control item-out" title="Sortir l'objet"><i class="fas fa-times"></i></a>
         </div>
       </li>
       {{/each}}
@@ -115,8 +116,7 @@
     <div class="bestiaire" style="height:500px">
       {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
       rollData prop. --}}
-      {{editor system.desccacher target="system.desccacher" rollData=rollData button=true owner=owner
-      editable=editable}}
+      {{editor enrichedDesccacher target="system.desccacher" button=true editable=editable}}
     </div>
   </section>
   {{/if}}

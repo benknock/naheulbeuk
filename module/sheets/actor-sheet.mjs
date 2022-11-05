@@ -36,7 +36,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
+  async getData() {
     // Retrieve the data structure from the base sheet. You can inspect or log
     // the context variable to see the structure, but some key properties for
     // sheets are the actor object, the data object, whether or not it's
@@ -49,6 +49,9 @@ export class NaheulbeukActorSheet extends ActorSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.system = actorData.system;
     context.flags = actorData.flags;
+
+    if (this.actor.system.biography!=undefined){context.enrichedBio = await TextEditor.enrichHTML(this.actor.system.biography, {async: true});}
+    if (this.actor.system.attributes.bioCombat!=undefined){context.enrichedBioCombat = await TextEditor.enrichHTML(this.actor.system.attributes.bioCombat, {async: true});}
 
     // Prepare character data and items.
     if (actorData.type == 'character') {
@@ -320,7 +323,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //PCH - sur tag item-equipe, on équipe l'objet
     html.find('.item-equipe').click(ev => this._onItemEquipe(ev, this.actor));
 
-    //PCH - sur tag item-equipe, on équipe l'objet
+    //PCH - sur tag item-en-main, on équipe l'objet
     html.find('.item-en-main').click(ev => this._onArmeEnMains(ev, this.actor));
 
     //PCH afficher ou masquer le champs (oeil carac)
@@ -523,8 +526,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
       let handler = ev => this._onDragStart(ev);
       html.find('li.item').each((i, li) => {
         if (li.classList.contains("inventory-header")) return;
-        li.setAttribute("draggable", true);
-        li.addEventListener("dragstart", handler, false);
+        if (this.actor.items.get(li.dataset.itemId)!=undefined){
+          if (this.actor.items.get(li.dataset.itemId).system.equipe!=true) {
+            li.setAttribute("draggable", true);
+            li.addEventListener("dragstart", handler, false);
+          }
+        }
       });
     }
   }

@@ -268,20 +268,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="generaliste">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="generaliste">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}generaliste" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "generaliste")}}
-      <li class="item flexrow " data-item-id="{{item._id}}">
+      <li class="flexrow " data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -343,12 +343,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -361,20 +361,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="combat">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="combat">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}combat" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "combat")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -436,12 +436,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -454,20 +454,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="feu">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="feu">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}feu" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "feu")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -529,12 +529,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -547,20 +547,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="metamorphose">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="metamorphose">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}metamorphose" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "metamorphose")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -622,12 +622,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -640,20 +640,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="thermodynamique">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="thermodynamique">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}thermodynamique" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "thermodynamique")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -715,12 +715,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -733,20 +733,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="invocation">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="invocation">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}invocation" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "invocation")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -808,12 +808,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -826,20 +826,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="necromancie">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="necromancie">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}necromancie" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "necromancie")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -901,12 +901,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -919,20 +919,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="eau">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="eau">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}eau" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "eau")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -994,12 +994,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1012,20 +1012,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="terre">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="terre">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}terre" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "terre")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1087,12 +1087,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1105,20 +1105,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="air">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="air">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}air" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "air")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1180,12 +1180,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1198,20 +1198,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="tzinntch">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="tzinntch">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}tzinntch" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "tzinntch")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1273,12 +1273,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1291,20 +1291,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pr-niourgl">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pr-niourgl">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pr-niourgl" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pr-niourgl")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1366,12 +1366,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1384,20 +1384,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pr-dlul">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pr-dlul">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pr-dlul" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pr-dlul")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1459,12 +1459,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1477,20 +1477,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pr-youclidh">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pr-youclidh">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pr-youclidh" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pr-youclidh")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1552,12 +1552,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1570,20 +1570,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pr-slanoush">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pr-slanoush">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pr-slanoush" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pr-slanoush")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1645,12 +1645,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1663,20 +1663,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pr-adathie">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pr-adathie">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pr-adathie" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pr-adathie")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1738,12 +1738,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1756,20 +1756,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pa-niourgl">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pa-niourgl">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pa-niourgl" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pa-niourgl")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1831,12 +1831,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1849,20 +1849,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pa-slanoush">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pa-slanoush">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pa-slanoush" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pa-slanoush")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -1924,12 +1924,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -1942,20 +1942,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pa-dlul">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pa-dlul">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pa-dlul" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pa-dlul")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -2017,12 +2017,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -2035,20 +2035,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pa-braav">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pa-braav">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pa-braav" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pa-braav")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -2110,12 +2110,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>
@@ -2128,20 +2128,20 @@
   {{!-- Owned Features Tab --}}
   <div class="tab features" data-group="primary-spell" data-tab="pa-khornettoh">
     {{#each spells as |spells spellLevel|}}
-    <li class="item flexrow items-header" style="margin-bottom: 7px;">
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
       <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="pa-khornettoh">Niveau {{spellLevel}}</div>
     </li>
     <div id="hideSort{{spellLevel}}pa-khornettoh" style="display: block;">
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pa-khornettoh")}}
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
         </div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div class="item-control">
           {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
           {{#if (equals item.system.epreuvecustom true)}}
@@ -2203,12 +2203,12 @@
         </div>
         <div>Incantation : {{item.system.incantation}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Durée : {{item.system.duree}}</div>
         <div>Portée : {{item.system.portee}}</div>
         <div>Coût : {{item.system.cout}}</div>
       </li>
-      <li class="item flexrow" data-item-id="{{item._id}}">
+      <li class="flexrow" data-item-id="{{item._id}}">
         <div>Effet : {{item.system.effet}}</div>
       </li>
       <hr>

@@ -3,7 +3,7 @@
   <div class="tab features" style="height: auto;font-size: 16px;">
     {{#each coups as |item id|}}
     {{#if (equals system.bourrepif true)}}
-    <li class="item flexrow " data-item-id="{{item._id}}">
+    <li class="flexrow " data-item-id="{{item._id}}">
       <div style="margin-bottom: 5px;margin-top: 5px;">
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
@@ -37,11 +37,11 @@
         {{/if}}
       </div>
     </li>
-    <li class="item flexrow">
+    <li class="flexrow">
       <div>Effet : {{item.system.effet}}</div>
     </li>
     {{else}}
-    <li class="item flexrow " data-item-id="{{item._id}}">
+    <li class="flexrow " data-item-id="{{item._id}}">
       <div style="margin-bottom: 5px; margin-top: 5px;">
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
@@ -72,13 +72,13 @@
         {{/if}}
       </div>
     </li>
-    <li class="item flexrow">
+    <li class="flexrow">
       <div>Condition : {{item.system.condition}}</div>
     </li>
-    <li class="item flexrow">
+    <li class="flexrow">
       <div>Utilisation : {{item.system.duree}}</div>
     </li>
-    <li class="item flexrow">
+    <li class="flexrow">
       <div>Effet : {{item.system.effet}}</div>
     </li>
 

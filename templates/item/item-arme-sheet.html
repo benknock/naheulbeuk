@@ -94,8 +94,8 @@
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item hidecategorie" data-tab="attributes">Détails</a>
-    <a class="item" data-tab="description">Description</a>
+    <a class="hidecategorie" data-tab="attributes">Détails</a>
+    <a data-tab="description">Description</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -105,8 +105,7 @@
     <div class="tab" data-group="primary" data-tab="description">
       {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
       rollData prop. --}}
-      {{editor system.description target="system.description" rollData=rollData button=true owner=owner
-      editable=editable}}
+      {{editor enrichedDescription target="system.description" button=true editable=editable}}
     </div>
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
@@ -301,8 +300,7 @@
     <div class="bestiaire" style="height:500px">
       {{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to the
       rollData prop. --}}
-      {{editor system.desccacher target="system.desccacher" rollData=rollData button=true owner=owner
-      editable=editable}}
+      {{editor enrichedDesccacher target="system.desccacher" button=true editable=editable}}
     </div>
   </section>
   {{/if}}

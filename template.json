@@ -630,7 +630,10 @@
       ],
       "img": "icons/svg/target.svg",
       "epreuvecustom": false,
-      "desc": ""
+      "desc": "",
+      "attributes": {
+        "desc": ""
+      }
     },
     "region": {
       "templates": [

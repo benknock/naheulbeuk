@@ -124,7 +124,6 @@ Handlebars.registerHelper("arrondi", function (lvalue) {
 Handlebars.registerHelper("arrondiProche", function (lvalue) {
   lvalue = parseFloat(lvalue);
   var value = Math.round(lvalue * 1000) / 1000
-  console.log(lvalue)
   return value
 });
 

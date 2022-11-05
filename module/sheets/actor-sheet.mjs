@@ -526,12 +526,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
       let handler = ev => this._onDragStart(ev);
       html.find('li.item').each((i, li) => {
         if (li.classList.contains("inventory-header")) return;
-        if (this.actor.items.get(li.dataset.itemId)!=undefined){
-          if (this.actor.items.get(li.dataset.itemId).system.equipe!=true) {
-            li.setAttribute("draggable", true);
-            li.addEventListener("dragstart", handler, false);
-          }
-        }
+        li.setAttribute("draggable", true);
+        li.addEventListener("dragstart", handler, false);
       });
     }
   }

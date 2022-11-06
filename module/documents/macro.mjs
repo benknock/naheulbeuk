@@ -7,93 +7,42 @@ export class Macros {
    * @returns 
    */
 
-  //Fonction pour permettre un jet custom
-  static customRoll = function (dice, diff) {
-    if (game.naheulbeuk.macros.getSpeakersActor() == null) { return }
-    const actorSource = game.naheulbeuk.macros.getSpeakersActor()
-    dice = dice.replace(/ /g, "");
-    diff = diff.replace(/ /g, "");
-    let d = new Dialog({
-      title: "Lancer custom",
-      content: `
-        <em style="font-size: 15px;">Raccourcis :</em>
-        <br/>
-        <em style="font-size: 15px;">@cou @int @cha @ad @fo @att @prd @lvl @pr @prm @esq @rm @mphy @mpsy @att-distance @bonusint</em>
-        <hr>
-        <label style="font-size: 15px;">Formule :</label>
-        <input style="font-size: 15px;" type="text" name="inputFormule" value="`+ dice + `">
-        <br/><br/>
-        <label style="font-size: 15px;">Difficulté :</label>
-        <input style="font-size: 15px;" type="text" name="inputDiff" value="`+ diff + `"></li>
-        <br/><br/>
-        `,
-      buttons: {
-        one: {
-          label: "Lancer custom",
-          callback: (html) => {
-            let dice = html.find('input[name="inputFormule"').val();
-            let diff = html.find('input[name="inputDiff"').val();
-            const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
-            if (dice.substr(0, 6) == "cible:" || diff.substr(0, 6) == "cible:") {
-              if (game.naheulbeuk.macros.getSpeakersTarget() == null) { return }
-            }
-            if (dice.substr(0, 6) == "cible:") {
-              dice = game.naheulbeuk.macros.replaceAttr(dice, game.naheulbeuk.macros.getSpeakersTarget());
-            } else {
-              dice = game.naheulbeuk.macros.replaceAttr(dice, actorSource);
-            }
-            if (diff.substr(0, 6) == "cible:") {
-              diff = game.naheulbeuk.macros.replaceAttr(diff, game.naheulbeuk.macros.getSpeakersTarget());
-            } else {
-              diff = game.naheulbeuk.macros.replaceAttr(diff, actorSource);
-            }
-            if (dice != "") {
-              let r = new Roll(dice);
-              //await r.roll({"async": true});
-              r.roll({ "async": true }).then(r => {
-                var result = 0;
-                var tplData = {};
-                var reussite = "Réussite !   ";
-                if (diff == "") {
-                  tplData = {
-                    diff: "",
-                    name: "Lancer custom"
-                  }
-                  renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
-                    r.toMessage({
-                      user: game.user.id,
-                      flavor: msgFlavor,
-                      speaker: ChatMessage.getSpeaker({ actor: actorSource })
-                    });
-                  });
-                } else {
-                  diff = new Roll(diff);
-                  diff.roll({ "async": true }).then(diff => {
-                    result = Math.abs(diff.total - r.total);
-                    if (r.total > diff.total) { reussite = "Echec !   " };
-                    tplData = {
-                      diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                      name: "Lancer custom"
-                    };
-                    renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
-                      r.toMessage({
-                        user: game.user.id,
-                        flavor: msgFlavor,
-                        speaker: ChatMessage.getSpeaker({ actor: actorSource })
-                      });
-                    });
-                  });
-                };
-              });
-            }
-          }
-        }
-      }
-    });
-    d.render(true);
+
+  //----------------Fonctions utilisées de manière globale------------------------------------------------ 
+
+  //Global : récupérer le token cible
+  static getSpeakersTarget = function () {
+    let targets = ([...game.user.targets].length > 0) ? [...game.user.targets] : canvas.tokens.children.filter(t => t._controlled);
+    if (targets.length == 0 || targets.length > 1) {
+      ui.notifications.error("Choisissez un token cible (unique)");
+      return null;
+    }
+    return targets[0].actor;
   }
 
-  // remplace @lvl @ad... ds un string
+  //Global : récupérer le token acteur
+  static getSpeakersActor = function () {
+    // Vérifie qu'un seul token est sélectionné
+    const tokens = canvas.tokens.controlled;
+    if (tokens.length > 1) {
+      ui.notifications.error("Choisissez un unique token source")
+      return null;
+    }
+    const speaker = ChatMessage.getSpeaker();
+    let actor;
+    // Si un token est sélectionné, le prendre comme acteur cible
+    if (speaker.token) actor = game.actors.tokens[speaker.token];
+    // Sinon prendre l'acteur par défaut pour l'utilisateur courrant
+    if (!actor) actor = game.actors.get(speaker.actor);
+    if (actor === undefined) {
+      ui.notifications.error("Choisissez un token source")
+      return null;
+    } else {
+      return actor;
+    }
+  }
+
+  //Global : remplace @lvl @ad... ds un string
   static replaceAttr = function (expr, actor) {
     var expr = expr
     if (actor.type == "character") {
@@ -182,39 +131,117 @@ export class Macros {
     return expr;
   }
 
-  //Récupérer le token cible
-  static getSpeakersTarget = function () {
-    let targets = ([...game.user.targets].length > 0) ? [...game.user.targets] : canvas.tokens.children.filter(t => t._controlled);
-    if (targets.length == 0 || targets.length > 1) {
-      ui.notifications.error("Choisissez un token cible (unique)");
-      return null;
-    }
-    return targets[0].actor;
-  }
-
-  //Récupérer le token acteur
-  static getSpeakersActor = function () {
-    // Vérifie qu'un seul token est sélectionné
-    const tokens = canvas.tokens.controlled;
-    if (tokens.length > 1) {
-      ui.notifications.error("Choisissez un unique token source")
-      return null;
-    }
-    const speaker = ChatMessage.getSpeaker();
-    let actor;
-    // Si un token est sélectionné, le prendre comme acteur cible
-    if (speaker.token) actor = game.actors.tokens[speaker.token];
-    // Sinon prendre l'acteur par défaut pour l'utilisateur courrant
-    if (!actor) actor = game.actors.get(speaker.actor);
-    if (actor === undefined) {
-      ui.notifications.error("Choisissez un token source")
-      return null;
-    } else {
-      return actor;
+  //Global : drag and drop d'un objet dans la barre de macro
+  static createMacro = async function(dropData, slot) {
+    const item = await fromUuid(dropData.uuid);
+    const actor = item.actor;
+    let command = null;
+    let macroName = null;
+    command = `game.naheulbeuk.rollItemMacro("${item.name}",1);//changer le dernier 1 en 0 pour arriver directement sur l'interface de jets de dés`;
+    macroName = item.name + " (" + game.actors.get(actor.id).name + ")";
+    let macro = game.macros.contents.find(m => (m.name === macroName) && (m.command === command));
+    if (!macro) {
+      macro = await Macro.create({
+          name: macroName,
+          type: "script",
+          img: item.img,
+          command: command,
+          flags: {"naheulbeuk.macro": true}
+      }, {displaySheet: false});
+      game.user.assignHotbarMacro(macro, slot);        
     }
   }
 
-  //Chercher un compendium
+
+  //----------------Fonctions utilisées pour les outils du compendium Macros------------------------------ 
+
+  //Macros : fonction pour permettre un jet custom
+  static customRoll = function (dice, diff) {
+    if (game.naheulbeuk.macros.getSpeakersActor() == null) { return }
+    const actorSource = game.naheulbeuk.macros.getSpeakersActor()
+    dice = dice.replace(/ /g, "");
+    diff = diff.replace(/ /g, "");
+    let d = new Dialog({
+      title: "Lancer custom",
+      content: `
+        <em style="font-size: 15px;">Raccourcis :</em>
+        <br/>
+        <em style="font-size: 15px;">@cou @int @cha @ad @fo @att @prd @lvl @pr @prm @esq @rm @mphy @mpsy @att-distance @bonusint</em>
+        <hr>
+        <label style="font-size: 15px;">Formule :</label>
+        <input style="font-size: 15px;" type="text" name="inputFormule" value="`+ dice + `">
+        <br/><br/>
+        <label style="font-size: 15px;">Difficulté :</label>
+        <input style="font-size: 15px;" type="text" name="inputDiff" value="`+ diff + `"></li>
+        <br/><br/>
+        `,
+      buttons: {
+        one: {
+          label: "Lancer custom",
+          callback: (html) => {
+            let dice = html.find('input[name="inputFormule"').val();
+            let diff = html.find('input[name="inputDiff"').val();
+            const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
+            if (dice.substr(0, 6) == "cible:" || diff.substr(0, 6) == "cible:") {
+              if (game.naheulbeuk.macros.getSpeakersTarget() == null) { return }
+            }
+            if (dice.substr(0, 6) == "cible:") {
+              dice = game.naheulbeuk.macros.replaceAttr(dice, game.naheulbeuk.macros.getSpeakersTarget());
+            } else {
+              dice = game.naheulbeuk.macros.replaceAttr(dice, actorSource);
+            }
+            if (diff.substr(0, 6) == "cible:") {
+              diff = game.naheulbeuk.macros.replaceAttr(diff, game.naheulbeuk.macros.getSpeakersTarget());
+            } else {
+              diff = game.naheulbeuk.macros.replaceAttr(diff, actorSource);
+            }
+            if (dice != "") {
+              let r = new Roll(dice);
+              //await r.roll({"async": true});
+              r.roll({ "async": true }).then(r => {
+                var result = 0;
+                var tplData = {};
+                var reussite = "Réussite !   ";
+                if (diff == "") {
+                  tplData = {
+                    diff: "",
+                    name: "Lancer custom"
+                  }
+                  renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
+                    r.toMessage({
+                      user: game.user.id,
+                      flavor: msgFlavor,
+                      speaker: ChatMessage.getSpeaker({ actor: actorSource })
+                    });
+                  });
+                } else {
+                  diff = new Roll(diff);
+                  diff.roll({ "async": true }).then(diff => {
+                    result = Math.abs(diff.total - r.total);
+                    if (r.total > diff.total) { reussite = "Echec !   " };
+                    tplData = {
+                      diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                      name: "Lancer custom"
+                    };
+                    renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
+                      r.toMessage({
+                        user: game.user.id,
+                        flavor: msgFlavor,
+                        speaker: ChatMessage.getSpeaker({ actor: actorSource })
+                      });
+                    });
+                  });
+                };
+              });
+            }
+          }
+        }
+      }
+    });
+    d.render(true);
+  }
+
+  //Macros : chercher un compendium
   static compendiumSearch = function () {
     var compendiums = [];
     game.packs.forEach(elem => {
@@ -264,7 +291,7 @@ export class Macros {
     });
   }
 
-  //Chercher une rencontre (liste)
+  //Macros : chercher une rencontre (liste)
   static async rencontre() {
     var message = "";
     var monstres = []
@@ -595,7 +622,7 @@ export class Macros {
     });
   }
 
-  //Chercher un élément aléatoire d'un compendium
+  //Macros : chercher un élément aléatoire d'un compendium
   static async compendiumAlea() {
     var compendiums = [];
     game.packs.forEach(elem => {
@@ -648,7 +675,7 @@ export class Macros {
     });
   }
 
-  //Chercher une rencontre (générateur) étape 1
+  //Macros : chercher une rencontre (générateur) étape 1
   static async listrencontreprep() {
     //---------------------------
     let list = '';
@@ -1253,7 +1280,7 @@ export class Macros {
     //-------------------------
   }
 
-  //Chercher une rencontre (générateur) étape 2
+  //Macros : chercher une rencontre (générateur) étape 2
   static async listrencontre(monstres, level, zone, trait, type, consnom, listfamille) {
     var rencontresN = []
     var rencontresM = []
@@ -1365,7 +1392,7 @@ export class Macros {
     d.render(true);
   }
 
-  //Outil de recherche/création mag (--> A vérifier)
+  //Macros : outil de recherche/création mag
   static async magic_search() {
     let all = all_items_search;
     var raw_arr = all.split("\n");
@@ -1666,7 +1693,7 @@ export class Macros {
     });
   }
 
-  //chercher les compétence (--> à vérifier)
+  //Macros : chercher les compétence
   static async competence_display() {
     var content = ''
     var competences = []
@@ -1777,26 +1804,6 @@ export class Macros {
         }
       })
     })
-  }
-
-  static createMacro = async function(dropData, slot) {
-    const item = await fromUuid(dropData.uuid);
-    const actor = item.actor;
-    let command = null;
-    let macroName = null;
-    command = `game.naheulbeuk.rollItemMacro("${item.name}",1);//changer le dernier 1 en 0 pour arriver directement sur l'interface de jets de dés`;
-    macroName = item.name + " (" + game.actors.get(actor.id).name + ")";
-    let macro = game.macros.contents.find(m => (m.name === macroName) && (m.command === command));
-    if (!macro) {
-      macro = await Macro.create({
-          name: macroName,
-          type: "script",
-          img: item.img,
-          command: command,
-          flags: {"naheulbeuk.macro": true}
-      }, {displaySheet: false});
-      game.user.assignHotbarMacro(macro, slot);        
-    }
   }
   
 }

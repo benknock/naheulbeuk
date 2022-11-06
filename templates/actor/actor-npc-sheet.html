@@ -124,9 +124,9 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a class="item" data-tab="carac">Caractéristique</a>
-    <a class="item" data-tab="combat">Combat</a>
-    <a class="item" data-tab="items">Inventaire</a>
+    <a data-tab="carac">Caractéristique</a>
+    <a data-tab="combat">Combat</a>
+    <a data-tab="items">Inventaire</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -227,9 +227,9 @@
               <div class="esquive">
                 <label class="resource-label">Esquive&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="Esquive"
-                    data-diff='{{math (math system.attributes.esq.value "+" system.attributes.esq.bonus) "+" system.abilities.ad.bonus}}'></i>
+                    data-diff='{{math2 system.attributes.esq.value "+" system.attributes.esq.bonus "+" system.abilities.ad.bonus}}'></i>
                     &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Esquive"
-                    data-diff='{{math (math system.attributes.esq.value "+" system.attributes.esq.bonus) "+" system.abilities.ad.bonus}}'></i></label>
+                    data-diff='{{math2 system.attributes.esq.value "+" system.attributes.esq.bonus "+" system.abilities.ad.bonus}}'></i></label>
                 <input type="text" name="system.attributes.esq.bonus" value='{{system.attributes.esq.bonus}}'
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>

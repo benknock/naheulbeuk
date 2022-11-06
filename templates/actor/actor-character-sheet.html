@@ -232,7 +232,7 @@
                     system.attributes.mvt.value}}</em></label>
                 <div class="ability flexrow flex-group-center">
                   Base :&nbsp;<input type="text" name="pr"
-                    value='{{math (math system.attributes.pr.value "+" system.attributes.pr.bonusSsEncombrement) "+" system.attributes.pr.trucdemauviette}}'
+                    value='{{math2 system.attributes.pr.value "+" system.attributes.pr.bonusSsEncombrement "+" system.attributes.pr.trucdemauviette}}'
                     data-dtype="Number" readonly />
                   &nbsp;Bonus :&nbsp;<input type="text" name="system.attributes.pr.bonus"
                     value='{{system.attributes.pr.bonus}}' data-dtype="Number" />
@@ -318,7 +318,7 @@
               <div class="resource flex-group-center" style="padding-bottom: 5px;"><label
                   class="resource-label">Etats</label></div>
               {{#each etats as |item id|}}
-              <li class="flexrow" data-item-id="{{item._id}}">
+              <li class="item flexrow" data-item-id="{{item._id}}">
                 <label>
                   {{item.name}}
                   {{#if (equalsor item.system.formula "" item.system.formula "-")}}

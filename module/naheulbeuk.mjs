@@ -10,6 +10,7 @@ import { NAHEULBEUK } from "./helpers/config.mjs";
 
 //PCH
 import { Macros } from "./documents/macro.mjs";
+import { registerHandlebarsHelpers } from './documents/helpers.mjs';
 
 
 /* -------------------------------------------- */
@@ -62,249 +63,12 @@ Hooks.once('init', async function () {
     }
   })
 
+  // Register Handlebars Helpers
+	registerHandlebarsHelpers();
+  
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
-
-/* -------------------------------------------- */
-/*  Handlebars Helpers                          */
-/* -------------------------------------------- */
-
-// If you need to add Handlebars helpers, here are a few useful examples:
-Handlebars.registerHelper('concat', function () {
-  var outStr = '';
-  for (var arg in arguments) {
-    if (typeof arguments[arg] != 'object') {
-      outStr += arguments[arg];
-    }
-  }
-  return outStr;
-});
-
-Handlebars.registerHelper('toLowerCase', function (str) {
-  return str.toLowerCase();
-});
-
-//PCH - opération mathématique
-Handlebars.registerHelper("math", function (lvalue, operator, rvalue, options) {
-  lvalue = parseFloat(lvalue);
-  rvalue = parseFloat(rvalue);
-  return {
-    "+": lvalue + rvalue,
-    "-": lvalue - rvalue,
-    "*": (lvalue * 100) * (rvalue * 100) / 10000,
-    "/": Math.ceil(lvalue / rvalue),
-    ":": lvalue / rvalue,
-    "%": lvalue % rvalue
-  }[operator];
-});
-//PCH - opération mathématique arrondi
-Handlebars.registerHelper("arrondi", function (lvalue) {
-  lvalue = parseFloat(lvalue);
-  var value = Math.ceil(lvalue * 100) / 100
-  return value
-});
-
-//PCH - opération mathématique arrondi le plus proche
-Handlebars.registerHelper("arrondiProche", function (lvalue) {
-  lvalue = parseFloat(lvalue);
-  var value = Math.round(lvalue * 1000) / 1000
-  return value
-});
-
-//PCH - égalité
-Handlebars.registerHelper('equals', function (val1, val2) {
-  var val1 = val1;
-  var val2 = val2;
-  if (val1 == "false") { val1 = false };
-  if (val1 == "true") { val1 = true };
-  if (val2 == "false") { val2 = false };
-  if (val2 == "true") { val2 = true };
-  return val1 == val2;
-});
-
-//PCH - premier character
-Handlebars.registerHelper('first', function (val1) {
-  var val1 = val1;
-  return val1.slice(0, 1);
-});
-
-//PCH - sans premier character
-Handlebars.registerHelper('first2', function (val1) {
-  var val1 = val1;
-  return val1.slice(1, val1.length);
-});
-
-//PCH - pas égalité
-Handlebars.registerHelper('equalsnot', function (val1, val2) {
-  var val1 = val1;
-  var val2 = val2;
-  if (val1 == "false") { val1 = false };
-  if (val1 == "true") { val1 = true };
-  if (val2 == "false") { val2 = false };
-  if (val2 == "true") { val2 = true };
-  return val1 != val2;
-});
-
-//PCH - égalité avec OU
-Handlebars.registerHelper('equalsor', function (val1, val2, val3, val4) {
-  var val1 = val1;
-  var val2 = val2;
-  var val3 = val3;
-  var val4 = val4;
-  var result = false;
-  if (val1 == "false") { val1 = false };
-  if (val1 == "true") { val1 = true };
-  if (val2 == "false") { val2 = false };
-  if (val2 == "true") { val2 = true };
-  if (val3 == "false") { val3 = false };
-  if (val3 == "true") { val3 = true };
-  if (val4 == "false") { val4 = false };
-  if (val4 == "true") { val4 = true };
-  if (val1 == val2 || val3 == val4) { result = true }
-  return result;
-});
-
-//PCH - égalité avec ET
-Handlebars.registerHelper('equalsand', function (val1, val2, val3, val4) {
-  var val1 = val1;
-  var val2 = val2;
-  var val3 = val3;
-  var val4 = val4;
-  var result = false;
-  if (val1 == "false") { val1 = false };
-  if (val1 == "true") { val1 = true };
-  if (val2 == "false") { val2 = false };
-  if (val2 == "true") { val2 = true };
-  if (val3 == "false") { val3 = false };
-  if (val3 == "true") { val3 = true };
-  if (val4 == "false") { val4 = false };
-  if (val4 == "true") { val4 = true };
-  if (val1 == val2 && val3 == val4) { result = true }
-  return result;
-});
-
-//PCH - a un bonus (item)
-Handlebars.registerHelper('bonus', function (val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12) {
-  if ((val1 == 0) && (val2 == 0) && (val3 == 0) && (val4 == 0) && (val5 == 0) && (val6 == 0) && (val7 == 0) && (val8 == 0) && (val9 == 0) && (val9 == 0) && (val10 == 0) && (val11 == 0) && (val12 == "")) {
-    return true
-  } else {
-    return false
-  }
-});
-
-//PCH - déplacement
-Handlebars.registerHelper('deplacement', function (val1, val2, val3, val4) {
-  var calc = val1 + val2 - val3;
-  var calc1 = 0;
-  var calc2 = 0;
-  if (calc <= 1) {
-    calc1 = 8;
-    calc2 = 12;
-  } else if (calc == 2) {
-    calc1 = 6;
-    calc2 = 10;
-  } else if (calc <= 4) {
-    calc1 = 4;
-    calc2 = 8;
-  } else if (calc == 5) {
-    calc1 = 4;
-    calc2 = 6;
-  } else if (calc == 6) {
-    calc1 = 3;
-    calc2 = 4;
-  } else if (calc == 7) {
-    calc1 = 2;
-    calc2 = 3;
-  } else if (calc > 7) {
-    calc1 = 1;
-    calc2 = 2;
-  }
-  calc1 = Math.max(0, Math.ceil(calc1 + (calc1 * val4 / 100)))
-  calc2 = Math.max(0, Math.ceil(calc2 + (calc2 * val4 / 100)))
-  calc = "(" + calc1 + "m/" + calc2 + "m)"
-  return calc;
-});
-//PCH - log
-Handlebars.registerHelper("log", function (value) {
-  console.log(value)
-});
-
-//PCH - sauvegarder l'acteur dans une variable pour être lû dans les boucles for
-if (typeof actor_data != 'object') { var actor_data };
-Handlebars.registerHelper("save_actor", function (actor) {
-  actor_data = actor
-});
-//PCH - lire l'acteur dans la variable précédente
-Handlebars.registerHelper("read_actor", function (value) {
-  var actor_details = "actor_data.data.root.actor.system" + value
-  actor_details = eval(actor_details)
-  if (actor_details.toString().substring(0, 1) != "-" && /^[0-9]/.test(actor_details)) { actor_details = "+" + actor_details }
-  if (actor_details == "+0") {
-    return
-  } else {
-    return actor_details
-  }
-});
-
-Handlebars.registerHelper("ingeniositeMalus", function (difficulte,malus) {
-  var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus
-  var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus
-  var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
-  var actor_diff = actor_ingeniosite - difficulte
-  if (Math.sign(actor_diff)==-1){
-    actor_ingeniosite=actor_ingeniosite+actor_diff
-  }
-  if (malus.substring(0,1)=="-"){
-    actor_ingeniosite=actor_ingeniosite+parseInt(malus)
-  } else {
-    actor_ingeniosite = 0
-  }
-  return actor_ingeniosite
-});
-
-Handlebars.registerHelper("ingeniosite", function (difficulte) {
-  var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus
-  var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus
-  var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
-  var actor_diff = actor_ingeniosite - difficulte
-  actor_ingeniosite=actor_ingeniosite+actor_diff
-  return actor_ingeniosite
-});
-
-//PCH - lire l'acteur dans la variable précédente
-Handlebars.registerHelper("read_items_actor", function (value) {
-  let compteur = 0
-  for (let itemActor of actor_data.data.root.actor.items){
-    if (itemActor.system.stockage!=undefined){
-      let arme_armure_pas_equipe = true
-      if ((itemActor.type=="arme" || itemActor.type=="armure") && itemActor.system.equipe==true){arme_armure_pas_equipe=false}
-      if (arme_armure_pas_equipe && value=="sac" && itemActor.system.stockage=="sac") {compteur++}
-      if (arme_armure_pas_equipe && value=="nosac" && itemActor.system.stockage=="nosac") {compteur++}
-      if (arme_armure_pas_equipe && value=="bourse" && itemActor.system.stockage=="bourse") {compteur++}
-      if (arme_armure_pas_equipe && value=="divers" && itemActor.system.stockage=="sac" && (itemActor.type=="sac" || itemActor.system.categorie=="Divers" || itemActor.system.categorie=="")) {compteur++}
-      if (arme_armure_pas_equipe && value=="livres" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Livres") {compteur++}
-      if (arme_armure_pas_equipe && value=="potions" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Potions") {compteur++}
-      if (arme_armure_pas_equipe && value=="ingredients" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Ingrédients") {compteur++}
-      if (arme_armure_pas_equipe && value=="armes" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Armes") {compteur++}
-      if (arme_armure_pas_equipe && value=="armures" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Armures") {compteur++}
-      if (arme_armure_pas_equipe && value=="nourritures" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Nourritures") {compteur++}
-      if (arme_armure_pas_equipe && value=="richesses" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Richesses") {compteur++}
-      if (arme_armure_pas_equipe && value=="perso" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Objets personnels") {compteur++}
-      if (arme_armure_pas_equipe && value=="montures" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Montures") {compteur++}
-    }
-  }
-  return compteur
-});
-
-Handlebars.registerHelper("poidconteneur", function (item) {
-  var poid = item.system.poidconteneur
-  for (let itemFind of item.system.items){
-    poid = poid + itemFind.system.weight*itemFind.system.quantity
-  }
-  return poid
-});
-
 
 /**
  * Create a Macro from an Item drop.
@@ -339,16 +103,16 @@ function rollItemMacro(itemName,param) {
           two: {
             label: "Utiliser l'objet",
             callback: (html) => {
-              if (item.data.data.epreuvecustom == true) {
-                var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5 };
+              if (item.system.epreuvecustom == true) {
+                var dataset = { "actor": actor, "dice1": item.system.jet1, "name1": item.system.name1, "diff1": item.system.epreuve1, "dice2": item.system.jet2, "name2": item.system.name2, "diff2": item.system.epreuve2, "dice3": item.system.jet3, "name3": item.system.name3, "diff3": item.system.epreuve3, "dice4": item.system.jet4, "name4": item.system.name4, "diff4": item.system.epreuve4, "dice5": item.system.jet5, "name5": item.system.name5, "diff5": item.system.epreuve5 };
                 var currentTarget = { "dataset": dataset };
                 var event = { "currentTarget": currentTarget };
                 onRollCustomSpell(event)
               } else {
-                if (item.data.data.degat == "") {
-                  var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": "", "name2": "", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+                if (item.system.degat == "") {
+                  var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.system.epreuve, "dice2": "", "name2": "", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
                 } else {
-                  var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": item.data.data.degat, "name2": "Dégâts", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+                  var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.system.epreuve, "dice2": item.system.degat, "name2": "Dégâts", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
                 }
                 var currentTarget = { "dataset": dataset };
                 var event = { "currentTarget": currentTarget };
@@ -361,7 +125,7 @@ function rollItemMacro(itemName,param) {
       d.render(true);
 
     //Macro pour une arme ou un bouclier (ignore les flèches et autre projectile/combustibles) sans épreuve custom
-    } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == false) {
+    } else if (item.type == "arme" && item.system.formula + item.system.prd != "-" && item.system.formula + item.system.prd != "--" && item.system.epreuvecustom == false) {
       let d = new Dialog({
         title: item.name,
         content: `
@@ -378,17 +142,17 @@ function rollItemMacro(itemName,param) {
           two: {
             label: "Utiliser l'objet",
             callback: (html) => {
-              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+              if (item.system.equipe == false || item.system.enmain == false) {
                 return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
               } else {
-                if (item.data.data.prd == "-") {
+                if (item.system.prd == "-") {
                   var prd = "";
                   var prdname = "";
                 } else {
-                  var prd = "@prd+" + item.data.data.prd;
+                  var prd = "@prd+" + item.system.prd;
                   var prdname = "Parade";
                 }
-                if (item.data.data.formula == "-" || item.data.data.formula == "") {
+                if (item.system.formula == "-" || item.system.formula == "") {
                   var attaque = "";
                   var attname = "";
                   var degat = "";
@@ -396,16 +160,16 @@ function rollItemMacro(itemName,param) {
                 } else {
                   var attname = "Attaque";
                   var degatname = "Dégâts";
-                  if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
-                  var degat = item.data.data.formula;
-                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
-                    degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
+                  if (item.system.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
+                  var degat = item.system.formula;
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
+                    degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) - 12)
                   };
-                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
                     degat = degat + "-1"
                   };
-                  if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
-                    degat = degat + actor.data.data.attributes.lancerarme.degat
+                  if (item.system.lancerarme != "-" && actor.system.attributes.lancerarme.degat != 0) {
+                    degat = degat + actor.system.attributes.lancerarme.degat
                   };
                 }
 
@@ -420,7 +184,7 @@ function rollItemMacro(itemName,param) {
       });
       d.render(true);
     //Macro pour une arme ou un bouclier (ignore les flèches et autre projectile/combustibles) avec épreuve custom
-    } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == true) {
+    } else if (item.type == "arme" && item.system.formula + item.system.prd != "-" && item.system.formula + item.system.prd != "--" && item.system.epreuvecustom == true) {
       let d = new Dialog({
         title: item.name,
         content: `
@@ -437,17 +201,17 @@ function rollItemMacro(itemName,param) {
           two: {
             label: "Utiliser l'objet",
             callback: (html) => {
-              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+              if (item.system.equipe == false || item.system.enmain == false) {
                 return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
               } else {
-                if (item.data.data.prd == "-") {
+                if (item.system.prd == "-") {
                   var prd = "";
                   var prdname = "";
                 } else {
-                  var prd = "@prd+" + item.data.data.prd;
+                  var prd = "@prd+" + item.system.prd;
                   var prdname = "Parade";
                 }
-                if (item.data.data.formula == "-" || item.data.data.formula == "") {
+                if (item.system.formula == "-" || item.system.formula == "") {
                   var attaque = "";
                   var attname = "";
                   var degat = "";
@@ -455,16 +219,16 @@ function rollItemMacro(itemName,param) {
                 } else {
                   var attname = "Attaque";
                   var degatname = "Dégâts";
-                  if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
-                  var degat = item.data.data.formula;
-                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
-                    degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
+                  if (item.system.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
+                  var degat = item.system.formula;
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
+                    degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) - 12)
                   };
-                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
                     degat = degat + "-1"
                   };
-                  if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
-                    degat = degat + actor.data.data.attributes.lancerarme.degat
+                  if (item.system.lancerarme != "-" && actor.system.attributes.lancerarme.degat != 0) {
+                    degat = degat + actor.system.attributes.lancerarme.degat
                   };
                 }
 
@@ -478,10 +242,10 @@ function rollItemMacro(itemName,param) {
           three: {
             label: "Épreuve(s) custom",
             callback: (html) => {
-              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+              if (item.system.equipe == false || item.system.enmain == false) {
                 return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
               }
-              var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5 };
+              var dataset = { "actor": actor, "dice1": item.system.jet1, "name1": item.system.name1, "diff1": item.system.epreuve1, "dice2": item.system.jet2, "name2": item.system.name2, "diff2": item.system.epreuve2, "dice3": item.system.jet3, "name3": item.system.name3, "diff3": item.system.epreuve3, "dice4": item.system.jet4, "name4": item.system.name4, "diff4": item.system.epreuve4, "dice5": item.system.jet5, "name5": item.system.name5, "diff5": item.system.epreuve5 };
               var currentTarget = { "dataset": dataset };
               var event = { "currentTarget": currentTarget };
               onRollCustomSpell(event)
@@ -491,7 +255,7 @@ function rollItemMacro(itemName,param) {
       });
       d.render(true);
     //Macro pour une autre arme (sans dégâts donc) avec une épreuve custom (comme une arme à feu)
-    } else if (item.type == "arme" && item.data.data.epreuvecustom == true) {
+    } else if (item.type == "arme" && item.system.epreuvecustom == true) {
       let d = new Dialog({
         title: item.name,
         content: `
@@ -508,10 +272,10 @@ function rollItemMacro(itemName,param) {
           three: {
             label: "Épreuve(s)",
             callback: (html) => {
-              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+              if (item.system.equipe == false || item.system.enmain == false) {
                 return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
               }
-              var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5, "dice6": item.data.data.jet6, "name6": item.data.data.name6, "diff6": item.data.data.epreuve6, "dice7": item.data.data.jet7, "name7": item.data.data.name7, "diff7": item.data.data.epreuve7 };
+              var dataset = { "actor": actor, "dice1": item.system.jet1, "name1": item.system.name1, "diff1": item.system.epreuve1, "dice2": item.system.jet2, "name2": item.system.name2, "diff2": item.system.epreuve2, "dice3": item.system.jet3, "name3": item.system.name3, "diff3": item.system.epreuve3, "dice4": item.system.jet4, "name4": item.system.name4, "diff4": item.system.epreuve4, "dice5": item.system.jet5, "name5": item.system.name5, "diff5": item.system.epreuve5, "dice6": item.system.jet6, "name6": item.system.name6, "diff6": item.system.epreuve6, "dice7": item.system.jet7, "name7": item.system.name7, "diff7": item.system.epreuve7 };
               var currentTarget = { "dataset": dataset };
               var event = { "currentTarget": currentTarget };
               onRollCustomSpell(event)
@@ -521,7 +285,7 @@ function rollItemMacro(itemName,param) {
       });
       d.render(true);
     //Macro pour un coup spécial - désactivé pour le moment
-    /*} else if (item.type == "coup" && ((item.data.data.epreuve != "" && item.data.data.bourrepif == false) || item.data.data.bourrepif == true)) {
+    /*} else if (item.type == "coup" && ((item.system.epreuve != "" && item.system.bourrepif == false) || item.system.bourrepif == true)) {
       let d = new Dialog({
         title: item.name,
         content: `
@@ -538,20 +302,20 @@ function rollItemMacro(itemName,param) {
           two: {
             label: "Utiliser l'objet",
             callback: (html) => {
-              if (item.data.data.bourrepif == false) {
+              if (item.system.bourrepif == false) {
                 var name1 = "";
                 var name2 = "";
                 var diff1 = "";
                 var dice1 = "";
                 var dice2 = "";
-                if (item.data.data.epreuve.substring(0, 1) != "*") {
+                if (item.system.epreuve.substring(0, 1) != "*") {
                   name1 = "Epreuve"
-                  diff1 = item.data.data.epreuve
+                  diff1 = item.system.epreuve
                   dice1 = "d20"
                 }
-                if (item.data.data.degat.substring(0, 1) != "*") {
+                if (item.system.degat.substring(0, 1) != "*") {
                   name2 = "Dégâts"
-                  dice2 = item.data.data.degat
+                  dice2 = item.system.degat
                 }
                 var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
                 var currentTarget = { "dataset": dataset };
@@ -566,18 +330,18 @@ function rollItemMacro(itemName,param) {
                 var dice1 = "";
                 var dice2 = "";
                 var dice3 = "";
-                if (item.data.data.epreuve != "" && item.data.data.epreuve != "-") {
+                if (item.system.epreuve != "" && item.system.epreuve != "-") {
                   name1 = "Epreuve d'attaque";
-                  diff1 = item.data.data.epreuve;
+                  diff1 = item.system.epreuve;
                   dice1 = "d20";
                 }
-                if (item.data.data.degat != "" && item.data.data.degat != "-") {
+                if (item.system.degat != "" && item.system.degat != "-") {
                   name2 = "Dégâts";
-                  dice2 = item.data.data.degat;
+                  dice2 = item.system.degat;
                 }
-                if (item.data.data.attaque != "" && item.data.data.attaque != "-") {
+                if (item.system.attaque != "" && item.system.attaque != "-") {
                   name3 = "Epreuve spéciale";
-                  diff3 = item.data.data.attaque;
+                  diff3 = item.system.attaque;
                   dice3 = "d20";
                 }
                 var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": dice3, "name3": name3, "diff3": diff3, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
@@ -598,34 +362,34 @@ function rollItemMacro(itemName,param) {
   if (param==0){
     //sort
     if (item.type == "sort") {
-      if (item.data.data.epreuvecustom == true) {
-        var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5 };
+      if (item.system.epreuvecustom == true) {
+        var dataset = { "actor": actor, "dice1": item.system.jet1, "name1": item.system.name1, "diff1": item.system.epreuve1, "dice2": item.system.jet2, "name2": item.system.name2, "diff2": item.system.epreuve2, "dice3": item.system.jet3, "name3": item.system.name3, "diff3": item.system.epreuve3, "dice4": item.system.jet4, "name4": item.system.name4, "diff4": item.system.epreuve4, "dice5": item.system.jet5, "name5": item.system.name5, "diff5": item.system.epreuve5 };
         var currentTarget = { "dataset": dataset };
         var event = { "currentTarget": currentTarget };
         onRollCustomSpell(event)
       } else {
-        if (item.data.data.degat == "") {
-          var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": "", "name2": "", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+        if (item.system.degat == "") {
+          var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.system.epreuve, "dice2": "", "name2": "", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
         } else {
-          var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.data.data.epreuve, "dice2": item.data.data.degat, "name2": "Dégâts", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
+          var dataset = { "actor": actor, "dice1": "d20", "name1": "Epreuve", "diff1": item.system.epreuve, "dice2": item.system.degat, "name2": "Dégâts", "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
         }
         var currentTarget = { "dataset": dataset };
         var event = { "currentTarget": currentTarget };
         onRollCustomSpell(event)
       }
     //arme sans épreuve custom
-    } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == false) {
-        if (item.data.data.equipe == false || item.data.data.enmain == false) {
+    } else if (item.type == "arme" && item.system.formula + item.system.prd != "-" && item.system.formula + item.system.prd != "--" && item.system.epreuvecustom == false) {
+        if (item.system.equipe == false || item.system.enmain == false) {
           return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
         } else {
-          if (item.data.data.prd == "-") {
+          if (item.system.prd == "-") {
             var prd = "";
             var prdname = "";
           } else {
-            var prd = "@prd+" + item.data.data.prd;
+            var prd = "@prd+" + item.system.prd;
             var prdname = "Parade";
           }
-          if (item.data.data.formula == "-" || item.data.data.formula == "") {
+          if (item.system.formula == "-" || item.system.formula == "") {
             var attaque = "";
             var attname = "";
             var degat = "";
@@ -633,16 +397,16 @@ function rollItemMacro(itemName,param) {
           } else {
             var attname = "Attaque";
             var degatname = "Dégâts";
-            if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
-            var degat = item.data.data.formula;
-            if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
-              degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
+            if (item.system.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
+            var degat = item.system.formula;
+            if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
+              degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) - 12)
             };
-            if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
+            if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
               degat = degat + "-1"
             };
-            if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
-              degat = degat + actor.data.data.attributes.lancerarme.degat
+            if (item.system.lancerarme != "-" && actor.system.attributes.lancerarme.degat != 0) {
+              degat = degat + actor.system.attributes.lancerarme.degat
             };
           }
 
@@ -652,7 +416,7 @@ function rollItemMacro(itemName,param) {
           onRollCustomSpell(event)
         }
     //arme avec épreuve custom
-    } else if (item.type == "arme" && item.data.data.formula + item.data.data.prd != "-" && item.data.data.formula + item.data.data.prd != "--" && item.data.data.epreuvecustom == true) {
+    } else if (item.type == "arme" && item.system.formula + item.system.prd != "-" && item.system.formula + item.system.prd != "--" && item.system.epreuvecustom == true) {
       let d = new Dialog({
         title: item.name,
         content: `
@@ -663,17 +427,17 @@ function rollItemMacro(itemName,param) {
           two: {
             label: "Utiliser l'objet",
             callback: (html) => {
-              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+              if (item.system.equipe == false || item.system.enmain == false) {
                 return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
               } else {
-                if (item.data.data.prd == "-") {
+                if (item.system.prd == "-") {
                   var prd = "";
                   var prdname = "";
                 } else {
-                  var prd = "@prd+" + item.data.data.prd;
+                  var prd = "@prd+" + item.system.prd;
                   var prdname = "Parade";
                 }
-                if (item.data.data.formula == "-" || item.data.data.formula == "") {
+                if (item.system.formula == "-" || item.system.formula == "") {
                   var attaque = "";
                   var attname = "";
                   var degat = "";
@@ -681,16 +445,16 @@ function rollItemMacro(itemName,param) {
                 } else {
                   var attname = "Attaque";
                   var degatname = "Dégâts";
-                  if (item.data.data.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.data.data.att }
-                  var degat = item.data.data.formula;
-                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) > 12) {
-                    degat = degat + "+" + Math.max(0, (actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) - 12)
+                  if (item.system.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
+                  var degat = item.system.formula;
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
+                    degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) - 12)
                   };
-                  if ((actor.data.data.abilities.fo.value + actor.data.data.abilities.fo.bonus) < 9) {
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
                     degat = degat + "-1"
                   };
-                  if (item.data.data.lancerarme != "-" && actor.data.data.attributes.lancerarme.degat != 0) {
-                    degat = degat + actor.data.data.attributes.lancerarme.degat
+                  if (item.system.lancerarme != "-" && actor.system.attributes.lancerarme.degat != 0) {
+                    degat = degat + actor.system.attributes.lancerarme.degat
                   };
                 }
 
@@ -704,10 +468,10 @@ function rollItemMacro(itemName,param) {
           three: {
             label: "Épreuve(s) custom",
             callback: (html) => {
-              if (item.data.data.equipe == false || item.data.data.enmain == false) {
+              if (item.system.equipe == false || item.system.enmain == false) {
                 return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
               }
-              var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5 };
+              var dataset = { "actor": actor, "dice1": item.system.jet1, "name1": item.system.name1, "diff1": item.system.epreuve1, "dice2": item.system.jet2, "name2": item.system.name2, "diff2": item.system.epreuve2, "dice3": item.system.jet3, "name3": item.system.name3, "diff3": item.system.epreuve3, "dice4": item.system.jet4, "name4": item.system.name4, "diff4": item.system.epreuve4, "dice5": item.system.jet5, "name5": item.system.name5, "diff5": item.system.epreuve5 };
               var currentTarget = { "dataset": dataset };
               var event = { "currentTarget": currentTarget };
               onRollCustomSpell(event)
@@ -717,31 +481,31 @@ function rollItemMacro(itemName,param) {
       });
       d.render(true);
     //arme sans dégâts, juste avec épreuve custom
-    } else if (item.type == "arme" && item.data.data.epreuvecustom == true) {
-        if (item.data.data.equipe == false || item.data.data.enmain == false) {
+    } else if (item.type == "arme" && item.system.epreuvecustom == true) {
+        if (item.system.equipe == false || item.system.enmain == false) {
           return ui.notifications.warn(`L'objet ${itemName} n'est pas équipé`);
         }
-        var dataset = { "actor": actor, "dice1": item.data.data.jet1, "name1": item.data.data.name1, "diff1": item.data.data.epreuve1, "dice2": item.data.data.jet2, "name2": item.data.data.name2, "diff2": item.data.data.epreuve2, "dice3": item.data.data.jet3, "name3": item.data.data.name3, "diff3": item.data.data.epreuve3, "dice4": item.data.data.jet4, "name4": item.data.data.name4, "diff4": item.data.data.epreuve4, "dice5": item.data.data.jet5, "name5": item.data.data.name5, "diff5": item.data.data.epreuve5, "dice6": item.data.data.jet6, "name6": item.data.data.name6, "diff6": item.data.data.epreuve6, "dice7": item.data.data.jet7, "name7": item.data.data.name7, "diff7": item.data.data.epreuve7 };
+        var dataset = { "actor": actor, "dice1": item.system.jet1, "name1": item.system.name1, "diff1": item.system.epreuve1, "dice2": item.system.jet2, "name2": item.system.name2, "diff2": item.system.epreuve2, "dice3": item.system.jet3, "name3": item.system.name3, "diff3": item.system.epreuve3, "dice4": item.system.jet4, "name4": item.system.name4, "diff4": item.system.epreuve4, "dice5": item.system.jet5, "name5": item.system.name5, "diff5": item.system.epreuve5, "dice6": item.system.jet6, "name6": item.system.name6, "diff6": item.system.epreuve6, "dice7": item.system.jet7, "name7": item.system.name7, "diff7": item.system.epreuve7 };
         var currentTarget = { "dataset": dataset };
         var event = { "currentTarget": currentTarget };
         onRollCustomSpell(event)
     //coup spécial, désactivé pour le moment
     /*
-    } else if (item.type == "coup" && ((item.data.data.epreuve != "" && item.data.data.bourrepif == false) || item.data.data.bourrepif == true)) {
-        if (item.data.data.bourrepif == false) {
+    } else if (item.type == "coup" && ((item.system.epreuve != "" && item.system.bourrepif == false) || item.system.bourrepif == true)) {
+        if (item.system.bourrepif == false) {
           var name1 = "";
           var name2 = "";
           var diff1 = "";
           var dice1 = "";
           var dice2 = "";
-          if (item.data.data.epreuve.substring(0, 1) != "*") {
+          if (item.system.epreuve.substring(0, 1) != "*") {
             name1 = "Epreuve"
-            diff1 = item.data.data.epreuve
+            diff1 = item.system.epreuve
             dice1 = "d20"
           }
-          if (item.data.data.degat.substring(0, 1) != "*") {
+          if (item.system.degat.substring(0, 1) != "*") {
             name2 = "Dégâts"
-            dice2 = item.data.data.degat
+            dice2 = item.system.degat
           }
           var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": "", "name3": "", "diff3": "", "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };
           var currentTarget = { "dataset": dataset };
@@ -756,18 +520,18 @@ function rollItemMacro(itemName,param) {
           var dice1 = "";
           var dice2 = "";
           var dice3 = "";
-          if (item.data.data.epreuve != "" && item.data.data.epreuve != "-") {
+          if (item.system.epreuve != "" && item.system.epreuve != "-") {
             name1 = "Epreuve d'attaque";
-            diff1 = item.data.data.epreuve;
+            diff1 = item.system.epreuve;
             dice1 = "d20";
           }
-          if (item.data.data.degat != "" && item.data.data.degat != "-") {
+          if (item.system.degat != "" && item.system.degat != "-") {
             name2 = "Dégâts";
-            dice2 = item.data.data.degat;
+            dice2 = item.system.degat;
           }
-          if (item.data.data.attaque != "" && item.data.data.attaque != "-") {
+          if (item.system.attaque != "" && item.system.attaque != "-") {
             name3 = "Epreuve spéciale";
-            diff3 = item.data.data.attaque;
+            diff3 = item.system.attaque;
             dice3 = "d20";
           }
           var dataset = { "actor": actor, "dice1": dice1, "name1": name1, "diff1": diff1, "dice2": dice2, "name2": name2, "diff2": "", "dice3": dice3, "name3": name3, "diff3": diff3, "dice4": "", "name4": "", "diff4": "", "dice5": "", "name5": "", "diff5": "" };

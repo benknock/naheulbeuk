@@ -4,10 +4,12 @@
   font-family: Naheulbeuk2;
   src: url("../css/folkard_.ttf");
 }
+
 @font-face {
   font-family: Naheulbeuk;
   src: url("../css/Dauphin.ttf");
 }
+
 /* Global styles */
 .window-app {
   font-family: "Naheulbeuk","Roboto", sans-serif;

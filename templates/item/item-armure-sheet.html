@@ -3,14 +3,14 @@
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <div class="flexrow" style="align-items: center;">
-        <h1 class="charname" style="flex:1"><input {{#if (equals system.equipe true)}}readonly{{/if}} name="name" type="text"
+        <h1 class="charname" style="flex:1"><input name="name" type="text"
           value="{{item.name}}" placeholder="Name" /></h1>
         <i class="fas fa-eye masquerstats cliquable" style="flex:0.01;padding-left:3px"></i>
       </div>
       <div class="grid grid-2col">
         <div class="resource">
           <label class="resource-label">Quantité</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.quantity"
+          <input type="text" name="system.quantity"
             value="{{system.quantity}}" data-dtype="Number" />
         </div>
         <div class="resource">
@@ -24,7 +24,7 @@
               style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.weight" value="{{system.weight}}"
+          <input type="text" name="system.weight" value="{{system.weight}}"
             data-dtype="Number" />
         </div>
       </div>
@@ -32,7 +32,7 @@
         {{#if (equals system.cacher false)}}
         <div class="resource">
           <label class="resource-label">Prix (po)</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.prix" value="{{system.prix}}"
+          <input type="text" name="system.prix" value="{{system.prix}}"
             data-dtype="Number" />
         </div>
         <div class="resource">
@@ -136,7 +136,7 @@
 
   <div class="resource flexrow paddingcustom" style="align-items: center; margin-bottom: 10px">
     <label class="resource-label" style="flex:0.42;">Origine/métier compatibles :</label>
-    <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.limitporteur"
+    <input type="text" name="system.limitporteur"
       value="{{system.limitporteur}}" data-dtype="String" />
   </div>
 
@@ -182,66 +182,66 @@
         <h2><label class="resource-label">Rupture </label></h2>
       </div>
       <div class="resource grid grid-2col">
-        <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.formula" value="{{system.formula}}"
+        <input type="text" name="system.formula" value="{{system.formula}}"
           data-dtype="String" />
-        <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.rupture" value="{{system.rupture}}"
+        <input type="text" name="system.rupture" value="{{system.rupture}}"
           data-dtype="String" />
       </div>
       <div class="resource" style="margin-top: 10px;">
         <h2><label class="resource-label">Bonus / Malus :</label></h2>
         <div class="resources flexrow" style="margin-bottom: 10px;">
           <label class="resource-label">Courage</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.cou" value="{{system.cou}}"
+          <input type="text" name="system.cou" value="{{system.cou}}"
             data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Intelligence</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.int" value="{{system.int}}"
+          <input type="text" name="system.int" value="{{system.int}}"
             data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Charisme</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.cha" value="{{system.cha}}"
+          <input type="text" name="system.cha" value="{{system.cha}}"
             data-dtype="Number" style="flex:0.2" />
         </div>
         <div class="resources flexrow" style="margin-bottom: 10px;">
           <label class="resource-label">Adresse</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.ad" value="{{system.ad}}"
+          <input type="text" name="system.ad" value="{{system.ad}}"
             data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Force</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.fo" value="{{system.fo}}"
+          <input type="text" name="system.fo" value="{{system.fo}}"
             data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Attaque</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.att" value="{{system.att}}"
+          <input type="text" name="system.att" value="{{system.att}}"
             data-dtype="Number" style="flex:0.2" />
         </div>
         <div class="resources flexrow" style="margin-bottom: 10px;">
           <label class="resource-label">Parade</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.prd" value="{{system.prd}}"
+          <input type="text" name="system.prd" value="{{system.prd}}"
             data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.pr" value="{{system.pr}}"
+          <input type="text" name="system.pr" value="{{system.pr}}"
             data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection Magique</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.prm" value="{{system.prm}}"
+          <input type="text" name="system.prm" value="{{system.prm}}"
             data-dtype="Number" style="flex:0.2" />
         </div>
         <div class="resources flexrow" style="margin-bottom: 10px;">
           <label class="resource-label">Mouvement (%)</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.mvt" value="{{system.mvt}}"
+          <input type="text" name="system.mvt" value="{{system.mvt}}"
             data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;Résistance magique</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.rm" value="{{system.rm}}"
+          <input type="text" name="system.rm" value="{{system.rm}}"
             data-dtype="Number" style="flex:0.2" />
           <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
           <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
         </div>
         <div class="resources flexrow">
           <label class="resource-label">Autre</label>
-          <textarea {{#if (equals system.equipe true)}}readonly{{/if}} name="system.autre" rows="2"
+          <textarea name="system.autre" rows="2"
             style="flex:2.76;min-height: auto; height: 42px;">{{system.autre}}</textarea>
         </div>
         <hr class="hideItem">
         <div id="hideItem" style="display:none">
           <div class="resources flexrow">
             <label class="resource-label">Custom</label>
-            <textarea {{#if (equals system.equipe true)}}readonly{{/if}} name="system.custom" rows="2"
+            <textarea name="system.custom" rows="2"
               style="flex:2.76;min-height: auto; height: 42px;">{{system.custom}}</textarea>
           </div>
         </div>

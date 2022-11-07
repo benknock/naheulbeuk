@@ -3,7 +3,7 @@
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <div class="flexrow" style="align-items: center;">
-        <h1 class="charname" style="flex:1"><input {{#if (equals system.equipe true)}}readonly{{/if}} name="name" type="text"
+        <h1 class="charname" style="flex:1"><input name="name" type="text"
           value="{{item.name}}" placeholder="Name" /></h1>
         <i class="fas fa-eye masquerstats cliquable" style="flex:0.01;padding-left:3px"></i>
       </div>
@@ -23,7 +23,7 @@
               style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
             {{/if}}
           </label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.weight" value="{{system.weight}}"
+          <input type="text" name="system.weight" value="{{system.weight}}"
             data-dtype="Number" />
         </div>
       </div>
@@ -31,7 +31,7 @@
         {{#if (equals system.cacher false)}}
         <div class="resource">
           <label class="resource-label">Prix (po)</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.prix" value="{{system.prix}}"
+          <input type="text" name="system.prix" value="{{system.prix}}"
             data-dtype="Number" />
         </div>
         <div class="resource">
@@ -88,7 +88,7 @@
   {{#if (equals system.cacher false)}}
   <div class="resource flexrow paddingcustom" style="align-items: center; margin-bottom: 10px">
     <label class="resource-label" style="flex:0.42;">Origine/métier compatibles :</label>
-    <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.limitporteur"
+    <input type="text" name="system.limitporteur"
       value="{{system.limitporteur}}" data-dtype="String" />
   </div>
 
@@ -133,9 +133,9 @@
         <h2><label class="resource-label">Rupture </label></h2>
       </div>
       <div class="resource grid grid-2col">
-        <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.formula" value="{{system.formula}}"
+        <input type="text" name="system.formula" value="{{system.formula}}"
           data-dtype="String" />
-        <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.rupture" value="{{system.rupture}}"
+        <input type="text" name="system.rupture" value="{{system.rupture}}"
           data-dtype="String" />
       </div>
       {{#if (equals system.epreuvecustom false)}}
@@ -146,79 +146,79 @@
           <hr>
           <div class="flexrow">
             <label class="resource-label">Nom</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.name1" value="{{system.name1}}"
+            <input type="text" name="system.name1" value="{{system.name1}}"
               data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.epreuve1"
+            <input type="text" name="system.epreuve1"
               value="{{system.epreuve1}}" data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.jet1" value="{{system.jet1}}"
+            <input type="text" name="system.jet1" value="{{system.jet1}}"
               data-dtype="String" />
           </div>
           <div class="flexrow">
             <label class="resource-label">Nom</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.name2" value="{{system.name2}}"
+            <input type="text" name="system.name2" value="{{system.name2}}"
               data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.epreuve2"
+            <input type="text" name="system.epreuve2"
               value="{{system.epreuve2}}" data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.jet2" value="{{system.jet2}}"
+            <input type="text" name="system.jet2" value="{{system.jet2}}"
               data-dtype="String" />
           </div>
           <div class="flexrow">
             <label class="resource-label">Nom</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.name3" value="{{system.name3}}"
+            <input type="text" name="system.name3" value="{{system.name3}}"
               data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.epreuve3"
+            <input type="text" name="system.epreuve3"
               value="{{system.epreuve3}}" data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.jet3" value="{{system.jet3}}"
+            <input type="text" name="system.jet3" value="{{system.jet3}}"
               data-dtype="String" />
           </div>
           <div class="flexrow">
             <label class="resource-label">Nom</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.name4" value="{{system.name4}}"
+            <input type="text" name="system.name4" value="{{system.name4}}"
               data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.epreuve4"
+            <input type="text" name="system.epreuve4"
               value="{{system.epreuve4}}" data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.jet4" value="{{system.jet4}}"
+            <input type="text" name="system.jet4" value="{{system.jet4}}"
               data-dtype="String" />
           </div>
           <div class="flexrow">
             <label class="resource-label">Nom</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.name5" value="{{system.name5}}"
+            <input type="text" name="system.name5" value="{{system.name5}}"
               data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.epreuve5"
+            <input type="text" name="system.epreuve5"
               value="{{system.epreuve5}}" data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.jet5" value="{{system.jet5}}"
+            <input type="text" name="system.jet5" value="{{system.jet5}}"
               data-dtype="String" />
           </div>
           <div class="flexrow">
             <label class="resource-label">Nom</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.name6" value="{{system.name6}}"
+            <input type="text" name="system.name6" value="{{system.name6}}"
               data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.epreuve6"
+            <input type="text" name="system.epreuve6"
               value="{{system.epreuve6}}" data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.jet6" value="{{system.jet6}}"
+            <input type="text" name="system.jet6" value="{{system.jet6}}"
               data-dtype="String" />
           </div>
           <div class="flexrow">
             <label class="resource-label">Nom</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.name7" value="{{system.name7}}"
+            <input type="text" name="system.name7" value="{{system.name7}}"
               data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Difficulté</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.epreuve7"
+            <input type="text" name="system.epreuve7"
               value="{{system.epreuve7}}" data-dtype="String" />
             <label class="resource-label">&nbsp;&nbsp;Jet de dés</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.jet7" value="{{system.jet7}}"
+            <input type="text" name="system.jet7" value="{{system.jet7}}"
               data-dtype="String" />
           </div>
           <hr>
@@ -227,51 +227,51 @@
           <h2><label class="resource-label">Bonus / Malus :</label></h2>
           <div class="resources flexrow" style="margin-bottom: 10px;">
             <label class="resource-label">Courage</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.cou" value="{{system.cou}}"
+            <input type="text" name="system.cou" value="{{system.cou}}"
               data-dtype="Number" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Intelligence</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.int" value="{{system.int}}"
+            <input type="text" name="system.int" value="{{system.int}}"
               data-dtype="Number" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Charisme</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.cha" value="{{system.cha}}"
+            <input type="text" name="system.cha" value="{{system.cha}}"
               data-dtype="Number" style="flex:0.2" />
           </div>
           <div class="resources flexrow" style="margin-bottom: 10px;">
             <label class="resource-label">Adresse</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.ad" value="{{system.ad}}"
+            <input type="text" name="system.ad" value="{{system.ad}}"
               data-dtype="Number" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Force</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.fo" value="{{system.fo}}"
+            <input type="text" name="system.fo" value="{{system.fo}}"
               data-dtype="Number" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Attaque</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.att" value="{{system.att}}"
+            <input type="text" name="system.att" value="{{system.att}}"
               data-dtype="Number" style="flex:0.2" />
           </div>
           <div class="resources flexrow" style="margin-bottom: 10px;">
             <label class="resource-label">Parade</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.prd" value="{{system.prd}}"
+            <input type="text" name="system.prd" value="{{system.prd}}"
               data-dtype="String" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.pr" value="{{system.pr}}"
+            <input type="text" name="system.pr" value="{{system.pr}}"
               data-dtype="Number" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection Magique</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.prm" value="{{system.prm}}"
+            <input type="text" name="system.prm" value="{{system.prm}}"
               data-dtype="Number" style="flex:0.2" />
           </div>
           <div class="resources flexrow" style="margin-bottom: 10px;">
             <label class="resource-label">Adresse à distance</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.lancerarme"
+            <input type="text" name="system.lancerarme"
               value="{{system.lancerarme}}" data-dtype="String" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Dégâts à distance</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.lancerarmedegat"
+            <input type="text" name="system.lancerarmedegat"
               value="{{system.lancerarmedegat}}" data-dtype="String" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Résistance magique</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.rm" value="{{system.rm}}"
+            <input type="text" name="system.rm" value="{{system.rm}}"
               data-dtype="Number" style="flex:0.2" />
           </div>
           <div class="resources flexrow" style="margin-bottom: 10px;">
             <label class="resource-label">Mouvement (%)</label>
-            <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.mvt" value="{{system.mvt}}"
+            <input type="text" name="system.mvt" value="{{system.mvt}}"
               data-dtype="Number" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
             <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
@@ -280,14 +280,14 @@
           </div>
           <div class="resources flexrow">
             <label class="resource-label">Autre</label>
-            <textarea {{#if (equals system.equipe true)}}readonly{{/if}} name="system.autre" rows="2"
+            <textarea name="system.autre" rows="2"
               style="flex:2.76;min-height: auto; height: 42px;">{{system.autre}}</textarea>
           </div>
           <hr class="hideItem">
           <div id="hideItem" style="display:none">
             <div class="resources flexrow">
               <label class="resource-label">Custom</label>
-              <textarea {{#if (equals system.equipe true)}}readonly{{/if}} name="system.custom" rows="2"
+              <textarea name="system.custom" rows="2"
                 style="flex:2.76;min-height: auto; height: 42px;">{{system.custom}}</textarea>
             </div>
           </div>

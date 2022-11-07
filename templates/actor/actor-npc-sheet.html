@@ -28,7 +28,7 @@
       <label class="resource-label">Traits</label>
       <div class="grid grid-4col" style="margin: 5px 0;gap: 5px;">
         {{#each traits as |item id|}}
-        <div class="flexrow" data-item-id="{{item._id}}">
+        <div class="item flexrow" data-item-id="{{item._id}}">
           <span>
             <a class="item-control item-delete" title="Delete Item"
               style="font-family: Roboto;font-size: 15px;"><strong>x</strong></a>
@@ -43,7 +43,7 @@
       <label class="resource-label">Répartition géographique</label>
       <div class="grid grid-3col" style="margin: 5px 0;gap: 5px;">
         {{#each regions as |item id|}}
-        <div class="flexrow" data-item-id="{{item._id}}">
+        <div class="item flexrow" data-item-id="{{item._id}}">
           <label>
             <a class="item-control item-delete" title="Delete Item"
               style="font-family: Roboto;font-size: 15px;"><strong>x</strong></a>
@@ -58,7 +58,7 @@
 
   <div id="hide" style="display:none">
     <div style="margin-bottom: 10px;">
-      <li class="flexrow" data-item-id="{{item._id}}">
+      <li class="item flexrow" data-item-id="{{item._id}}">
         <span style="text-overflow: ellipsis;flex:0.6;"><strong>Objets</strong></span>
         <div class=""><strong>Commentaires</strong></div>
       </li>
@@ -67,7 +67,7 @@
     {{#if (equals item.system.equipe true)}}
     {{#if (equals item.system.autre "")}}
     {{else}}
-    <li class="flexrow" data-item-id="{{item._id}}">
+    <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
       <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
@@ -78,7 +78,7 @@
     {{#if (equals item.system.equipe true)}}
     {{#if (equals item.system.autre "")}}
     {{else}}
-    <li class="flexrow" data-item-id="{{item._id}}">
+    <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
       <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
@@ -89,7 +89,7 @@
     {{#if (equals item.system.equipe true)}}
     {{#if (equals item.system.autre "")}}
     {{else}}
-    <li class="flexrow" data-item-id="{{item._id}}">
+    <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
       <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
@@ -100,7 +100,7 @@
     {{#if (equals item.system.equipe true)}}
     {{#if (equals item.system.autre "")}}
     {{else}}
-    <li class="flexrow" data-item-id="{{item._id}}">
+    <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
       <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
@@ -111,7 +111,7 @@
     {{#if (equals item.system.equipe true)}}
     {{#if (equals item.system.autre "")}}
     {{else}}
-    <li class="flexrow" data-item-id="{{item._id}}">
+    <li class="item flexrow" data-item-id="{{item._id}}">
       <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
       <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
     </li>
@@ -295,7 +295,7 @@
         <div class="resource flex-group-center" style="padding-bottom: 5px;"><label class="resource-label">Etats</label>
         </div>
         {{#each etats as |item id|}}
-        <li class="flexrow" data-item-id="{{item._id}}">
+        <li class="item flexrow" data-item-id="{{item._id}}">
           <label>
             {{item.name}}
             {{#if (equalsor item.system.formula "" item.system.formula "-")}}
@@ -363,7 +363,7 @@
         </li>
         {{save_actor}}
         {{#each attaques as |item id|}}
-        <li class="flexrow" data-item-id="{{item._id}}" style="margin-top: 2px;">
+        <li class="item flexrow" data-item-id="{{item._id}}" style="margin-top: 2px;">
           <div class="item-name">
             <div class="item-image">
               <img src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
@@ -446,7 +446,7 @@
             <strong><u>{{item.name}}</u></strong>
           </div>
         </li>
-        <li class="flexrow" data-item-id="{{item._id}}">
+        <li class="item flexrow" data-item-id="{{item._id}}">
           <div class="item-control">
             {{#if (equals item.system.epreuve "")}}
             {{#if (equals item.system.epreuvecustom true)}}
@@ -489,12 +489,12 @@
           </div>
           <div>Incantation : {{item.system.incantation}}</div>
         </li>
-        <li class="flexrow" data-item-id="{{item._id}}">
+        <li class="item flexrow" data-item-id="{{item._id}}">
           <div>Durée : {{item.system.duree}}</div>
           <div>Portée : {{item.system.portee}}</div>
           <div>Coût : {{item.system.cout}}</div>
         </li>
-        <li class="flexrow" data-item-id="{{item._id}}">
+        <li class="item flexrow" data-item-id="{{item._id}}">
           <div>Effet : {{item.system.effet}}</div>
         </li>
         <hr>

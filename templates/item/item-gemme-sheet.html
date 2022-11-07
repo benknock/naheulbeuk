@@ -3,14 +3,14 @@
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <div class="flexrow" style="align-items: center;">
-        <h1 class="charname" style="flex:1"><input {{#if (equals system.equipe true)}}readonly{{/if}} name="name" type="text"
+        <h1 class="charname" style="flex:1"><input name="name" type="text"
           value="{{item.name}}" placeholder="Name" /></h1>
         <i class="fas fa-eye masquerstats cliquable" style="flex:0.01;padding-left:3px"></i>
       </div>
       <div class="grid grid-2col">
         <div class="resource">
           <label class="resource-label">Quantité</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.quantity"
+          <input type="text" name="system.quantity"
             value="{{system.quantity}}" data-dtype="Number" />
         </div>
         <div class="resource">
@@ -31,7 +31,7 @@
         {{#if (equals system.cacher false)}}
         <div class="resource">
           <label class="resource-label">Prix (po)</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.prix" value="{{system.prix}}"
+          <input type="text" name="system.prix" value="{{system.prix}}"
             data-dtype="Number" />
         </div>
         {{/if}}
@@ -78,17 +78,17 @@
       <div class="resource" style="margin-top: 10px;">
         <div class="resources" style="margin-bottom: 10px;">
           <label class="resource-label">Gemme brute ou taillée</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.taille" value="{{system.taille}}"
+          <input type="text" name="system.taille" value="{{system.taille}}"
             data-dtype="String" style="flex:0.2" />
         </div>
         <div class="resources" style="margin-bottom: 10px;">
           <label class="resource-label">Nombre d'UG</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.ug" value="{{system.ug}}"
+          <input type="text" name="system.ug" value="{{system.ug}}"
             data-dtype="Number" style="flex:0.2" />
         </div>
         <div class="resources" style="margin-bottom: 10px;">
           <label class="resource-label">Description</label>
-          <input {{#if (equals system.equipe true)}}readonly{{/if}} type="text" name="system.note" value="{{system.note}}"
+          <input type="text" name="system.note" value="{{system.note}}"
             data-dtype="String" style="flex:0.2" />
         </div>
       </div>

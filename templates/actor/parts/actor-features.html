@@ -3,7 +3,7 @@
     <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences héritées</span></div>
   </h2>
   {{#each skillsNonchoisis as |item id|}}
-  <li class="flexrow" data-item-id="{{item._id}}">
+  <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <h4 class="item-control flex-group-center">{{item.name}}&nbsp;</h4>
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
@@ -25,7 +25,7 @@
     <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences choisies</span></div>
   </h2>
   {{#each skillsChoisis as |item id|}}
-  <li class="flexrow" data-item-id="{{item._id}}">
+  <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
@@ -49,7 +49,7 @@
     <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences gagnées</span></div>
   </h2>
   {{#each skillsGagnes as |item id|}}
-  <li class="flexrow" data-item-id="{{item._id}}">
+  <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
@@ -73,7 +73,7 @@
     <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences de base</span></div>
   </h2>
   {{#each skillsBases as |item id|}}
-  <li class="flexrow" data-item-id="{{item._id}}">
+  <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}

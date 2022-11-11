@@ -251,16 +251,16 @@
               <div class="mpsy">
                 <label for="system.attributes.mpsy.value" class="resource-label">Mpsy&nbsp;<i
                     class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Mpsy"
-                    data-diff='{{system.attributes.mpsy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-                    data-dice="d20" data-name="Mpsy" data-diff='{{system.attributes.mpsy.value}}'></i></label>
+                    data-diff='{{math system.attributes.mpsy.value "+" system.attributes.mpsy.bonus}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+                    data-dice="d20" data-name="Mpsy" data-diff='{{math system.attributes.mpsy.value "+" system.attributes.mpsy.bonus}}'></i></label>
                 <input type="text" name="system.attributes.mpsy.value" value="{{system.attributes.mpsy.value}}"
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>
               <div class="mphy">
                 <label for="system.attributes.mphy.value" class="resource-label">Mphy&nbsp;<i
                     class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Mphy"
-                    data-diff='{{system.attributes.mphy.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-                    data-dice="d20" data-name="Mphy" data-diff='{{system.attributes.mphy.value}}'></i></label>
+                    data-diff='{{math system.attributes.mphy.value "+" system.attributes.mphy.bonus}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+                    data-dice="d20" data-name="Mphy" data-diff='{{math system.attributes.mphy.value "+" system.attributes.mphy.bonus}}'></i></label>
                 <input type="text" name="system.attributes.mphy.value" value="{{system.attributes.mphy.value}}"
                   data-dtype="Number" style="width: calc(100% - 30px);" />
               </div>

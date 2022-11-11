@@ -42,32 +42,39 @@
         "pr": {
           "value": 0,
           "bonus": 0,
-          "bonusSsEncombrement": 0,
+          "bonus_man": 0,
           "trucdemauviette": 0,
-          "prignorepoid": 0
+          "nb_pr_ss_encombrement": 0
         },
         "prm": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "rm": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "esq": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "mvt": {
           "value": 0
         },
         "mphy": {
-          "value": 0
+          "value": 0,
+          "bonus": 0,
+          "bonus_man": 0
         },
         "mpsy": {
-          "value": 0
+          "value": 0,
+          "bonus": 0,
+          "bonus_man": 0
         },
-        "lancerarme": {
+        "att_arme_jet": {
           "value": 0,
           "bonus": 0,
           "degat": 0
@@ -172,33 +179,41 @@
       "abilities": {
         "cou": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "int": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "cha": {
           "value": 0,
           "bonus": 0,
-          "ignorempsy": 0
+          "ignorempsy": 0,
+          "bonus_man": 0
         },
         "ad": {
           "value": 0,
           "bonus": 0,
-          "bonus_malus_AD":0
+          "bonus_malus_AD":0,
+          "bonus_man": 0
         },
         "fo": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "att": {
           "value": 8,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0,
+          "degat": 0
         },
         "prd": {
           "value": 10,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         }
       }
     },
@@ -219,61 +234,75 @@
         "pr": {
           "value": 0,
           "bonus": 0,
-          "bonusSsEncombrement": 0,
           "trucdemauviette": 0,
-          "prignorepoid": 0
+          "nb_pr_ss_encombrement": 0,
+          "bonus_man": 0
         },
         "prm": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "rm": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "esq": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "mvt": {
           "value": 0
         },
         "mphy": {
-          "value": 0
+          "value": 0,
+          "bonus": 0,
+          "bonus_man": 0
         },
         "mpsy": {
-          "value": 0
+          "value": 0,
+          "bonus": 0,
+          "bonus_man": 0
         }
       },
       "abilities": {
         "cou": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "prd": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "int": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "cha": {
           "value": 0,
           "bonus": 0,
-          "ignorempsy": 0
+          "ignorempsy": 0,
+          "bonus_man": 0
         },
         "ad": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "fo": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         },
         "att": {
           "value": 0,
-          "bonus": 0
+          "bonus": 0,
+          "bonus_man": 0
         }
       }
     }
@@ -326,9 +355,16 @@
       "prm": 0,
       "mvt": 0,
       "rm": 0,
+      "att_arme_jet": 0,
+      "degat_arme_jet": 0,
+      "mphy": 0,
+      "mpsy": 0,
+      "esq": 0,
+      "degat_arme_cac": 0,
+      "cha_ignorempsy": 0,
+      "nb_pr_ss_encombrement": 0,
       "autre": "",
       "custom": "",
-      "ignorePoidSac": false,
       "name1": "",
       "name2": "",
       "name3": "",
@@ -374,8 +410,14 @@
       "prm": 0,
       "mvt": 0,
       "rm": 0,
-      "lancerarme": "-",
-      "lancerarmedegat": 0,
+      "att_arme_jet": "-",
+      "degat_arme_jet": 0,
+      "mphy": 0,
+      "mpsy": 0,
+      "esq": 0,
+      "degat_arme_cac": 0,
+      "cha_ignorempsy": 0,
+      "nb_pr_ss_encombrement": 0,
       "autre": "",
       "name1": "",
       "name2": "",
@@ -400,13 +442,16 @@
       "jet7": "",
       "epreuvecustom": false,
       "custom": "",
-      "ignorePoidSac": false,
       "prbouclier": false,
       "enchantement": false,
       "relique": false,
       "limitporteur": "tous sauf indications contraires",
       "categorie": "Armes",
       "armefeu": false,
+      "munition": false,
+      "arme_distance": false,
+      "arme_cac": true,
+      "arme_autre": false,
       "cacher": false,
       "desccacher": "",
       "nomcacher": "Nom de l'objet caché",
@@ -435,9 +480,16 @@
       "prm": 0,
       "mvt": 0,
       "rm": 0,
+      "att_arme_jet": 0,
+      "degat_arme_jet": 0,
+      "mphy": 0,
+      "mpsy": 0,
+      "esq": 0,
+      "degat_arme_cac": 0,
+      "cha_ignorempsy": 0,
+      "nb_pr_ss_encombrement": 0,
       "autre": "",
       "custom": "",
-      "ignorePoidSac": false,
       "prtete": false,
       "prbras": false,
       "prtorse": false,
@@ -475,9 +527,17 @@
       "pr": 0,
       "prm": 0,
       "mvt": 0,
+      "rm": 0,
+      "att_arme_jet": 0,
+      "degat_arme_jet": 0,
+      "mphy": 0,
+      "mpsy": 0,
+      "esq": 0,
+      "degat_arme_cac": 0,
+      "cha_ignorempsy": 0,
+      "nb_pr_ss_encombrement": 0,
       "autre": "",
       "custom": "",
-      "ignorePoidSac": false,
       "cacher": false,
       "desccacher": "",
       "nomcacher": "Nom de l'objet caché",
@@ -502,6 +562,14 @@
       "prm": 0,
       "mvt": 0,
       "rm": 0,
+      "att_arme_jet": 0,
+      "degat_arme_jet": 0,
+      "mphy": 0,
+      "mpsy": 0,
+      "esq": 0,
+      "degat_arme_cac": 0,
+      "cha_ignorempsy": 0,
+      "nb_pr_ss_encombrement": 0,
       "autre": "",
       "name1": "",
       "name2": "",
@@ -603,8 +671,8 @@
       "img": "icons/svg/sword.svg",
       "formula": "d6",
       "attaque": "10",
-      "lancerarme": "-",
-      "lancerarmedegat": 0,
+      "att_arme_jet": "-",
+      "degat_arme_jet": 0,
       "autre": "",
       "name1": "",
       "name2": "",
@@ -663,7 +731,6 @@
       "note": "",
       "note2": "<p>➢ &Eacute;valuation ou d&eacute;couverte d'une pierre brute : NAIN, MARCHAND<br />➢ &Eacute;valuation pr&eacute;cise de la raret&eacute; et du poids : NAIN, MARCHAND, VOLEUR (humain ou elfe)<br />➢ &Eacute;valuation approximative raret&eacute;/poids : VOLEUR, NOBLE, PIRATE, HAUT-ELFE, ELFE NOIR<br />➢ &Eacute;valuation li&eacute;e au poids, vague id&eacute;e pour la raret&eacute; : MAGE, PR&Ecirc;TRE, RANGER, ING&Eacute;NIEUR<br />➢ &Eacute;valuation tr&egrave;s laborieuse : BARBARE, GUERRIER, ELFE SYLVAIN, DEMI-ELFE, HOBBIT<br />➢ Aucune &eacute;valuation : ORQUE, DEMI-ORQUE, GOBELIN, GNOME, OGRE</p>\n<p><strong>Type de pierre/gemme - Valeur U.G. (brut) - Valeur U.G. (taill&eacute;e) - Notes</strong><br />Barbonate Chatoyante 70 P.O. 210 P.O. Jaune luminescent<br />Diamant bleu 60 P.O. 160 P.O. L&eacute;g&egrave;rement bleut&eacute;<br />Diamant blanc 50 P.O. 130 P.O. Rien &agrave; signaler<br />Klokolium 35 P.O. 150 P.O. Jaune opaque, iris&eacute;<br />Saphir 35 P.O. 100 P.O. Bleu assez profond<br />Rubis 30 P.O. 95 P.O. Rouge/rose<br />Zacorite 25 p.O. 90 P.O. Mauve translucide, iris&eacute;<br />&Eacute;meraude 25 P.O. 70 P.O. Vert profond<br />Ambre 22 P.O. 65 P.O. Orang&eacute;/jaune translucide<br />Opale noire 20 P.O. 60 P.O. Noire, iris&eacute;e<br />Spinelle 18 P.O. 60 P.O. Rouge<br />Jaspe 18 P.O. 55 P.O. Attention, couleurs vari&eacute;es<br />Grenat 18 P.O. 50 P.O. Rouge-brun<br />B&eacute;ryl rouge 15 P.O. 45 P.O. Rouge<br />Cornaline 8 P.O. 20 P.O. Rouge orang&eacute; sombre<br />Kunzite 8 P.O. 15 P.O. Gris l&eacute;g&egrave;rement teint&eacute;<br />Perle rose Sans objet 12 P.O. Ronde, rose p&acirc;le, iris&eacute;e<br />Perle blanche Sans objet 10 P.O. Ronde, blanche, iris&eacute;e<br />Serpentine 3 P.O. 5 P.O. G&eacute;n&eacute;ralement verte/turquoise<br />Sardonyx 2 P.O. 4 P.O. Couleurs vari&eacute;es ou noir</p>\n<p>&nbsp;</p>",
       "equipe": false,
-      "ignorePoidSac": false,
       "categorie": "Richesses",
       "formula": "-",
       "cacher": false,

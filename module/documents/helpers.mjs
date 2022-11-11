@@ -193,8 +193,8 @@ export const registerHandlebarsHelpers = function() {
   });
 
   //Calcul du déplacement en fonction des PR
-  Handlebars.registerHelper('deplacement', function (val1, val2, val3, val4) {
-    var calc = val1 + val2 - val3;
+  Handlebars.registerHelper('deplacement', function (val1, val11, val2, val3, val4) {
+    var calc = val1 + val11 + val2 - val3;
     var calc1 = 0;
     var calc2 = 0;
     if (calc <= 1) {
@@ -224,7 +224,6 @@ export const registerHandlebarsHelpers = function() {
     calc = "(" + calc1 + "m/" + calc2 + "m)"
     return calc;
   });
-
 
   //Sauvegarder l'acteur dans une variable pour être lû dans les boucles for
   if (typeof actor_data != 'object') { var actor_data };
@@ -271,8 +270,8 @@ export const registerHandlebarsHelpers = function() {
 
   //Calculer le test d'ingéniosité non spécialiste
   Handlebars.registerHelper("ingeniositeMalus", function (difficulte,malus) {
-    var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus
-    var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus
+    var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus+actor_data.data.root.actor.system.abilities.ad.bonus_man
+    var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus+actor_data.data.root.actor.system.abilities.int.bonus_man
     var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
     var actor_diff = actor_ingeniosite - difficulte
     if (Math.sign(actor_diff)==-1){
@@ -288,8 +287,8 @@ export const registerHandlebarsHelpers = function() {
 
   //Calculer le test d'ingéniosité  spécialiste
   Handlebars.registerHelper("ingeniosite", function (difficulte) {
-    var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus
-    var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus
+    var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus+actor_data.data.root.actor.system.abilities.ad.bonus_man
+    var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus+actor_data.data.root.actor.system.abilities.int.bonus_man
     var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
     var actor_diff = actor_ingeniosite - difficulte
     actor_ingeniosite=actor_ingeniosite+actor_diff

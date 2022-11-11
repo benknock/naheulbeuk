@@ -59,55 +59,58 @@ export class Macros {
   static replaceAttr = function (expr, actor) {
     var expr = expr
     if (actor.type == "character") {
-      const ad = actor.system.abilities.ad.value + actor.system.abilities.ad.bonus;
-      const lancer = actor.system.attributes.lancerarme.value + actor.system.attributes.lancerarme.bonus + ad;
-      const bonusint = Math.max(0, (actor.system.abilities.int.value + actor.system.abilities.int.bonus) - 12)
-      var lancerdegat = actor.system.attributes.lancerarme.degat
+      let ad = actor.system.abilities.ad.value + actor.system.abilities.ad.bonus + actor.system.abilities.ad.bonus_man;
+      let lancer = actor.system.attributes.att_arme_jet.value + actor.system.attributes.att_arme_jet.bonus + ad;
+      let degat_cac = actor.system.abilities.att.degat
+      let lancerdegat = actor.system.attributes.att_arme_jet.degat
       if (lancerdegat == "") { lancerdegat = 0 }
       expr = expr.replace(/@att-distance/g, lancer);
-      expr = expr.replace(/@bonusint/g, bonusint);
       expr = expr.replace(/@degat-distance/g, lancerdegat);
+      expr = expr.replace(/@degat-contact/g, degat_cac);
     }
 
-    const pr = actor.system.attributes.pr.value + actor.system.attributes.pr.bonus + actor.system.attributes.pr.bonusSsEncombrement + actor.system.attributes.pr.trucdemauviette;
+    const pr = actor.system.attributes.pr.value + actor.system.attributes.pr.bonus + actor.system.attributes.pr.bonus_man + actor.system.attributes.pr.trucdemauviette;
+    const pr_avec_encombrement = pr - actor.system.attributes.pr.nb_pr_ss_encombrement;
     var malusmvtpr
-    if (pr > 7) {
+    if (pr_avec_encombrement > 7) {
       malusmvtpr = 20
-    } else if (pr > 6) {
+    } else if (pr_avec_encombrement > 6) {
       malusmvtpr = 6
-    } else if (pr > 5){
+    } else if (pr_avec_encombrement > 5){
       malusmvtpr = 5
-    } else if (pr > 4){
+    } else if (pr_avec_encombrement > 4){
       malusmvtpr = 4
-    } else if (pr > 2){
+    } else if (pr_avec_encombrement > 2){
       malusmvtpr = 2
     } else {
       malusmvtpr = 0
     }
-    const prm = actor.system.attributes.prm.value + actor.system.attributes.prm.bonus;
-    const cou = actor.system.abilities.cou.value + actor.system.abilities.cou.bonus;
-    const int = actor.system.abilities.int.value + actor.system.abilities.int.bonus;
-    const cha = actor.system.abilities.cha.value + actor.system.abilities.cha.bonus;
-    const ad = actor.system.abilities.ad.value + actor.system.abilities.ad.bonus;
-    const fo = actor.system.abilities.fo.value + actor.system.abilities.fo.bonus;
-    const att = actor.system.abilities.att.value + actor.system.abilities.att.bonus;
-    const prd = actor.system.abilities.prd.value + actor.system.abilities.prd.bonus;
-    const mphy = actor.system.attributes.mphy.value;
-    const mpsy = actor.system.attributes.mpsy.value;
-    const rm = actor.system.attributes.rm.value + actor.system.attributes.rm.bonus;
-    var esq = actor.system.attributes.esq.value + actor.system.attributes.esq.bonus;
+    const prm = actor.system.attributes.prm.value + actor.system.attributes.prm.bonus + actor.system.attributes.prm.bonus_man;
+    const cou = actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man;
+    const int = actor.system.abilities.int.value + actor.system.abilities.int.bonus + actor.system.abilities.int.bonus_man;
+    const cha = actor.system.abilities.cha.value + actor.system.abilities.cha.bonus + actor.system.abilities.cha.bonus_man;
+    const ad = actor.system.abilities.ad.value + actor.system.abilities.ad.bonus + actor.system.abilities.ad.bonus_man;
+    const fo = actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man;
+    const att = actor.system.abilities.att.value + actor.system.abilities.att.bonus + actor.system.abilities.att.bonus_man;
+    const prd = actor.system.abilities.prd.value + actor.system.abilities.prd.bonus + actor.system.abilities.prd.bonus_man;
+    const mphy = actor.system.attributes.mphy.value + actor.system.attributes.mphy.bonus + actor.system.attributes.mphy.bonus_man;
+    const mpsy = actor.system.attributes.mpsy.value + actor.system.attributes.mpsy.bonus + actor.system.attributes.mpsy.bonus_man;
+    const rm = actor.system.attributes.rm.value + actor.system.attributes.rm.bonus + actor.system.attributes.rm.bonus_man;
+    var esq = actor.system.attributes.esq.value + actor.system.attributes.esq.bonus + actor.system.attributes.esq.bonus_man;
 
     if (actor.type == "npc") { esq = esq + actor.system.abilities.ad.bonus }
     
     const lvl = actor.system.attributes.level.value;
 
     var bonusfo = "";
-    if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
-      bonusfo = "+" + (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus - 12)
+    if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) > 12) {
+      bonusfo = "+" + (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus  + actor.system.abilities.fo.bonus_man - 12)
     };
-    if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
+    if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) < 9) {
       bonusfo = "-1"
     };
+
+    const bonusint = Math.max(0, (actor.system.abilities.int.value + actor.system.abilities.int.bonus + actor.system.abilities.int.bonus_man) - 12)
 
     let flagTirerCorrectement = 5
     for (let actoritem of actor.items) {
@@ -118,6 +121,7 @@ export class Macros {
     expr = expr.replace(/@malus-mvt-pr/g, malusmvtpr);
     expr = expr.replace(/épreuve:/g, "");
     expr = expr.replace(/@armefeu/g, flagTirerCorrectement);
+    expr = expr.replace(/@bonusint/g, bonusint);
     expr = expr.replace(/cible:/g, "");
     expr = expr.replace(/@prm/g, prm);
     expr = expr.replace(/@cou/g, cou);
@@ -156,21 +160,23 @@ export class Macros {
       dice = "d20";
     }
     //ajout du bonus de dégâts fo>12 ou malus si fo < 8 si c'est une arme
-    if (item.system!=undefined) {
-      if (item.type == "arme" && (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        if (item.system.armefeu!=true) {
-          dice = dice + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) - 12)
-        }
+    if (item) {
+      if (item.system!=undefined) {
+        if (item.type == "arme" && (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
+          if (item.system.armefeu!=true) {
+            dice = dice + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) - 12)
+          }
+        };
+        if (item.type == "arme" && (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) < 9 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
+          if (item.system.armefeu!=true) {
+            dice = dice + "-1"
+          }
+        };
+        if (item.type == "arme" && item.system.att_arme_jet != "-" && actor.system.attributes.att_arme_jet.degat != 0 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
+          dice = dice + actor.system.attributes.att_arme_jet.degat
+        };
       };
-      if (item.type == "arme" && (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        if (item.system.armefeu!=true) {
-          dice = dice + "-1"
-        }
-      };
-      if (item.type == "arme" && item.system.lancerarme != "-" && actor.system.attributes.lancerarme.degat != 0 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-        dice = dice + actor.system.attributes.lancerarme.degat
-      };
-    };
+    }
 
     //replace attributs
     if (dice.substr(0, 6) == "cible:" || diff.substr(0, 6) == "cible:") {
@@ -2209,14 +2215,17 @@ export class Macros {
           <label>Filtre pour arme ou armure --> 2 choix = choix 1 et choix 2</label><br/>
           <input type="checkbox" id="ench1" name="enchantée"><label>Enchantée</label>
           <input type="checkbox" id="ench2" name="relique"><label>Relique</label>
-          <input type="checkbox" id="ench3" name="armepoudre"><label>Arme à poudre</label>
+          <input type="checkbox" id="ench3" name="armecac"><label>Arme de contact</label>
           <input type="checkbox" id="ench4" name="bouclier"><label>Bouclier</label>
-          <input type="checkbox" id="ench5" name="prtete"><label>PR Tête</label>
-          <input type="checkbox" id="ench6" name="prbras"><label>PR Bras</label>
-          <input type="checkbox" id="ench7" name="prtorse"><label>PR Torse</label>
-          <input type="checkbox" id="ench8" name="prmains"><label>PR Mains</label>
-          <input type="checkbox" id="ench9" name="prjambes"><label>PR Jambes</label>
-          <input type="checkbox" id="ench10" name="prpieds"><label>PR Pieds</label>
+          <input type="checkbox" id="ench5" name="armedistance"><label>Arme à distance</label>
+          <input type="checkbox" id="ench6" name="armepoudre"><label>Arme à poudre</label>
+          <input type="checkbox" id="ench7" name="munition"><label>Munition</label>
+          <input type="checkbox" id="ench8" name="prtete"><label>PR Tête</label>
+          <input type="checkbox" id="ench9" name="prbras"><label>PR Bras</label>
+          <input type="checkbox" id="ench10" name="prtorse"><label>PR Torse</label>
+          <input type="checkbox" id="ench11" name="prmains"><label>PR Mains</label>
+          <input type="checkbox" id="ench12" name="prjambes"><label>PR Jambes</label>
+          <input type="checkbox" id="ench13" name="prpieds"><label>PR Pieds</label>
         </div>
         <hr>
         <div style="display: flex;align-items: center;">  
@@ -2338,7 +2347,7 @@ export class Macros {
 
         //Recherche arme/armure enchantée
         let search_arme_armure = false
-        for (let env = 1; env < 11; env++) {
+        for (let env = 1; env < 14; env++) {
           if (document.getElementById("ench" + env).checked) { search_arme_armure = true }
         }
         if (search_arme_armure == true) {
@@ -2347,14 +2356,17 @@ export class Macros {
             if (r.system.enchantement == undefined) { flag = false }
             if (r.system.enchantement == false && document.getElementById("ench" + 1).checked) { flag = false }
             if (r.system.relique == false && document.getElementById("ench" + 2).checked) { flag = false }
-            if ((r.system.armefeu == undefined || r.system.armefeu == false) && document.getElementById("ench" + 3).checked) { flag = false }
+            if ((r.system.arme_cac == undefined || r.system.arme_cac == false) && document.getElementById("ench" + 3).checked) { flag = false }
             if ((r.system.prbouclier == undefined || r.system.prbouclier == false) && document.getElementById("ench" + 4).checked) { flag = false }
-            if ((r.system.prtete == undefined || r.system.prtete == false) && document.getElementById("ench" + 5).checked) { flag = false }
-            if ((r.system.prbras == undefined || r.system.prbras == false) && document.getElementById("ench" + 6).checked) { flag = false }
-            if ((r.system.prtorse == undefined || r.system.prtorse == false) && document.getElementById("ench" + 7).checked) { flag = false }
-            if ((r.system.prmains == undefined || r.system.prmains == false) && document.getElementById("ench" + 8).checked) { flag = false }
-            if ((r.system.prjambes == undefined || r.system.prjambes == false) && document.getElementById("ench" + 9).checked) { flag = false }
-            if ((r.system.prpieds == undefined || r.system.prpieds == false) && document.getElementById("ench" + 10).checked) { flag = false }
+            if ((r.system.arme_distance == undefined || r.system.arme_distance == false) && document.getElementById("ench" + 5).checked) { flag = false }
+            if ((r.system.armefeu == undefined || r.system.armefeu == false) && document.getElementById("ench" + 6).checked) { flag = false }
+            if ((r.system.munition == undefined || r.system.munition == false) && document.getElementById("ench" + 7).checked) { flag = false }
+            if ((r.system.prtete == undefined || r.system.prtete == false) && document.getElementById("ench" + 8).checked) { flag = false }
+            if ((r.system.prbras == undefined || r.system.prbras == false) && document.getElementById("ench" + 9).checked) { flag = false }
+            if ((r.system.prtorse == undefined || r.system.prtorse == false) && document.getElementById("ench" + 10).checked) { flag = false }
+            if ((r.system.prmains == undefined || r.system.prmains == false) && document.getElementById("ench" + 11).checked) { flag = false }
+            if ((r.system.prjambes == undefined || r.system.prjambes == false) && document.getElementById("ench" + 12).checked) { flag = false }
+            if ((r.system.prpieds == undefined || r.system.prpieds == false) && document.getElementById("ench" + 13).checked) { flag = false }
             if (flag == true) { result.push(r) }
           }
         } else {

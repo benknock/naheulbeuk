@@ -15,14 +15,7 @@
         </div>
         <div class="resource">
           <label class="resource-label">
-            Poids (kg) <em style="font-weight: normal;">- ignorer pour le sac</em>
-            {{#if (equals system.ignorePoidSac true)}}
-            <input type="checkbox" name="system.ignorePoidSac" checked
-              style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
-            {{else}}
-            <input type="checkbox" name="system.ignorePoidSac"
-              style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
-            {{/if}}
+            Poids (kg)
           </label>
           <input type="text" name="system.weight" value="{{system.weight}}"
             data-dtype="Number" />
@@ -80,57 +73,93 @@
       <h2><label class="resource-label">Jet de dés</label></h2>
       <input type="text" name="system.formula" value="{{system.formula}}"
         data-dtype="String" />
-      <div class="resource" style="margin-top: 10px;">
-        <h2><label class="resource-label">Bonus / Malus :</label></h2>
-        <div class="resources flexrow" style="margin-bottom: 10px;">
-          <label class="resource-label">Courage</label>
-          <input type="text" name="system.cou" value="{{system.cou}}"
-            data-dtype="Number" style="flex:0.2" />
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Intelligence</label>
-          <input type="text" name="system.int" value="{{system.int}}"
-            data-dtype="Number" style="flex:0.2" />
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Charisme</label>
-          <input type="text" name="system.cha" value="{{system.cha}}"
-            data-dtype="Number" style="flex:0.2" />
+        <div class="resource" style="margin-top: 10px;">
+          <h2><label class="resource-label">Bonus / Malus :</label></h2>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Courage</label>
+            <input type="text" name="system.cou" value="{{system.cou}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Intelligence</label>
+            <input type="text" name="system.int" value="{{system.int}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Charisme</label>
+            <input type="text" name="system.cha" value="{{system.cha}}"
+              data-dtype="Number" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Adresse</label>
+            <input type="text" name="system.ad" value="{{system.ad}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Force</label>
+            <input type="text" name="system.fo" value="{{system.fo}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Attaque</label>
+            <input type="text" name="system.att" value="{{system.att}}"
+              data-dtype="Number" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Parade</label>
+            <input type="text" name="system.prd" value="{{system.prd}}"
+              data-dtype="String" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection</label>
+            <input type="text" name="system.pr" value="{{system.pr}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection Magique</label>
+            <input type="text" name="system.prm" value="{{system.prm}}"
+              data-dtype="Number" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Dégâts corps à corps</label>
+            <input type="text" name="system.degat_arme_cac" value="{{system.degat_arme_cac}}"
+              data-dtype="String" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Adresse à distance</label>
+            <input type="text" name="system.att_arme_jet"
+              value="{{system.att_arme_jet}}" data-dtype="String" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Dégâts à distance</label>
+            <input type="text" name="system.degat_arme_jet"
+              value="{{system.degat_arme_jet}}" data-dtype="String" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Esquive</label>
+            <input type="text" name="system.esq"
+              value="{{system.esq}}" data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Magie Physique</label>
+            <input type="text" name="system.mphy"
+              value="{{system.mphy}}" data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Magie Psychique</label>
+            <input type="text" name="system.mpsy" value="{{system.mpsy}}"
+              data-dtype="Number" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Mouvement (%)</label>
+            <input type="text" name="system.mvt" value="{{system.mvt}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Résistance magique</label>
+            <input type="text" name="system.rm" value="{{system.rm}}"
+              data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
+            <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
+          </div>
+          <hr>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Part du bonus /malus de Charisme ignoré pour la magie psychique</label>
+            <input type="text" name="system.cha_ignorempsy" value="{{system.cha_ignorempsy}}"
+              data-dtype="Number" style="flex:0.07" />
+            <label class="resource-label" style="flex:0.1">&nbsp;&nbsp;&nbsp;</label>
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Part du bonus / malus de Pr ignoré pour les malus d'encombrement</label>
+            <input type="text" name="system.nb_pr_ss_encombrement" value="{{system.nb_pr_ss_encombrement}}"
+              data-dtype="Number" style="flex:0.07" />
+            <label class="resource-label" style="flex:0.1">&nbsp;&nbsp;&nbsp;</label>
+          </div>
+          <hr>
+          <div class="resources flexrow">
+            <label class="resource-label">Autre</label>
+            <textarea name="system.autre" rows="2"
+              style="flex:2.76;min-height: auto; height: 42px;">{{system.autre}}</textarea>
+          </div>
         </div>
-        <div class="resources flexrow" style="margin-bottom: 10px;">
-          <label class="resource-label">Adresse</label>
-          <input type="text" name="system.ad" value="{{system.ad}}"
-            data-dtype="Number" style="flex:0.2" />
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Force</label>
-          <input type="text" name="system.fo" value="{{system.fo}}"
-            data-dtype="Number" style="flex:0.2" />
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Attaque</label>
-          <input type="text" name="system.att" value="{{system.att}}"
-            data-dtype="Number" style="flex:0.2" />
-        </div>
-        <div class="resources flexrow" style="margin-bottom: 10px;">
-          <label class="resource-label">Parade</label>
-          <input type="text" name="system.prd" value="{{system.prd}}"
-            data-dtype="Number" style="flex:0.2" />
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection</label>
-          <input type="text" name="system.pr" value="{{system.pr}}"
-            data-dtype="Number" style="flex:0.2" />
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection Magique</label>
-          <input type="text" name="system.prm" value="{{system.prm}}"
-            data-dtype="Number" style="flex:0.2" />
-        </div>
-        <div class="resources flexrow" style="margin-bottom: 10px;">
-          <label class="resource-label">Mouvement (%)</label>
-          <input type="text" name="system.mvt" value="{{system.mvt}}"
-            data-dtype="Number" style="flex:0.2" />
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;Résistance magique</label>
-          <input type="text" name="system.rm" value="{{system.rm}}"
-            data-dtype="Number" style="flex:0.2" />
-          <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
-          <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
-        </div>
-        <div class="resources flexrow">
-          <label class="resource-label">Autre</label>
-          <textarea name="system.autre" rows="2"
-            style="flex:2.76;min-height: auto; height: 42px;">{{system.autre}}</textarea>
-        </div>
-      </div>
     </div>
   </section>
   {{else}}

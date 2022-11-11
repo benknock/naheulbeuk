@@ -151,24 +151,29 @@
           from 1 to 12 and will create that number of columns. --}}
           <div class="abilities flexcol">
             <div class="ability flexrow flex-group-center" style="padding-bottom: 0.5em;">
-              <label class="resource-label flexlarge align-left">Carac&nbsp;<i class="fas fa-dice-d20 rollable2"
+              <label class="resource-label flexlarge align-left" style="flex:1.66">Carac</label>
+              <label class="resource-label flexlarge align-left" style="flex:0.8"><i class="fas fa-dice-d20 rollable2"
                   data-name="Initialisation" data-dice="d6+7" data-diff=""></i>&nbsp;<i
                   class="fas fa-eye hide cliquable"></i></label>
-              <label class="resource-label">Base</label>
-              <label class="resource-label">Bonus</label>
-              <label class="resource-label">Total</label>
+              <label class="resource-label" style="flex:0.5">Base</label>
+              <label class="resource-label" style="flex:0.2"></label>
+              <label class="resource-label" style="flex:0.5">Bonus</label>
+              <label class="resource-label" style="flex:0.8"></label>
             </div>
             {{#each system.abilities as |ability key|}}
             <div class="ability flexrow flex-group-center">
               <label for="system.abilities.{{key}}.value"
-                class="resource-label flexlarge align-left">{{ability.label}}&nbsp;<i class="fas fa-dice-d20 rollable2"
+                class="resource-label flexlarge align-left" style="flex:1.7">{{ability.label}}&nbsp;:&nbsp;{{math2 ability.bonus "+" ability.bonus_man "+" ability.value}}</label>
+              <label for="system.abilities.{{key}}.value"
+                class="resource-label flexlarge align-left" style="flex:0.8"><i class="fas fa-dice-d20 rollable2"
                   data-dice="d20" data-name="{{ability.label}}"
                   data-diff='{{math ability.bonus "+" ability.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
                   data-dice="d20" data-name="{{ability.label}}"
                   data-diff='{{math ability.bonus "+" ability.value}}'></i></label>
-              <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-              <input type="text" name="system.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
-              <span class="ability-mod ">{{math ability.bonus "+" ability.value}}</span>
+              <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" style="flex:0.5"/>
+              <label class="resource-label" style="flex:0.1"></label>
+              <input type="text" name="system.abilities.{{key}}.bonus_man" value="{{ability.bonus_man}}" data-dtype="Number" style="flex:0.5"/>
+              <label class="resource-label" style="flex:0.8"></label>
             </div>
             {{#if (equals key "fo")}}
             <hr>
@@ -201,9 +206,9 @@
               <div>
                 <label class="resource-label">Résistance mag.&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="Résistance magique"
-                    data-diff='{{math system.attributes.rm.value "+" system.attributes.rm.bonus}}'></i>&nbsp;<i
+                    data-diff='{{math2 system.attributes.rm.value "+" system.attributes.rm.bonus "+" system.attributes.rm.bonus_man}}'></i>&nbsp;<i
                     class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Résistance magique"
-                    data-diff='{{math system.attributes.rm.value "+" system.attributes.rm.bonus}}'></i></label>
+                    data-diff='{{math2 system.attributes.rm.value "+" system.attributes.rm.bonus "+" system.attributes.rm.bonus_man}}'></i></label>
                 <div class="ability flexrow flex-group-center">
                   Base :&nbsp;<input type="text" name="res-mag" value='{{system.attributes.rm.value}}' data-dtype="Number"
                     readonly />
@@ -214,9 +219,9 @@
               <div class="esquive">
                 <label class="resource-label">Esquive&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="Esquive"
-                    data-diff='{{math system.attributes.esq.value "+" system.attributes.esq.bonus}}'></i>&nbsp;<i
+                    data-diff='{{math2 system.attributes.esq.value "+" system.attributes.esq.bonus "+" system.attributes.esq.bonus_man}}'></i>&nbsp;<i
                     class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Esquive"
-                    data-diff='{{math system.attributes.esq.value "+" system.attributes.esq.bonus}}'></i></label>
+                    data-diff='{{math2 system.attributes.esq.value "+" system.attributes.esq.bonus "+" system.attributes.esq.bonus_man}}'></i></label>
                 <div class="ability flexrow flex-group-center">
                   Base :&nbsp;<input type="text" name="esq" value='{{system.attributes.esq.value}}' data-dtype="Number"
                     readonly />
@@ -228,11 +233,11 @@
             <div class="resources grid grid-2col">
               <div class="protection">
                 <label class="resource-label armuredetail"><span class="cliquable">Protection</span><em
-                    style="font-weight: lighter;">{{deplacement system.attributes.pr.bonus system.attributes.pr.value system.attributes.pr.prignorepoid
+                    style="font-weight: lighter;">{{deplacement system.attributes.pr.bonus system.attributes.pr.bonus_man system.attributes.pr.value system.attributes.pr.nb_pr_ss_encombrement
                     system.attributes.mvt.value}}</em></label>
                 <div class="ability flexrow flex-group-center">
                   Base :&nbsp;<input type="text" name="pr"
-                    value='{{math2 system.attributes.pr.value "+" system.attributes.pr.bonusSsEncombrement "+" system.attributes.pr.trucdemauviette}}'
+                    value='{{math system.attributes.pr.value "+" system.attributes.pr.trucdemauviette}}'
                     data-dtype="Number" readonly />
                   &nbsp;Bonus :&nbsp;<input type="text" name="system.attributes.pr.bonus"
                     value='{{system.attributes.pr.bonus}}' data-dtype="Number" />
@@ -280,18 +285,18 @@
         <div class="resource flex-group-center">
           <div class="res-mag">
             <label class="resource-label">MagiePhys&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
-                data-name="MagiePhys" data-diff='{{system.attributes.mphy.value}}'></i>&nbsp;<i
+                data-name="MagiePhys" data-diff='{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}'></i>&nbsp;<i
                 class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePhys"
-                data-diff='{{system.attributes.mphy.value}}'></i></label>
+                data-diff='{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}'></i></label>
             <input type="text" name="res-mag" value='{{system.attributes.mphy.value}}' data-dtype="Number" readonly />
           </div>
         </div>
         <div class="resource flex-group-center">
           <div class="res-mag">
             <label class="resource-label">MagiePsy&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
-                data-name="MagiePsy" data-diff='{{system.attributes.mpsy.value}}'></i>&nbsp;<i
+                data-name="MagiePsy" data-diff='{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}'></i>&nbsp;<i
                 class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePsy"
-                data-diff='{{system.attributes.mpsy.value}}'></i></label>
+                data-diff='{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}'></i></label>
             <input type="text" name="res-mag" value='{{system.attributes.mpsy.value}}' data-dtype="Number" readonly />
           </div>
         </div>

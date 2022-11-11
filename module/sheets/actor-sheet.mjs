@@ -77,19 +77,9 @@ export class NaheulbeukActorSheet extends ActorSheet {
       v.label = game.i18n.localize(CONFIG.NAHEULBEUK.abilities[k]) ?? k;
     }
 
-    //PCH check bonus malus AD
-    
-    if (document.getElementById("bonus_malus_ad")==null) {
-      await this._bonus_malus_ad()
-    }
-
-    if (document.getElementById("level_up")==null) {
-      if (this.actor.system.attributes.level.value!=this._level()) {
-        await this._level_up()
-      }
-    }
-
-    //PCH maj actor (PJ)
+    //Maj stat acteurs
+    let actorData = this._update_stats()
+    actor.update(actorData);
     if (actor.type == "character") {
       const actorData = {
         "system.attributes.level.value": this._level(),
@@ -99,6 +89,16 @@ export class NaheulbeukActorSheet extends ActorSheet {
         "system.attributes.mpsy.value": this._mpsy()
       };
       actor.update(actorData);
+    }
+
+    //PCH check bonus malus AD
+    if (document.getElementById("bonus_malus_ad")==null) {
+      await this._bonus_malus_ad()
+    }
+    if (document.getElementById("level_up")==null) {
+      if (this.actor.system.attributes.level.value!=this._level()) {
+        await this._level_up()
+      }
     }
   }
 
@@ -268,7 +268,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     if (this.actor.type == "character") {
       const actorData = {
         "system.attributes.pr.trucdemauviette": flagTrucDeMauviette,
-        "system.attributes.lancerarme.value": flagTirerCorrectement * (-5)
+        "system.attributes.att_arme_jet.value": flagTirerCorrectement * (-5)
       };
       this.actor.update(actorData);
     }
@@ -312,9 +312,6 @@ export class NaheulbeukActorSheet extends ActorSheet {
     }
     //PCH - sur tag item-equipe, on équipe l'objet
     html.find('.item-equipe').click(ev => this._onItemEquipe(ev, this.actor));
-
-    //PCH - sur tag item-en-main, on équipe l'objet
-    html.find('.item-en-main').click(ev => this._onArmeEnMains(ev, this.actor));
 
     //PCH afficher ou masquer le champs (oeil carac)
     html.find('.hide').click(ev => {
@@ -576,230 +573,77 @@ export class NaheulbeukActorSheet extends ActorSheet {
     const li = $(ev.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
 
-    //Maj poid max sac et bourse
+    //Maj  sac et bourse
     if (item.system.equipe == false && item.type == "sac" && actor.type == "character") {
       if (item.type == "sac" && item.system.type == "sac à dos") {
-        var poidsac = Number(actor.system.attributes.sac.max) + Number(item.system.place);
-        await actor.update({"system.attributes.sac.max": poidsac});
         await item.update({"system.stockage":"nosac"})
       }
       if (item.type == "sac" && item.system.type == "bourse") {
-        var poidbourse = Number(actor.system.attributes.bourse.max) + Number(item.system.place);
-        await actor.update({"system.attributes.bourse.max": poidbourse});
         await item.update({"system.stockage":"nosac"})
       }
     } else if (item.system.equipe == true && item.type == "sac" && actor.type == "character") {
       if (item.type == "sac" && item.system.type == "sac à dos") {
-        var poidsac = Number(actor.system.attributes.sac.max) - Number(item.system.place);
-        await actor.update({"system.attributes.sac.max": poidsac});
         await item.update({"system.stockage":"sac"})
       }
       if (item.type == "sac" && item.system.type == "bourse") {
-        var poidbourse = Number(actor.system.attributes.bourse.max) - Number(item.system.place);
-        await actor.update({"system.attributes.bourse.max": poidbourse});
         await item.update({"system.stockage":"sac"})
       }
     }
 
+    //Test des objets de type "arme" équipés
+    let flag_equipement_possible = true
+    if (item.system.equipe == false && item.type == "arme" && actor.type == "character") {
+      //On regarde ce qui est équipé
+      let nb_arme_cac=0
+      let nb_bouclier=0
+      let nb_arme_distance=0
+      let nb_munition=0
+      let nb_arme_autre=0
+      for (let objFind of actor.items) {
+        if (objFind.type=="arme") {
+          if (objFind.system.equipe == true) {
+            if (objFind.system.arme_cac == true) {nb_arme_cac++}
+            if (objFind.system.prbouclier == true) {nb_bouclier++}
+            if ((objFind.system.arme_distance == true || objFind.system.armefeu == true) && objFind.system.arme_cac == false) {nb_arme_distance++}
+            if (objFind.system.nb_munition == true) {nb_munition++}
+            if (objFind.system.arme_autre == true) {nb_arme_autre++}
+          }
+        }
+      }
+
+      //On compare avec l'objet à équiper
+      if (item.system.arme_cac == true) {
+        if (nb_arme_cac>1) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà 2 armes équipées.");}
+        else if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez une arme à distance équipée.");}
+        else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
+        else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+      } else if (item.system.arme_distance == true) {
+        if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
+        else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
+        else if (nb_arme_cac>0 && nb_bouclier==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
+        else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
+        else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+      } else if (item.system.prbouclier == true) {
+        if (nb_arme_cac>1) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà 2 armes équipées.");}
+        else if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez une arme à distance équipée.");}
+        else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
+        else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+        else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
+      } else if (item.system.arme_autre == true) {
+        if (nb_arme_cac>0 || nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
+        else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
+        else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+      }
+    }
+    
     //si l'objet n'est pas équipé
-    if (item.system.equipe == false) {
-      var cou = Number(actor.system.abilities.cou.bonus) + Number(item.system.cou);
-      var int = Number(actor.system.abilities.int.bonus) + Number(item.system.int);
-      var cha = Number(actor.system.abilities.cha.bonus) + Number(item.system.cha);
-      var ad = Number(actor.system.abilities.ad.bonus) + Number(item.system.ad);
-      var fo = Number(actor.system.abilities.fo.bonus) + Number(item.system.fo);
-      var att = Number(actor.system.abilities.att.bonus) + Number(item.system.att);
-      var prd = Number(actor.system.abilities.prd.bonus) + Number(item.system.prd);
-      var pr = Number(actor.system.attributes.pr.bonus) + Number(item.system.pr);
-      var prm = Number(actor.system.attributes.prm.bonus) + Number(item.system.prm);
-      var rm = Number(actor.system.attributes.rm.bonus) + Number(item.system.rm);
-      var mvt = Number(actor.system.attributes.mvt.value) + Number(item.system.mvt);
-      
-      //on construit les datas
-      var actorData = {};
-
-      if (item.type != "arme") { //pour autre chose qu'une arme
-        actorData = {
-          "system.abilities.cou.bonus": cou,
-          "system.abilities.int.bonus": int,
-          "system.abilities.cha.bonus": cha,
-          "system.abilities.ad.bonus": ad,
-          "system.abilities.fo.bonus": fo,
-          "system.abilities.att.bonus": att,
-          "system.abilities.prd.bonus": prd,
-          "system.attributes.pr.bonus": pr,
-          "system.attributes.prm.bonus": prm,
-          "system.attributes.mvt.value": mvt,
-          "system.attributes.rm.bonus": rm
-        };
-      }
-      if (item.type == "arme") { //Si c'est une arme on n'applique pas les bonus liés à la prise en mains
-        actorData = {
-          "system.abilities.cou.bonus": cou,
-          "system.abilities.int.bonus": int,
-          "system.abilities.cha.bonus": cha,
-          "system.abilities.ad.bonus": ad,
-          "system.abilities.fo.bonus": fo
-        };
-      }
-      await item.update({ "system.equipe": true }); //update de l'objet pour le passer en équipé
-      await actor.update(actorData);//update de l'acteur pour modifier les stats
-      //ajout d'un bout spécifique pour gérer les formules custom
-      //ATTENTION PEUT ËTRE A REVOIR
-      if (item.system.custom != "") {
-        const customS = item.system.custom.split(";")
-        customS.forEach(e => {
-          const custom = e.split("=")
-          var variable = custom[0]
-          var customvaleur = Number(eval(game.naheulbeuk.macros.replaceAttr(custom[1], actor)))
-          const valeur = Number(eval("actor." + variable)) + customvaleur
-          actor.update({ [variable]: valeur });
-        })
-      }
-    } else { //même chose mais en retirant le bonus
-      var cou = Number(actor.system.abilities.cou.bonus) - Number(item.system.cou);
-      var int = Number(actor.system.abilities.int.bonus) - Number(item.system.int);
-      var cha = Number(actor.system.abilities.cha.bonus) - Number(item.system.cha);
-      var ad = Number(actor.system.abilities.ad.bonus) - Number(item.system.ad);
-      var fo = Number(actor.system.abilities.fo.bonus) - Number(item.system.fo);
-      var att = Number(actor.system.abilities.att.bonus) - Number(item.system.att);
-      var prd = Number(actor.system.abilities.prd.bonus) - Number(item.system.prd);
-      var pr = Number(actor.system.attributes.pr.bonus) - Number(item.system.pr);
-      var prm = Number(actor.system.attributes.prm.bonus) - Number(item.system.prm);
-      var rm = Number(actor.system.attributes.rm.bonus) - Number(item.system.rm);
-      var mvt = Number(actor.system.attributes.mvt.value) - Number(item.system.mvt);
-
-      var actorData = {};
-      if (item.type != "arme") {
-        actorData = {
-          "system.abilities.cou.bonus": cou,
-          "system.abilities.int.bonus": int,
-          "system.abilities.cha.bonus": cha,
-          "system.abilities.ad.bonus": ad,
-          "system.abilities.fo.bonus": fo,
-          "system.abilities.att.bonus": att,
-          "system.abilities.prd.bonus": prd,
-          "system.attributes.pr.bonus": pr,
-          "system.attributes.prm.bonus": prm,
-          "system.attributes.mvt.value": mvt,
-          "system.attributes.rm.bonus": rm,
-        };
-      }
-      if (item.type == "arme") {
-        actorData = {
-          "system.abilities.cou.bonus": cou,
-          "system.abilities.int.bonus": int,
-          "system.abilities.cha.bonus": cha,
-          "system.abilities.ad.bonus": ad,
-          "system.abilities.fo.bonus": fo
-        };
-      }
-      if (item.type == "arme" && item.system.enmain == true) { await this._onArmeEnMains(ev, actor) };
-      await item.update({ "system.equipe": false }); //update de l'objet pour le passer en équipé
-      await actor.update(actorData);
-      //ajout d'un bout spécifique pour gérer les formules custom
-      //ATTENTION PEUT ËTRE PAS BON
-      if (item.system.custom != "") {
-        const customS = item.system.custom.split(";")
-        customS.forEach(e => {
-          const custom = e.split("=")
-          var variable = custom[0]
-          var customvaleur = Number(eval(game.naheulbeuk.macros.replaceAttr(custom[1], actor)))
-          const valeur = Number(eval("actor." + variable)) - customvaleur
-          actor.update({ [variable]: valeur });
-        })
-      }
-    };
-  }
-
-  //Application des bonus/malus quand on prend l'arme en mains
-  async _onArmeEnMains(ev, actor) {
-    ev.preventDefault();
-    //on récupère l'objet
-    const li = $(ev.currentTarget).parents(".item");
-    const item = this.actor.items.get(li.data("itemId"));
-    //si l'objet n'est pas en mains
-    if (item.system.enmain == false) {
-      //on calcule les nouvelles stats en rajoutant les bonus
-
-      //cas particulier de l'attaque baissé quand on a un bouclier
-      if (item.system.prd != "-" && (item.system.formula == "" || item.system.formula == "-")) {
-        var att = Number(actor.system.abilities.att.bonus) + Number(item.system.att);
-      } else {
-        var att = Number(actor.system.abilities.att.bonus);
-      }
-
-      const prd = Number(actor.system.abilities.prd.bonus) + Number(item.system.prd);
-      const pr = Number(actor.system.attributes.pr.bonus) + Number(item.system.pr);
-      const prm = Number(actor.system.attributes.prm.bonus) + Number(item.system.prm);
-      const rm = Number(actor.system.attributes.rm.bonus) + Number(item.system.rm);
-      const mvt = Number(actor.system.attributes.mvt.value) + Number(item.system.mvt);
-      var lancer = Number(actor.system.attributes.lancerarme.bonus)
-      if (item.system.lancerarme != "-") { lancer = lancer + Number(item.system.lancerarme) }
-      if (actor.system.attributes.lancerarme.degat == 0) {
-        var lancerdegat = ""
-      } else {
-        var lancerdegat = actor.system.attributes.lancerarme.degat
-      }
-      if (item.system.lancerarmedegat != "-" && item.system.lancerarmedegat != "0") {
-        if (item.system.lancerarmedegat.substr(0, 1) == "-" || item.system.lancerarmedegat.substr(0, 1) == "+") {
-          lancerdegat = lancerdegat + " " + item.system.lancerarmedegat + " "
-        } else {
-          lancerdegat = lancerdegat + " +" + item.system.lancerarmedegat + " "
-        }
-      }
-      //on construit les datas
-      const actorData = {
-        "system.abilities.att.bonus": att,
-        //"system.abilities.prd.bonus": prd,
-        "system.attributes.pr.bonus": pr,
-        "system.attributes.prm.bonus": prm,
-        "system.attributes.lancerarme.bonus": lancer,
-        "system.attributes.lancerarme.degat": lancerdegat,
-        "system.attributes.mvt.value": mvt,
-        "system.attributes.rm.bonus": rm
+    if (flag_equipement_possible==true) {
+      if (item.system.equipe == false) {
+        await item.update({ "system.equipe": true }); //update de l'objet pour le passer en équipé
+      } else { //même chose mais en retirant le bonus
+        await item.update({ "system.equipe": false}); //update de l'objet pour le passer en équipé
       };
-      await item.update({ "system.enmain": true }); //update de l'objet pour le passer en équipé
-      await actor.update(actorData);//update de l'acteur pour modifier les stats
-      return
-    } else if (item.system.enmain == true) { //même chose mais en retirant le bonus
-      //cas particulier de l'attaque baissé quand on a un bouclier
-      if (item.system.prd != "-" && (item.system.formula == "" || item.system.formula == "-")) {
-        var att = Number(actor.system.abilities.att.bonus) - Number(item.system.att);
-      } else {
-        var att = Number(actor.system.abilities.att.bonus);
-      }
-      const prd = Number(actor.system.abilities.prd.bonus) - Number(item.system.prd);
-      const pr = Number(actor.system.attributes.pr.bonus) - Number(item.system.pr);
-      const prm = Number(actor.system.attributes.prm.bonus) - Number(item.system.prm);
-      const rm = Number(actor.system.attributes.rm.bonus) - Number(item.system.rm);
-      const mvt = Number(actor.system.attributes.mvt.value) - Number(item.system.mvt);
-      var lancer = Number(actor.system.attributes.lancerarme.bonus)
-      if (item.system.lancerarme != "-") { lancer = lancer - Number(item.system.lancerarme) }
-      var lancerdegat = actor.system.attributes.lancerarme.degat
-      if (item.system.lancerarmedegat != "-") {
-        if (item.system.lancerarmedegat.substr(0, 1) == "-" || item.system.lancerarmedegat.substr(0, 1) == "+") {
-          var replacedegat = " " + item.system.lancerarmedegat + " ";
-          lancerdegat = actor.system.attributes.lancerarme.degat.replace(replacedegat, "")
-        } else {
-          var replacedegat = " +" + item.system.lancerarmedegat + " ";
-          lancerdegat = actor.system.attributes.lancerarme.degat.replace(replacedegat, "")
-        }
-      }
-      const actorData = {
-        "system.abilities.att.bonus": att,
-        //"system.abilities.prd.bonus": prd,
-        "system.attributes.pr.bonus": pr,
-        "system.attributes.prm.bonus": prm,
-        "system.attributes.lancerarme.bonus": lancer,
-        "system.attributes.lancerarme.degat": lancerdegat,
-        "system.attributes.mvt.value": mvt,
-        "system.attributes.rm.bonus": rm
-      };
-      await item.update({ "system.enmain": false }); //update de l'objet pour le passer en équipé
-      await actor.update(actorData);
-      return
-    };
+    }
   }
 
   //PCH - diminue la quantité d'un objet
@@ -832,86 +676,6 @@ export class NaheulbeukActorSheet extends ActorSheet {
     if (option=="plus") {
       item.update({ "system.quantity": quantity + 1 });
     }
-  }
-
-  //PCH calcule niveau
-  _level() {
-    var value = this.actor.system.attributes.xp.value
-    if (value < 100) { return 1 }
-    else if (value < 300) { return 2 }
-    else if (value < 600) { return 3 }
-    else if (value < 1000) { return 4 }
-    else if (value < 1500) { return 5 }
-    else if (value < 2100) { return 6 }
-    else if (value < 2800) { return 7 }
-    else if (value < 3600) { return 8 }
-    else if (value < 4500) { return 9 }
-    else if (value < 5500) { return 10 }
-    else if (value < 6600) { return 11 }
-    else if (value < 7800) { return 12 }
-    else if (value < 9100) { return 13 }
-    else if (value < 10500) { return 14 }
-    else if (value < 12000) { return 15 }
-    else if (value < 13600) { return 16 }
-    else if (value < 15300) { return 17 }
-    else if (value < 17100) { return 18 }
-    else if (value < 19000) { return 19 }
-    else if (value < 21000) { return 20 }
-    else if (value < 24000) { return 21 }
-    else if (value < 29000) { return 22 }
-    else if (value < 35000) { return 23 }
-    else if (value < 45000) { return 24 }
-    else if (value < 60000) { return 25 }
-    else { return 26 };
-  }
-
-  //PCH calcule résistance magique
-  _rm() {
-    var value = this.actor.system.abilities.cou.value + this.actor.system.abilities.cou.bonus;
-    value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus;
-    value = value + this.actor.system.abilities.fo.value + this.actor.system.abilities.fo.bonus;
-    value = Math.round(value / 3);
-    return value;
-  }
-
-  //PCH calcule esquive
-  _esq() {
-    var val1 = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus
-    var val2 = this.actor.system.attributes.pr.value + this.actor.system.attributes.pr.bonus - this.actor.system.attributes.pr.prignorepoid
-    if (val2 <= 1) {
-      val2 = 1;
-    } else if (val2 == 2) {
-      val2 = 0;
-    } else if (val2 <= 4) {
-      val2 = -2;
-    } else if (val2 == 5) {
-      val2 = -4;
-    } else if (val2 == 6) {
-      val2 = -5;
-    } else if (val2 == 7) {
-      val2 = -6;
-    } else if (val2 > 7) {
-      val2 = 0;
-      val1 = 0;
-    }
-    return val1 + val2;
-  }
-
-  //PCH calcule magie physique
-  _mphy() {
-    var value = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus;
-    value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus;
-    value = Math.ceil(value / 2);
-    return value;
-  }
-
-  //PCH calcule magie psychique
-  _mpsy() {
-    var value = this.actor.system.abilities.cha.value + this.actor.system.abilities.cha.bonus;
-    value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus;
-    value = value - this.actor.system.abilities.cha.ignorempsy
-    value = Math.ceil(value / 2);
-    return value;
   }
 
   //Détail d'armure
@@ -1024,7 +788,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
 
   //PCH calcule bonus/malus AD
   _bonus_malus_ad() {
-    let ad_value = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus
+    let ad_value = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus + this.actor.system.abilities.ad.bonus_man;
     let bonus_malus_AD = this.actor.system.abilities.ad.bonus_malus_AD
     let d
     if (this.actor.system.abilities.ad.value!=0 && ad_value<9 && bonus_malus_AD==0){
@@ -1191,5 +955,249 @@ export class NaheulbeukActorSheet extends ActorSheet {
     });
     d.render(true);
   }
+
+
+  //PCH calcule niveau
+  _level() {
+    var value = this.actor.system.attributes.xp.value
+    if (value < 100) { return 1 }
+    else if (value < 300) { return 2 }
+    else if (value < 600) { return 3 }
+    else if (value < 1000) { return 4 }
+    else if (value < 1500) { return 5 }
+    else if (value < 2100) { return 6 }
+    else if (value < 2800) { return 7 }
+    else if (value < 3600) { return 8 }
+    else if (value < 4500) { return 9 }
+    else if (value < 5500) { return 10 }
+    else if (value < 6600) { return 11 }
+    else if (value < 7800) { return 12 }
+    else if (value < 9100) { return 13 }
+    else if (value < 10500) { return 14 }
+    else if (value < 12000) { return 15 }
+    else if (value < 13600) { return 16 }
+    else if (value < 15300) { return 17 }
+    else if (value < 17100) { return 18 }
+    else if (value < 19000) { return 19 }
+    else if (value < 21000) { return 20 }
+    else if (value < 24000) { return 21 }
+    else if (value < 29000) { return 22 }
+    else if (value < 35000) { return 23 }
+    else if (value < 45000) { return 24 }
+    else if (value < 60000) { return 25 }
+    else { return 26 };
+  }
+
+  //PCH calcule résistance magique
+  _rm() {
+    var value = this.actor.system.abilities.cou.value + this.actor.system.abilities.cou.bonus + this.actor.system.abilities.cou.bonus_man;
+    value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus  + this.actor.system.abilities.int.bonus_man;
+    value = value + this.actor.system.abilities.fo.value + this.actor.system.abilities.fo.bonus + this.actor.system.abilities.fo.bonus_man;
+    value = Math.round(value / 3);
+    return value;
+  }
+
+  //PCH calcule esquive
+  _esq() {
+    var val1 = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus + this.actor.system.abilities.ad.bonus_man;
+    var val2 = this.actor.system.attributes.pr.value + this.actor.system.attributes.pr.bonus + this.actor.system.attributes.pr.bonus_man - this.actor.system.attributes.pr.nb_pr_ss_encombrement
+    if (val2 <= 1) {
+      val2 = 1;
+    } else if (val2 == 2) {
+      val2 = 0;
+    } else if (val2 <= 4) {
+      val2 = -2;
+    } else if (val2 == 5) {
+      val2 = -4;
+    } else if (val2 == 6) {
+      val2 = -5;
+    } else if (val2 == 7) {
+      val2 = -6;
+    } else if (val2 > 7) {
+      val2 = 0;
+      val1 = 0;
+    }
+    return val1 + val2;
+  }
+
+  //PCH calcule magie physique
+  _mphy() {
+    var value = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus + this.actor.system.abilities.ad.bonus_man;
+    value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus  + this.actor.system.abilities.int.bonus_man;
+    value = Math.ceil(value / 2);
+    return value;
+  }
+
+  //PCH calcule magie psychique
+  _mpsy() {
+    var value = this.actor.system.abilities.cha.value + this.actor.system.abilities.cha.bonus + this.actor.system.abilities.cha.bonus_man;
+    value = value - this.actor.system.abilities.cha.ignorempsy;
+    value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus + this.actor.system.abilities.int.bonus_man;
+    value = Math.ceil(value / 2);
+    return value;
+  }
+
+  //Mise à jour des statistiques au chargement de la page
+  _update_stats() {
+    let UpdatedData = {}
+    UpdatedData.system = {}
+    UpdatedData.system.attributes = {}
+    UpdatedData.system.abilities = {}
+    UpdatedData.system.attributes.sac={}
+    UpdatedData.system.attributes.sac.max=0
+    UpdatedData.system.attributes.bourse={}
+    UpdatedData.system.attributes.bourse.max=0
+    UpdatedData.system.attributes.pr={}
+    UpdatedData.system.attributes.pr.bonus=0
+    UpdatedData.system.attributes.pr.nb_pr_ss_encombrement=0
+    UpdatedData.system.attributes.prm={}
+    UpdatedData.system.attributes.prm.bonus=0
+    UpdatedData.system.attributes.att_arme_jet={}
+    UpdatedData.system.attributes.att_arme_jet.bonus=0
+    UpdatedData.system.attributes.att_arme_jet.degat=0
+    UpdatedData.system.attributes.rm={}
+    UpdatedData.system.attributes.rm.bonus=0
+    UpdatedData.system.attributes.mvt={}
+    UpdatedData.system.attributes.mvt.value=0
+    UpdatedData.system.attributes.mphy={}
+    UpdatedData.system.attributes.mphy.bonus=0
+    UpdatedData.system.attributes.mpsy={}
+    UpdatedData.system.attributes.mpsy.bonus=0
+    UpdatedData.system.attributes.esq={}
+    UpdatedData.system.attributes.esq.bonus=0
+    UpdatedData.system.abilities.cou={}
+    UpdatedData.system.abilities.cou.bonus=0
+    UpdatedData.system.abilities.int={}
+    UpdatedData.system.abilities.int.bonus=0
+    UpdatedData.system.abilities.cha={}
+    UpdatedData.system.abilities.cha.bonus=0
+    UpdatedData.system.abilities.cha.ignorempsy=0
+    UpdatedData.system.abilities.ad={}
+    UpdatedData.system.abilities.ad.bonus=0
+    UpdatedData.system.abilities.fo={}
+    UpdatedData.system.abilities.fo.bonus=0
+    UpdatedData.system.abilities.att={}
+    UpdatedData.system.abilities.att.bonus=0
+    UpdatedData.system.abilities.att.degat=0
+    UpdatedData.system.abilities.prd={}
+    UpdatedData.system.abilities.prd.bonus=0
+
+    for (let item of this.actor.items){
+      if (item.system.equipe==true) {
+        if (this.actor.type=="character"){
+          //Maj sac et bourse charge max
+          if (item.type=="sac"){
+            if (item.system.type=="sac à dos") {
+              UpdatedData.system.attributes.sac.max = UpdatedData.system.attributes.sac.max + parseInt(item.system.place)
+            }
+            if (item.system.type=="bourse") {
+              UpdatedData.system.attributes.bourse.max = UpdatedData.system.attributes.bourse.max + parseInt(item.system.place)
+            }
+          }
+
+          //Maj dégat cac (si c'est une arme de cac, on ne modifie pas car le bonus/malus ne vaut que pour elle)
+          if (((item.type == "arme" && item.system.arme_cac == false) || (item.type != "arme")) && item.system.degat_arme_cac != undefined && item.system.degat_arme_cac != "-") {
+            if (item.system.degat_arme_cac.toString().substr(0, 1) == "-" || item.system.degat_arme_cac.toString().substr(0, 1) == "+") {
+              UpdatedData.system.abilities.att.degat = UpdatedData.system.abilities.att.degat + item.system.degat_arme_cac
+            } else {
+              UpdatedData.system.abilities.att.degat = UpdatedData.system.abilities.att.degat + "+" + item.system.degat_arme_cac
+            }
+          }
+
+          //Maj att_arme_jet et degat_arme_jet
+          if (((item.type == "arme" && item.system.arme_distance == false) || (item.type != "arme")) && item.system.att_arme_jet != undefined && item.system.att_arme_jet != "-") {
+            UpdatedData.system.attributes.att_arme_jet.bonus = UpdatedData.system.attributes.att_arme_jet.bonus + parseInt(item.system.att_arme_jet)
+          }
+          if (((item.type == "arme" && item.system.arme_distance == false) || (item.type != "arme")) && item.system.att_arme_jet != undefined && item.system.att_arme_jet != "-") {
+            if (item.system.degat_arme_jet.toString().substr(0, 1) == "-" || item.system.degat_arme_jet.toString().substr(0, 1) == "+") {
+              UpdatedData.system.attributes.att_arme_jet.degat = UpdatedData.system.attributes.att_arme_jet.degat + item.system.degat_arme_jet
+            } else {
+              UpdatedData.system.attributes.att_arme_jet.degat = UpdatedData.system.attributes.att_arme_jet.degat + "+" + item.system.degat_arme_jet
+            }
+          }
+
+          //Maj Mvt
+          if (item.system.mvt != undefined && item.system.mvt != "-") {
+            UpdatedData.system.attributes.mvt.value = UpdatedData.system.attributes.mvt.value + parseInt(item.system.mvt)
+          }
+
+        }      
+
+        //Maj PR bonus
+        if (item.system.pr != undefined && item.system.pr != "-") {
+          UpdatedData.system.attributes.pr.bonus = UpdatedData.system.attributes.pr.bonus + parseInt(item.system.pr)
+        }
+        if(item.system.nb_pr_ss_encombrement != undefined  && item.system.nb_pr_ss_encombrement != "-") {
+          UpdatedData.system.attributes.pr.nb_pr_ss_encombrement = UpdatedData.system.attributes.pr.nb_pr_ss_encombrement + parseInt(item.system.nb_pr_ss_encombrement)
+        }
+
+        //Maj PRM bonus
+        if (item.system.prm != undefined && item.system.prm != "-") {
+          UpdatedData.system.attributes.prm.bonus = UpdatedData.system.attributes.prm.bonus + parseInt(item.system.prm)
+        }
+
+        //Maj RM bonus
+        if (item.system.rm != undefined && item.system.rm != "-") {
+          UpdatedData.system.attributes.rm.bonus = UpdatedData.system.attributes.rm.bonus + parseInt(item.system.rm)
+        }
+
+        //Maj mphy bonus
+        if (item.system.mphy != undefined && item.system.mphy != "-") {
+          UpdatedData.system.attributes.mphy.bonus = UpdatedData.system.attributes.mphy.bonus + parseInt(item.system.mphy)
+        }
+
+        //Maj mpsy bonus
+        if (item.system.mpsy != undefined && item.system.mpsy != "-") {
+          UpdatedData.system.attributes.mpsy.bonus = UpdatedData.system.attributes.mpsy.bonus + parseInt(item.system.mpsy)
+        }
+        
+        //Maj esquive bonus
+        if (item.system.esq != undefined && item.system.esq != "-") {
+          UpdatedData.system.attributes.esq.bonus = UpdatedData.system.attributes.esq.bonus + parseInt(item.system.esq)
+        }
+
+        //Maj cou bonus
+        if (item.system.cou != undefined && item.system.cou != "-") {
+          UpdatedData.system.abilities.cou.bonus = UpdatedData.system.abilities.cou.bonus + parseInt(item.system.cou)
+        }
+
+        //Maj int bonus
+        if (item.system.int != undefined && item.system.int != "-") {
+          UpdatedData.system.abilities.int.bonus = UpdatedData.system.abilities.int.bonus + parseInt(item.system.int)
+        }
+        //Maj cha bonus
+        if (item.system.cha != undefined && item.system.cha != "-") {
+          UpdatedData.system.abilities.cha.bonus = UpdatedData.system.abilities.cha.bonus + parseInt(item.system.cha)
+        }
+        if (item.system.cha_ignorempsy != undefined && item.system.cha_ignorempsy != "-") {
+          UpdatedData.system.abilities.cha.ignorempsy = UpdatedData.system.abilities.cha.ignorempsy + parseInt(item.system.cha_ignorempsy)
+        }
+
+        //Maj ad bonus
+        if (item.system.ad != undefined && item.system.ad != "-") {
+          UpdatedData.system.abilities.ad.bonus = UpdatedData.system.abilities.ad.bonus + parseInt(item.system.ad)
+        }
+
+        //Maj fo bonus
+        if (item.system.fo != undefined && item.system.fo != "-") {
+          UpdatedData.system.abilities.fo.bonus = UpdatedData.system.abilities.fo.bonus + parseInt(item.system.fo)
+        }
+
+        //Maj att bonus (les armes ont un bonus d'attaque qui n'impacte que les jets avec cet objet)
+        if ((item.type == "arme" && item.system.arme_cac == false || item.type != "arme") && item.system.att != undefined && item.system.att != "-") {
+          UpdatedData.system.abilities.att.bonus = UpdatedData.system.abilities.att.bonus + parseInt(item.system.att)
+        }
+
+        //Maj prd bonus (une arme ou un bouclier ont un bonus de PR qui n'impact que les jets avec cet objet)
+        if (((item.type=="arme" && item.system.arme_cac == false && item.system.prbouclier == false) || item.type != "arme") && item.system.prd != undefined && item.system.prd != "-") {
+          UpdatedData.system.abilities.prd.bonus = UpdatedData.system.abilities.prd.bonus + parseInt(item.system.prd)
+        }
+      }
+    }
+
+    return UpdatedData
+  }
+
 }
+
 

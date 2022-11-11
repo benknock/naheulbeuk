@@ -144,15 +144,6 @@ export class NaheulbeukItemSheet extends ItemSheet {
       }
     });
 
-    //PCH afficher ou masquer le champs caché
-    html.find('.hideItem').click(ev => {
-      if (document.getElementById("hideItem").style.display == "none") {
-        document.getElementById("hideItem").style.display = "block"
-      } else {
-        document.getElementById("hideItem").style.display = "none"
-      }
-    });
-
     //PCH rajout d'un roll custom avec plus d'options, et d'un roll avec fenêtre pour les inputs
     html.find('.rollable2').click(this._onRollCustom.bind(this));
 

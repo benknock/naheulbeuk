@@ -42,7 +42,7 @@ Hooks.once('init', async function () {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: "@abilities.cou.value + @abilities.cou.bonus",
+    formula: "@abilities.cou.value + @abilities.cou.bonus + @abilities.cou.bonus_man",
     decimals: 2
   };
 
@@ -166,16 +166,16 @@ function rollItemMacro(itemName,param) {
                 } else {
                   var attname = "Attaque";
                   var degatname = "Dégâts";
-                  if (item.system.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
+                  if (item.system.att_arme_jet != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
                   var degat = item.system.formula;
-                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
-                    degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) - 12)
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) > 12) {
+                    degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) - 12)
                   };
-                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) < 9) {
                     degat = degat + "-1"
                   };
-                  if (item.system.lancerarme != "-" && actor.system.attributes.lancerarme.degat != 0) {
-                    degat = degat + actor.system.attributes.lancerarme.degat
+                  if (item.system.att_arme_jet != "-" && actor.system.attributes.att_arme_jet.degat != 0) {
+                    degat = degat + actor.system.attributes.att_arme_jet.degat
                   };
                 }
 
@@ -228,16 +228,16 @@ function rollItemMacro(itemName,param) {
                 } else {
                   var attname = "Attaque";
                   var degatname = "Dégâts";
-                  if (item.system.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
+                  if (item.system.att_arme_jet != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
                   var degat = item.system.formula;
-                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
-                    degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) - 12)
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus  + actor.system.abilities.fo.bonus_man) > 12) {
+                    degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) - 12)
                   };
-                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) < 9) {
                     degat = degat + "-1"
                   };
-                  if (item.system.lancerarme != "-" && actor.system.attributes.lancerarme.degat != 0) {
-                    degat = degat + actor.system.attributes.lancerarme.degat
+                  if (item.system.att_arme_jet != "-" && actor.system.attributes.att_arme_jet.degat != 0) {
+                    degat = degat + actor.system.attributes.att_arme_jet.degat
                   };
                 }
 
@@ -415,16 +415,16 @@ function rollItemMacro(itemName,param) {
           } else {
             var attname = "Attaque";
             var degatname = "Dégâts";
-            if (item.system.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
+            if (item.system.att_arme_jet != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
             var degat = item.system.formula;
-            if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
-              degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) - 12)
+            if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) > 12) {
+              degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) - 12)
             };
-            if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
+            if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) < 9) {
               degat = degat + "-1"
             };
-            if (item.system.lancerarme != "-" && actor.system.attributes.lancerarme.degat != 0) {
-              degat = degat + actor.system.attributes.lancerarme.degat
+            if (item.system.att_arme_jet != "-" && actor.system.attributes.att_arme_jet.degat != 0) {
+              degat = degat + actor.system.attributes.att_arme_jet.degat
             };
           }
 
@@ -463,16 +463,16 @@ function rollItemMacro(itemName,param) {
                 } else {
                   var attname = "Attaque";
                   var degatname = "Dégâts";
-                  if (item.system.lancerarme != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
+                  if (item.system.att_arme_jet != "-") { var attaque = "@att-distance" } else { var attaque = "@att+" + item.system.att }
                   var degat = item.system.formula;
-                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) > 12) {
-                    degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) - 12)
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) > 12) {
+                    degat = degat + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) - 12)
                   };
-                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus) < 9) {
+                  if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) < 9) {
                     degat = degat + "-1"
                   };
-                  if (item.system.lancerarme != "-" && actor.system.attributes.lancerarme.degat != 0) {
-                    degat = degat + actor.system.attributes.lancerarme.degat
+                  if (item.system.att_arme_jet != "-" && actor.system.attributes.att_arme_jet.degat != 0) {
+                    degat = degat + actor.system.attributes.att_arme_jet.degat
                   };
                 }
 

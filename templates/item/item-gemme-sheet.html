@@ -15,14 +15,7 @@
         </div>
         <div class="resource">
           <label class="resource-label">
-            Poids (kg) <em style="font-weight: normal;">- ignorer pour le sac</em>
-            {{#if (equals system.ignorePoidSac true)}}
-            <input type="checkbox" name="system.ignorePoidSac" checked
-              style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
-            {{else}}
-            <input type="checkbox" name="system.ignorePoidSac"
-              style="width: 11px; height: auto; margin: auto;vertical-align: middle;" />
-            {{/if}}
+            Poids (kg)
           </label>
           <input readonly type="text" name="system.weight" value="{{math system.ug "*" 0.008}}" data-dtype="Number" />
         </div>

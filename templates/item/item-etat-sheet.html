@@ -121,12 +121,34 @@
           <div class="resources flexrow" style="margin-bottom: 10px;">
             <label class="resource-label">Parade</label>
             <input type="text" name="system.prd" value="{{system.prd}}"
-              data-dtype="Number" style="flex:0.2" />
+              data-dtype="String" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection</label>
             <input type="text" name="system.pr" value="{{system.pr}}"
               data-dtype="Number" style="flex:0.2" />
             <label class="resource-label">&nbsp;&nbsp;&nbsp;Protection Magique</label>
             <input type="text" name="system.prm" value="{{system.prm}}"
+              data-dtype="Number" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Dégâts corps à corps</label>
+            <input type="text" name="system.degat_arme_cac" value="{{system.degat_arme_cac}}"
+              data-dtype="String" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Adresse à distance</label>
+            <input type="text" name="system.att_arme_jet"
+              value="{{system.att_arme_jet}}" data-dtype="String" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Dégâts à distance</label>
+            <input type="text" name="system.degat_arme_jet"
+              value="{{system.degat_arme_jet}}" data-dtype="String" style="flex:0.2" />
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Esquive</label>
+            <input type="text" name="system.esq"
+              value="{{system.esq}}" data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Magie Physique</label>
+            <input type="text" name="system.mphy"
+              value="{{system.mphy}}" data-dtype="Number" style="flex:0.2" />
+            <label class="resource-label">&nbsp;&nbsp;&nbsp;Magie Psychique</label>
+            <input type="text" name="system.mpsy" value="{{system.mpsy}}"
               data-dtype="Number" style="flex:0.2" />
           </div>
           <div class="resources flexrow" style="margin-bottom: 10px;">
@@ -139,18 +161,24 @@
             <label class="resource-label">&nbsp;&nbsp;&nbsp;</label>
             <label class="resource-label" style="flex:0.25">&nbsp;&nbsp;&nbsp;</label>
           </div>
+          <hr>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Part du bonus /malus de Charisme ignoré pour la magie psychique</label>
+            <input type="text" name="system.cha_ignorempsy" value="{{system.cha_ignorempsy}}"
+              data-dtype="Number" style="flex:0.07" />
+            <label class="resource-label" style="flex:0.1">&nbsp;&nbsp;&nbsp;</label>
+          </div>
+          <div class="resources flexrow" style="margin-bottom: 10px;">
+            <label class="resource-label">Part du bonus / malus de Pr ignoré pour les malus d'encombrement</label>
+            <input type="text" name="system.nb_pr_ss_encombrement" value="{{system.nb_pr_ss_encombrement}}"
+              data-dtype="Number" style="flex:0.07" />
+            <label class="resource-label" style="flex:0.1">&nbsp;&nbsp;&nbsp;</label>
+          </div>
+          <hr>
           <div class="resources flexrow">
             <label class="resource-label">Autre</label>
             <textarea name="system.autre" rows="2"
               style="flex:2.76;min-height: auto; height: 42px;">{{system.autre}}</textarea>
-          </div>
-          <hr class="hideItem">
-          <div id="hideItem" style="display:none">
-            <div class="resources flexrow">
-              <label class="resource-label">Custom</label>
-              <textarea name="system.custom" rows="2"
-                style="flex:2.76;min-height: auto; height: 42px;">{{system.custom}}</textarea>
-            </div>
           </div>
         </div>
       </div>

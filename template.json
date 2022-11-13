@@ -208,12 +208,14 @@
           "value": 8,
           "bonus": 0,
           "bonus_man": 0,
-          "degat": 0
+          "degat": 0,
+          "bonus_ad":0
         },
         "prd": {
           "value": 10,
           "bonus": 0,
-          "bonus_man": 0
+          "bonus_man": 0,
+          "bonus_ad":0
         }
       }
     },
@@ -273,11 +275,6 @@
           "bonus": 0,
           "bonus_man": 0
         },
-        "prd": {
-          "value": 0,
-          "bonus": 0,
-          "bonus_man": 0
-        },
         "int": {
           "value": 0,
           "bonus": 0,
@@ -292,6 +289,7 @@
         "ad": {
           "value": 0,
           "bonus": 0,
+          "bonus_malus_AD":0,
           "bonus_man": 0
         },
         "fo": {
@@ -300,9 +298,17 @@
           "bonus_man": 0
         },
         "att": {
-          "value": 0,
+          "value": 8,
           "bonus": 0,
-          "bonus_man": 0
+          "bonus_man": 0,
+          "degat": 0,
+          "bonus_ad":0
+        },
+        "prd": {
+          "value": 10,
+          "bonus": 0,
+          "bonus_man": 0,
+          "bonus_ad":0
         }
       }
     }

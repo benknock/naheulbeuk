@@ -64,6 +64,17 @@ export class Macros {
       let degat_cac = actor.system.abilities.att.degat
       let lancerdegat = actor.system.attributes.att_arme_jet.degat
       if (lancerdegat == "") { lancerdegat = 0 }
+
+      //pour arme à poudre (+1 si tirer correctement, pas de bonus sinon)
+      let flagTirerCorrectement = 5
+      for (let actoritem of actor.items) {
+        if (actoritem.name == "TIRER CORRECTEMENT") {
+          flagTirerCorrectement = 1
+        }
+      }
+
+      expr = expr.replace(/@att-arme-poudre/g, lancer+flagTirerCorrectement);
+      expr = expr.replace(/@armefeu/g, flagTirerCorrectement); // pour garder compatibilité, à virer un jour
       expr = expr.replace(/@att-distance/g, lancer);
       expr = expr.replace(/@degat-distance/g, lancerdegat);
       expr = expr.replace(/@degat-contact/g, degat_cac);
@@ -71,6 +82,8 @@ export class Macros {
 
     const pr = actor.system.attributes.pr.value + actor.system.attributes.pr.bonus + actor.system.attributes.pr.bonus_man + actor.system.attributes.pr.trucdemauviette;
     const pr_avec_encombrement = pr - actor.system.attributes.pr.nb_pr_ss_encombrement;
+
+    //Malus de mvt en fonction des PRs (utilisé par exemple pour les compétences de déplacement)
     var malusmvtpr
     if (pr_avec_encombrement > 7) {
       malusmvtpr = 20
@@ -85,6 +98,7 @@ export class Macros {
     } else {
       malusmvtpr = 0
     }
+
     const prm = actor.system.attributes.prm.value + actor.system.attributes.prm.bonus + actor.system.attributes.prm.bonus_man;
     const cou = actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man;
     const int = actor.system.abilities.int.value + actor.system.abilities.int.bonus + actor.system.abilities.int.bonus_man;
@@ -97,11 +111,7 @@ export class Macros {
     const mpsy = actor.system.attributes.mpsy.value + actor.system.attributes.mpsy.bonus + actor.system.attributes.mpsy.bonus_man;
     const rm = actor.system.attributes.rm.value + actor.system.attributes.rm.bonus + actor.system.attributes.rm.bonus_man;
     var esq = actor.system.attributes.esq.value + actor.system.attributes.esq.bonus + actor.system.attributes.esq.bonus_man;
-
-    if (actor.type == "npc") { esq = esq + actor.system.abilities.ad.bonus }
-    
     const lvl = actor.system.attributes.level.value;
-
     var bonusfo = "";
     if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) > 12) {
       bonusfo = "+" + (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus  + actor.system.abilities.fo.bonus_man - 12)
@@ -109,18 +119,12 @@ export class Macros {
     if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) < 9) {
       bonusfo = "-1"
     };
-
     const bonusint = Math.max(0, (actor.system.abilities.int.value + actor.system.abilities.int.bonus + actor.system.abilities.int.bonus_man) - 12)
 
-    let flagTirerCorrectement = 5
-    for (let actoritem of actor.items) {
-      if (actoritem.name == "TIRER CORRECTEMENT") {
-        flagTirerCorrectement = 1
-      }
-    }
+    if (actor.type == "npc") { esq = esq + actor.system.abilities.ad.bonus }
+
     expr = expr.replace(/@malus-mvt-pr/g, malusmvtpr);
     expr = expr.replace(/épreuve:/g, "");
-    expr = expr.replace(/@armefeu/g, flagTirerCorrectement);
     expr = expr.replace(/@bonusint/g, bonusint);
     expr = expr.replace(/cible:/g, "");
     expr = expr.replace(/@prm/g, prm);
@@ -139,10 +143,16 @@ export class Macros {
     expr = expr.replace(/@bonusfo/g, bonusfo);
     expr = expr.replace(/@lvl/g, lvl);
     expr = expr.replace(/ /g, "");
+    expr = expr.replace(/\+0\+/g, "+");
+    expr = expr.replace(/\-0\+/g, "+");
+    expr = expr.replace(/\+0\-/g, "-");
+    expr = expr.replace(/\-0\-/g, "-");
     expr = expr.replace(/\+\-/g, "-");
     expr = expr.replace(/\-\+/g, "-");
     expr = expr.replace(/\-\-/g, "+");
     expr = expr.replace(/\+\+/g, "+");
+    if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
+    if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
     if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
     if (expr.substring(expr.length - 1, expr.length) == "+") { expr = expr.substring(0, expr.length - 1) }
     return expr;
@@ -380,20 +390,35 @@ export class Macros {
     if (dataset.diff6!=undefined) {diff6 = dataset.diff6;}
     if (dataset.diff7!=undefined) {diff7 = dataset.diff7;}
 
-    dice1 = dice1.replace(/ /g, "");
-    dice2 = dice2.replace(/ /g, "");
-    dice3 = dice3.replace(/ /g, "");
-    dice4 = dice4.replace(/ /g, "");
-    dice5 = dice5.replace(/ /g, "");
-    dice6 = dice6.replace(/ /g, "");
-    dice7 = dice7.replace(/ /g, "");
-    diff1 = diff1.replace(/ /g, "");
-    diff2 = diff2.replace(/ /g, "");
-    diff3 = diff3.replace(/ /g, "");
-    diff4 = diff4.replace(/ /g, "");
-    diff5 = diff5.replace(/ /g, "");
-    diff6 = diff6.replace(/ /g, "");
-    diff7 = diff7.replace(/ /g, "");
+    //replace attributs 1
+    let diff_dice_array=[dice1,dice2,dice3,dice4,dice5,dice6,dice7,diff1,diff2,diff3,diff4,diff5,diff6,diff7]
+    let i = 0
+    for (let change_entry of diff_dice_array) {
+      if (diff_dice_array[i].substr(0, 6) == "cible:") {
+        if (game.naheulbeuk.macros.getSpeakersTarget() == null) { return }
+      }
+      if (diff_dice_array[i].substr(0, 6) == "cible:") {
+        diff_dice_array[i] = game.naheulbeuk.macros.replaceAttr(diff_dice_array[i], game.naheulbeuk.macros.getSpeakersTarget());
+      } else {
+        diff_dice_array[i] = game.naheulbeuk.macros.replaceAttr(diff_dice_array[i], actor);
+      }
+      diff_dice_array[i] = diff_dice_array[i].replace(/ /g, "");
+      i++
+    }
+    dice1=diff_dice_array[0]
+    dice2=diff_dice_array[1]
+    dice3=diff_dice_array[2]
+    dice4=diff_dice_array[3]
+    dice5=diff_dice_array[4]
+    dice6=diff_dice_array[5]
+    dice7=diff_dice_array[6]
+    diff1=diff_dice_array[7]
+    diff2=diff_dice_array[8]
+    diff3=diff_dice_array[9]
+    diff4=diff_dice_array[10]
+    diff5=diff_dice_array[11]
+    diff6=diff_dice_array[12]
+    diff7=diff_dice_array[13]
 
     var content = `
     <em style="font-size: 15px;">Raccourcis :</em>

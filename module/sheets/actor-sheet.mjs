@@ -76,10 +76,19 @@ export class NaheulbeukActorSheet extends ActorSheet {
     for (let [k, v] of Object.entries(context.system.abilities)) {
       v.label = game.i18n.localize(CONFIG.NAHEULBEUK.abilities[k]) ?? k;
     }
-
+    //PCH check bonus malus AD
+    if (document.getElementById("bonus_malus_ad")==null) {
+      await this._bonus_malus_ad()
+    }
+    //Check level up
+    if (document.getElementById("level_up")==null) {
+      if (this.actor.system.attributes.level.value!=this._level()) {
+        await this._level_up()
+      }
+    }
     //Maj stat acteurs
     let actorData = this._update_stats()
-    actor.update(actorData);
+    await actor.update(actorData);
     if (actor.type == "character") {
       const actorData = {
         "system.attributes.level.value": this._level(),
@@ -88,17 +97,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         "system.attributes.mphy.value": this._mphy(),
         "system.attributes.mpsy.value": this._mpsy()
       };
-      actor.update(actorData);
-    }
-
-    //PCH check bonus malus AD
-    if (document.getElementById("bonus_malus_ad")==null) {
-      await this._bonus_malus_ad()
-    }
-    if (document.getElementById("level_up")==null) {
-      if (this.actor.system.attributes.level.value!=this._level()) {
-        await this._level_up()
-      }
+      await actor.update(actorData);
     }
   }
 
@@ -617,7 +616,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         else if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez une arme à distance équipée.");}
         else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
         else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
-      } else if (item.system.arme_distance == true) {
+      } else if (item.system.arme_distance == true || item.system.armefeu == true) {
         if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
         else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
         else if (nb_arme_cac>0 && nb_bouclier==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
@@ -796,7 +795,11 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer en dessous de 9, mets -1 en parade ou en attaque.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer en dessous de 9, mets un malus de -1 en parade ou en attaque.</label><br/>
+          <label>Bonus de parade :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormulePRD" value="`+ this.actor.system.abilities.prd.bonus_ad + `">
+          <label>Bonus d'attaque :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormuleATT" value="`+ this.actor.system.abilities.att.bonus_ad + `">
           <br/><br/>
         </form>
         `,
@@ -804,8 +807,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
           one: {
             label: "C'est fait",
             callback: (html) => {
+              let bonus_prd = html.find('input[name="inputFormulePRD"').val();
+              let bonus_att = html.find('input[name="inputFormuleATT"').val();
               const actorData = {
-                "system.abilities.ad.bonus_malus_AD": -1
+                "system.abilities.ad.bonus_malus_AD": -1,
+                "system.abilities.prd.bonus_ad": bonus_prd,
+                "system.abilities.att.bonus_ad": bonus_att
               };
               this.actor.update(actorData);
             }
@@ -818,7 +825,11 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 12, mets +1 en parade ou en attaque.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 12, mets un bonus de 1 en parade ou en attaque.</label><br/>
+          <label>Bonus de parade :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormulePRD" value="`+ this.actor.system.abilities.prd.bonus_ad + `">
+          <label>Bonus d'attaque :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormuleATT" value="`+ this.actor.system.abilities.att.bonus_ad + `">
           <br/><br/>
         </form>
         `,
@@ -826,8 +837,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
           one: {
             label: "C'est fait",
             callback: (html) => {
+              let bonus_prd = html.find('input[name="inputFormulePRD"').val();
+              let bonus_att = html.find('input[name="inputFormuleATT"').val();
               const actorData = {
-                "system.abilities.ad.bonus_malus_AD": 1
+                "system.abilities.ad.bonus_malus_AD": 1,
+                "system.abilities.prd.bonus_ad": bonus_prd,
+                "system.abilities.att.bonus_ad": bonus_att
               };
               this.actor.update(actorData);
             }
@@ -840,7 +855,11 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 12, enlève le malus de -1 en attaque ou parade que tu avais mis, puis mets +1 en parade ou en attaque.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 12, enlève le malus de -1 en attaque ou parade que tu avais mis, puis mets un bonus de 1 en parade ou en attaque.</label><br/>
+          <label>Bonus de parade :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormulePRD" value="`+ this.actor.system.abilities.prd.bonus_ad + `">
+          <label>Bonus d'attaque :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormuleATT" value="`+ this.actor.system.abilities.att.bonus_ad + `">
           <br/><br/>
         </form>
         `,
@@ -848,8 +867,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
           one: {
             label: "C'est fait",
             callback: (html) => {
+              let bonus_prd = html.find('input[name="inputFormulePRD"').val();
+              let bonus_att = html.find('input[name="inputFormuleATT"').val();
               const actorData = {
-                "system.abilities.ad.bonus_malus_AD": 1
+                "system.abilities.ad.bonus_malus_AD": 1,
+                "system.abilities.prd.bonus_ad": bonus_prd,
+                "system.abilities.att.bonus_ad": bonus_att
               };
               this.actor.update(actorData);
             }
@@ -862,7 +885,11 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer en dessous de 9, enlève le bonus de +1 en attaque ou parade que tu avais mis, puis mets -1 en parade ou en attaque.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer en dessous de 9, enlève le bonus de 1 en attaque ou parade que tu avais mis, puis mets un malus de -1 en parade ou en attaque.</label><br/>
+          <label>Bonus de parade :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormulePRD" value="`+ this.actor.system.abilities.prd.bonus_ad + `">
+          <label>Bonus d'attaque :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormuleATT" value="`+ this.actor.system.abilities.att.bonus_ad + `">
           <br/><br/>
         </form>
         `,
@@ -870,8 +897,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
           one: {
             label: "C'est fait",
             callback: (html) => {
+              let bonus_prd = html.find('input[name="inputFormulePRD"').val();
+              let bonus_att = html.find('input[name="inputFormuleATT"').val();
               const actorData = {
-                "system.abilities.ad.bonus_malus_AD": -1
+                "system.abilities.ad.bonus_malus_AD": -1,
+                "system.abilities.prd.bonus_ad": bonus_prd,
+                "system.abilities.att.bonus_ad": bonus_att
               };
               this.actor.update(actorData);
             }
@@ -884,7 +915,11 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 8, enlève le malus de -1 en attaque ou parade que tu avais mis.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer au dessus de 8, enlève le malus de -1 en attaque ou parade que tu avais mis.</label><br/>
+          <label>Bonus de parade :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormulePRD" value="`+ this.actor.system.abilities.prd.bonus_ad + `">
+          <label>Bonus d'attaque :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormuleATT" value="`+ this.actor.system.abilities.att.bonus_ad + `">
           <br/><br/>
         </form>
         `,
@@ -892,8 +927,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
           one: {
             label: "C'est fait",
             callback: (html) => {
+              let bonus_prd = html.find('input[name="inputFormulePRD"').val();
+              let bonus_att = html.find('input[name="inputFormuleATT"').val();
               const actorData = {
-                "system.abilities.ad.bonus_malus_AD": 0
+                "system.abilities.ad.bonus_malus_AD": 0,
+                "system.abilities.prd.bonus_ad": bonus_prd,
+                "system.abilities.att.bonus_ad": bonus_att
               };
               this.actor.update(actorData);
             }
@@ -906,7 +945,11 @@ export class NaheulbeukActorSheet extends ActorSheet {
         title: "Bonus / Malus d'attaque ou de parade lié à l'Adresse",
         content: `
         <form>
-          <label id="bonus_malus_ad">Ton Adresse vient de passer en dessous de 13, enlève le bonus de +1 en attaque ou parade que tu avais mis.</label>
+          <label id="bonus_malus_ad">Ton Adresse vient de passer en dessous de 13, enlève le bonus de 1 en attaque ou parade que tu avais mis.</label><br/>
+          <label>Bonus de parade :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormulePRD" value="`+ this.actor.system.abilities.prd.bonus_ad + `">
+          <label>Bonus d'attaque :</label><br/>
+          <input style="font-size: 15px;" type="text" name="inputFormuleATT" value="`+ this.actor.system.abilities.att.bonus_ad + `">
           <br/><br/>
         </form>
         `,
@@ -914,8 +957,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
           one: {
             label: "C'est fait",
             callback: (html) => {
+              let bonus_prd = html.find('input[name="inputFormulePRD"').val();
+              let bonus_att = html.find('input[name="inputFormuleATT"').val();
               const actorData = {
-                "system.abilities.ad.bonus_malus_AD": 0
+                "system.abilities.ad.bonus_malus_AD": 0,
+                "system.abilities.prd.bonus_ad": bonus_prd,
+                "system.abilities.att.bonus_ad": bonus_att
               };
               this.actor.update(actorData);
             }
@@ -930,24 +977,30 @@ export class NaheulbeukActorSheet extends ActorSheet {
   //PCH calcule level up
   _level_up() {
     let niveau = this._level()
+    let content = `
+    <form>
+      <label id="level_up">Bravo, tu viens de passer niveau `+niveau+` !!<br/><br/>
+      Voila la liste des modifications à apporter.<br/>
+      <em>(Attention, ton personnage peut avoir des règles spécifiques !)</em><br/><br/>
+        > +1d6 PV ou PA<br/>
+      `
+    if (niveau%2 == 0){
+      content = content + `  > +1 à la force, l'adresse, le courage ou l'intelligence`
+    } else {
+      content = content + `  > +1 à l'attaque ou la parade`
+    }
+    if (niveau==3 || niveau==6 || niveau==10) { content = content + `<br/>  > une compétence choisie supplémentaire`}
+    if (niveau==5 || niveau==10) { content = content + `<br/>  > une spécialité supplémentaire pour le mage`}
+    content = content + `</label>
+      <br/><br/>
+    </form>
+    `
     let d = new Dialog({
       title: "Level UP",
-      content: `
-      <form>
-        <label id="level_up">Bravo, tu viens de passer niveau `+niveau+` !!<br/><br/>
-        Voila la liste des modifications à apporter.<br/>
-        <em>(Attention, ton personnage peut avoir des règles spécifiques !)</em><br/><br/>
-          - Tous les niveaux : +1d6 PV ou PA<br/>
-          - Niveaux pairs : +1 à FO ou AD ou COU ou INT<br/>
-          - Niveaux impairs : +1 à l'attaque ou la parade<br/>
-          - Niveau 3, 6 et 10 : +1 compétence<br/>
-          - Niveau 5 et 10 : +1 spécialité pour le mage</label>
-        <br/><br/>
-      </form>
-      `,
+      content: content,
       buttons: {
         one: {
-          label: "ok !",
+          label: "Ok !",
           callback: (html) => {
           }
         }
@@ -955,7 +1008,6 @@ export class NaheulbeukActorSheet extends ActorSheet {
     });
     d.render(true);
   }
-
 
   //PCH calcule niveau
   _level() {
@@ -1077,10 +1129,10 @@ export class NaheulbeukActorSheet extends ActorSheet {
     UpdatedData.system.abilities.fo={}
     UpdatedData.system.abilities.fo.bonus=0
     UpdatedData.system.abilities.att={}
-    UpdatedData.system.abilities.att.bonus=0
+    UpdatedData.system.abilities.att.bonus=this.actor.system.abilities.att.bonus_ad
     UpdatedData.system.abilities.att.degat=0
     UpdatedData.system.abilities.prd={}
-    UpdatedData.system.abilities.prd.bonus=0
+    UpdatedData.system.abilities.prd.bonus=this.actor.system.abilities.prd.bonus_ad
 
     for (let item of this.actor.items){
       if (item.system.equipe==true) {
@@ -1115,7 +1167,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
               UpdatedData.system.attributes.att_arme_jet.degat = UpdatedData.system.attributes.att_arme_jet.degat + "+" + item.system.degat_arme_jet
             }
           }
-
+          
           //Maj Mvt
           if (item.system.mvt != undefined && item.system.mvt != "-") {
             UpdatedData.system.attributes.mvt.value = UpdatedData.system.attributes.mvt.value + parseInt(item.system.mvt)

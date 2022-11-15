@@ -55,71 +55,6 @@
       {{/if}}
     </div>
   </header>
-
-  <div id="hide" style="display:none">
-    <div style="margin-bottom: 10px;">
-      <li class="item flexrow" data-item-id="{{item._id}}">
-        <span style="text-overflow: ellipsis;flex:0.6;"><strong>Objets</strong></span>
-        <div class=""><strong>Commentaires</strong></div>
-      </li>
-    </div>
-    {{#each armures as |item id|}}
-    {{#if (equals item.system.equipe true)}}
-    {{#if (equals item.system.autre "")}}
-    {{else}}
-    <li class="item flexrow" data-item-id="{{item._id}}">
-      <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
-    </li>
-    {{/if}}
-    {{/if}}
-    {{/each}}
-    {{#each armes as |item id|}}
-    {{#if (equals item.system.equipe true)}}
-    {{#if (equals item.system.autre "")}}
-    {{else}}
-    <li class="item flexrow" data-item-id="{{item._id}}">
-      <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
-    </li>
-    {{/if}}
-    {{/if}}
-    {{/each}}
-    {{#each etats as |item id|}}
-    {{#if (equals item.system.equipe true)}}
-    {{#if (equals item.system.autre "")}}
-    {{else}}
-    <li class="item flexrow" data-item-id="{{item._id}}">
-      <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
-    </li>
-    {{/if}}
-    {{/if}}
-    {{/each}}
-    {{#each trucs as |item id|}}
-    {{#if (equals item.system.equipe true)}}
-    {{#if (equals item.system.autre "")}}
-    {{else}}
-    <li class="item flexrow" data-item-id="{{item._id}}">
-      <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
-    </li>
-    {{/if}}
-    {{/if}}
-    {{/each}}
-    {{#each sacs as |item id|}}
-    {{#if (equals item.system.equipe true)}}
-    {{#if (equals item.system.autre "")}}
-    {{else}}
-    <li class="item flexrow" data-item-id="{{item._id}}">
-      <span style="text-overflow: ellipsis;flex:0.6;">{{item.name}}</span>
-      <textarea name="system.autre" style="min-height: auto; height: 42px;" rows="2" readonly>{{system.autre}}</textarea>
-    </li>
-    {{/if}}
-    {{/if}}
-    {{/each}}
-    <hr>
-  </div>
   
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
@@ -134,153 +69,177 @@
 
     {{!-- Biography Tab --}}
     <div class="tab biography" data-group="primary" data-tab="carac">
-      <section class="grid grid-2col">
+      <section class="grid grid-2col" style="grid-column-gap:30px;grid-template-columns: 40% 57%">
         <aside class="sidebar">
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns. --}}
-          <div class="abilities flexcol" style="margin-top: 10px;">
-            <div class="ability flexrow flex-group-center" style="padding-bottom: 0.5em;">
-              <label class="resource-label flexlarge align-left"><span class="moreStats cliquable">Carac
-                  +</span>&nbsp;<i class="fas fa-eye hide cliquable"></i></label>
-              <label class="resource-label">Base</label>
-              <label class="resource-label">Bonus</label>
-              <label class="resource-label">Total</label>
+          <div class="abilities flexcol">
+            <div style="padding-bottom: 0.5em;">
+              <div class="ability flexrow flex-group-center" style="border-bottom: 1px solid #a7a69e;">
+                <label class="resource-label flexlarge align-left rollable2"
+                data-name="Initialisation" data-dice="d6+7" data-diff="" style="flex:1.66"><span class="moreStats cliquable">Caractéristique
+                  +</span></label>
+                <label class="resource-label flexlarge align-left" style="flex:0.8">&nbsp;&nbsp;<i
+                    class="fas fa-eye bonus-eye cliquable" style="font-size: 0.8em;"></i></label>
+                <label class="resource-label" style="flex:0.5">Base</label>
+                <label class="resource-label" style="flex:0.2"></label>
+                <label class="resource-label" style="flex:0.5">Bonus</label>
+              </div>
             </div>
             {{#if system.attributes.moreStats}}
-            {{#each system.abilities as |ability key|}}
-            <div class="ability flexrow flex-group-center ">
-              <label for="system.abilities.{{key}}.value"
-                class="resource-label flexlarge align-left">{{ability.label}}&nbsp;<i class="fas fa-dice-d20 rollable2"
-                  data-dice="d20" data-name="{{ability.label}}"
-                  data-diff='{{math ability.bonus "+" ability.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-                  data-dice="d20" data-name="{{ability.label}}"
-                  data-diff='{{math ability.bonus "+" ability.value}}'></i></label>
-              <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-              <input type="text" name="system.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
-              <span class="ability-mod ">{{math ability.bonus "+" ability.value}}</span>
-            </div>
-            {{/each}}
+              {{#each system.abilities as |ability key|}}
+                <div class="ability flexrow flex-group-center">
+                  <label for="system.abilities.{{key}}.value"
+                    class="resource-label flexlarge align-left" style="flex:1.7">{{ability.label}}&nbsp;:&nbsp;{{math2 ability.bonus "+" ability.bonus_man "+" ability.value}}</label>
+                  <label for="system.abilities.{{key}}.value"
+                    class="resource-label flexlarge align-left" style="flex:0.8"><i class="fas fa-dice-d20 rollable2"
+                      data-dice="d20" data-name="{{ability.label}}"
+                      data-diff='{{math ability.bonus "+" ability.value}}' style="font-size: 0.8em;"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+                      data-dice="d20" data-name="{{ability.label}}"
+                      data-diff='{{math ability.bonus "+" ability.value}}' style="font-size: 0.8em;"></i></label>
+                  <input class="inputCarac" type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" style="flex:0.5;"/>
+                  <label class="resource-label" style="flex:0.1"></label>
+                  <input class="inputCarac" type="text" name="system.abilities.{{key}}.bonus_man" value="{{ability.bonus_man}}" data-dtype="Number" style="flex:0.5"/>
+                </div>
+                {{#if (equals key "fo")}}
+                <div style="border-bottom: 1px solid #a7a69e; margin-top: 9px; margin-bottom: 9px;"></div>
+                {{/if}}
+              {{/each}}
             {{else}}
-            {{#each system.abilities as |ability key|}}
-            {{#if (equals key "cou")}}
-            <div class="ability flexrow flex-group-center" style="margin-bottom: 8px;">
-              <label for="system.abilities.{{key}}.value"
-                class="resource-label flexlarge align-left">{{ability.label}}&nbsp;<i class="fas fa-dice-d20 rollable2"
-                  data-dice="d20" data-name="{{ability.label}}"
-                  data-diff='{{math ability.bonus "+" ability.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-                  data-dice="d20" data-name="{{ability.label}}"
-                  data-diff='{{math ability.bonus "+" ability.value}}'></i></label>
-              <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-              <input type="text" name="system.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
-              <span class="ability-mod ">{{math ability.bonus "+" ability.value}}</span>
-            </div>
-            {{/if}}
-            {{#if (equals key "prd")}}
-            <div class="ability flexrow flex-group-center">
-              <label for="system.abilities.{{key}}.value"
-                class="resource-label flexlarge align-left">{{ability.label}}&nbsp;<i class="fas fa-dice-d20 rollable2"
-                  data-dice="d20" data-name="{{ability.label}}"
-                  data-diff='{{math ability.bonus "+" ability.value}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-                  data-dice="d20" data-name="{{ability.label}}"
-                  data-diff='{{math ability.bonus "+" ability.value}}'></i></label>
-              <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-              <input type="text" name="system.abilities.{{key}}.bonus" value="{{ability.bonus}}" data-dtype="Number" />
-              <span class="ability-mod ">{{math ability.bonus "+" ability.value}}</span>
-            </div>
-            {{/if}}
-            {{/each}}
+              {{#each system.abilities as |ability key|}}
+                {{#if (equals key "cou")}}
+                  <div class="ability flexrow flex-group-center">
+                    <label for="system.abilities.{{key}}.value"
+                      class="resource-label flexlarge align-left" style="flex:1.7">{{ability.label}}&nbsp;:&nbsp;{{math2 ability.bonus "+" ability.bonus_man "+" ability.value}}</label>
+                    <label for="system.abilities.{{key}}.value"
+                      class="resource-label flexlarge align-left" style="flex:0.8"><i class="fas fa-dice-d20 rollable2"
+                        data-dice="d20" data-name="{{ability.label}}"
+                        data-diff='{{math ability.bonus "+" ability.value}}' style="font-size: 0.8em;"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+                        data-dice="d20" data-name="{{ability.label}}"
+                        data-diff='{{math ability.bonus "+" ability.value}}' style="font-size: 0.8em;"></i></label>
+                    <input class="inputCarac" type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" style="flex:0.5;"/>
+                    <label class="resource-label" style="flex:0.1"></label>
+                    <input class="inputCarac" type="text" name="system.abilities.{{key}}.bonus_man" value="{{ability.bonus_man}}" data-dtype="Number" style="flex:0.5"/>
+                  </div>
+                {{/if}}
+                {{#if (equals key "prd")}}
+                  <div class="ability flexrow flex-group-center">
+                    <label for="system.abilities.{{key}}.value"
+                      class="resource-label flexlarge align-left" style="flex:1.7">{{ability.label}}&nbsp;:&nbsp;{{math2 ability.bonus "+" ability.bonus_man "+" ability.value}}</label>
+                    <label for="system.abilities.{{key}}.value"
+                      class="resource-label flexlarge align-left" style="flex:0.8"><i class="fas fa-dice-d20 rollable2"
+                        data-dice="d20" data-name="{{ability.label}}"
+                        data-diff='{{math ability.bonus "+" ability.value}}' style="font-size: 0.8em;"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+                        data-dice="d20" data-name="{{ability.label}}"
+                        data-diff='{{math ability.bonus "+" ability.value}}' style="font-size: 0.8em;"></i></label>
+                    <input class="inputCarac" type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" style="flex:0.5;"/>
+                    <label class="resource-label" style="flex:0.1"></label>
+                    <input class="inputCarac" type="text" name="system.abilities.{{key}}.bonus_man" value="{{ability.bonus_man}}" data-dtype="Number" style="flex:0.5"/>
+                  </div>
+                {{/if}}
+              {{/each}}
             {{/if}}
           </div>
         </aside>
         {{!-- For the main features list, span the right two columns --}}
         <section class="main  grid-span-1">
           <aside class="sidebar">
-            <div class="res-mag grid grid-2col" style="margin-bottom: 3px;">
-              <div class="xp">
-                <label for="system.attributes.xp.value" class="resource-label">Classe / XP</label>
-                <input type="text" name="system.attributes.xp.value" value="{{system.attributes.xp.value}}"
-                  data-dtype="Number" style="width: calc(100% - 30px);" />
+            <div class="resources grid grid-2col" style="margin-top: 0px;">
+              <div class="ability flexrow flex-group-center">
+                <label for="system.attributes.xp.value" class="resource-label" style="text-align: left;flex:1.8;">Classe / XP :&nbsp;</label>
+                <input class="inputCarac" type="text" name="system.attributes.xp.value" value="{{system.attributes.xp.value}}"
+                  data-dtype="Number" style="flex:1" />
+                <div style="flex:0.5"></div>
               </div>
-              <div class="abilities flexcol">
-                <div class="resource">
-                  <label for="system.health.value" class="resource-label">Energie vitale</label>
-                  <div class="resource-content flexrow flex-center flex-between flex-group-center"
-                    style="width: calc(100% - 30px);">
-                    <input type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number" />
-                    <span> / </span>
-                    <input type="text" name="system.health.max" value="{{system.health.max}}" data-dtype="Number" />
-                  </div>
+              <div class="ability flexrow flex-group-center">
+                <label for="system.health.value" class="resource-label" style="flex:4.2;text-align: left;">Énergie vitale :</label>
+                <input class="inputCarac" type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number" />
+                <span style="flex:0.5"> / </span>
+                <input class="inputCarac" type="text" name="system.health.max" value="{{system.health.max}}" data-dtype="Number" />
+              </div>
+            </div>
+            <div class="resources grid grid-2col">
+              <div>
+                <label class="resource-label">Rés. magique :&nbsp;{{math2 system.attributes.rm.value "+" system.attributes.rm.bonus "+" system.attributes.rm.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
+                    data-name="Résistance magique"
+                    data-diff='{{math2 system.attributes.rm.value "+" system.attributes.rm.bonus "+" system.attributes.rm.bonus_man}}' style="font-size: 0.8em;"></i>&nbsp;<i
+                    class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Résistance magique"
+                    data-diff='{{math2 system.attributes.rm.value "+" system.attributes.rm.bonus "+" system.attributes.rm.bonus_man}}' style="font-size: 0.8em;"></i></label>
+                <div class="ability flexrow flex-group-center">
+                  Base :&nbsp;<input class="inputCarac" type="text" name="system.attributes.rm.bonus_man"
+                    value='{{system.attributes.rm.bonus_man}}' data-dtype="Number" />
+                  <div style="flex:2.5"></div>
+                </div>
+              </div>
+              <div class="esquive">
+                <label class="resource-label">Esquive :&nbsp;{{math3 system.attributes.esq.value "+" system.attributes.esq.bonus "+" system.attributes.esq.bonus_man "+" system.abilities.ad.bonus}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
+                    data-name="Esquive"
+                    data-diff='{{math2 system.attributes.esq.value "+" system.attributes.esq.bonus "+" system.attributes.esq.bonus_man}}' style="font-size: 0.8em;"></i>&nbsp;<i
+                    class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Esquive"
+                    data-diff='{{math2 system.attributes.esq.value "+" system.attributes.esq.bonus "+" system.attributes.esq.bonus_man}}' style="font-size: 0.8em;"></i></label>
+                <div class="ability flexrow flex-group-center">
+                  Base :&nbsp;<input class="inputCarac" type="text" name="system.attributes.esq.bonus_man"
+                    value='{{system.attributes.esq.bonus_man}}' data-dtype="Number" />
+                    <div style="flex:2.5"></div>
                 </div>
               </div>
             </div>
-            <div class="res-mag grid grid-2col" style="margin-bottom: 3px;margin-top: 3px;">
-              <div>
-                <label class="resource-label">Résistance mag.&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
-                    data-name="Résistance magique"
-                    data-diff='{{math system.attributes.rm.value "+" system.attributes.rm.bonus}}'></i>&nbsp;<i
-                    class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Résistance magique"
-                    data-diff='{{math system.attributes.rm.value "+" system.attributes.rm.bonus}}'></i></label>
-                <input type="text" name="system.attributes.rm.bonus" value='{{system.attributes.rm.bonus}}'
-                  data-dtype="Number" style="width: calc(100% - 30px);" />
-              </div>
-              <div class="esquive">
-                <label class="resource-label">Esquive&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
-                    data-name="Esquive"
-                    data-diff='{{math2 system.attributes.esq.value "+" system.attributes.esq.bonus "+" system.abilities.ad.bonus}}'></i>
-                    &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Esquive"
-                    data-diff='{{math2 system.attributes.esq.value "+" system.attributes.esq.bonus "+" system.abilities.ad.bonus}}'></i></label>
-                <input type="text" name="system.attributes.esq.bonus" value='{{system.attributes.esq.bonus}}'
-                  data-dtype="Number" style="width: calc(100% - 30px);" />
-              </div>
-            </div>
-            <div class="resources grid grid-2col" style="margin-bottom: 3px;margin-top: 3px;">
+            <div class="resources grid grid-2col">
               <div class="protection">
-                <label class="resource-label">Protection</label>
-                <input type="text" name="system.attributes.pr.bonus" value='{{system.attributes.pr.bonus}}'
-                  data-dtype="Number" style="width: calc(100% - 30px);" />
+                <label class="resource-label armuredetail"><span class="cliquable">Protection : {{math3 system.attributes.pr.value "+" system.attributes.pr.trucdemauviette "+" system.attributes.pr.bonus "+" system.attributes.pr.bonus_man}}&nbsp;</span></label>
+                <div class="ability flexrow flex-group-center">
+                  Base :&nbsp;<input class="inputCarac" type="text" name="system.attributes.pr.bonus_man"
+                    value='{{system.attributes.pr.bonus_man}}' data-dtype="Number" />
+                    <div style="flex:2.5"></div>
+                </div>
               </div>
               <div class="protection">
-                <label class="resource-label">Protection magique</label>
-                <input type="text" name="system.attributes.prm.bonus" value='{{system.attributes.prm.bonus}}'
-                  data-dtype="Number" style="width: calc(100% - 30px);" />
+                <label class="resource-label">Protection magique : {{math2 system.attributes.prm.value "+" system.attributes.prm.bonus "+" system.attributes.prm.bonus_man}}</label>
+                <div class="ability flexrow flex-group-center">
+                  Base :&nbsp;<input class="inputCarac" type="text" name="system.attributes.prm.bonus_man" value='{{system.attributes.prm.bonus_man}}'
+                    data-dtype="Number" />
+                    <div style="flex:2.5"></div>
+                </div>
               </div>
             </div>
             {{#if system.attributes.moreStats}}
-            <div class="resources grid grid-2col" style="margin-bottom: 3px;margin-top: 3px;">
-              <div class="mpsy">
-                <label for="system.attributes.mpsy.value" class="resource-label">Mpsy&nbsp;<i
-                    class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Mpsy"
-                    data-diff='{{math system.attributes.mpsy.value "+" system.attributes.mpsy.bonus}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-                    data-dice="d20" data-name="Mpsy" data-diff='{{math system.attributes.mpsy.value "+" system.attributes.mpsy.bonus}}'></i></label>
-                <input type="text" name="system.attributes.mpsy.value" value="{{system.attributes.mpsy.value}}"
-                  data-dtype="Number" style="width: calc(100% - 30px);" />
+            <div class="resources grid grid-2col">
+              <div class="magie">
+                <label class="resource-label">MagiePhys :&nbsp;{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
+                    data-name="MagiePhys" data-diff='{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}' style="font-size: 0.8em;"></i>&nbsp;<i
+                    class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePhys"
+                    data-diff='{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}' style="font-size: 0.8em;"></i></label>
+                <div class="ability flexrow flex-group-center">
+                  Base :&nbsp;<input class="inputCarac" type="text" name="system.attributes.mphy.bonus_man" value='{{system.attributes.mphy.bonus_man}}' data-dtype="Number" />
+                  <div style="flex:2.5"></div>
+                </div>
               </div>
-              <div class="mphy">
-                <label for="system.attributes.mphy.value" class="resource-label">Mphy&nbsp;<i
-                    class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Mphy"
-                    data-diff='{{math system.attributes.mphy.value "+" system.attributes.mphy.bonus}}'></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-                    data-dice="d20" data-name="Mphy" data-diff='{{math system.attributes.mphy.value "+" system.attributes.mphy.bonus}}'></i></label>
-                <input type="text" name="system.attributes.mphy.value" value="{{system.attributes.mphy.value}}"
-                  data-dtype="Number" style="width: calc(100% - 30px);" />
+              <div class="magie">
+                <label class="resource-label">MagiePsy :&nbsp;{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
+                    data-name="MagiePsy" data-diff='{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}' style="font-size: 0.8em;"></i>&nbsp;<i
+                    class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePsy"
+                    data-diff='{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}' style="font-size: 0.8em;"></i></label>
+                <div class="ability flexrow flex-group-center">  
+                  Base :&nbsp;<input class="inputCarac" type="text" name="system.attributes.mpsy.bonus_man" value='{{system.attributes.mpsy.bonus_man}}' data-dtype="Number" />
+                  <div style="flex:2.5"></div>
+                </div>
               </div>
             </div>
             <div class="resources grid grid-2col" style="margin-bottom: 3px;margin-top: 3px;">
               <div class="abilities flexcol">
-                <div class="resource">
-                  <label for="system.pa.value" class="resource-label">Energie astrale</label>
-                  <div class="resource-content flexrow flex-center flex-between flex-group-center"
-                    style="width: calc(100% - 30px);">
-                    <input type="text" name="system.pa.value" value="{{system.pa.value}}" data-dtype="Number" />
-                    <span> / </span>
-                    <input type="text" name="system.pa.max" value="{{system.pa.max}}" data-dtype="Number" />
-                  </div>
+                <div class="ability flexrow flex-group-center">
+                  <label for="system.health.value" class="resource-label" style="flex:4.4;text-align: left;">Énergie astrale :</label>
+                  <input class="inputCarac" type="text" name="system.pa.value" value="{{system.pa.value}}" data-dtype="Number" />
+                  <span style="flex:0.5"> / </span>
+                  <input class="inputCarac" type="text" name="system.pa.max" value="{{system.pa.max}}" data-dtype="Number" />
                 </div>
               </div>
-              <div class="resource">
-                <label for="system.pa.value" class="resource-label">Niveau</label>
-                <input type="text" name="system.attributes.level.value" value="{{system.attributes.level.value}}"
-                  data-dtype="Number" style="width: calc(100% - 30px);" />
+              <div class="ability flexrow flex-group-center">
+                <label for="system.attributes.xp.value" class="resource-label" style="text-align: left;flex:1.6;">Niveau :&nbsp;</label>
+                <input class="inputCarac" type="text" name="system.attributes.level.value" value="{{system.attributes.level.value}}"
+                  data-dtype="Number" style="flex:0.8" />
+                <div style="flex:1.5"></div>
               </div>
             </div>
             {{/if}}
@@ -292,48 +251,48 @@
         {{#if (equals etats.length 0)}}
         {{else}}
         <hr>
-        <div class="resource flex-group-center" style="padding-bottom: 5px;"><label class="resource-label">Etats</label>
+        <div class="resources grid grid-2col" style="column-gap: 50px;">
+          {{#each etats as |item id|}}
+          <li class="item flexrow" data-item-id="{{item._id}}" style="border-bottom: 1px solid #c9c7b8;">
+            <label>
+              {{item.name}}
+              {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+              {{#if (equals item.system.epreuvecustom true)}}
+              <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+                data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+                data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+                data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+                data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+                data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
+              {{/if}}
+              {{else}}
+              {{#if (equals item.system.epreuvecustom true)}}
+              <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+                data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+                data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+                data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+                data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+                data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
+              {{else}}
+              <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
+                data-diff=""></i>
+              &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
+                data-diff=""></i>
+              {{/if}}
+              {{/if}}
+            </label>
+            <div class="item-controls" style="align-items: center;">
+              {{#if (equals item.system.equipe true)}}
+              <input class="item-equipe" type="checkbox" name="item.system.equipe" checked />
+              {{else}}
+              <input class="item-equipe" type="checkbox" name="item.system.equipe" />
+              {{/if}}
+              <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+              <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            </div>
+          </li>
+          {{/each}}
         </div>
-        {{#each etats as |item id|}}
-        <li class="item flexrow" data-item-id="{{item._id}}">
-          <label>
-            {{item.name}}
-            {{#if (equalsor item.system.formula "" item.system.formula "-")}}
-            {{#if (equals item.system.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
-              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
-              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
-              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
-              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
-              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
-            {{/if}}
-            {{else}}
-            {{#if (equals item.system.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
-              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
-              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
-              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
-              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
-              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
-            {{else}}
-            <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
-              data-diff=""></i>
-            &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
-              data-diff=""></i>
-            {{/if}}
-            {{/if}}
-          </label>
-          <div class="item-controls" style="align-items: center;">
-            {{#if (equals item.system.equipe true)}}
-            <input class="item-equipe" type="checkbox" name="item.system.equipe" checked />
-            {{else}}
-            <input class="item-equipe" type="checkbox" name="item.system.equipe" />
-            {{/if}}
-            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-          </div>
-        </li>
-        {{/each}}
         {{/if}}
       </ol>
       <hr>
@@ -439,7 +398,7 @@
       <div class="tab features" style="height: auto;font-size: 16px;">
         {{#each spells as |spells spellLevel|}}
         {{#each spells as |item id|}}
-        <li class="flexrow " data-item-id="{{item._id}}">
+        <li class="item flexrow " data-item-id="{{item._id}}">
           <div style="margin-bottom: 5px;">
             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
             <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
@@ -504,7 +463,7 @@
       <div class="tab features" style="height: auto;font-size: 16px;">
         {{#each coups as |item id|}}
         {{#if (equals system.bourrepif true)}}
-        <li class="flexrow " data-item-id="{{item._id}}">
+        <li class="item flexrow " data-item-id="{{item._id}}">
           <div style="margin-bottom: 5px;">
             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
             <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
@@ -543,7 +502,7 @@
         </li>
         <hr>
         {{else}}
-        <li class="flexrow " data-item-id="{{item._id}}">
+        <li class="item flexrow " data-item-id="{{item._id}}">
           <div style="margin-bottom: 5px;">
             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
             <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>

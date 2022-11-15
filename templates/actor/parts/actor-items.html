@@ -9,11 +9,11 @@
   <div style="margin-bottom: 4px;">
     <li class="item flexrow">
       <div class="" style="flex: 2.23;">Nom</div>
-      <div class="flex-group-center" style="flex:0.7">ATT</div>
-      <div class="flex-group-center" style="flex:0.7">Dégâts</div>
-      <div class="flex-group-center" style="flex:0.7">PRD</div>
-      <div class="flex-group-center" style="flex:0.7">Rupt.</div>
-      <div class="flex-group-center" title="Equipe Item" style="flex:0.7">Equipé</div>
+      <div class="flex-group-center" style="flex:0.55">Attaque</div>
+      <div class="flex-group-center" style="flex:1.1">Dégâts</div>
+      <div class="flex-group-center" style="flex:0.55">Parade</div>
+      <div class="flex-group-center" style="flex:0.55">Rupture</div>
+      <div class="flex-group-center" title="Equipe Item" style="flex:0.5">Equipé</div>
       <div class="item-controls" style="flex:0.5">
         <a class="item-control item-edit" title="Edit Item"></a>
         <a class="item-control item-delete" title="Delete Item"></a>
@@ -52,29 +52,37 @@
     </div>
 
     <!-- Lancers pour l'attaque suivant cac+distance, cac, ou distance -->
-    <div class="flex-group-center" style="flex:0.7">
+    <div class="flex-group-center" style="flex:0.55">
       {{#if (equalsand item.system.arme_cac "true" item.system.arme_distance "true")}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" 
-        data-dice1="d20" data-name1="Attaque au corps à corps" data-diff1="@att+{{item.system.att}}" 
-        data-dice2="d20" data-name2="Attaque à distance" data-diff2="@att-distance+{{item.system.att_arme_jet}}">
-      </i>
+        {{#if (equalsor item.system.formula "" item.system.formula "-")}}
+        -
+        {{else}}
+          {{evalAtt "@att" item.system.att}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
+          data-diff="@att+{{item.system.att}}" data-af="{{item.system.armefeu}}" style="font-size: 0.8em;"></i>
+          <i class="fas fa-dice-d6 rollable3" data-dice="d20"
+          data-name="{{item.name}}" data-diff="@att+{{item.system.att}}" data-af="{{item.system.armefeu}}" style="font-size: 0.8em;"></i><br/>
+          {{evalAtt "@att-distance" item.system.att_arme_jet}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
+          data-diff="@att-distance+{{item.system.att_arme_jet}}" data-af="{{item.system.armefeu}}" style="font-size: 0.8em;"></i>
+          <i class="fas fa-dice-d6 rollable3" data-dice="d20"
+          data-name="{{item.name}}" data-diff="@att-distance+{{item.system.att_arme_jet}}" data-af="{{item.system.armefeu}}" style="font-size: 0.8em;"></i>
+        {{/if}}
       {{else if (equals item.system.arme_cac "true")}}
         {{#if (equalsor item.system.formula "" item.system.formula "-")}}
         -
         {{else}}
-        <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
-          data-diff="@att+{{item.system.att}}" data-af="{{item.system.armefeu}}"></i>
-          &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
-          data-name="{{item.name}}" data-diff="@att+{{item.system.att}}" data-af="{{item.system.armefeu}}"></i>
+        {{evalAtt "@att" item.system.att}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
+          data-diff="@att+{{item.system.att}}" data-af="{{item.system.armefeu}}" style="font-size: 0.8em;"></i>
+          <i class="fas fa-dice-d6 rollable3" data-dice="d20"
+          data-name="{{item.name}}" data-diff="@att+{{item.system.att}}" data-af="{{item.system.armefeu}}" style="font-size: 0.8em;"></i>
         {{/if}}
       {{else if (equals item.system.arme_distance "true")}}
         {{#if (equalsor item.system.formula "" item.system.formula "-")}}
         -
         {{else}}
-        <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
-          data-diff="@att-distance+{{item.system.att_arme_jet}}" data-af="{{item.system.armefeu}}"></i>
-          &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
-          data-name="{{item.name}}" data-diff="@att-distance+{{item.system.att_arme_jet}}" data-af="{{item.system.armefeu}}"></i>
+        {{evalAtt "@att-distance" item.system.att_arme_jet}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
+          data-diff="@att-distance+{{item.system.att_arme_jet}}" data-af="{{item.system.armefeu}}" style="font-size: 0.8em;"></i>
+          <i class="fas fa-dice-d6 rollable3" data-dice="d20"
+          data-name="{{item.name}}" data-diff="@att-distance+{{item.system.att_arme_jet}}" data-af="{{item.system.armefeu}}" style="font-size: 0.8em;"></i>
         {{/if}}
       {{else}}
         -
@@ -82,50 +90,55 @@
     </div>
 
     <!-- Lancers pour les dégats -->
-    <div class="flex-group-center" style="flex:0.7">
+    <div class="flex-group-center" style="flex:1.1">
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       -
       {{else if (equalsand item.system.arme_cac "true" item.system.arme_distance "true")}}
-      <i class="fas fa-dice-d6 rollable4 cliquable" 
-        data-dice1="d20" data-name1="Dégâts au corps à corps" data-diff1="@att+{{item.system.formula}}+{{item.system.degat_arme_cac}}+@bonusfo" 
-        data-dice2="d20" data-name2="Dégâts à distance" data-diff2="@att-distance+{{item.system.formula}}+{{item.system.degat_arme_jet}}+@bonusfo">
-      </i>
+        {{evalDegat item.system.formula item.system.degat_arme_cac "@degat-contact"}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}} + @degat-contact" data-name="Dégâts {{item.name}}"
+        data-diff="" style="font-size: 0.8em;"></i>
+        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}} + @degat-contact" data-name="Dégâts {{item.name}}"
+        data-diff="" style="font-size: 0.8em;"></i><br/>
+        {{evalDegat item.system.formula item.system.degat_arme_jet "@degat-distance"}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}} + @degat-distance" data-name="Dégâts {{item.name}}"
+        data-diff="" style="font-size: 0.8em;"></i>
+        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}} + @degat-distance" data-name="Dégâts {{item.name}}"
+        data-diff="" style="font-size: 0.8em;"></i>
       {{else if (equals item.system.arme_cac "true")}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}}" data-name="Dégâts {{item.name}}"
-      data-diff=""></i>&nbsp;
-      <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}}" data-name="Dégâts {{item.name}}"
-      data-diff=""></i>
+        {{evalDegat item.system.formula item.system.degat_arme_cac "@degat-contact"}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}} + @degat-contact" data-name="Dégâts {{item.name}}"
+        data-diff="" style="font-size: 0.8em;"></i>
+        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}} + @degat-contact" data-name="Dégâts {{item.name}}"
+        data-diff="" style="font-size: 0.8em;"></i>
       {{else if (equals item.system.arme_distance "true")}}      
-      <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}}" data-name="Dégâts {{item.name}}"
-      data-diff=""></i>&nbsp;
-      <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}}" data-name="Dégâts {{item.name}}"
-      data-diff=""></i>
+        {{evalDegat item.system.formula item.system.degat_arme_jet "@degat-distance"}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}} + @degat-distance" data-name="Dégâts {{item.name}}"
+        data-diff="" style="font-size: 0.8em;"></i>
+        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}} + @degat-distance" data-name="Dégâts {{item.name}}"
+        data-diff="" style="font-size: 0.8em;"></i>
       {{else}}
+      -
       {{/if}}
     </div>
 
     <!-- Lancers pour la parade -->
-    <div class="flex-group-center" style="flex:0.7">
+    <div class="flex-group-center" style="flex:0.55">
       {{#if (equals item.system.prd "-")}}
       -
       {{else}}
-      <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
-        data-diff="@prd+{{item.system.prd}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
-        data-name="{{item.name}}" data-diff="@prd+{{item.system.prd}}"></i>
+      {{evalAtt "@prd" item.system.prd}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="{{item.name}}"
+        data-diff="@prd+{{item.system.prd}}" style="font-size: 0.8em;"></i>&nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="d20"
+        data-name="{{item.name}}" data-diff="@prd+{{item.system.prd}}" style="font-size: 0.8em;"></i>
       {{/if}}
     </div>
 
     <!-- Lancers pour la rupture -->
     {{#if (equalsor item.system.rupture "-" item.system.rupture "0")}}
-    <div class="flex-group-center" style="flex:0.7">-</div>
+    <div class="flex-group-center" style="flex:0.55">-</div>
     {{else}}
-    <div class="flex-group-center" style="flex:0.7"><i class="fas fa-dice-d20 rollable2" data-dice="d6"
-        data-name="Rupture" data-diff="{{item.system.rupture}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-        data-dice="d6" data-name="Rupture" data-diff="{{item.system.rupture}}"></i></div>
+    <div class="flex-group-center" style="flex:0.55">{{item.system.rupture}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d6"
+        data-name="Rupture" data-diff="{{item.system.rupture}}" style="font-size: 0.8em;"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+        data-dice="d6" data-name="Rupture" data-diff="{{item.system.rupture}}" style="font-size: 0.8em;"></i></div>
     {{/if}}
 
     <!-- Boutons -->
-    <div class="flex-group-center" style="flex:0.7">
+    <div class="flex-group-center" style="flex:0.5">
       {{#if (equals item.system.equipe true)}}
       <input class="flex-group-center item-equipe" type="checkbox" checked />
       {{else}}
@@ -177,8 +190,8 @@
     <div class="flex-group-center">-</div>
     {{else}}
     <div class="flex-group-center">{{item.system.rupture}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d6"
-        data-name="Rupture" data-diff="{{item.system.rupture}}"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
-        data-dice="d6" data-name="Rupture" data-diff="{{item.system.rupture}}"></i></div>
+        data-name="Rupture" data-diff="{{item.system.rupture}}" style="font-size: 0.8em;"></i>&nbsp;<i class="fas fa-dice-d6 rollable3"
+        data-dice="d6" data-name="Rupture" data-diff="{{item.system.rupture}}" style="font-size: 0.8em;"></i></div>
     {{/if}}
     <div class="flex-group-center">
       {{#if (equals item.system.equipe true)}}
@@ -264,8 +277,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -365,8 +377,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -466,8 +477,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -567,8 +577,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -668,8 +677,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -769,8 +777,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -870,8 +877,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -971,8 +977,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -1072,8 +1077,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -1173,8 +1177,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -1273,8 +1276,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}
@@ -1308,7 +1310,7 @@
   {{/if}}
   {{/each}}
   {{/if}}
-  <li class="hidenosac item flexrow items-header" style="height: auto;background: rgba(0, 0, 0, 0.1);">En dehors du sac ({{read_items_actor "nosac"}})</li>
+  <li class="hidenosac item flexrow items-header" style="height: auto;background: rgba(0, 0, 0, 0.1);">En dehors du sac ({{read_items_actor "nosac"}} + armes et armures équipées) :&nbsp;&nbsp;{{arrondi (math2 charge "-" poidsbourse "-" poidssac)}} kg / {{arrondi (math2 system.attributes.charge.max "-" poidsbourse "-" poidssac)}} kg</li>
   {{#if (equals system.attributes.hidenosac true)}}
   <li class="item flexrow">
     <div class="">Nom</div>
@@ -1370,8 +1372,7 @@
     </div>
     <div class="flex-group-center">
       {{#if (equals item.type "truc")}}
-      {{#if (bonus item.system.cou item.system.int item.system.cha item.system.ad item.system.fo item.system.att item.system.prd
-      item.system.pr item.system.prm item.system.mvt item.system.rm item.system.autre)}}
+      {{#if (bonus item)}}
       <label>-</label>
       {{else}}
       {{#if (equals item.system.equipe true)}}

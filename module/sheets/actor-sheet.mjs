@@ -76,21 +76,30 @@ export class NaheulbeukActorSheet extends ActorSheet {
     for (let [k, v] of Object.entries(context.system.abilities)) {
       v.label = game.i18n.localize(CONFIG.NAHEULBEUK.abilities[k]) ?? k;
     }
-    //PCH check bonus malus AD
-    if (document.getElementById("bonus_malus_ad")==null) {
-      await this._bonus_malus_ad()
-    }
-    //Check level up
-    if (document.getElementById("level_up")==null) {
-      if (this.actor.system.attributes.level.value!=this._level()) {
-        await this._level_up()
+    if(actor.type=="character") {
+      //PCH check bonus malus AD
+      if (document.getElementById("bonus_malus_ad")==null) {
+        await this._bonus_malus_ad()
+      }
+      //Check level up
+      if (document.getElementById("level_up")==null) {
+        if (this.actor.system.attributes.level.value!=this._level()) {
+          await this._level_up()
+        }
       }
     }
     //Maj stat acteurs
     let actorData = this._update_stats()
     await actor.update(actorData);
     if (actor.type == "character") {
+      let bio = ""
+      if (actor.system.biography=="") {
+        bio = '<h2>Description :</h2>\n<p><strong>&Acirc;ge :</strong></p>\n<p><strong>Taille :</strong></p>\n<p><strong>Poids :</strong></p>\n<p><strong>Cheveux :</strong></p>\n<p>&nbsp;</p>\n<h2>Caract&eacute;ristiques sp&eacute;ciales :</h2>\n<p><strong>Vision :</strong></p>\n<p><strong>Restrictions :</strong></p>\n<p><strong>Bonus :</strong></p>\n<p>&nbsp;</p>\n<h2>Histoire :</h2>\n<p>&nbsp;</p>\n<p>&nbsp;</p>'
+      } else {
+        bio = actor.system.biography
+      }
       const actorData = {
+        "system.biography": bio,
         "system.attributes.level.value": this._level(),
         "system.attributes.rm.value": this._rm(),
         "system.attributes.esq.value": this._esq(),
@@ -312,13 +321,9 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //PCH - sur tag item-equipe, on équipe l'objet
     html.find('.item-equipe').click(ev => this._onItemEquipe(ev, this.actor));
 
-    //PCH afficher ou masquer le champs (oeil carac)
-    html.find('.hide').click(ev => {
-      if (document.getElementById("hide").style.display == "none") {
-        document.getElementById("hide").style.display = "block"
-      } else {
-        document.getElementById("hide").style.display = "none"
-      }
+    //PCH afficher les bonus/malus liés aux objets (oeil carac)
+    html.find('.bonus-eye').click(ev => {
+      this._getStatsEquipe(this.actor)
     });
 
     //PCH hide catégorie d'inventaire
@@ -571,7 +576,6 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //on récupère l'objet
     const li = $(ev.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
-
     //Maj  sac et bourse
     if (item.system.equipe == false && item.type == "sac" && actor.type == "character") {
       if (item.type == "sac" && item.system.type == "sac à dos") {
@@ -1129,10 +1133,10 @@ export class NaheulbeukActorSheet extends ActorSheet {
     UpdatedData.system.abilities.fo={}
     UpdatedData.system.abilities.fo.bonus=0
     UpdatedData.system.abilities.att={}
-    UpdatedData.system.abilities.att.bonus=this.actor.system.abilities.att.bonus_ad
+    UpdatedData.system.abilities.att.bonus=parseInt(this.actor.system.abilities.att.bonus_ad)
     UpdatedData.system.abilities.att.degat=0
     UpdatedData.system.abilities.prd={}
-    UpdatedData.system.abilities.prd.bonus=this.actor.system.abilities.prd.bonus_ad
+    UpdatedData.system.abilities.prd.bonus=parseInt(this.actor.system.abilities.prd.bonus_ad)
 
     for (let item of this.actor.items){
       if (item.system.equipe==true) {
@@ -1246,8 +1250,165 @@ export class NaheulbeukActorSheet extends ActorSheet {
         }
       }
     }
-
     return UpdatedData
+  }
+
+  //Popup qui donne des infos sur les objets équipés
+  _getStatsEquipe(actor) {
+    let name = []
+    let change = []
+
+    for (let item of actor.items) {
+      if (item.system.equipe==true) {
+        console.log(item.name)
+        let addName = ""
+        let addChange = ""
+        let signe = ""
+        if (item.system.cou!=0 && item.system.cou!="" && item.system.cou!="0" && item.system.cou!="-" && item.system.cou!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.cou.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Courage "+ signe + item.system.cou
+        }
+        if (item.system.int!=0 && item.system.int!="" && item.system.int!="0" && item.system.int!="-" && item.system.int!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.int.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Intelligence "+signe+item.system.int
+        }
+        if (item.system.cha!=0 && item.system.cha!="" && item.system.cha!="0" && item.system.cha!="-" && item.system.cha!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.cha.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Charisme "+signe+item.system.cha
+        }
+        if (item.system.ad!=0 && item.system.ad!="" && item.system.ad!="0" && item.system.ad!="-" && item.system.ad!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.ad.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Adresse "+signe+item.system.ad
+        }
+        if (item.system.fo!=0 && item.system.fo!="" && item.system.fo!="0" && item.system.fo!="-" && item.system.fo!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.fo.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Force "+signe+item.system.fo
+        }
+        if (item.system.pr!=0 && item.system.pr!="" && item.system.pr!="0" && item.system.pr!="-" && item.system.pr!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.pr.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Protection "+signe+item.system.pr
+        }
+        if (item.system.prm!=0 && item.system.prm!="" && item.system.prm!="0" && item.system.prm!="-" && item.system.prm!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.prm.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Protection magique"+signe+item.system.prm
+        }
+        if (item.system.mvt!=0 && item.system.mvt!="" && item.system.mvt!="0" && item.system.mvt!="-" && item.system.mvt!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.mvt.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Déplacement "+signe+item.system.mvt+"%"
+        }
+        if (item.system.rm!=0 && item.system.rm!="" && item.system.rm!="0" && item.system.rm!="-" && item.system.rm!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.rm.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Résistance magique "+signe+item.system.rm
+        }
+        if (item.system.mphy!=0 && item.system.mphy!="" && item.system.mphy!="0" && item.system.mphy!="-" && item.system.mphy!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.mphy.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Magie physique "+signe+item.system.mphy
+        }
+        if (item.system.mpsy!=0 && item.system.mpsy!="" && item.system.mpsy!="0" && item.system.mpsy!="-" && item.system.mpsy!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.mpsy.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Magie psychique "+signe+item.system.mpsy
+        }
+        if (item.system.esq!=0 && item.system.esq!="" && item.system.esq!="0" && item.system.esq!="-" && item.system.esq!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.esq.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Esquive "+signe+item.system.esq
+        }
+        if (item.system.att!=0 && item.system.att!="" && item.system.att!="0" && item.system.att!="-" && item.system.att!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.att.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Attaque au contact "+signe+item.system.att
+        }
+        if (item.system.degat_arme_cac!=0 && item.system.degat_arme_cac!="" && item.system.degat_arme_cac!="0" && item.system.degat_arme_cac!="-" && item.system.degat_arme_cac!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.degat_arme_cac.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Dégat au contact "+signe+item.system.degat_arme_cac
+        }
+        if (item.system.prd!=0 && item.system.prd!="" && item.system.prd!="0" && item.system.prd!="-" && item.system.prd!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.prd.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Parade "+signe+item.system.prd
+        }
+        if (item.system.att_arme_jet!=0 && item.system.att_arme_jet!="" && item.system.att_arme_jet!="0" && item.system.att_arme_jet!="-" && item.system.att_arme_jet!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.att_arme_jet.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Attaque à distance "+signe+item.system.att_arme_jet
+        }
+        if (item.system.degat_arme_jet!=0 && item.system.degat_arme_jet!="" && item.system.degat_arme_jet!="0" && item.system.degat_arme_jet!="-" && item.system.degat_arme_jet!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.degat_arme_jet.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Dégat à distance "+signe+item.system.degat_arme_jet
+        }
+        if (item.system.cha_ignorempsy!=0 && item.system.cha_ignorempsy!="" && item.system.cha_ignorempsy!="0" && item.system.cha_ignorempsy!="-" && item.system.cha_ignorempsy!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.cha_ignorempsy.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Charisme ignoré dans le calcul de la magie psychique "+signe+item.system.cha_ignorempsy
+        }
+        if (item.system.nb_pr_ss_encombrement!=0 && item.system.nb_pr_ss_encombrement!="" && item.system.nb_pr_ss_encombrement!="0" && item.system.nb_pr_ss_encombrement!="-" && item.system.nb_pr_ss_encombrement!=null) {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          if (item.system.nb_pr_ss_encombrement.toString().substr(0,1)=="-") {signe=""} else {signe="+"}
+          addChange=addChange+"Protection ignorée pour le calcul des déplacements "+signe+item.system.nb_pr_ss_encombrement
+        }
+        if (item.system.autre!="") {
+          if (addName=="") {addName=item.name}
+          if (addChange!="") {addChange=addChange+", "}
+          addChange=addChange+"<br/><u>Information importante : "+item.system.autre+"</u>"
+        }
+
+        if (addName!="") {
+          name.push(addName)
+          change.push(addChange)
+        }
+      }
+    }
+    let i = 0
+    let content = "<form>"
+    for (let obj of name) {
+      if (i==0) {
+        content = content + "<strong>" + name[i] + " :</strong><br/>" + change[i]
+      } else {
+        content = content + "<br/><strong>" + name[i] + " :</strong><br/>" + change[i]
+      }
+      i++
+    }
+    if (name.length==0){content=content+"Aucun objet ne donne de bonus ou malus."}
+    content = content+"</form>"
+    let d = new Dialog({
+      title: "Bonus / Malus issus des objets équipés",
+      content: content,
+      buttons: {
+      }
+    });
+    d.render(true);
   }
 
 }

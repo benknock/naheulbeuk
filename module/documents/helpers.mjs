@@ -184,12 +184,13 @@ export const registerHandlebarsHelpers = function() {
   });
 
   //Test si un objet a un bonus
-  Handlebars.registerHelper('bonus', function (val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, val11, val12) {
-    if ((val1 == 0) && (val2 == 0) && (val3 == 0) && (val4 == 0) && (val5 == 0) && (val6 == 0) && (val7 == 0) && (val8 == 0) && (val9 == 0) && (val9 == 0) && (val10 == 0) && (val11 == 0) && (val12 == "")) {
-      return true
-    } else {
-      return false
+  Handlebars.registerHelper('bonus', function (item) {
+    let flag_bonus = true
+    let testArray = [item.system.cou,item.system.int,item.system.cha,item.system.ad,item.system.fo,item.system.att,item.system.prd,item.system.pr,item.system.prm,item.system.mvt,item.system.rm,item.system.att_arme_jet,item.system.degat_arme_jet,item.system.mphy,item.system.mpsy,item.system.esq,item.system.degat_arme_cac,item.system.cha_ignorempsy,item.system.nb_pr_ss_encombrement,item.system.autre]
+    for (let testValue of testArray) {
+      if (testValue!="-" && testValue!=0 && testValue!="" && testValue!="0"){flag_bonus=false}
     }
+    return flag_bonus
   });
 
   //Calcul du déplacement en fonction des PR
@@ -302,6 +303,27 @@ export const registerHandlebarsHelpers = function() {
       poid = poid + itemFind.system.weight*itemFind.system.quantity
     }
     return poid
+  });
+
+  //Calculer la parade et l'attaque d'une arme pour l'affichage dans l'inventaire
+  Handlebars.registerHelper("evalAtt", function (val1, val2) {
+    var actor_details = actor_data.data.root.actor
+    val1 = game.naheulbeuk.macros.replaceAttr(val1.toString(), actor_details);
+    val2 = game.naheulbeuk.macros.replaceAttr(val2.toString(), actor_details);
+    return (parseInt(val1)+parseInt(val2))
+  });
+
+  //Calculer les dégâts d'une arme pour l'affichage dans l'inventaire
+  Handlebars.registerHelper("evalDegat", function (val1, val2, val3, val4) {
+    let actor_details = actor_data.data.root.actor
+    let total
+    if (typeof(val4)!="string"){
+      total = val1+"+"+val2+"+"+val3
+    } else {
+      total = val1+"+"+val2+"+"+val3+"+"+val4
+    }
+    total = game.naheulbeuk.macros.replaceAttr(total, actor_details);
+    return (total)
   });
   
 }

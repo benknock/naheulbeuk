@@ -105,8 +105,8 @@ export class Macros {
     const cha = actor.system.abilities.cha.value + actor.system.abilities.cha.bonus + actor.system.abilities.cha.bonus_man;
     const ad = actor.system.abilities.ad.value + actor.system.abilities.ad.bonus + actor.system.abilities.ad.bonus_man;
     const fo = actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man;
-    const att = actor.system.abilities.att.value + actor.system.abilities.att.bonus + actor.system.abilities.att.bonus_man;
-    const prd = actor.system.abilities.prd.value + actor.system.abilities.prd.bonus + actor.system.abilities.prd.bonus_man;
+    const att = parseInt(actor.system.abilities.att.value) + parseInt(actor.system.abilities.att.bonus) + parseInt(actor.system.abilities.att.bonus_man);
+    const prd = parseInt(actor.system.abilities.prd.value) + parseInt(actor.system.abilities.prd.bonus) + parseInt(actor.system.abilities.prd.bonus_man);
     const mphy = actor.system.attributes.mphy.value + actor.system.attributes.mphy.bonus + actor.system.attributes.mphy.bonus_man;
     const mpsy = actor.system.attributes.mpsy.value + actor.system.attributes.mpsy.bonus + actor.system.attributes.mpsy.bonus_man;
     const rm = actor.system.attributes.rm.value + actor.system.attributes.rm.bonus + actor.system.attributes.rm.bonus_man;
@@ -143,18 +143,20 @@ export class Macros {
     expr = expr.replace(/@bonusfo/g, bonusfo);
     expr = expr.replace(/@lvl/g, lvl);
     expr = expr.replace(/ /g, "");
-    expr = expr.replace(/\+0\+/g, "+");
-    expr = expr.replace(/\-0\+/g, "+");
-    expr = expr.replace(/\+0\-/g, "-");
-    expr = expr.replace(/\-0\-/g, "-");
-    expr = expr.replace(/\+\-/g, "-");
-    expr = expr.replace(/\-\+/g, "-");
-    expr = expr.replace(/\-\-/g, "+");
-    expr = expr.replace(/\+\+/g, "+");
-    if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
-    if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
-    if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
-    if (expr.substring(expr.length - 1, expr.length) == "+") { expr = expr.substring(0, expr.length - 1) }
+    let i = 0
+    while (i!=4) {
+      expr = expr.replace(/\+0\+/g, "+");
+      expr = expr.replace(/\-0\+/g, "+");
+      expr = expr.replace(/\+0\-/g, "-");
+      expr = expr.replace(/\-0\-/g, "-");
+      expr = expr.replace(/\+\-/g, "-");
+      expr = expr.replace(/\-\+/g, "-");
+      expr = expr.replace(/\-\-/g, "+");
+      expr = expr.replace(/\+\+/g, "+");
+      if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
+      if (expr.substring(expr.length - 1, expr.length) == "+") { expr = expr.substring(0, expr.length - 1) }
+      i++
+    }
     return expr;
   }
 

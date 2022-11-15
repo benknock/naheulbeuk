@@ -550,3 +550,10 @@
 h2 {
   font-size: 1.3em;
 }
+
+.inputCarac {
+  border-radius: 0px !important;
+  border:0px !important; 
+  border-bottom: 1px solid #96958a !important;
+  background: rgba(45, 43, 42, 0.05) !important;
+}

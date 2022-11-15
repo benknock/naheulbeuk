@@ -51,7 +51,7 @@
   {{#each skillsGagnes as |item id|}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
-      <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
+      <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;-&nbsp;&nbsp;{{item.system.gagneSource}}&nbsp;&nbsp;</h4>
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       {{else}}
       <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"

@@ -76,37 +76,40 @@ export class NaheulbeukActorSheet extends ActorSheet {
     for (let [k, v] of Object.entries(context.system.abilities)) {
       v.label = game.i18n.localize(CONFIG.NAHEULBEUK.abilities[k]) ?? k;
     }
-    if(actor.type=="character") {
-      //PCH check bonus malus AD
-      if (document.getElementById("bonus_malus_ad")==null) {
-        await this._bonus_malus_ad()
-      }
-      //Check level up
-      if (document.getElementById("level_up")==null) {
-        if (this.actor.system.attributes.level.value!=this._level()) {
-          await this._level_up()
+    if (this.isEditable) {
+      if(actor.type=="character") {
+        //Popup bonus malus AD > 12 <8
+        if (document.getElementById("bonus_malus_ad")==null) {
+          await this._bonus_malus_ad()
+        }
+        //Popup level up
+        if (document.getElementById("level_up")==null) {
+          if (this.actor.system.attributes.level.value!=this._level()) {
+            await this._level_up()
+          }
         }
       }
-    }
-    //Maj stat acteurs
-    let actorData = this._update_stats()
-    await actor.update(actorData);
-    if (actor.type == "character") {
-      let bio = ""
-      if (actor.system.biography=="") {
-        bio = '<h2>Description :</h2>\n<p><strong>&Acirc;ge :</strong></p>\n<p><strong>Taille :</strong></p>\n<p><strong>Poids :</strong></p>\n<p><strong>Cheveux :</strong></p>\n<p>&nbsp;</p>\n<h2>Caract&eacute;ristiques sp&eacute;ciales :</h2>\n<p><strong>Vision :</strong></p>\n<p><strong>Restrictions :</strong></p>\n<p><strong>Bonus :</strong></p>\n<p>&nbsp;</p>\n<h2>Histoire :</h2>\n<p>&nbsp;</p>\n<p>&nbsp;</p>'
-      } else {
-        bio = actor.system.biography
-      }
-      const actorData = {
-        "system.biography": bio,
-        "system.attributes.level.value": this._level(),
-        "system.attributes.rm.value": this._rm(),
-        "system.attributes.esq.value": this._esq(),
-        "system.attributes.mphy.value": this._mphy(),
-        "system.attributes.mpsy.value": this._mpsy()
-      };
+
+      //Maj stat acteurs
+      let actorData = this._update_stats()
       await actor.update(actorData);
+      if (actor.type == "character") {
+        let bio = ""
+        if (actor.system.biography=="") {
+          bio = '<h2>Description :</h2>\n<p><strong>&Acirc;ge :</strong></p>\n<p><strong>Taille :</strong></p>\n<p><strong>Poids :</strong></p>\n<p><strong>Cheveux :</strong></p>\n<p>&nbsp;</p>\n<h2>Caract&eacute;ristiques sp&eacute;ciales :</h2>\n<p><strong>Vision :</strong></p>\n<p><strong>Restrictions :</strong></p>\n<p><strong>Bonus :</strong></p>\n<p>&nbsp;</p>\n<h2>Histoire :</h2>\n<p>&nbsp;</p>\n<p>&nbsp;</p>'
+        } else {
+          bio = actor.system.biography
+        }
+        const actorData = {
+          "system.biography": bio,
+          "system.attributes.level.value": this._level(),
+          "system.attributes.rm.value": this._rm(),
+          "system.attributes.esq.value": this._esq(),
+          "system.attributes.mphy.value": this._mphy(),
+          "system.attributes.mpsy.value": this._mpsy()
+        };
+        await actor.update(actorData);
+      }
     }
   }
 
@@ -117,7 +120,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
    *
    * @return {undefined}
    */
-  _prepareItems(context) {
+  _prepareItems(context) { //permet l'accès dans les doc html
     // Initialize containers.
     const trucs = [];
     const armes = [];
@@ -147,18 +150,18 @@ export class NaheulbeukActorSheet extends ActorSheet {
       15: []
     };
     const etats = [];
-    var poidssac = 0;
-    var poidsbourse = 0;
-    var charge = 0;
-    var compteurMetier = 0;
-    var compteurOrigine = 0;
-    var flagTrucDeMauviette = 0;
-    var flagTirerCorrectement = 1;
-    var attaques = [];
-    var traits = [];
-    var regions = [];
-    var coups = [];
-    var apes = [];
+    var poidssac = 0; // poids des objets dans le sac
+    var poidsbourse = 0; //poids des objets dans la bourse
+    var charge = 0; //poids total des objets portés
+    var compteurMetier = 0; //pour limiter à 1
+    var compteurOrigine = 0; // pour limiter à 1
+    var flagTrucDeMauviette = 0; //pour détecter si on a la compétence
+    var flagTirerCorrectement = 1; //pour détecter si on a la compétence
+    var attaques = []; // attaque PNJ
+    var traits = []; //traits PNJ
+    var regions = []; //region PNJ
+    var coups = []; //coups spéciaux
+    var apes = []; //APE
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -240,33 +243,41 @@ export class NaheulbeukActorSheet extends ActorSheet {
       else if (i.type === 'etat') {
         etats.push(i);
       }
+      //attaque (PNJ)
       else if (i.type === 'attaque') {
         attaques.push(i);
       }
+      //traits (PNJ)
       else if (i.type === 'trait') {
         traits.push(i);
       }
+      //region (PNJ)
       else if (i.type === 'region') {
         regions.push(i);
       }
+      //Coup spéciaux
       else if (i.type === 'coup') {
         coups.push(i);
       }
+      //APE
       else if (i.type === 'ape') {
         apes.push(i);
       }
+      //Gemmes
       else if (i.type === 'gemme') {
         trucs.push(i);
         if (i.system.stockage == "sac") { poidssac = poidssac + i.system.weight * i.system.quantity * 100 }
         if (i.system.stockage == "bourse") { poidsbourse = poidsbourse + i.system.weight * i.system.quantity * 100 }
         charge = charge + i.system.weight * i.system.quantity
       }
+      //Conteneurs
       else if (i.type === 'conteneur') {
         trucs.push(i);
         if (i.system.stockage == "sac") { poidssac = poidssac + i.system.weight * i.system.quantity * 100 }
         if (i.system.stockage == "bourse") { poidsbourse = poidsbourse + i.system.weight * i.system.quantity * 100 }
         charge = charge + i.system.weight * i.system.quantity
       }
+      //Plan ingénieur
       else if (i.type === 'recette') {
         trucs.push(i);
       }
@@ -304,6 +315,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     context.traits = traits;
     context.regions = regions;
     context.apes = apes;
+    context.categoriemagique=["generaliste","combat","feu","metamorphose","thermodynamique","invocation","necromancie","eau","terre","air","tzinntch","pr-niourgl","pr-dlul","pr-youclidh","pr-slanoush","pr-adathie","pa-niourgl","pa-slanoush","pa-dlul","pa-braav","pa-khornettoh"]
   }
 
   /* -------------------------------------------- */
@@ -311,107 +323,108 @@ export class NaheulbeukActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-    //fenetre bonus ad et level up au premier plan
+
+    //Garder la fenetre bonus ad et level up au premier plan
     if(document.getElementById("bonus_malus_ad")!=null){
       document.getElementById("bonus_malus_ad").offsetParent.style["z-index"]=document.getElementById("bonus_malus_ad").offsetParent.style["z-index"]+1
     }
     if(document.getElementById("level_up")!=null){
       document.getElementById("level_up").offsetParent.style["z-index"]=document.getElementById("level_up").offsetParent.style["z-index"]+1
     }
-    //PCH - sur tag item-equipe, on équipe l'objet
+
+    //Sur tag item-equipe, on équipe l'objet
     html.find('.item-equipe').click(ev => this._onItemEquipe(ev, this.actor));
 
-    //PCH afficher les bonus/malus liés aux objets (oeil carac)
+    //Afficher les bonus/malus liés aux objets (oeil carac)
     html.find('.bonus-eye').click(ev => {
       this._getStatsEquipe(this.actor)
     });
 
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hidelivres').click(ev => {
       const actorData = {
         "system.attributes.hidelivres": !this.actor.system.attributes.hidelivres
       };
       this.actor.update(actorData);
     });
-
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hidefioles').click(ev => {
       const actorData = {
         "system.attributes.hidefioles": !this.actor.system.attributes.hidefioles
       };
       this.actor.update(actorData);
     });
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hideingredients').click(ev => {
       const actorData = {
         "system.attributes.hideingredients": !this.actor.system.attributes.hideingredients
       };
       this.actor.update(actorData);
     });
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hidearmes').click(ev => {
       const actorData = {
         "system.attributes.hidearmes": !this.actor.system.attributes.hidearmes
       };
       this.actor.update(actorData);
     });
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hideprotections').click(ev => {
       const actorData = {
         "system.attributes.hideprotections": !this.actor.system.attributes.hideprotections
       };
       this.actor.update(actorData);
     });
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hidenourritures').click(ev => {
       const actorData = {
         "system.attributes.hidenourritures": !this.actor.system.attributes.hidenourritures
       };
       this.actor.update(actorData);
     });
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hiderichesses').click(ev => {
       const actorData = {
         "system.attributes.hiderichesses": !this.actor.system.attributes.hiderichesses
       };
       this.actor.update(actorData);
     });
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hideperso').click(ev => {
       const actorData = {
         "system.attributes.hideperso": !this.actor.system.attributes.hideperso
       };
       this.actor.update(actorData);
     });
-        //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hidemonture').click(ev => {
       const actorData = {
         "system.attributes.hidemonture": !this.actor.system.attributes.hidemonture
       };
       this.actor.update(actorData);
     });
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hidespeciaux').click(ev => {
       const actorData = {
         "system.attributes.hidespeciaux": !this.actor.system.attributes.hidespeciaux
       };
       this.actor.update(actorData);
     });
-      //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hidebourse').click(ev => {
       const actorData = {
         "system.attributes.hidebourse": !this.actor.system.attributes.hidebourse
       };
       this.actor.update(actorData);
     });
-      //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hidenosac').click(ev => {
       const actorData = {
         "system.attributes.hidenosac": !this.actor.system.attributes.hidenosac
       };
       this.actor.update(actorData);
     });
-    //PCH hide catégorie d'inventaire
+    //Hide catégorie d'inventaire
     html.find('.hidesac').click(ev => {
       const actorData = {
         "system.attributes.hidesac": !this.actor.system.attributes.hidesac
@@ -419,7 +432,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       this.actor.update(actorData);
     });
 
-    //PCH afficher ou masquer les sorts
+    //Afficher ou masquer les niveau de sorts
     html.find('.hideSort').click(ev => {
       const lvl = ev.currentTarget.dataset.lvl
       const tab = ev.currentTarget.dataset.tab
@@ -430,8 +443,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     });
 
-
-    // Render the item sheet for viewing/editing prior to the editable check.
+    //Render the item sheet for viewing/editing prior to the editable check.
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
@@ -442,6 +454,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     });
 
+    //Affichage d'un compendium (metier/origine)
     html.find('.compendium-pack').click(ev => {
       const element = ev.currentTarget;
       const dataset = element.dataset;
@@ -453,7 +466,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
-    // Add Inventory Item
+    // Add Inventory Item --> non utilisé mais gardé au cas ou
     html.find('.item-create').click(this._onItemCreate.bind(this));
 
     // Delete Inventory Item
@@ -469,7 +482,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       li.slideUp(200, () => this.render(false));
     });
 
-    // Item changer stockage
+    // Item changer le type de stockage
     html.find('.item-nosac').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
@@ -486,10 +499,9 @@ export class NaheulbeukActorSheet extends ActorSheet {
       item.update({"system.stockage":"bourse"})
     });
     
-    // Active Effect management
+    // Active Effect management --> non utilisé mais gardé au cas ou
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
 
-    //PCH rajout d'un roll custom avec plus d'options, et d'un roll avec fenêtre pour les inputs
     //Roll simple, depuis la fiche acteur, sans interface
     html.find('.rollable2').click(ev => {
       let elementRoll = ev.currentTarget;
@@ -515,14 +527,14 @@ export class NaheulbeukActorSheet extends ActorSheet {
       game.naheulbeuk.macros.onRollCustom(this.actor,itemRoll,datasetRoll)
     });
 
-    //PCH détail de l'armure
+    //Détail de la répartition de l'armure
     html.find('.armuredetail').click(this._armuredetail.bind(this));
 
-    //PCH diminuer quantité d'objet
+    //Augmenter/Diminuer quantité d'objet
     html.find('.item-quantity-moins').click(this._quantitymoins.bind(this));
     html.find('.item-quantity-plus').click(this._quantityplus.bind(this));
 
-    //PCH more stats NPC
+    //Affiche plus de stats pour les PNJ
     html.find('.moreStats').click(ev => {
       const actorData = {
         "system.attributes.moreStats": !this.actor.system.attributes.moreStats
@@ -649,7 +661,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     }
   }
 
-  //PCH - diminue la quantité d'un objet
+  //Diminue la quantité d'un objet
   async _quantitymoins(ev) {
     let option="moins"
     ev.preventDefault();
@@ -665,7 +677,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     }
   }
 
-  //PCH - diminue la quantité d'un objet
+  //Augmente la quantité d'un objet
   async _quantityplus(ev) {
     let option="plus"
     ev.preventDefault();
@@ -681,7 +693,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     }
   }
 
-  //Détail d'armure
+  //Détail de répartition de l'armure
   _armuredetail() {
     var compendiums = [];
     game.packs.forEach(elem => {
@@ -789,7 +801,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     d.render(true);
   }
 
-  //PCH calcule bonus/malus AD
+  //Calcul bonus/malus AD + popup
   _bonus_malus_ad() {
     let ad_value = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus + this.actor.system.abilities.ad.bonus_man;
     let bonus_malus_AD = this.actor.system.abilities.ad.bonus_malus_AD
@@ -978,7 +990,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     return d
   }
 
-  //PCH calcule level up
+  //Calcul level up + popup
   _level_up() {
     let niveau = this._level()
     let content = `
@@ -1013,7 +1025,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     d.render(true);
   }
 
-  //PCH calcule niveau
+  //Calcul niveau en fonction de l'XP
   _level() {
     var value = this.actor.system.attributes.xp.value
     if (value < 100) { return 1 }
@@ -1044,7 +1056,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     else { return 26 };
   }
 
-  //PCH calcule résistance magique
+  //Calcul résistance magique
   _rm() {
     var value = this.actor.system.abilities.cou.value + this.actor.system.abilities.cou.bonus + this.actor.system.abilities.cou.bonus_man;
     value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus  + this.actor.system.abilities.int.bonus_man;
@@ -1053,7 +1065,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     return value;
   }
 
-  //PCH calcule esquive
+  //Calcul esquive
   _esq() {
     var val1 = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus + this.actor.system.abilities.ad.bonus_man;
     var val2 = this.actor.system.attributes.pr.value + this.actor.system.attributes.pr.bonus + this.actor.system.attributes.pr.bonus_man - this.actor.system.attributes.pr.nb_pr_ss_encombrement
@@ -1076,7 +1088,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     return val1 + val2;
   }
 
-  //PCH calcule magie physique
+  //Calcul magie physique
   _mphy() {
     var value = this.actor.system.abilities.ad.value + this.actor.system.abilities.ad.bonus + this.actor.system.abilities.ad.bonus_man;
     value = value + this.actor.system.abilities.int.value + this.actor.system.abilities.int.bonus  + this.actor.system.abilities.int.bonus_man;
@@ -1084,7 +1096,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     return value;
   }
 
-  //PCH calcule magie psychique
+  //Calcul magie psychique
   _mpsy() {
     var value = this.actor.system.abilities.cha.value + this.actor.system.abilities.cha.bonus + this.actor.system.abilities.cha.bonus_man;
     value = value - this.actor.system.abilities.cha.ignorempsy;
@@ -1260,7 +1272,6 @@ export class NaheulbeukActorSheet extends ActorSheet {
 
     for (let item of actor.items) {
       if (item.system.equipe==true) {
-        console.log(item.name)
         let addName = ""
         let addChange = ""
         let signe = ""
@@ -1380,8 +1391,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
         }
         if (item.system.autre!="") {
           if (addName=="") {addName=item.name}
-          if (addChange!="") {addChange=addChange+", "}
-          addChange=addChange+"<br/><u>Information importante : "+item.system.autre+"</u>"
+          if (addChange!="") {addChange=addChange+"<br/>"}
+          addChange=addChange+"<u>Information importante : "+item.system.autre+"</u>"
         }
 
         if (addName!="") {

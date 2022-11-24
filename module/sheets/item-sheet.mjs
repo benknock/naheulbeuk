@@ -50,12 +50,20 @@ export class NaheulbeukItemSheet extends ItemSheet {
     if (context.item.system.img != "") {
       context.item.update({ "img": context.item.system.img, "system.img": "" });
     }
+
+    //modif pour permettre d'afficher les liens vers les objets dans les desriptions
     if (this.object.system.desccacher!=undefined){context.enrichedDesccacher = await TextEditor.enrichHTML(this.object.system.desccacher, {async: true});}
     if (this.object.system.description!=undefined){context.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, {async: true});}
     if (this.object.system.note2!=undefined){context.enrichedNote2 = await TextEditor.enrichHTML(this.object.system.note2, {async: true});}
     if (this.object.system.attributes!=undefined){
       if (this.object.system.attributes.desc!=undefined){context.enrichedDesc = await TextEditor.enrichHTML(this.object.system.attributes.desc, {async: true});}
     }
+
+  //maj gemmes
+  if (this.object.type=="gemme"){
+     this.object.update({"system.weight":parseFloat(this.object.system.ug)*0.008})
+  }
+    
     return context;
   }
 
@@ -69,9 +77,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
 
     //Si l'objet est un conteneur
     if (this.object.type == 'conteneur') {
-      //on permet le Drag and Drop depuis l'objet (DragStart) et vers l'objet (Drop)
-      //this.form.ondragstart = (event) => this._onDragStart(event);
-      this.form.ondrop = (event) => this._onDrop(event);
+      this.form.ondrop = (event) => this._onDrop(event); //permet le drop
     }
 
     // Suppression d'un objet d'un conteneur
@@ -118,13 +124,17 @@ export class NaheulbeukItemSheet extends ItemSheet {
       let cont_id={}
       cont_id._id=this.object._id
       new_Item.system.conteneur=cont_id
-      let itemFinal = new Item(new_Item)
-      itemFinal.sheet.render(true)
+      //let itemFinal = new Item(new_Item)
+      //itemFinal.sheet.render(true)
+      if (new_Item.type=="conteneur") {
+        Item.create(new_Item, {temporary:true}).then(itemFinal=>itemFinal.sheet.render(true,{editable:false}))
+      } else {
+        Item.create(new_Item, {temporary:true}).then(itemFinal=>itemFinal.sheet.render(true))
+      }
     });
 
 
-    // Roll handlers, click handlers, etc. would go here.
-    //PCH afficher ou masquer les stats
+    //Afficher ou masquer les stats d'un objet pour limiter ce que les joueurs voient
     html.find('.masquerstats').click(ev => {
       if (game.users.current.role==4){
         let nom = this.object.name
@@ -135,7 +145,8 @@ export class NaheulbeukItemSheet extends ItemSheet {
         });
       }
     })
-    //PCH afficher ou masquer les épreuves avancées sur un objets
+
+    //Afficher ou masquer les épreuves avancées sur un objet
     html.find('.epreuves').click(ev => {
       if (this.object.system.epreuvecustom == true) {
         this.object.update({ "system.epreuvecustom": false });
@@ -144,10 +155,10 @@ export class NaheulbeukItemSheet extends ItemSheet {
       }
     });
 
-    //PCH rajout d'un roll custom avec plus d'options, et d'un roll avec fenêtre pour les inputs
+    //Rajout d'un roll 
     html.find('.rollable2').click(this._onRollCustom.bind(this));
 
-    //PCH afficher ou masquer la catégorie d'une arme/armure
+    //Afficher ou masquer la catégorie d'une arme/armure
     html.find('.hidecategorie').dblclick(ev => {
       if (document.getElementById("hidecategorie").style.display == "none") {
         document.getElementById("hidecategorie").style.display = "block"
@@ -156,7 +167,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
       }
     });
 
-    //PCH permet d'avoir un choix de type de compétence unique
+    //Permet d'avoir un choix de type de compétence unique
     html.find('.majcomp').click(ev => {
       var compchoix = ev.currentTarget.dataset.name
       var dataset
@@ -186,7 +197,7 @@ export class NaheulbeukItemSheet extends ItemSheet {
   }
 
 
-  //PCH roll custom avec label et description
+  //Roll --> A VIRER pour utiliser la fonction dans les macros ?
   async _onRollCustom(event) {
     event.preventDefault();
     //récupération des données du html

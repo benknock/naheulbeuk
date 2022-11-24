@@ -1,9 +1,12 @@
+{{save_actor}}
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
   {{!-- Sheet Header --}}
+  <!-- Header : nom, image, traits, régions... -->
   <header class="sheet-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
+      <!-- Catégorie -->
       <div class="resource">
         <label class="resource-label">Catégorie</label>
         <select name="system.attributes.categorie"
@@ -23,6 +26,7 @@
           <option value="Opposants légendaires">Opposants légendaires</option>
         </select>
       </div>
+      <!-- Traits -->
       {{#if (equals traits.length 0)}}
       {{else}}
       <label class="resource-label">Traits</label>
@@ -31,13 +35,14 @@
         <div class="item flexrow" data-item-id="{{item._id}}">
           <span>
             <a class="item-control item-delete" title="Delete Item"
-              style="font-family: Roboto;font-size: 15px;"><strong>x</strong></a>
+              style="font-family: Roboto;font-size: 15px;"><i class="fa-solid fa-xmark" style="font-size: 10px;"></i></a>
             <a class="item-control item-edit" title="Edit Item">{{item.name}}</a>
           </span>
         </div>
         {{/each}}
       </div>
       {{/if}}
+      <!-- Régions -->
       {{#if (equals regions.length 0)}}
       {{else}}
       <label class="resource-label">Répartition géographique</label>
@@ -46,7 +51,7 @@
         <div class="item flexrow" data-item-id="{{item._id}}">
           <label>
             <a class="item-control item-delete" title="Delete Item"
-              style="font-family: Roboto;font-size: 15px;"><strong>x</strong></a>
+              style="font-family: Roboto;font-size: 15px;"><i class="fa-solid fa-xmark" style="font-size: 10px;"></i></a>
             <a class="item-control item-edit" title="Edit Item">{{item.name}}</a>
           </label>
         </div>
@@ -56,29 +61,28 @@
     </div>
   </header>
   
+  <!-- Onglets -->
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a data-tab="carac">Caractéristique</a>
+    <a data-tab="carac">Caractéristiques</a>
     <a data-tab="combat">Combat</a>
     <a data-tab="items">Inventaire</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
-
     {{!-- Biography Tab --}}
+    <!-- Onglet caractéristiques -->
     <div class="tab biography" data-group="primary" data-tab="carac">
       <section class="grid grid-2col" style="grid-column-gap:30px;grid-template-columns: 40% 57%">
+        <!-- Caractéristiques principales stockées dans abilities -->
         <aside class="sidebar">
-          {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-          use both the "grid" and "grid-Ncol" class where "N" can be any number
-          from 1 to 12 and will create that number of columns. --}}
           <div class="abilities flexcol">
             <div style="padding-bottom: 0.5em;">
               <div class="ability flexrow flex-group-center" style="border-bottom: 1px solid #a7a69e;">
                 <label class="resource-label flexlarge align-left rollable2"
-                data-name="Initialisation" data-dice="d6+7" data-diff="" style="flex:1.66"><span class="moreStats cliquable">Caractéristique
+                data-name="Initialisation" data-dice="d6+7" data-diff="" style="flex:1.69"><span class="moreStats cliquable">Caractéristiques
                   +</span></label>
                 <label class="resource-label flexlarge align-left" style="flex:0.8">&nbsp;&nbsp;<i
                     class="fas fa-eye bonus-eye cliquable" style="font-size: 0.8em;"></i></label>
@@ -87,6 +91,7 @@
                 <label class="resource-label" style="flex:0.5">Bonus</label>
               </div>
             </div>
+            <!-- Si le MJ a cliqué sur Caractéristiques + on affiche toutes les carac -->
             {{#if system.attributes.moreStats}}
               {{#each system.abilities as |ability key|}}
                 <div class="ability flexrow flex-group-center">
@@ -107,6 +112,7 @@
                 {{/if}}
               {{/each}}
             {{else}}
+            <!-- Sinon on affiche juste le courage et la force -->
               {{#each system.abilities as |ability key|}}
                 {{#if (equals key "cou")}}
                   <div class="ability flexrow flex-group-center">
@@ -142,7 +148,7 @@
             {{/if}}
           </div>
         </aside>
-        {{!-- For the main features list, span the right two columns --}}
+        <!-- Autres Caractéristiques stockées dans attributes principalement-->
         <section class="main  grid-span-1">
           <aside class="sidebar">
             <div class="resources grid grid-2col" style="margin-top: 0px;">
@@ -206,7 +212,7 @@
             {{#if system.attributes.moreStats}}
             <div class="resources grid grid-2col">
               <div class="magie">
-                <label class="resource-label">MagiePhys :&nbsp;{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
+                <label class="resource-label">Magie physique :&nbsp;{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="MagiePhys" data-diff='{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}' style="font-size: 0.8em;"></i>&nbsp;<i
                     class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePhys"
                     data-diff='{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}' style="font-size: 0.8em;"></i></label>
@@ -216,7 +222,7 @@
                 </div>
               </div>
               <div class="magie">
-                <label class="resource-label">MagiePsy :&nbsp;{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
+                <label class="resource-label">Magie psychique :&nbsp;{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="MagiePsy" data-diff='{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}' style="font-size: 0.8em;"></i>&nbsp;<i
                     class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePsy"
                     data-diff='{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}' style="font-size: 0.8em;"></i></label>
@@ -246,7 +252,7 @@
           </aside>
         </section>
       </section>
-
+      <!-- Affichage des états (bonus/malus comme des blessures, malédictions, folies...) -->
       <ol class="items-list">
         {{#if (equals etats.length 0)}}
         {{else}}
@@ -255,10 +261,15 @@
           {{#each etats as |item id|}}
           <li class="item flexrow" data-item-id="{{item._id}}" style="border-bottom: 1px solid #c9c7b8;">
             <label>
+              {{#if (equals item.system.equipe true)}}
+              <input class="item-equipe" type="checkbox" name="item.system.equipe" checked />
+              {{else}}
+              <input class="item-equipe" type="checkbox" name="item.system.equipe" />
+              {{/if}}
               {{item.name}}
               {{#if (equalsor item.system.formula "" item.system.formula "-")}}
               {{#if (equals item.system.epreuvecustom true)}}
-              <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
                 data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
                 data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
                 data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
@@ -267,7 +278,7 @@
               {{/if}}
               {{else}}
               {{#if (equals item.system.epreuvecustom true)}}
-              <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
                 data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
                 data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
                 data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
@@ -282,11 +293,6 @@
               {{/if}}
             </label>
             <div class="item-controls" style="align-items: center;">
-              {{#if (equals item.system.equipe true)}}
-              <input class="item-equipe" type="checkbox" name="item.system.equipe" checked />
-              {{else}}
-              <input class="item-equipe" type="checkbox" name="item.system.equipe" />
-              {{/if}}
               <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
               <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
             </div>
@@ -296,6 +302,7 @@
         {{/if}}
       </ol>
       <hr>
+      <!-- Description-->
       {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to
       the rollData property. --}}
       <span style="font-size: 16px;">
@@ -303,7 +310,7 @@
       </span>
     </div>
 
-    {{!-- Biography Tab --}}
+    <!-- Onglet de combat -->
     <div class="tab biography" data-group="primary" data-tab="combat">
       <ol class="items-list">
         <li class="flexrow">
@@ -320,7 +327,7 @@
             &nbsp;
           </div>
         </li>
-        {{save_actor}}
+        <!-- Affichage des attaques -->
         {{#each attaques as |item id|}}
         <li class="item flexrow" data-item-id="{{item._id}}" style="margin-top: 2px;">
           <div class="item-name">
@@ -330,20 +337,20 @@
             <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
           </div>
           <div class="flex-group-center">
-            {{#if (equals item.system.attaque "-")}}
+            {{#if (equalsor item.system.attaque "-" item.system.attaque "")}}
             {{#if (equals item.system.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+            <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
               data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
               data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
               data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
               data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
               data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
             {{else}}
-            {{item.system.attaque}}
+            -
             {{/if}}
             {{else}}
             {{#if (equals item.system.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+            <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
               data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
               data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
               data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
@@ -359,25 +366,11 @@
             {{/if}}
           </div>
           <div class="flex-group-center">
-            {{#if (equals item.system.formula "-")}}
-            {{#if (equals item.system.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
-              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
-              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
-              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
-              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
-              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
-            {{else}}
-            {{item.system.formula}}
-            {{/if}}
+            {{#if (equalsor item.system.formula "-" item.system.formula "")}}
+            -
             {{else}}
             {{#if (equals item.system.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
-              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
-              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
-              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
-              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
-              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
+            -
             {{else}}
             {{item.system.formula}}
             &nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}"
@@ -395,55 +388,76 @@
         {{/each}}
       </ol>
       <hr>
+
+      <!-- Affichages des sorts -->
       <div class="tab features" style="height: auto;font-size: 16px;">
         {{#each spells as |spells spellLevel|}}
         {{#each spells as |item id|}}
         <li class="item flexrow " data-item-id="{{item._id}}">
           <div style="margin-bottom: 5px;">
-            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-            <strong><u>{{item.name}}</u></strong>
+            <a class="item-control item-edit" title="Edit Item" style="font-size: 0.8em;"><i class="fas fa-edit" style="font-size: 0.8em;"></i></a>
+            <a class="item-control item-delete" title="Delete Item" style="font-size: 0.8em;"><i class="fas fa-trash" style="font-size: 0.8em;"></i></a>
+            <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           </div>
         </li>
         <li class="item flexrow" data-item-id="{{item._id}}">
           <div class="item-control">
-            {{#if (equals item.system.epreuve "")}}
+            {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
             {{#if (equals item.system.epreuvecustom true)}}
-            Épreuve : <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+            Épreuve :&nbsp;<i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
               data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
               data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
               data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
               data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
-              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
             {{else}}
             Épreuve : -
             {{/if}}
             {{else}}
-            Épreuve : {{item.system.epreuve}}
-            <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.system.epreuve}}"></i>
             {{#if (equals item.system.epreuvecustom true)}}
-            <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
-              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
-              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
-              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
-              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
-              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
+            Épreuve :&nbsp;
+            <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}" data-name1="{{item.system.name1}}"
+              data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}" data-name2="{{item.system.name2}}"
+              data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}" data-name3="{{item.system.name3}}"
+              data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}" data-name4="{{item.system.name4}}"
+              data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}" data-name5="{{item.system.name5}}"
+              data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
             {{else}}
+            Épreuve : {{replaceAttr item.system.epreuve}}
+            <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}"
+              data-diff="{{item.system.epreuve}}" style="font-size: 0.8em;"></i>
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.system.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}" style="font-size: 0.8em;"></i>
             {{/if}}
             {{/if}}
           </div>
           <div>
-            {{#if (equals item.system.degat "")}}
-            Dégâts : -
+            {{#if (equalsor item.system.degat "" item.system.degat "-")}}
+            {{#if (equals item.system.epreuvecustom true)}}
+            Dégâts :&nbsp;<i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
             {{else}}
-            Dégâts : {{item.system.degat}}
+            Dégâts : -
+            {{/if}}
+            {{else}}
+            {{#if (equals item.system.epreuvecustom true)}}
+            Dégâts :&nbsp;<i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+              data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+              data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+              data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+              data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+              data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
+            {{else}}
+            Dégâts : {{replaceAttr item.system.degat}}
             <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.degat}}" data-name="Dégat - {{item.name}}"
-              data-diff=""></i>
+              data-diff="" style="font-size: 0.8em;"></i>
             <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.degat}}" data-name="Dégat - {{item.name}}"
-              data-diff=""></i>
+              data-diff="" style="font-size: 0.8em;"></i>
+            {{/if}}
             {{/if}}
           </div>
           <div>Incantation : {{item.system.incantation}}</div>
@@ -460,39 +474,42 @@
         {{/each}}
         {{/each}}
       </div>
+
+      <!-- Affichage des coups spéciaux -->
       <div class="tab features" style="height: auto;font-size: 16px;">
         {{#each coups as |item id|}}
+        <!-- Coups spéciaux de type Bourre Pif -->
         {{#if (equals system.bourrepif true)}}
-        <li class="item flexrow " data-item-id="{{item._id}}">
-          <div style="margin-bottom: 5px;">
-            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-            <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;:
-            {{#if (equals item.system.epreuve "")}}
+        <li class="item flexrow" data-item-id="{{item._id}}">
+          <div style="margin-bottom: 5px;margin-top: 5px;">
+            <a class="item-control item-edit" title="Edit Item" style="font-size: 0.8em;"><i class="fas fa-edit" style="font-size: 0.8em;"></i></a>
+            <a class="item-control item-delete" title="Delete Item" style="font-size: 0.8em;"><i class="fas fa-trash" style="font-size: 0.8em;"></i></a>
+            <strong><u>{{item.name}}</u></strong>
+            {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
             {{else}}
-            &nbsp;&nbsp;épreuve d'attaque :
+            &nbsp;- épreuve : {{replaceAttr item.system.epreuve}}
             <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve d'attaque - {{item.name}}"
-              data-diff="{{item.system.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}" style="font-size: 0.8em;"></i>
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.system.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}" style="font-size: 0.8em;"></i>
             {{/if}}
-            {{#if (equals item.system.degat "")}}
+            {{#if (equalsor item.system.degat "" item.system.degat "-")}}
             {{else}}
-            &nbsp;&nbsp;dégâts :
+            &nbsp;- dégâts : {{replaceAttr item.system.degat}}
             <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.degat}}" data-name="Dégâts - {{item.name}}"
-              data-diff=""></i>
+              data-diff="" style="font-size: 0.8em;"></i>
             <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.degat}}" data-name="Épreuve - {{item.name}}"
-              data-diff=""></i>
+              data-diff="" style="font-size: 0.8em;"></i>
             {{/if}}
             {{#if (equals item.system.attaque "")}}
             {{else}}
             {{#if (equals item.system.attaque "-")}}
             {{else}}
-            &nbsp;&nbsp;épreuve spéciale :
+            &nbsp;- spéciale : {{replaceAttr item.system.attaque}}
             <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve spéciale - {{item.name}}"
-              data-diff="{{item.system.attaque}}"></i>
+              data-diff="{{item.system.attaque}}" style="font-size: 0.8em;"></i>
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.system.attaque}}"></i>
+              data-diff="{{item.system.attaque}}" style="font-size: 0.8em;"></i>
             {{/if}}
             {{/if}}
           </div>
@@ -500,20 +517,37 @@
         <li class="flexrow">
           <div>Effet : {{item.system.effet}}</div>
         </li>
-        <hr>
+
+        <!-- Autre coups spéciaux -->
         {{else}}
-        <li class="item flexrow " data-item-id="{{item._id}}">
-          <div style="margin-bottom: 5px;">
-            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-            <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;:
-            {{#if (equals item.system.epreuve "")}}
+        <li class="item flexrow" data-item-id="{{item._id}}">
+          <div style="margin-bottom: 5px; margin-top: 5px;">
+            <a class="item-control item-edit" title="Edit Item" style="font-size: 0.8em;"><i class="fas fa-edit" style="font-size: 0.8em;"></i></a>
+            <a class="item-control item-delete" title="Delete Item" style="font-size: 0.8em;"><i class="fas fa-trash" style="font-size: 0.8em;"></i></a>
+            <strong><u>{{item.name}}</u></strong>
+            {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
             {{else}}
-            &nbsp;&nbsp;{{item.system.epreuve}}
+            {{#if (equalsnot (first item.system.epreuve) "*")}}
+            &nbsp;- épreuve : {{replaceAttr item.system.epreuve}}
             <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.system.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}" style="font-size: 0.8em;"></i>
             <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
-              data-diff="{{item.system.epreuve}}"></i>
+              data-diff="{{item.system.epreuve}}" style="font-size: 0.8em;"></i>
+            {{else}}
+            &nbsp;- épreuve : {{first2 item.system.epreuve}}
+            {{/if}}
+            {{/if}}
+            {{#if (equalsor item.system.degat "" item.system.degat "-")}}
+            {{else}}
+            {{#if (equalsnot (first item.system.degat) "*")}}
+            &nbsp;- dégâts : {{replaceAttr item.system.degat}}
+            <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}"
+              data-diff="{{item.system.degat}}" style="font-size: 0.8em;"></i>
+            <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
+              data-diff="{{item.system.degat}}" style="font-size: 0.8em;"></i>
+            {{else}}
+            &nbsp;- dégâts : {{first2 item.system.degat}}
+            {{/if}}
             {{/if}}
           </div>
         </li>
@@ -526,10 +560,12 @@
         <li class="flexrow">
           <div>Effet : {{item.system.effet}}</div>
         </li>
-        <hr>
         {{/if}}
+        <hr>
         {{/each}}
       </div>
+
+      <!-- Description spécifique au combat -->
       {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to
       the rollData property. --}}
       <span style="font-size: 16px;">
@@ -537,6 +573,7 @@
       </span>
     </div>
 
+    <!-- Onglet inventaire -->
     {{!-- Owned Items Tab --}}
     <div class="tab items" data-group="primary" data-tab="items">
       <ol class="items-list">
@@ -556,6 +593,5 @@
         {{/each}}
       </ol>
     </div>
-
   </section>
 </form>

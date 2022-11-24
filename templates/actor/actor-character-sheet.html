@@ -1,6 +1,6 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
 
-  {{!-- Sheet Tab Navigation --}}
+  <!-- Onglets -->
   <nav class="sheet-tabs tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
     <a data-tab="carac">Caractéristiques</a>
@@ -20,10 +20,12 @@
   </nav>
 
   {{!-- Sheet Body --}}
+  <!-- Onglet Caractéristiques -->
   <section class="sheet-body">
     {{!-- Owned Features Tab --}}
     <div class="tab features" data-group="primary" data-tab="carac">
       {{!-- Sheet Header --}}
+      <!-- Image + métier + origine + sexe + signes particuliers -->
       <header class="sheet-header">
         <div class="flex-group-center" style="flex:1.2">
           <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"
@@ -70,17 +72,12 @@
             <div class="resource-label" style="padding-bottom: 5px;"><span>Signes particuliers :</span></div>
             <input class="inputCarac" type="text" name="system.attributes.signe.value" value="{{system.attributes.signe.value}}" />
           </div>
-          {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-          use both the "grid" and "grid-Ncol" class where "N" can be any number
-          from 1 to 12 and will create that number of columns. --}}
         </div>
       </header>
       <hr>
       <section class="grid grid-2col" style="grid-column-gap:40px;grid-template-columns: 40% 55%">
+        <!-- Caractéristiques principales stockées dans abilities(cou,int,...) -->
         <aside class="sidebar">
-          {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-          use both the "grid" and "grid-Ncol" class where "N" can be any number
-          from 1 to 12 and will create that number of columns. --}}
           <div class="abilities flexcol" >
             <div style="padding-bottom: 0.5em;">
               <div class="ability flexrow flex-group-center" style="border-bottom: 1px solid #a7a69e;">
@@ -113,8 +110,7 @@
             {{/each}}
           </div>
         </aside>
-
-        {{!-- For the main features list, span the right two columns --}}
+        <!-- Autres caractéristiques stockées dans attributes principalement-->
         <section class="main  grid-span-1">
           <aside class="sidebar">
             <div class="resources grid grid-2col" style="margin-top: 0px;">
@@ -140,6 +136,7 @@
               </div>
               {{#if (equals system.attributes.magie.value false)}}
               <div></div>
+              <!-- Si le métier est lié à la magie : mage, prêtre, paladin -->
               {{else}}
               <div class="ability flexrow flex-group-center">
                 <label for="system.pa.value" class="resource-label" style="flex:4.8;text-align: left;">Énergie astrale :</label>
@@ -195,10 +192,11 @@
                 </div>
               </div>
             </div>
+            <!-- Si le métier est lié à la magie : mage, prêtre, paladin -->
             {{#if (equals system.attributes.magie.value true)}}
             <div class="resources grid grid-2col">
               <div class="magie">
-                <label class="resource-label">MagiePhys :&nbsp;{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
+                <label class="resource-label">Magie physique :&nbsp;{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="MagiePhys" data-diff='{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}' style="font-size: 0.8em;"></i>&nbsp;<i
                     class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePhys"
                     data-diff='{{math2 system.attributes.mphy.value "+" system.attributes.mphy.bonus "+" system.attributes.mphy.bonus_man}}' style="font-size: 0.8em;"></i></label>
@@ -208,7 +206,7 @@
                 </div>
               </div>
               <div class="magie">
-                <label class="resource-label">MagiePsy :&nbsp;{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
+                <label class="resource-label">Magie psychique :&nbsp;{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="d20"
                     data-name="MagiePsy" data-diff='{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}' style="font-size: 0.8em;"></i>&nbsp;<i
                     class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="MagiePsy"
                     data-diff='{{math2 system.attributes.mpsy.value "+" system.attributes.mpsy.bonus "+" system.attributes.mpsy.bonus_man}}' style="font-size: 0.8em;"></i></label>
@@ -240,6 +238,7 @@
         </section>
       </section>
       <hr>
+      <!-- Affichage des états (bonus/malus comme une blessure, une folie etc)-->
       <section>
         <aside class="sidebar">
           <ol class="items-list">
@@ -249,10 +248,15 @@
             {{#each etats as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}" style="border-bottom: 1px solid #c9c7b8;">
               <label>
+                {{#if (equals item.system.equipe true)}}
+                <input class="item-equipe" type="checkbox" name="item.system.equipe" checked />
+                {{else}}
+                <input class="item-equipe" type="checkbox" name="item.system.equipe" />
+                {{/if}}
                 {{item.name}}
                 {{#if (equalsor item.system.formula "" item.system.formula "-")}}
                 {{#if (equals item.system.epreuvecustom true)}}
-                <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+                <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
                   data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
                   data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
                   data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
@@ -261,7 +265,7 @@
                 {{/if}}
                 {{else}}
                 {{#if (equals item.system.epreuvecustom true)}}
-                <i class="fas fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+                <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
                   data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
                   data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
                   data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
@@ -276,11 +280,6 @@
                 {{/if}}
               </label>
               <div class="item-controls" style="align-items: center;">
-                {{#if (equals item.system.equipe true)}}
-                <input class="item-equipe" type="checkbox" name="item.system.equipe" checked />
-                {{else}}
-                <input class="item-equipe" type="checkbox" name="item.system.equipe" />
-                {{/if}}
                 <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                 <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
               </div>
@@ -293,12 +292,15 @@
       </section>
     </div>
 
+    <!-- Onglet description -->
     {{!-- Biography Tab --}}
     <div class="tab biography" data-group="primary" data-tab="description">
       {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to
       the rollData property. --}}
       {{editor enrichedBio target="system.biography" button=true editable=editable}}
     </div>
+
+    <!-- Onglet compétences -->
     {{!-- Owned Features Tab --}}
     <div class="tab items" data-group="primary" data-tab="competences">
       {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in
@@ -306,6 +308,7 @@
       {{> "systems/naheulbeuk/templates/actor/parts/actor-competences.html"}}
     </div>
 
+    <!-- Onglet Coups spéciaux -->
     {{!-- Owned Features2 Tab --}}
     <div class="tab items" data-group="primary" data-tab="coupsspeciaux">
       {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in
@@ -313,21 +316,25 @@
       {{> "systems/naheulbeuk/templates/actor/parts/actor-coupsspeciaux.html"}}
     </div>
 
+    <!-- Onglet Aptitudes parfois étranges -->
     {{!-- Active Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="ape">
       {{> "systems/naheulbeuk/templates/actor/parts/actor-ape.html"}}
     </div>
 
+    <!-- Onglet Inventaire-->
     {{!-- Owned Items Tab --}}
     <div class="tab items" data-group="primary" data-tab="items">
       {{> "systems/naheulbeuk/templates/actor/parts/actor-items.html"}}
     </div>
 
+    <!-- Onglet Magie -->
     {{!-- Owned Spells Tab --}}
     <div class="tab spells" data-group="primary" data-tab="spells">
       {{> "systems/naheulbeuk/templates/actor/parts/actor-spells.html"}}
     </div>
 
+    <!-- Onglet Effets, non utilisé mais gardé au cas où -->
     {{!-- Active Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="effects">
       {{> "systems/naheulbeuk/templates/actor/parts/actor-effects.html"}}

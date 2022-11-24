@@ -58,27 +58,6 @@ export class Macros {
   //Global : remplace @lvl @ad... ds un string
   static replaceAttr = function (expr, actor) {
     var expr = expr
-    if (actor.type == "character") {
-      let ad = actor.system.abilities.ad.value + actor.system.abilities.ad.bonus + actor.system.abilities.ad.bonus_man;
-      let lancer = actor.system.attributes.att_arme_jet.value + actor.system.attributes.att_arme_jet.bonus + ad;
-      let degat_cac = actor.system.abilities.att.degat
-      let lancerdegat = actor.system.attributes.att_arme_jet.degat
-      if (lancerdegat == "") { lancerdegat = 0 }
-
-      //pour arme à poudre (+1 si tirer correctement, pas de bonus sinon)
-      let flagTirerCorrectement = 5
-      for (let actoritem of actor.items) {
-        if (actoritem.name == "TIRER CORRECTEMENT") {
-          flagTirerCorrectement = 1
-        }
-      }
-
-      expr = expr.replace(/@att-arme-poudre/g, lancer+flagTirerCorrectement);
-      expr = expr.replace(/@armefeu/g, flagTirerCorrectement); // pour garder compatibilité, à virer un jour
-      expr = expr.replace(/@att-distance/g, lancer);
-      expr = expr.replace(/@degat-distance/g, lancerdegat);
-      expr = expr.replace(/@degat-contact/g, degat_cac);
-    }
 
     const pr = actor.system.attributes.pr.value + actor.system.attributes.pr.bonus + actor.system.attributes.pr.bonus_man + actor.system.attributes.pr.trucdemauviette;
     const pr_avec_encombrement = pr - actor.system.attributes.pr.nb_pr_ss_encombrement;
@@ -123,6 +102,23 @@ export class Macros {
 
     if (actor.type == "npc") { esq = esq + actor.system.abilities.ad.bonus }
 
+    let lancer = actor.system.attributes.att_arme_jet.value + actor.system.attributes.att_arme_jet.bonus + ad;
+    let degat_cac = actor.system.abilities.att.degat
+    let lancerdegat = actor.system.attributes.att_arme_jet.degat
+    if (lancerdegat == "") { lancerdegat = 0 }
+
+    //pour arme à poudre (+1 si tirer correctement, pas de bonus sinon)
+    let flagTirerCorrectement = 5
+    for (let actoritem of actor.items) {
+      if (actoritem.name == "TIRER CORRECTEMENT") {
+        flagTirerCorrectement = 1
+      }
+    }
+    expr = expr.replace(/@att-arme-poudre/g, lancer+flagTirerCorrectement);
+    expr = expr.replace(/@armefeu/g, flagTirerCorrectement); // pour garder compatibilité, à virer un jour
+    expr = expr.replace(/@att-distance/g, lancer);
+    expr = expr.replace(/@degat-distance/g, lancerdegat);
+    expr = expr.replace(/@degat-contact/g, degat_cac);
     expr = expr.replace(/@malus-mvt-pr/g, malusmvtpr);
     expr = expr.replace(/épreuve:/g, "");
     expr = expr.replace(/@bonusint/g, bonusint);
@@ -154,10 +150,25 @@ export class Macros {
       expr = expr.replace(/\-\-/g, "+");
       expr = expr.replace(/\+\+/g, "+");
       if (expr.substring(expr.length - 2, expr.length) == "+0") { expr = expr.substring(0, expr.length - 2) }
+      if (expr.substring(expr.length - 2, expr.length) == "-0") { expr = expr.substring(0, expr.length - 2) }
       if (expr.substring(expr.length - 1, expr.length) == "+") { expr = expr.substring(0, expr.length - 1) }
+      if (expr.substring(expr.length - 1, expr.length) == "-") { expr = expr.substring(0, expr.length - 1) }
       i++
     }
-    return expr;
+
+    //si on peut calculer la valeur de l'expression on le fait
+    let evalFormula = expr
+    if (expr!=""){
+      try {
+        evalFormula = eval(expr)
+        evalFormula = Math.ceil(evalFormula)
+        evalFormula=evalFormula.toString()
+      } catch (error) {
+        evalFormula = expr
+      }
+    }
+
+    return evalFormula
   }
 
   //Global : fonction de jet de dés simples, avec ou sans interface (option "simple" ou "interface") 
@@ -167,30 +178,12 @@ export class Macros {
     var diff = dataset.diff;
     const desc = dataset.desc;
     const armefeu = dataset.af;
+
+    //-------------replace attributs
     if (dice.substr(0, 8) == "épreuve:") { //lancement d'épreuve quand il y'a juste jet de dés
       diff = dice;
       dice = "d20";
     }
-    //ajout du bonus de dégâts fo>12 ou malus si fo < 8 si c'est une arme
-    if (item) {
-      if (item.system!=undefined) {
-        if (item.type == "arme" && (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) > 12 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-          if (item.system.armefeu!=true) {
-            dice = dice + "+" + Math.max(0, (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) - 12)
-          }
-        };
-        if (item.type == "arme" && (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) < 9 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-          if (item.system.armefeu!=true) {
-            dice = dice + "-1"
-          }
-        };
-        if (item.type == "arme" && item.system.att_arme_jet != "-" && actor.system.attributes.att_arme_jet.degat != 0 && (name.substr(0, 5) == "Dégat" || name.substr(0, 5) == "Dégât")) {
-          dice = dice + actor.system.attributes.att_arme_jet.degat
-        };
-      };
-    }
-
-    //replace attributs
     if (dice.substr(0, 6) == "cible:" || diff.substr(0, 6) == "cible:") {
       if (game.naheulbeuk.macros.getSpeakersTarget() == null) { return }
     }
@@ -206,6 +199,7 @@ export class Macros {
     }
     dice = dice.replace(/ /g, "");
     diff = diff.replace(/ /g, "");
+
     if (armefeu == "true") {
       let flagTirerCorrectement=0
       for (let actoritem of actor.items){
@@ -219,10 +213,6 @@ export class Macros {
       let d = new Dialog({
         title: name,
         content: `
-          <em style="font-size: 15px;">Raccourcis :</em>
-          <br/>
-          <em style="font-size: 15px;">@cou @int @cha @ad @fo @att @prd @lvl @pr @prm @esq @rm @mphy @mpsy @att-distance @bonusint</em>
-          <hr>
           <label style="font-size: 15px;">Formule :</label>
           <input style="font-size: 15px;" type="text" name="inputFormule" value="`+ dice + `">
           <br/><br/>
@@ -272,7 +262,7 @@ export class Macros {
                       });
                     });
                   } else {
-                    diff = new Roll(diff);
+                    diff = new Roll("ceil(" + diff + ")");
                     diff.roll({ "async": true }).then(diff => {
                       result = Math.abs(diff.total - r.total);
                       if (r.total > diff.total) { reussite = "Echec !   " };
@@ -322,7 +312,7 @@ export class Macros {
             });
           });
         } else { //si on a la difficulté
-          diff = new Roll(diff);
+          diff = new Roll("ceil(" + diff + ")");
           diff.roll({ "async": true }).then(diff => {
             //calcule de la réussite ou l'échec suivant si on est sur un jet de rupture ou non
             if (r.total > diff.total && name != "Rupture") { reussite = "Echec !   " };
@@ -349,6 +339,10 @@ export class Macros {
 
   //Global : macro jet de dés custom 
   static async onRollCustom(actor,item,dataset) {
+    let nom_objet=""
+    if (item.name!=undefined){
+      nom_objet=" - " + item.name
+    }
     var dice1 = "";
     var dice2 = "";
     var dice3 = "";
@@ -422,12 +416,7 @@ export class Macros {
     diff6=diff_dice_array[12]
     diff7=diff_dice_array[13]
 
-    var content = `
-    <em style="font-size: 15px;">Raccourcis :</em>
-    <br/>
-    <em style="font-size: 15px;">@cou @int @cha @ad @fo @att @prd @lvl @pr @prm @esq @rm @mphy @mpsy @att-distance @bonusint</em>
-    <hr>
-    `
+    var content = ""
     
     if (name1 != "") {
       content = content + `
@@ -578,7 +567,7 @@ export class Macros {
             if (diff == "") {
               tplData = {
                 diff: "",
-                name: name1 + " - " + item.name
+                name: name1 + nom_objet
               }
               renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                 r.toMessage({
@@ -594,7 +583,7 @@ export class Macros {
                 if (r.total > diff.total) { reussite = "Echec !   " };
                 tplData = {
                   diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                  name: name1 + " - " + item.name
+                  name: name1 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                   r.toMessage({
@@ -641,7 +630,7 @@ export class Macros {
             if (diff == "") {
               tplData = {
                 diff: "",
-                name: name2 + " - " + item.name
+                name: name2 + nom_objet
               }
               renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                 r.toMessage({
@@ -657,7 +646,7 @@ export class Macros {
                 if (r.total > diff.total) { reussite = "Echec !   " };
                 tplData = {
                   diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                  name: name2 + " - " + item.name
+                  name: name2 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                   r.toMessage({
@@ -704,7 +693,7 @@ export class Macros {
             if (diff == "") {
               tplData = {
                 diff: "",
-                name: name3 + " - " + item.name
+                name: name3 + nom_objet
               }
               renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                 r.toMessage({
@@ -720,7 +709,7 @@ export class Macros {
                 if (r.total > diff.total) { reussite = "Echec !   " };
                 tplData = {
                   diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                  name: name3 + " - " + item.name
+                  name: name3 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                   r.toMessage({
@@ -767,7 +756,7 @@ export class Macros {
             if (diff == "") {
               tplData = {
                 diff: "",
-                name: name4 + " - " + item.name
+                name: name4 + nom_objet
               }
               renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                 r.toMessage({
@@ -783,7 +772,7 @@ export class Macros {
                 if (r.total > diff.total) { reussite = "Echec !   " };
                 tplData = {
                   diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                  name: name4 + " - " + item.name
+                  name: name4 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                   r.toMessage({
@@ -830,7 +819,7 @@ export class Macros {
             if (diff == "") {
               tplData = {
                 diff: "",
-                name: name5 + " - " + item.name
+                name: name5 + nom_objet
               }
               renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                 r.toMessage({
@@ -846,7 +835,7 @@ export class Macros {
                 if (r.total > diff.total) { reussite = "Echec !   " };
                 tplData = {
                   diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                  name: name5 + " - " + item.name
+                  name: name5 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                   r.toMessage({
@@ -893,7 +882,7 @@ export class Macros {
             if (diff == "") {
               tplData = {
                 diff: "",
-                name: name6 + " - " + item.name
+                name: name6 + nom_objet
               }
               renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                 r.toMessage({
@@ -909,7 +898,7 @@ export class Macros {
                 if (r.total > diff.total) { reussite = "Echec !   " };
                 tplData = {
                   diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                  name: name6 + " - " + item.name
+                  name: name6 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                   r.toMessage({
@@ -956,7 +945,7 @@ export class Macros {
             if (diff == "") {
               tplData = {
                 diff: "",
-                name: name7 + " - " + item.name
+                name: name7 + nom_objet
               }
               renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                 r.toMessage({
@@ -972,7 +961,7 @@ export class Macros {
                 if (r.total > diff.total) { reussite = "Echec !   " };
                 tplData = {
                   diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                  name: name7 + " - " + item.name
+                  name: name7 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                   r.toMessage({
@@ -999,7 +988,7 @@ export class Macros {
       width: 700
     };
     let d = new CustomDialog({
-      title: "Avancé",
+      title: "Jet de dés",
       content: content,
       buttons: buttons
     }, myDialogOptions);
@@ -1014,7 +1003,7 @@ export class Macros {
     const actor = item.actor;
     let command = null;
     let macroName = null;
-    command = `game.naheulbeuk.rollItemMacro("${item.name}",1);//changer le dernier 1 en 0 pour arriver directement sur l'interface de jets de dés`;
+    command = `game.naheulbeuk.rollItemMacro('${item.name}',1);//changer le dernier 1 en 0 pour arriver directement sur l'interface de jets de dés`;
     macroName = item.name + " (" + game.actors.get(actor.id).name + ")";
     let macro = game.macros.contents.find(m => (m.name === macroName) && (m.command === command));
     if (!macro) {
@@ -1043,7 +1032,7 @@ export class Macros {
       title: "Rechercher un compendium du système Naheulbeuk",
       content: `
       <form>
-        <label>Taper le nom du compendium à ouvrir <em>(entrée pour faire la recherche)</em></label>
+        <label>Taper le nom du compendium à ouvrir <em></em></label>
         <input type="text" name="q" id="q" value="" label="Nom du compendium" />
         <br/><br/>
         <button name"r" id="r" type="button">Chercher</button>
@@ -1493,8 +1482,8 @@ export class Macros {
         <hr>
         <em>Remarque : s'il n'y a pas de résultat, la macro essayera de trouver une rencontre jusqu'à +/- 10 d'xp par rapport à la valeur choisie</em>
         <hr>
-        Les rencontres 2,3,n seront de la même famille que la 1 : <input type="checkbox" id="consnom" name="consnom"><br/>
-        Lister toutes les rencontres de la même famille que la première : <input type="checkbox" id="listfamille" name="listfamille"><hr>
+        Toutes les rencontres seront de la même famille que la 1 : <input type="checkbox" id="consnom" name="consnom"><br/>
+        Lister toutes les rencontres de la même famille que la 1 : <input type="checkbox" id="listfamille" name="listfamille"><hr>
         <div style="display:flex;text-align: center;">
           <div style="flex:2">Plage d'XP</div>
           <div style="flex:1">Zones</div>
@@ -2207,7 +2196,7 @@ export class Macros {
         </div>
         <hr>
         <div style="align-items: center;">
-          <label>Type d'objet (Foundry) --> 2 choix = choix 1 ou choix 2</label><br/>
+          <label>Type d'objets (Foundry) --> 2 choix = choix 1 ou choix 2</label><br/>
           <input type="checkbox" id="type1" name="ape"><label>APE</label>
           <input type="checkbox" id="type2" name="arme"><label>Armes/Objets en mains</label>
           <input type="checkbox" id="type3" name="armure"><label>Armure/Objets portés</label>
@@ -2225,7 +2214,7 @@ export class Macros {
         </div>
         <hr>
         <div style="align-items: center;">
-          <label>Catégorie d'objet (inventaire) --> 2 choix = choix 1 ou choix 2</label><br/>
+          <label>Catégorie d'objets (inventaire) --> 2 choix = choix 1 ou choix 2</label><br/>
           <input type="checkbox" id="cat1" name="Divers"><label>Divers</label>
           <input type="checkbox" id="cat2" name="Livres"><label>Livres</label>
           <input type="checkbox" id="cat3" name="Potions"><label>Potions</label>
@@ -2239,7 +2228,7 @@ export class Macros {
         </div>
         <hr>
         <div style="align-items: center;">
-          <label>Filtre pour arme ou armure --> 2 choix = choix 1 et choix 2</label><br/>
+          <label>Filtre pour armes ou armures --> 2 choix = choix 1 et choix 2</label><br/>
           <input type="checkbox" id="ench1" name="enchantée"><label>Enchantée</label>
           <input type="checkbox" id="ench2" name="relique"><label>Relique</label>
           <input type="checkbox" id="ench3" name="armecac"><label>Arme de contact</label>

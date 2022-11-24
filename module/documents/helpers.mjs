@@ -302,28 +302,22 @@ export const registerHandlebarsHelpers = function() {
     for (let itemFind of item.system.items){
       poid = poid + itemFind.system.weight*itemFind.system.quantity
     }
+    if (item.system.conteneur._id==undefined) {
+      item.update({"system.weight":poid})
+    }
     return poid
   });
 
-  //Calculer la parade et l'attaque d'une arme pour l'affichage dans l'inventaire
-  Handlebars.registerHelper("evalAtt", function (val1, val2) {
-    var actor_details = actor_data.data.root.actor
-    val1 = game.naheulbeuk.macros.replaceAttr(val1.toString(), actor_details);
-    val2 = game.naheulbeuk.macros.replaceAttr(val2.toString(), actor_details);
-    return (parseInt(val1)+parseInt(val2))
-  });
-
-  //Calculer les dégâts d'une arme pour l'affichage dans l'inventaire
-  Handlebars.registerHelper("evalDegat", function (val1, val2, val3, val4) {
-    let actor_details = actor_data.data.root.actor
-    let total
-    if (typeof(val4)!="string"){
-      total = val1+"+"+val2+"+"+val3
-    } else {
-      total = val1+"+"+val2+"+"+val3+"+"+val4
+  //Replace attr dans les fiches de personnage
+  Handlebars.registerHelper("replaceAttr", function (val1, val2, val3, val4){
+    let txt = ""
+    for (let val of [val1, val2, val3, val4]) {
+      if (typeof(val)=="string") {
+        if (txt != "") { txt = txt + "+"}
+        txt = txt + val
+      }
     }
-    total = game.naheulbeuk.macros.replaceAttr(total, actor_details);
-    return (total)
-  });
-  
+    let formula = game.naheulbeuk.macros.replaceAttr(txt, actor_data.data.root.actor)
+    return formula
+  })
 }

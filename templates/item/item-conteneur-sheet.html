@@ -87,7 +87,7 @@
         </div>
         <label style="flex:1;text-align:center;">Quantité</label>
         <label style="flex:1;text-align:center;">Poids</label>
-        <div style="flex:0.5">
+        <div style="flex:0.6">
         </div>
       </li>
       <hr>
@@ -101,10 +101,10 @@
         </div>
         <label style="flex:1;text-align:center;">{{item.system.quantity}}</label>
         <label style="flex:1;text-align:center;">{{arrondiProche (math item.system.quantity "*" item.system.weight)}}&nbsp;kg</label>
-        <div style="flex:0.5;font-size: 14px;">
+        <div style="flex:0.6;font-size: 14px;">
+          <a class="item-control item-out" title="Sortir l'objet"><i class="fa-solid fa-right-from-bracket"></i></a>
           <a class="item-control item-edit" title="Editer l'objet"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Supprimer l'objet"><i class="fas fa-trash"></i></a>
-          <a class="item-control item-out" title="Sortir l'objet"><i class="fas fa-times"></i></a>
         </div>
       </li>
       {{/each}}

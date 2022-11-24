@@ -1,4 +1,5 @@
 <ol class="items-list">
+  <!-- Compétences héritées -->
   <h2>
     <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences héritées</span></div>
   </h2>
@@ -21,6 +22,8 @@
     </div>
   </li>
   {{/each}}
+
+  <!-- Compétences choisies -->
   <h2>
     <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences choisies</span></div>
   </h2>
@@ -43,6 +46,8 @@
     </div>
   </li>
   {{/each}}
+
+  <!-- Compétence gagnées -->
   {{#if (equals skillsGagnes.length 0)}}
   {{else}}
   <h2>
@@ -68,6 +73,8 @@
   </li>
   {{/each}}
   {{/if}}
+
+   <!-- Compétence de base (ajout perso, en dehors des règles de base) -->
   {{#if (equalsnot skillsBases.length 0)}}
   <h2>
     <div class="resource-label flex-group-center" style="margin-top: 10px;"><span>Compétences de base</span></div>

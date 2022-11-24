@@ -2591,4 +2591,7 @@ export class Macros {
     })
   }
   
+  static return_items() {
+    return all_items_search;
+  }
 }

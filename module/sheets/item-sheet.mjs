@@ -305,7 +305,9 @@ export class NaheulbeukItemSheet extends ItemSheet {
             itemsFinal.push(itemData)
             //on update la liste d'objet du conteneur
             this.object.update({"system.items":itemsFinal})
-            item.delete()
+            if (data.uuid.substr(0,10)!="Compendium"){
+              item.delete()
+            }
           }
         }
       }

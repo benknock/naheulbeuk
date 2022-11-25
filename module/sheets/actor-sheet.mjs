@@ -627,27 +627,31 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
 
       //On compare avec l'objet à équiper
-      if (item.system.arme_cac == true) {
-        if (nb_arme_cac>1) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà 2 armes équipées.");}
-        else if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez une arme à distance équipée.");}
-        else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
-        else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
-      } else if (item.system.arme_distance == true || item.system.armefeu == true) {
-        if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
-        else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
-        else if (nb_arme_cac>0 && nb_bouclier==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
-        else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
-        else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
-      } else if (item.system.prbouclier == true) {
-        if (nb_arme_cac>1) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà 2 armes équipées.");}
-        else if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez une arme à distance équipée.");}
-        else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
-        else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
-        else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
-      } else if (item.system.arme_autre == true) {
-        if (nb_arme_cac>0 || nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
-        else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
-        else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+      if (ev.shiftKey) {
+
+      } else {
+        if (item.system.arme_cac == true) {
+          if (nb_arme_cac>1) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà 2 armes équipées.");}
+          else if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez une arme à distance équipée.");}
+          else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
+          else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+        } else if (item.system.arme_distance == true || item.system.armefeu == true) {
+          if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
+          else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
+          else if (nb_arme_cac>0 && nb_bouclier==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
+          else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
+          else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+        } else if (item.system.prbouclier == true) {
+          if (nb_arme_cac>1) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà 2 armes équipées.");}
+          else if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez une arme à distance équipée.");}
+          else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
+          else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+          else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
+        } else if (item.system.arme_autre == true) {
+          if (nb_arme_cac>0 || nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
+          else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
+          else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+        }
       }
     }
     

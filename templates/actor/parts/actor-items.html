@@ -91,23 +91,23 @@
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       -
       {{else if (equalsand item.system.arme_cac "true" item.system.arme_distance "true")}}
-        {{replaceAttr item.system.formula item.system.degat_arme_cac "@degat-contact+@bonusfo"}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}} + @degat-contact+@bonusfo" data-name="Dégâts {{item.name}}"
+        {{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_cac "@degat-contact+@bonusfo")}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_cac "@degat-contact+@bonusfo")}}" data-name="Dégâts {{item.name}}"
         data-diff="" style="font-size: 0.8em;"></i>
-        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}} + @degat-contact+@bonusfo" data-name="Dégâts {{item.name}}"
+        <i class="fas fa-dice-d6 rollable3" data-dice="{{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_cac "@degat-contact+@bonusfo")}}" data-name="Dégâts {{item.name}}"
         data-diff="" style="font-size: 0.8em;"></i><br/>
-        {{replaceAttr item.system.formula item.system.degat_arme_jet "@degat-distance+@bonusfo"}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}} + @degat-distance+@bonusfo" data-name="Dégâts {{item.name}}"
+        {{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_jet "@degat-distance+@bonusfo")}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_jet "@degat-distance+@bonusfo")}}" data-name="Dégâts {{item.name}}"
         data-diff="" style="font-size: 0.8em;"></i>
-        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}} + @degat-distance+@bonusfo" data-name="Dégâts {{item.name}}"
+        <i class="fas fa-dice-d6 rollable3" data-dice="{{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_jet "@degat-distance+@bonusfo")}}" data-name="Dégâts {{item.name}}"
         data-diff="" style="font-size: 0.8em;"></i>
       {{else if (equals item.system.arme_cac "true")}}
-        {{replaceAttr item.system.formula item.system.degat_arme_cac "@degat-contact+@bonusfo"}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}} + @degat-contact+@bonusfo" data-name="Dégâts {{item.name}}"
+        {{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_cac "@degat-contact+@bonusfo")}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_cac "@degat-contact+@bonusfo")}}" data-name="Dégâts {{item.name}}"
         data-diff="" style="font-size: 0.8em;"></i>
-        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_cac}} + @degat-contact+@bonusfo" data-name="Dégâts {{item.name}}"
+        <i class="fas fa-dice-d6 rollable3" data-dice="{{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_cac "@degat-contact+@bonusfo")}}" data-name="Dégâts {{item.name}}"
         data-diff="" style="font-size: 0.8em;"></i>
       {{else if (equals item.system.arme_distance "true")}}      
-        {{replaceAttr item.system.formula item.system.degat_arme_jet "@degat-distance+@bonusfo"}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}} + @degat-distance+@bonusfo" data-name="Dégâts {{item.name}}"
+        {{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_jet "@degat-distance+@bonusfo")}}&nbsp;<i class="fas fa-dice-d20 rollable2" data-dice="{{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_jet "@degat-distance+@bonusfo")}}" data-name="Dégâts {{item.name}}"
         data-diff="" style="font-size: 0.8em;"></i>
-        <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}+{{item.system.degat_arme_jet}} + @degat-distance+@bonusfo" data-name="Dégâts {{item.name}}"
+        <i class="fas fa-dice-d6 rollable3" data-dice="{{replaceAttr item.system.formula (replaceAttr item.system.degat_arme_jet "@degat-distance+@bonusfo")}}" data-name="Dégâts {{item.name}}"
         data-diff="" style="font-size: 0.8em;"></i>
       {{else}}
       -

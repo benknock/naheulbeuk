@@ -160,9 +160,16 @@ export class Macros {
     let evalFormula = expr
     if (expr!=""){
       try {
+        expr = expr.replace(/max/g, "Math.max");
+        expr = expr.replace(/min/g, "Math.min");
+        expr = expr.replace(/ceil/g, "Math.ceil");
+        expr = expr.replace(/floor/g, "Math.floor");
+        expr = expr.replace(/round/g, "Math.round");
+        expr = expr.replace(/abs/g, "Math.abs");
         evalFormula = eval(expr)
         evalFormula = Math.ceil(evalFormula)
         evalFormula=evalFormula.toString()
+        if (expr.substring(0,1)=="+") {evalFormula="+" + evalFormula}
       } catch (error) {
         evalFormula = expr
       }

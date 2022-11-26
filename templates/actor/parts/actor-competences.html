@@ -1,3 +1,4 @@
+{{save_actor}}
 <ol class="items-list">
   <!-- Compétences héritées -->
   <h2>
@@ -9,6 +10,7 @@
       <h4 class="item-control flex-group-center">{{item.name}}&nbsp;</h4>
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       {{else}}
+      :&nbsp;{{replaceAttr item.system.diff}}&nbsp;
       <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
         data-diff="{{item.system.diff}}"></i>
       &nbsp;
@@ -33,6 +35,7 @@
       <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       {{else}}
+      :&nbsp;{{replaceAttr item.system.diff}}&nbsp;
       <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
         data-diff="{{item.system.diff}}"></i>
       &nbsp;
@@ -59,6 +62,7 @@
       <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;-&nbsp;&nbsp;{{item.system.gagneSource}}&nbsp;&nbsp;</h4>
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       {{else}}
+      :&nbsp;{{replaceAttr item.system.diff}}&nbsp;
       <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
         data-diff="{{item.system.diff}}"></i>
       &nbsp;
@@ -85,6 +89,7 @@
       <h4 class="item-control flex-group-center">{{item.name}}&nbsp;&nbsp;</h4>
       {{#if (equalsor item.system.formula "" item.system.formula "-")}}
       {{else}}
+      :&nbsp;{{replaceAttr item.system.diff}}&nbsp;
       <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
         data-diff="{{item.system.diff}}"></i>
       &nbsp;

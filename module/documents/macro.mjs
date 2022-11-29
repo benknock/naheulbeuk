@@ -2464,10 +2464,11 @@ export class Macros {
             list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i></a><input style="width: 280px;"id="' + r._id + r._id + '" type="text" value="' + r.name + '" />&nbsp;-&nbsp;<input style="width: 50px;"id="' + r._id + '" type="text" value="' + prix2 + '" />&nbsp;PO&nbsp;-&nbsp;' + compendium.metadata.label + '&nbsp;&nbsp;<button style="width: 140px;" class="magasin" name="' + r.name + '" type="button">Ajouter au magasin</button></li>';
           }
         }
+        if (list==''){list="Aucun objet trouvé"}
         res[0].innerHTML = '<ul>' + list + '</ul>';
         document.getElementById("app-" + d.appId).style.height = "auto"
         $("[class=magasin]").click(ev2 => {
-          for (let r of result2) {
+          for (let r of result) {
             if (r.name == ev2.currentTarget.name) {
               let prixObj = $('[id=' + r._id + ']').val()
               let nameObj = $('[id=' + r._id + r._id + ']').val()

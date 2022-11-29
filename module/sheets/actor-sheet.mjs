@@ -287,7 +287,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     if (this.actor.type == "character") {
       const actorData = {
         "system.attributes.pr.trucdemauviette": flagTrucDeMauviette,
-        "system.attributes.att_arme_jet.value": flagTirerCorrectement * (-5)
+        "system.attributes.att_arme_jet.value": flagTirerCorrectement * (-4)
       };
       this.actor.update(actorData);
     }

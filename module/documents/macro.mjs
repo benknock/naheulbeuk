@@ -108,7 +108,7 @@ export class Macros {
     if (lancerdegat == "") { lancerdegat = 0 }
 
     //pour arme à poudre (+1 si tirer correctement, pas de bonus sinon)
-    let flagTirerCorrectement = 5
+    let flagTirerCorrectement = 4
     for (let actoritem of actor.items) {
       if (actoritem.name == "TIRER CORRECTEMENT") {
         flagTirerCorrectement = 1

@@ -174,7 +174,10 @@
         "hideperso": false,
         "hidebourse": false,
         "hidenosac": false,
-        "hidesac":false
+        "hidesac":false,
+        "hidesachs":false,
+        "hideautrehs":false,
+        "hidearmehs":false
       },
       "abilities": {
         "cou": {

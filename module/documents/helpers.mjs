@@ -264,6 +264,9 @@ export const registerHandlebarsHelpers = function() {
         if (arme_armure_pas_equipe && value=="richesses" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Richesses") {compteur++}
         if (arme_armure_pas_equipe && value=="perso" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Objets personnels") {compteur++}
         if (arme_armure_pas_equipe && value=="montures" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Montures") {compteur++}
+        if (arme_armure_pas_equipe && value=="armes-hs" && itemActor.system.stockage=="nosac" && itemActor.type=="arme" && itemActor.system.arme_autre==false) {compteur++}
+        if (arme_armure_pas_equipe && value=="sacs-hs" && itemActor.system.stockage=="nosac" && itemActor.type=="sac") {compteur++}
+        if (arme_armure_pas_equipe && value=="autres-hs" && itemActor.system.stockage=="nosac" && itemActor.type!="sac" && (itemActor.type!="arme" || itemActor.system.arme_autre==true)) {compteur++}
       }
     }
     return compteur

@@ -431,6 +431,27 @@ export class NaheulbeukActorSheet extends ActorSheet {
       };
       this.actor.update(actorData);
     });
+    //Hide catégorie d'inventaire
+    html.find('.hidesachs').click(ev => {
+      const actorData = {
+        "system.attributes.hidesachs": !this.actor.system.attributes.hidesachs
+      };
+      this.actor.update(actorData);
+    });
+    //Hide catégorie d'inventaire
+    html.find('.hidearmehs').click(ev => {
+      const actorData = {
+        "system.attributes.hidearmehs": !this.actor.system.attributes.hidearmehs
+      };
+      this.actor.update(actorData);
+    });
+    //Hide catégorie d'inventaire
+    html.find('.hideautrehs').click(ev => {
+      const actorData = {
+        "system.attributes.hideautrehs": !this.actor.system.attributes.hideautrehs
+      };
+      this.actor.update(actorData);
+    });
 
     //Afficher ou masquer les niveau de sorts
     html.find('.hideSort').click(ev => {

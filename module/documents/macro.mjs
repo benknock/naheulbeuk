@@ -2090,8 +2090,8 @@ export class Macros {
       let flagtest = false
       let compteurtest = 0
       while (!flagtest) {
-        xpmax = parseInt(levelCust[1]) + compteurtest
-        xpmin = parseInt(levelCust[0]) - compteurtest
+        xpmax = parseFloat(levelCust[1]) + compteurtest
+        xpmin = parseFloat(levelCust[0]) - compteurtest
         for (let monstre of monstres) {
           flag1 = 0
           flag2 = 0

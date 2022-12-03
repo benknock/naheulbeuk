@@ -1181,10 +1181,10 @@ export class NaheulbeukActorSheet extends ActorSheet {
           //Maj sac et bourse charge max
           if (item.type=="sac"){
             if (item.system.type=="sac à dos") {
-              UpdatedData.system.attributes.sac.max = UpdatedData.system.attributes.sac.max + parseInt(item.system.place)
+              UpdatedData.system.attributes.sac.max = UpdatedData.system.attributes.sac.max + parseFloat(item.system.place)
             }
             if (item.system.type=="bourse") {
-              UpdatedData.system.attributes.bourse.max = UpdatedData.system.attributes.bourse.max + parseInt(item.system.place)
+              UpdatedData.system.attributes.bourse.max = UpdatedData.system.attributes.bourse.max + parseFloat(item.system.place)
             }
           }
 

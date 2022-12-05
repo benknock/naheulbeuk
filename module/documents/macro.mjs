@@ -24,10 +24,10 @@ export class Macros {
   //----------------Fonctions utilisées de manière globale------------------------------------------------ 
 
   //Global : récupérer le token cible
-  static getSpeakersTarget = function () {
+  static getSpeakersTarget = function (option) {
     let targets = ([...game.user.targets].length > 0) ? [...game.user.targets] : canvas.tokens.children.filter(t => t._controlled);
     if (targets.length == 0 || targets.length > 1) {
-      ui.notifications.error("Choisissez un token cible (unique)");
+      if (option!="no-notif"){ui.notifications.error("Choisissez un token cible (unique)");}
       return null;
     }
     return targets[0].actor;
@@ -191,16 +191,17 @@ export class Macros {
       diff = dice;
       dice = "d20";
     }
-    if (dice.substr(0, 6) == "cible:" || diff.substr(0, 6) == "cible:") {
-      if (game.naheulbeuk.macros.getSpeakersTarget() == null) { return }
-    }
     if (dice.substr(0, 6) == "cible:") {
-      dice = game.naheulbeuk.macros.replaceAttr(dice, game.naheulbeuk.macros.getSpeakersTarget());
+      if (game.naheulbeuk.macros.getSpeakersTarget("no-notif") != null) {
+        dice = game.naheulbeuk.macros.replaceAttr(dice, game.naheulbeuk.macros.getSpeakersTarget());
+      }
     } else {
       dice = game.naheulbeuk.macros.replaceAttr(dice, actor);
     }
     if (diff.substr(0, 6) == "cible:") {
-      diff = game.naheulbeuk.macros.replaceAttr(diff, game.naheulbeuk.macros.getSpeakersTarget());
+      if (game.naheulbeuk.macros.getSpeakersTarget("no-notif") != null) {
+        diff = game.naheulbeuk.macros.replaceAttr(diff, game.naheulbeuk.macros.getSpeakersTarget());
+      }
     } else {
       diff = game.naheulbeuk.macros.replaceAttr(diff, actor);
     }
@@ -398,10 +399,9 @@ export class Macros {
     let i = 0
     for (let change_entry of diff_dice_array) {
       if (diff_dice_array[i].substr(0, 6) == "cible:") {
-        if (game.naheulbeuk.macros.getSpeakersTarget() == null) { return }
-      }
-      if (diff_dice_array[i].substr(0, 6) == "cible:") {
-        diff_dice_array[i] = game.naheulbeuk.macros.replaceAttr(diff_dice_array[i], game.naheulbeuk.macros.getSpeakersTarget());
+        if (game.naheulbeuk.macros.getSpeakersTarget("no-notif") != null) {
+          diff_dice_array[i] = game.naheulbeuk.macros.replaceAttr(diff_dice_array[i], game.naheulbeuk.macros.getSpeakersTarget());
+        }
       } else {
         diff_dice_array[i] = game.naheulbeuk.macros.replaceAttr(diff_dice_array[i], actor);
       }

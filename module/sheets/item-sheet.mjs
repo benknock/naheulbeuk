@@ -103,14 +103,15 @@ export class NaheulbeukItemSheet extends ItemSheet {
       }
       const index = items.indexOf(itemFind) //on sauve son index
       if (index > -1) {items.splice(index,1)} // on retire l'objet
-      this.object.update({"system.items":items}) // on met à jour le conteneur
-      let new_Item = duplicate(itemFind)
-      new_Item.system.conteneur={}
-      if (this.object.parent!=null){
-        Item.create(new_Item, { parent: this.object.parent });
-      } else {
-        Item.create(new_Item);
-      }
+      this.object.update({"system.items":items}).then(ev2=>{ // on met à jour le conteneur
+        let new_Item = duplicate(itemFind)
+        new_Item.system.conteneur={}
+        if (this.object.parent!=null){
+          Item.create(new_Item, { parent: this.object.parent });
+        } else {
+          Item.create(new_Item);
+        }
+      })
       
     });
 
@@ -304,10 +305,11 @@ export class NaheulbeukItemSheet extends ItemSheet {
             let itemsFinal = this.object.system.items
             itemsFinal.push(itemData)
             //on update la liste d'objet du conteneur
-            this.object.update({"system.items":itemsFinal})
-            if (data.uuid.substr(0,10)!="Compendium"){
-              item.delete()
-            }
+            this.object.update({"system.items":itemsFinal}).then(ev2=>{
+              if (data.uuid.substr(0,10)!="Compendium"){
+                item.delete()
+              }
+            })
           }
         }
       }
@@ -318,7 +320,6 @@ export class NaheulbeukItemSheet extends ItemSheet {
   //permet la mise à jour d'un objet contenu par un conteneur
   async _onSubmit(event, {updateData=null, preventClose=false, preventRender=false}={}) {
     event.preventDefault();
-  
     // Prevent double submission
     const states = this.constructor.RENDER_STATES;
     if ( (this._state === states.NONE) || !this.isEditable || this._submitting ) return false;

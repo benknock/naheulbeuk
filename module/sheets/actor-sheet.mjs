@@ -625,9 +625,38 @@ export class NaheulbeukActorSheet extends ActorSheet {
         await item.update({"system.stockage":"sac"})
       }
     }
+    
+    //Initialisation de la variable permettant de savoir si on peut équiper l'objet
+    let flag_equipement_possible = true
+
+    //Gestion PR max (ignoré si shift utilisé lors de l'équipement)
+    if (ev.shiftKey) {
+
+    } else {
+      if (item.system.equipe==false) {
+        //Test des objets de type "bouclier" équipés 
+        var prbouclier = 0;
+        this.actor.items._source.forEach(element => {
+          if (element.type == "arme" && element.system.equipe) {
+            if (element.system.prbouclier) { prbouclier = prbouclier + element.system.pr };
+          }
+        })
+        //Définition des différentes protection
+        //Pr totale sans truc de mauviette et les protections qui ne comptent pas dans l'encombrement
+        let pr_totale = this.actor.system.attributes.pr.value + this.actor.system.attributes.pr.bonus + this.actor.system.attributes.pr.bonus_man
+        let pr_ss_bouclier = pr_totale - prbouclier
+        let pr_max = this.actor.system.attributes.pr.max
+        //Test du nouvel objet à équiper
+        if (item.type == "armure") {
+          if ((pr_ss_bouclier + item.system.pr) > pr_max) {
+            flag_equipement_possible = false
+            ui.notifications.error("Ce n'est pas possible d'équiper cet objet, la protection max serait dépassée.");
+          }
+        }
+      }
+    }
 
     //Test des objets de type "arme" équipés
-    let flag_equipement_possible = true
     if (item.system.equipe == false && item.type == "arme" && actor.type == "character") {
       //On regarde ce qui est équipé
       let nb_arme_cac=0
@@ -742,7 +771,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         if (element.system.prjambes) { prjambes = prjambes + element.system.pr };
         if (element.system.prpieds) { prpieds = prpieds + element.system.pr };
       }
-      if (element.type == "arme" && element.system.equipe && element.system.enmain) {
+      if (element.type == "arme" && element.system.equipe) {
         if (element.system.prbouclier) { prbouclier = prbouclier + element.system.pr };
       }
     })
@@ -755,7 +784,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         if (element.system.prjambes) { prjambes = prjambes + "*" };
         if (element.system.prpieds) { prpieds = prpieds + "*" };
       }
-      if (element.type == "arme" && element.system.equipe && element.system.enmain) {
+      if (element.type == "arme" && element.system.equipe) {
         if (element.system.prbouclier) { prbouclier = prbouclier + "*" };
       }
     })

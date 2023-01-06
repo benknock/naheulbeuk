@@ -44,7 +44,8 @@
           "bonus": 0,
           "bonus_man": 0,
           "trucdemauviette": 0,
-          "nb_pr_ss_encombrement": 0
+          "nb_pr_ss_encombrement": 0,
+          "max": 0
         },
         "prm": {
           "value": 0,
@@ -241,7 +242,8 @@
           "bonus": 0,
           "trucdemauviette": 0,
           "nb_pr_ss_encombrement": 0,
-          "bonus_man": 0
+          "bonus_man": 0,
+          "max": 0
         },
         "prm": {
           "value": 0,

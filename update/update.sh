@@ -33,7 +33,7 @@ if [ -d ../updateNaheulbeuk ]; then
 fi
 mkdir ../updateNaheulbeuk
 cd ../updateNaheulbeuk
-mv ../naheulbeuk/.git .
+mv ../naheulbeuk/.git/ .
 cp ../naheulbeuk/system.json ./system.json
 zip -r system.zip ../naheulbeuk/
 mv .git ../naheulbeuk/

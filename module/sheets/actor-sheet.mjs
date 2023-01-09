@@ -647,8 +647,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
         let pr_ss_bouclier = pr_totale - prbouclier
         let pr_max = this.actor.system.attributes.pr.max
         //Test du nouvel objet à équiper
-        if (item.type == "armure") {
-          if ((pr_ss_bouclier + item.system.pr) > pr_max) {
+        if (item.type == "armure" && pr_max != "" && pr_max != "-") {
+          if ((pr_ss_bouclier + item.system.pr) > parseFloat(pr_max)) {
             flag_equipement_possible = false
             ui.notifications.error("Ce n'est pas possible d'équiper cet objet, la protection max serait dépassée.");
           }

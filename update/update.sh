@@ -35,5 +35,8 @@ mkdir ../updateNaheulbeuk
 cd ../updateNaheulbeuk
 mv ../naheulbeuk/.git/ .
 cp ../naheulbeuk/system.json ./system.json
-zip -r system.zip ../naheulbeuk/
+cd ..
+zip -r system.zip naheulbeuk/
+cd updateNaheulbeuk
+mv ../system.zip .
 mv .git ../naheulbeuk/

@@ -40,3 +40,4 @@ zip -r system.zip naheulbeuk/
 cd updateNaheulbeuk
 mv ../system.zip .
 mv .git ../naheulbeuk/
+echo "done !"

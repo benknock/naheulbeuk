@@ -106,7 +106,13 @@ export class NaheulbeukActorSheet extends ActorSheet {
           "system.attributes.rm.value": this._rm(),
           "system.attributes.esq.value": this._esq(),
           "system.attributes.mphy.value": this._mphy(),
-          "system.attributes.mpsy.value": this._mpsy()
+          "system.attributes.mpsy.value": this._mpsy(),
+          "system.attributes.init.value":actor.system.abilities.cou.value+actor.system.abilities.cou.bonus+actor.system.abilities.cou.bonus_man
+        };
+        await actor.update(actorData);
+      } else {
+        const actorData = {
+          "system.attributes.init.value":actor.system.abilities.cou.value+actor.system.abilities.cou.bonus+actor.system.abilities.cou.bonus_man
         };
         await actor.update(actorData);
       }

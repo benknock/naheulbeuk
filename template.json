@@ -178,7 +178,12 @@
         "hidesac":false,
         "hidesachs":false,
         "hideautrehs":false,
-        "hidearmehs":false
+        "hidearmehs":false,
+        "init": {
+          "value": 0,
+          "bonus":0,
+          "bonus_man": 0
+        }
       },
       "abilities": {
         "cou": {
@@ -271,6 +276,11 @@
         "mpsy": {
           "value": 0,
           "bonus": 0,
+          "bonus_man": 0
+        },
+        "init": {
+          "value": 0,
+          "bonus":0,
           "bonus_man": 0
         }
       },

@@ -110,6 +110,15 @@
                 <div style="border-bottom: 1px solid #a7a69e; margin-top: 9px; margin-bottom: 9px;"></div>
                 {{/if}}
               {{/each}}
+              <!--Affichage initiative-->
+              <div class="ability flexrow flex-group-center">
+                <label
+                  class="resource-label flexlarge align-left" style="flex:1.7">Initiative&nbsp;:&nbsp;{{math2 system.attributes.init.bonus "+" system.attributes.init.bonus_man "+" system.attributes.init.value}}</label>
+                <label class="resource-label flexlarge align-left" style="flex:0.8"></label>
+                <input readonly class="inputCarac" type="text" name="system.attributes.init.value" value='{{system.attributes.init.value}}' data-dtype="Number" style="flex:0.5;"/>
+                <label class="resource-label" style="flex:0.1"></label>
+                <input class="inputCarac" type="text" name="system.attributes.init.bonus_man" value="{{system.attributes.init.bonus_man}}" data-dtype="Number" style="flex:0.5"/>
+              </div>
             {{else}}
             <!-- Sinon on affiche juste le courage et la force -->
               {{#each system.abilities as |ability key|}}

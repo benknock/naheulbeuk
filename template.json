@@ -182,7 +182,9 @@
         "init": {
           "value": 0,
           "bonus":0,
-          "bonus_man": 0
+          "bonus_man": 0,
+          "noises": 0,
+          "total":0
         }
       },
       "abilities": {
@@ -281,7 +283,9 @@
         "init": {
           "value": 0,
           "bonus":0,
-          "bonus_man": 0
+          "bonus_man": 0,
+          "noises": 0,
+          "total":0
         }
       },
       "abilities": {

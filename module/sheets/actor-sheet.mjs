@@ -107,12 +107,14 @@ export class NaheulbeukActorSheet extends ActorSheet {
           "system.attributes.esq.value": this._esq(),
           "system.attributes.mphy.value": this._mphy(),
           "system.attributes.mpsy.value": this._mpsy(),
-          "system.attributes.init.value":actor.system.abilities.cou.value+actor.system.abilities.cou.bonus+actor.system.abilities.cou.bonus_man
+          "system.attributes.init.value": actor.system.abilities.cou.value+actor.system.abilities.cou.bonus+actor.system.abilities.cou.bonus_man,
+          "system.attributes.init.total": actor.system.attributes.init.noises + actor.system.attributes.init.bonus_man + actor.system.attributes.init.bonus + actor.system.abilities.cou.value+actor.system.abilities.cou.bonus+actor.system.abilities.cou.bonus_man
         };
         await actor.update(actorData);
       } else {
         const actorData = {
-          "system.attributes.init.value":actor.system.abilities.cou.value+actor.system.abilities.cou.bonus+actor.system.abilities.cou.bonus_man
+          "system.attributes.init.value":actor.system.abilities.cou.value+actor.system.abilities.cou.bonus+actor.system.abilities.cou.bonus_man,
+          "system.attributes.init.total": actor.system.attributes.init.noises + actor.system.attributes.init.bonus_man + actor.system.attributes.init.bonus + actor.system.abilities.cou.value+actor.system.abilities.cou.bonus+actor.system.abilities.cou.bonus_man
         };
         await actor.update(actorData);
       }
@@ -163,6 +165,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     var compteurOrigine = 0; // pour limiter à 1
     var flagTrucDeMauviette = 0; //pour détecter si on a la compétence
     var flagTirerCorrectement = 1; //pour détecter si on a la compétence
+    var flagChercherNoises = 0; //pour détecter si on a la compétence
     var attaques = []; // attaque PNJ
     var traits = []; //traits PNJ
     var regions = []; //region PNJ
@@ -215,6 +218,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
         //PCH maj actor TRUC DE MAUVIETTE
         if (i.name == "TRUC DE MAUVIETTE") { flagTrucDeMauviette = 1 }
         if (i.name == "TIRER CORRECTEMENT") { flagTirerCorrectement = 0 }
+        if (i.name == "CHERCHER DES NOISES") { flagChercherNoises = 1000 }
       }
       // Append to metier.
       else if (i.type === 'metier') {
@@ -289,11 +293,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     }
 
-    //update PR truc de mauviette et bonus tirer correctement pour les PJ
+    //update PR truc de mauviette et bonus tirer  correctement et chercher des noises pour les PJ
     if (this.actor.type == "character") {
       const actorData = {
         "system.attributes.pr.trucdemauviette": flagTrucDeMauviette,
-        "system.attributes.att_arme_jet.value": flagTirerCorrectement * (-4)
+        "system.attributes.att_arme_jet.value": flagTirerCorrectement * (-4),
+        "system.attributes.init.noises": flagChercherNoises
       };
       this.actor.update(actorData);
     }

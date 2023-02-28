@@ -71,6 +71,27 @@ Hooks.once('init', async function () {
   return preloadHandlebarsTemplates();
 });
 
+//Hook ready utilisé pour faire des patchs suite à des MAJ qui cassent le système
+Hooks.once('ready', async function () {
+  //Patch nouveau system d'initiative 10.0.9, a retirer dans quelques version
+  for (let actor of game.actors){
+    //Si la valeur d'initiative est différente de son équivalent en courage ou que le courage vaut 0
+    if (actor.system.attributes.init.value!=actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man || actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man == 0){
+      const actorData = {
+        "system.attributes.init.value": actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man,
+        "system.attributes.init.total": actor.system.attributes.init.noises + actor.system.attributes.init.bonus_man + actor.system.attributes.init.bonus + actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man
+      };
+      await actor.update(actorData);
+
+    } else {return}
+  }
+  CONFIG.Combat.initiative = {
+    formula: "@attributes.init.total",
+    decimals: 0
+  };
+  //FIN -- Patch nouveau system d'initiative
+});
+
 /**
  * Create a Macro from an Item drop.
  * Get an existing item macro if one exists, otherwise create a new one.

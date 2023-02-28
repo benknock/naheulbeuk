@@ -56,8 +56,10 @@
     </div>
   </header>
   
-  {{#if (equals system.cacher false)}}
   <div class="paddingcustom" style="margin-bottom: 10px;">
+    {{#if (equals system.cacher true)}}
+    <br/>
+    {{/if}}
     <label class="resource-label">Type :&nbsp;&nbsp;</label>
     <label>
       Arme contact
@@ -126,8 +128,7 @@
     </label>
   </div>
 
-
-
+  {{#if (equals system.cacher false)}}
   <div class="resource flexrow paddingcustom" style="align-items: center; margin-bottom: 10px">
     <label class="resource-label" style="flex:0.42;">Origine/métier compatibles :</label>
     <input type="text" name="system.limitporteur"

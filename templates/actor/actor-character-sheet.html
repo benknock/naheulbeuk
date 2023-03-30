@@ -264,7 +264,7 @@
                 {{else}}
                 <input class="item-equipe" type="checkbox" name="item.system.equipe" />
                 {{/if}}
-                {{item.name}}
+                <span style="vertical-align: 3px;">{{item.name}}</span>
                 {{#if (equalsor item.system.formula "" item.system.formula "-")}}
                 {{#if (equals item.system.epreuvecustom true)}}
                 <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
@@ -272,7 +272,7 @@
                   data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
                   data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
                   data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
-                  data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
+                  data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
                 {{/if}}
                 {{else}}
                 {{#if (equals item.system.epreuvecustom true)}}
@@ -281,12 +281,12 @@
                   data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
                   data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
                   data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
-                  data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}"></i>
+                  data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
                 {{else}}
                 <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
-                  data-diff=""></i>
+                  data-diff="" style="font-size: 0.8em;"></i>
                 &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
-                  data-diff=""></i>
+                  data-diff="" style="font-size: 0.8em;"></i>
                 {{/if}}
                 {{/if}}
               </label>

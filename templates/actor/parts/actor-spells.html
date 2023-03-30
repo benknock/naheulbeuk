@@ -68,6 +68,9 @@
   {{#if (equals system.attributes.pa-khornettoh.value true)}}
   <a data-tab="pa-khornettoh">Paladin de Khornettoh</a>
   {{/if}}
+  {{#if (equals system.attributes.chamane.value true)}}
+  <a data-tab="chamane">Chamane</a>
+  {{/if}}
 </nav>
 
 {{!-- Sheet Body --}}
@@ -78,7 +81,7 @@
     <h2><label class="resource-label">Écoles de magie</label></h2>
     <div class="flexrow flex-center">
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Généraliste</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Généraliste</span></div>
         {{#if (equals system.attributes.generaliste.value true)}}
         <input type="checkbox" name="system.attributes.generaliste.value" checked />
         {{else}}
@@ -104,7 +107,7 @@
     </div>
     <div class="flexrow flex">
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Feu</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Feu</span></div>
         {{#if (equals system.attributes.feu.value true)}}
         <input type="checkbox" name="system.attributes.feu.value" checked />
         {{else}}
@@ -130,7 +133,7 @@
     </div>
     <div class="flexrow flex">
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Invocation</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Invocation</span></div>
         {{#if (equals system.attributes.invocation.value true)}}
         <input type="checkbox" name="system.attributes.invocation.value" checked />
         {{else}}
@@ -156,7 +159,7 @@
     </div>
     <div class="flexrow flex">
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Eau/glace</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Eau/glace</span></div>
         {{#if (equals system.attributes.eau.value true)}}
         <input type="checkbox" name="system.attributes.eau.value" checked />
         {{else}}
@@ -177,7 +180,7 @@
     <h2 style="margin-top: 20px;"><label class="resource-label">Écoles de prêtrise</label></h2>
     <div class="flexrow flex-center">
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Niourgl</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Niourgl</span></div>
         {{#if (equals system.attributes.pr-niourgl.value true)}}
         <input type="checkbox" name="system.attributes.pr-niourgl.value" checked />
         {{else}}
@@ -185,7 +188,7 @@
         {{/if}}
       </div>
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Dlul</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Dlul</span></div>
         {{#if (equals system.attributes.pr-dlul.value true)}}
         <input type="checkbox" name="system.attributes.pr-dlul.value" checked />
         {{else}}
@@ -193,7 +196,7 @@
         {{/if}}
       </div>
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Youclidh</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Youclidh</span></div>
         {{#if (equals system.attributes.pr-youclidh.value true)}}
         <input type="checkbox" name="system.attributes.pr-youclidh.value" checked />
         {{else}}
@@ -203,7 +206,7 @@
     </div>
     <div class="flexrow flex-center">
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Slanoush</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Slanoush</span></div>
         {{#if (equals system.attributes.pr-slanoush.value true)}}
         <input type="checkbox" name="system.attributes.pr-slanoush.value" checked />
         {{else}}
@@ -211,7 +214,7 @@
         {{/if}}
       </div>
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Adathie</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Adathie</span></div>
         {{#if (equals system.attributes.pr-adathie.value true)}}
         <input type="checkbox" name="system.attributes.pr-adathie.value" checked />
         {{else}}
@@ -224,7 +227,7 @@
     <h2 style="margin-top: 20px;"><label class="resource-label">Écoles de paladin</label></h2>
     <div class="flexrow flex-center">
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Niourgl</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Niourgl</span></div>
         {{#if (equals system.attributes.pa-niourgl.value true)}}
         <input type="checkbox" name="system.attributes.pa-niourgl.value" checked />
         {{else}}
@@ -232,7 +235,7 @@
         {{/if}}
       </div>
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Slanoush</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Slanoush</span></div>
         {{#if (equals system.attributes.pa-slanoush.value true)}}
         <input type="checkbox" name="system.attributes.pa-slanoush.value" checked />
         {{else}}
@@ -240,7 +243,7 @@
         {{/if}}
       </div>
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Dlul</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Dlul</span></div>
         {{#if (equals system.attributes.pa-dlul.value true)}}
         <input type="checkbox" name="system.attributes.pa-dlul.value" checked />
         {{else}}
@@ -250,7 +253,7 @@
     </div>
     <div class="flexrow flex-center">
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Braav</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Braav</span></div>
         {{#if (equals system.attributes.pa-braav.value true)}}
         <input type="checkbox" name="system.attributes.pa-braav.value" checked />
         {{else}}
@@ -258,7 +261,7 @@
         {{/if}}
       </div>
       <div class="flexrow" style="align-items: center;">
-        <div style="flex:0.5;font-size: 17px;"><span>Khornettoh</span></div>
+        <div style="flex:0.489;font-size: 17px;"><span>Khornettoh</span></div>
         {{#if (equals system.attributes.pa-khornettoh.value true)}}
         <input type="checkbox" name="system.attributes.pa-khornettoh.value" checked />
         {{else}}
@@ -267,6 +270,13 @@
       </div>
       <div></div>
     </div>
+    <h2 style="margin-top: 20px;"><label class="resource-label">Chamane&nbsp;&nbsp;&nbsp;</label>
+      {{#if (equals system.attributes.chamane.value true)}}
+      <input type="checkbox" name="system.attributes.chamane.value" checked />
+      {{else}}
+      <input type="checkbox" name="system.attributes.chamane.value" />
+      {{/if}}
+    </h2>
   </div>
 
   <!-- Onglets pour chaque école de magie-->
@@ -1919,6 +1929,88 @@
       {{#each spells as |item id|}}
       {{#if (equals item.system.type "pa-khornettoh")}}
       <li class="item flexrow" data-item-id="{{item._id}}">
+        <div style="margin-bottom: 5px;">
+          <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
+          <a class="item-control item-edit" title="Edit Item" style="font-size: 0.8em;"><i class="fas fa-edit" style="font-size: 0.8em;"></i></a>
+          <a class="item-control item-delete" title="Delete Item" style="font-size: 0.8em;"><i class="fas fa-trash" style="font-size: 0.8em;"></i></a>
+        </div>
+      </li>
+      <li class="item flexrow" data-item-id="{{item._id}}">
+        <div class="item-control">
+          {{#if (equalsor item.system.epreuve "" item.system.epreuve "-")}}
+          {{#if (equals item.system.epreuvecustom true)}}
+          Épreuve :&nbsp;<i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
+            data-name1="{{item.system.name1}}" data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}"
+            data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
+            data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
+            data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
+            data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
+          {{else}}
+          Épreuve : -
+          {{/if}}
+          {{else}}
+          {{#if (equals item.system.epreuvecustom true)}}
+          Épreuve :&nbsp;
+          <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}" data-name1="{{item.system.name1}}"
+            data-diff1="{{item.system.epreuve1}}" data-dice2="{{item.system.jet2}}" data-name2="{{item.system.name2}}"
+            data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}" data-name3="{{item.system.name3}}"
+            data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}" data-name4="{{item.system.name4}}"
+            data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}" data-name5="{{item.system.name5}}"
+            data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
+          {{else}}
+          Épreuve : {{replaceAttr item.system.epreuve}}
+          <i class="fas fa-dice-d20 rollable2" data-dice="d20" data-name="Épreuve - {{item.name}}"
+            data-diff="{{item.system.epreuve}}" style="font-size: 0.8em;"></i>
+          <i class="fas fa-dice-d6 rollable3" data-dice="d20" data-name="Épreuve - {{item.name}}"
+            data-diff="{{item.system.epreuve}}" style="font-size: 0.8em;"></i>
+          {{/if}}
+          {{/if}}
+        </div>
+        <div>
+          {{#if (equalsor item.system.degat "" item.system.degat "-")}}
+          {{#if (equals item.system.epreuvecustom true)}}
+          Dégâts : -
+          {{else}}
+          Dégâts : -
+          {{/if}}
+          {{else}}
+          {{#if (equals item.system.epreuvecustom true)}}
+          Dégâts : -
+          {{else}}
+          Dégâts : {{replaceAttr item.system.degat}}
+          <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.degat}}" data-name="Dégat - {{item.name}}"
+            data-diff="" style="font-size: 0.8em;"></i>
+          <i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.degat}}" data-name="Dégat - {{item.name}}"
+            data-diff="" style="font-size: 0.8em;"></i>
+          {{/if}}
+          {{/if}}
+        </div>
+        <div>Incantation : {{item.system.incantation}}</div>
+      </li>
+      <li class="item flexrow" data-item-id="{{item._id}}">
+        <div>Durée : {{item.system.duree}}</div>
+        <div>Portée : {{item.system.portee}}</div>
+        <div>Coût : {{item.system.cout}}</div>
+      </li>
+      <li class="item flexrow" data-item-id="{{item._id}}">
+        <div>Effet : {{item.system.effet}}</div>
+      </li>
+      <hr>
+      {{/if}}
+      {{/each}}
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="tab features" data-group="primary-spell" data-tab="chamane">
+    {{#each spells as |spells spellLevel|}}
+    <li class="flexrow items-header" style="margin-bottom: 7px;">
+      <div class="item-name hideSort" data-lvl="{{spellLevel}}" data-tab="chamane">Niveau {{spellLevel}}</div>
+    </li>
+    <div id="hideSort{{spellLevel}}chamane" style="display: block;">
+      {{#each spells as |item id|}}
+      {{#if (equals item.system.type "chamane")}}
+      <li class="item flexrow " data-item-id="{{item._id}}">
         <div style="margin-bottom: 5px;">
           <strong><u>{{item.name}}</u></strong>&nbsp;&nbsp;
           <a class="item-control item-edit" title="Edit Item" style="font-size: 0.8em;"><i class="fas fa-edit" style="font-size: 0.8em;"></i></a>

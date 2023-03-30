@@ -2,7 +2,7 @@
   "id": "naheulbeuk",
   "title": "Naheulbeuk",
   "description": "The Naheulbeuk system for FoundryVTT!",
-  "version": "10.0.9",
+  "version": "10.0.10",
   "compatibility": {
     "minimum": "10",
     "verified": "10.291"
@@ -393,6 +393,14 @@
       "tag": "item"
     },
     {
+      "name": "sorts-chamane",
+      "label": "Magie : chamane",
+      "system": "naheulbeuk",
+      "path": "./packs/sorts-chamane.db",
+      "type": "Item",
+      "tag": "item"
+    },
+    {
       "name": "sorts-combat",
       "label": "Magie : combat",
       "system": "naheulbeuk",
@@ -550,6 +558,6 @@
   "secondaryTokenAttribute": "power",
   "url": "https://github.com/Dipess/naheulbeuk",
   "manifest": "https://github.com/Dipess/naheulbeuk/releases/latest/download/system.json",
-  "download": "https://github.com/Dipess/naheulbeuk/releases/download/10.0.9/system.zip",
+  "download": "https://github.com/Dipess/naheulbeuk/releases/download/10.0.10/system.zip",
   "license": "LICENSE.txt"
 }

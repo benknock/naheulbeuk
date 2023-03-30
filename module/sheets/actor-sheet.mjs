@@ -326,7 +326,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     context.traits = traits;
     context.regions = regions;
     context.apes = apes;
-    context.categoriemagique=["generaliste","combat","feu","metamorphose","thermodynamique","invocation","necromancie","eau","terre","air","tzinntch","pr-niourgl","pr-dlul","pr-youclidh","pr-slanoush","pr-adathie","pa-niourgl","pa-slanoush","pa-dlul","pa-braav","pa-khornettoh"]
+    context.categoriemagique=["generaliste","combat","feu","metamorphose","thermodynamique","invocation","necromancie","eau","terre","air","tzinntch","pr-niourgl","pr-dlul","pr-youclidh","pr-slanoush","pr-adathie","pa-niourgl","pa-slanoush","pa-dlul","pa-braav","pa-khornettoh","chamane"]
   }
 
   /* -------------------------------------------- */

@@ -620,7 +620,9 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //on récupère l'objet
     const li = $(ev.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
-    //Maj  sac et bourse
+
+    //Maj  sac et bourse --> on les place dans la catégorie d'inventaire en dehors du sac lorsqu'on les équipe
+    //Si on déséquipe, on remet dans le sac
     if (item.system.equipe == false && item.type == "sac" && actor.type == "character") {
       if (item.type == "sac" && item.system.type == "sac à dos") {
         await item.update({"system.stockage":"nosac"})
@@ -642,7 +644,6 @@ export class NaheulbeukActorSheet extends ActorSheet {
 
     //Gestion PR max (ignoré si shift utilisé lors de l'équipement)
     if (ev.shiftKey) {
-
     } else {
       if (item.system.equipe==false) {
         //Test des objets de type "bouclier" équipés 
@@ -667,7 +668,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     }
 
-    //Test des objets de type "arme" équipés
+    //Gestion des objets de type "arme" 
+    //on compte ce qui est actuellement équipé
     if (item.system.equipe == false && item.type == "arme" && actor.type == "character") {
       //On regarde ce qui est équipé
       let nb_arme_cac=0
@@ -686,10 +688,8 @@ export class NaheulbeukActorSheet extends ActorSheet {
           }
         }
       }
-
-      //On compare avec l'objet à équiper
+      //On compare avec l'objet à équiper pour imposer des limitations (sauf si on appuie sur shift)
       if (ev.shiftKey) {
-
       } else {
         if (item.system.arme_cac == true) {
           if (nb_arme_cac>1) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà 2 armes équipées.");}
@@ -715,15 +715,19 @@ export class NaheulbeukActorSheet extends ActorSheet {
         }
       }
     }
-    
-    //si l'objet n'est pas équipé
-    if (flag_equipement_possible==true) {
-      if (item.system.equipe == false) {
+
+    //si l'objet n'est pas équipé et qu'on a pas désactivé l'équipement on équipe
+    if (item.system.equipe == false) {
+      if (flag_equipement_possible==true) {
         await item.update({ "system.equipe": true }); //update de l'objet pour le passer en équipé
-      } else { //même chose mais en retirant le bonus
-        await item.update({ "system.equipe": false}); //update de l'objet pour le passer en équipé
-      };
-    }
+      }
+    } else { //même chose mais en retirant le bonus
+      await item.update({ "system.equipe": false}); //update de l'objet pour le passer en équipé
+    };
+
+    //MAJ Affichage des états
+    await this._affichage_etat(actor)
+    
   }
 
   //Diminue la quantité d'un objet
@@ -759,6 +763,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
   }
 
   //Détail de répartition de l'armure
+  //ARMURE SET A REVOIR
   _armuredetail() {
     var compendiums = [];
     game.packs.forEach(elem => {
@@ -1170,7 +1175,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
     return value;
   }
 
-  //Mise à jour des statistiques au chargement de la page
+  //Mise à jour des statistiques du personnage au chargement de la page
   _update_stats() {
     let UpdatedData = {}
     UpdatedData.system = {}
@@ -1497,6 +1502,39 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     });
     d.render(true);
+  }
+
+  //Update Effets liés aux états
+  async _affichage_etat(actor) {
+    console.log("début")
+    let item
+    let effect 
+    for (item of actor.items) { //Pour tous les objets
+      if (item.type=="etat"){ //si c'est un état
+        console.log("état trouvé: " + item.name + " id:" +item.id)
+        let action=""
+        if (item.system.affichage==false || item.system.equipe==false) {action="desactive"} else {action="active"}
+        console.log(action)
+        let effectS
+        for (effect of actor.effects) {
+          if (effect.label==item.id){ 
+            effectS=effect
+            console.log("effet existant trouvé: "+effect.label)
+          }
+        }
+        console.log(effectS)
+        if (action=="active" && effectS==undefined){
+          await actor.createEmbeddedDocuments("ActiveEffect", [{
+            label: item.id,
+            icon: item.img,
+            origin: actor.uuid,
+            "duration.rounds": 10000
+          }]);
+        } else if (action=="desactive" && effectS!=undefined) {
+          effectS.delete()
+        }
+      }
+    }
   }
 
 }

@@ -611,7 +611,8 @@
       "jet4": "",
       "jet5": "",
       "epreuvecustom": false,
-      "custom": ""
+      "custom": "",
+      "affichage": false
     },
     "competence": {
       "templates": [

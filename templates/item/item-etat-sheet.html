@@ -2,8 +2,19 @@
   <header class="sheet-header">
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text"
-          value="{{item.name}}" placeholder="Name" /></h1>
+      <h1 class="charname" style="margin-bottom: 15px;">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+      </h1>
+      <label>
+        {{#if (equals system.affichage true)}}
+        <input type="checkbox" name="system.affichage" checked
+          style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
+        {{else}}
+        <input type="checkbox" name="system.affichage"
+          style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
+        {{/if}}
+        Affichage de l'état sur le token
+      </label>
     </div>
   </header>
 
@@ -22,8 +33,6 @@
       rollData prop. --}}
       {{editor enrichedDescription target="system.description" button=true editable=editable}}
     </div>
-
-
 
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">

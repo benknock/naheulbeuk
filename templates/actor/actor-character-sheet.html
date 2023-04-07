@@ -258,13 +258,13 @@
             <div class="resources grid grid-2col" style="column-gap: 50px;">
             {{#each etats as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}" style="border-bottom: 1px solid #c9c7b8;">
-              <label>
+              <label style="font-size: 0.8em;">
                 {{#if (equals item.system.equipe true)}}
                 <input class="item-equipe" type="checkbox" name="item.system.equipe" checked />
                 {{else}}
                 <input class="item-equipe" type="checkbox" name="item.system.equipe" />
                 {{/if}}
-                <span style="vertical-align: 3px;">{{item.name}}</span>
+                <span style="vertical-align: 5px;">{{item.name}}</span>
                 {{#if (equalsor item.system.formula "" item.system.formula "-")}}
                 {{#if (equals item.system.epreuvecustom true)}}
                 <i class="fa-duotone fa-dice-d6 rollable4 cliquable" data-dice1="{{item.system.jet1}}"
@@ -272,7 +272,7 @@
                   data-name2="{{item.system.name2}}" data-diff2="{{item.system.epreuve2}}" data-dice3="{{item.system.jet3}}"
                   data-name3="{{item.system.name3}}" data-diff3="{{item.system.epreuve3}}" data-dice4="{{item.system.jet4}}"
                   data-name4="{{item.system.name4}}" data-diff4="{{item.system.epreuve4}}" data-dice5="{{item.system.jet5}}"
-                  data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
+                  data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;vertical-align: 5px;"></i>
                 {{/if}}
                 {{else}}
                 {{#if (equals item.system.epreuvecustom true)}}
@@ -284,13 +284,13 @@
                   data-name5="{{item.system.name5}}" data-diff5="{{item.system.epreuve5}}" style="font-size: 0.8em;"></i>
                 {{else}}
                 <i class="fas fa-dice-d20 rollable2" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
-                  data-diff="" style="font-size: 0.8em;"></i>
+                  data-diff="" style="font-size: 0.8em;vertical-align: 5px;"></i>
                 &nbsp;<i class="fas fa-dice-d6 rollable3" data-dice="{{item.system.formula}}" data-name="{{item.name}}"
-                  data-diff="" style="font-size: 0.8em;"></i>
+                  data-diff="" style="font-size: 0.8em;vertical-align: 5px;"></i>
                 {{/if}}
                 {{/if}}
               </label>
-              <div class="item-controls" style="align-items: center;">
+              <div class="item-controls" style="align-items: center; flex:0.1">
                 <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                 <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
               </div>

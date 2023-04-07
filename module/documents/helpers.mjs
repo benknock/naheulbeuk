@@ -228,13 +228,13 @@ export const registerHandlebarsHelpers = function() {
 
   //Sauvegarder l'acteur dans une variable pour être lû dans les boucles for
   if (typeof actor_data != 'object') { var actor_data };
-  Handlebars.registerHelper("save_actor", function (actor) {
-    actor_data = actor
+  Handlebars.registerHelper("save_actor", function (value) {
+    actor_data = value
   });
 
   //Lire l'acteur sauvegarder dans la variable de save_actor
   Handlebars.registerHelper("read_actor", function (value) {
-    var actor_details = "actor_data.data.root.actor.system" + value
+    var actor_details = "actor_data.system" + value
     actor_details = eval(actor_details)
     if (actor_details.toString().substring(0, 1) != "-" && /^[0-9]/.test(actor_details)) { actor_details = "+" + actor_details }
     if (actor_details == "+0") {
@@ -247,7 +247,7 @@ export const registerHandlebarsHelpers = function() {
   //Renvoie le nombre d'items de l'acteur sauvegardé dans save_actor en fonction de la recherche (sac, bourse, divers, potions...)
   Handlebars.registerHelper("read_items_actor", function (value) {
     let compteur = 0
-    for (let itemActor of actor_data.data.root.actor.items){
+    for (let itemActor of actor_data.items){
       if (itemActor.system.stockage!=undefined){
         let arme_armure_pas_equipe = true
         if ((itemActor.type=="arme" || itemActor.type=="armure") && itemActor.system.equipe==true){arme_armure_pas_equipe=false}
@@ -263,7 +263,6 @@ export const registerHandlebarsHelpers = function() {
         if (arme_armure_pas_equipe && value=="nourritures" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Nourritures") {compteur++}
         if (arme_armure_pas_equipe && value=="richesses" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Richesses") {compteur++}
         if (arme_armure_pas_equipe && value=="perso" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Objets personnels") {compteur++}
-        if (arme_armure_pas_equipe && value=="montures" && itemActor.system.stockage=="sac" && itemActor.system.categorie=="Montures") {compteur++}
         if (arme_armure_pas_equipe && value=="armes-hs" && itemActor.system.stockage=="nosac" && itemActor.type=="arme" && itemActor.system.arme_autre==false) {compteur++}
         if (arme_armure_pas_equipe && value=="sacs-hs" && itemActor.system.stockage=="nosac" && itemActor.type=="sac") {compteur++}
         if (arme_armure_pas_equipe && value=="autres-hs" && itemActor.system.stockage=="nosac" && itemActor.type!="sac" && (itemActor.type!="arme" || itemActor.system.arme_autre==true)) {compteur++}
@@ -274,8 +273,8 @@ export const registerHandlebarsHelpers = function() {
 
   //Calculer le test d'ingéniosité non spécialiste
   Handlebars.registerHelper("ingeniositeMalus", function (difficulte,malus) {
-    var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus+actor_data.data.root.actor.system.abilities.ad.bonus_man
-    var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus+actor_data.data.root.actor.system.abilities.int.bonus_man
+    var actor_ad = actor_data.system.abilities.ad.value+actor_data.system.abilities.ad.bonus+actor_data.system.abilities.ad.bonus_man
+    var actor_int = actor_data.system.abilities.int.value+actor_data.system.abilities.int.bonus+actor_data.system.abilities.int.bonus_man
     var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
     var actor_diff = actor_ingeniosite - difficulte
     if (Math.sign(actor_diff)==-1){
@@ -291,8 +290,8 @@ export const registerHandlebarsHelpers = function() {
 
   //Calculer le test d'ingéniosité  spécialiste
   Handlebars.registerHelper("ingeniosite", function (difficulte) {
-    var actor_ad = actor_data.data.root.actor.system.abilities.ad.value+actor_data.data.root.actor.system.abilities.ad.bonus+actor_data.data.root.actor.system.abilities.ad.bonus_man
-    var actor_int = actor_data.data.root.actor.system.abilities.int.value+actor_data.data.root.actor.system.abilities.int.bonus+actor_data.data.root.actor.system.abilities.int.bonus_man
+    var actor_ad = actor_data.system.abilities.ad.value+actor_data.system.abilities.ad.bonus+actor_data.system.abilities.ad.bonus_man
+    var actor_int = actor_data.system.abilities.int.value+actor_data.system.abilities.int.bonus+actor_data.system.abilities.int.bonus_man
     var actor_ingeniosite = Math.ceil((parseInt(actor_ad)+parseInt(actor_int))/2)
     var actor_diff = actor_ingeniosite - difficulte
     actor_ingeniosite=actor_ingeniosite+actor_diff
@@ -320,7 +319,18 @@ export const registerHandlebarsHelpers = function() {
         txt = txt + val
       }
     }
-    let formula = game.naheulbeuk.macros.replaceAttr(txt, actor_data.data.root.actor)
+    let formula = game.naheulbeuk.macros.replaceAttr(txt, actor_data)
     return formula
   })
+
+  //Poids total PNJ
+  Handlebars.registerHelper("poids_pnj", function (actor) {
+    let poids = 0
+    for (let item of actor.items){
+      if (item.system.weight!=undefined){
+        poids = poids + item.system.weight*item.system.quantity
+      }
+    }
+    return poids;
+  });
 }

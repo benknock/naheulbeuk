@@ -217,6 +217,14 @@
       "tag": "item"
     },
     {
+      "name": "montures",
+      "label": "Montures",
+      "system": "naheulbeuk",
+      "path": "./packs/montures.db",
+      "type": "Actor",
+      "tag": "Actor"
+    },
+    {
       "name": "mutations",
       "label": "États : mutations",
       "system": "naheulbeuk",

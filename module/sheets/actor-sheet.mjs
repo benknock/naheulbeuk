@@ -1466,6 +1466,18 @@ export class NaheulbeukActorSheet extends ActorSheet {
         }
       }
     }
+    if (actor.system.abilities.att.bonus_ad!=0) {
+      name.push("Modificateur d'attaque lié à l'adresse")
+      let modif=""
+      if(actor.system.abilities.att.bonus_ad>0){modif="+"}
+      change.push(modif+actor.system.abilities.att.bonus_ad)
+    }
+    if (actor.system.abilities.prd.bonus_ad!=0) {
+      name.push("Modificateur de parade lié à l'adresse")
+      let modif=""
+      if(actor.system.abilities.prd.bonus_ad>0){modif="+"}
+      change.push(modif+actor.system.abilities.prd.bonus_ad)
+    }
     let i = 0
     let content = "<form>"
     for (let obj of name) {

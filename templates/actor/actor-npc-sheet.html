@@ -1,6 +1,6 @@
-{{save_actor}}
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
   {{!-- Sheet Header --}}
+  {{save_actor actor}}
   <!-- Header : nom, image, traits, régions... -->
   <header class="sheet-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
@@ -585,13 +585,18 @@
     {{!-- Owned Items Tab --}}
     <div class="tab items" data-group="primary" data-tab="items">
       <ol class="items-list">
+        <li class="item flexrow" data-item-id="{{item._id}}" style="padding-bottom: 8px;">
+          <div class="item-name">
+            <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;"><strong>Objets - poids total : {{poids_pnj actor}} kg</strong></h4>
+          </div>
+        </li>
         {{#each trucs as |item id|}}
         <li class="item flexrow" data-item-id="{{item._id}}">
           <div class="item-name">
             <div class="item-image">
               <img src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
             </div>
-            <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;</h4>
+            <h4 class="item-control flex-group-center" style="text-overflow: ellipsis;">{{item.name}}&nbsp;&nbsp;({{arrondiProche (math item.system.quantity "*" item.system.weight)}} kg)</h4>
           </div>
           <div class="item-controls">
             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>

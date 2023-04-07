@@ -2231,7 +2231,6 @@ export class Macros {
           <input type="checkbox" id="cat7" name="Nourritures"><label>Nourritures</label>
           <input type="checkbox" id="cat8" name="Richesses"><label>Richesses</label>
           <input type="checkbox" id="cat9" name="Objets personnels"><label>Objets personnels</label>
-          <input type="checkbox" id="cat10" name="Montures"><label>Montures</label>
         </div>
         <hr>
         <div style="align-items: center;">
@@ -2352,7 +2351,7 @@ export class Macros {
 
         //Recherche catégorie
         var catObj = []
-        for (let env = 1; env < 11; env++) {
+        for (let env = 1; env < 10; env++) {
           if (document.getElementById("cat" + env).checked) {
             catObj.push(document.getElementById("cat" + env).name)
           }

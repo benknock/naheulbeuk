@@ -1,4 +1,5 @@
 import { all_items_search } from "./items.gen.mjs";
+import { all_actors_search } from "./actors.gen.mjs";
 
 //Modifie les Dialog Box pour rester ouvertes après avoir appuyer sur un bouton
 export class CustomDialog extends Dialog {

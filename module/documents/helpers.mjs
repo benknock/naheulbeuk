@@ -314,7 +314,7 @@ export const registerHandlebarsHelpers = function() {
   Handlebars.registerHelper("replaceAttr", function (val1, val2, val3, val4){
     let txt = ""
     for (let val of [val1, val2, val3, val4]) {
-      if (typeof(val)=="string") {
+      if (typeof(val)=="string" || typeof(val)=="number") {
         if (txt != "") { txt = txt + "+"}
         txt = txt + val
       }
@@ -332,5 +332,19 @@ export const registerHandlebarsHelpers = function() {
       }
     }
     return poids;
+  });
+
+  //2 mains
+  Handlebars.registerHelper("deuxmains", function (value1, value2) {
+    if (value1 && value2){
+      for (let itemActor of actor_data.items){
+        if (itemActor.type=="origine" && itemActor.name=="Nain"){
+          return 1
+        }
+      }
+      return 0
+    } else {
+      return 0
+    }
   });
 }

@@ -677,10 +677,12 @@ export class NaheulbeukActorSheet extends ActorSheet {
       let nb_arme_distance=0
       let nb_munition=0
       let nb_arme_autre=0
+      let nb_arme_deuxmains=0
       for (let objFind of actor.items) {
         if (objFind.type=="arme") {
           if (objFind.system.equipe == true) {
             if (objFind.system.arme_cac == true) {nb_arme_cac++}
+            if (objFind.system.arme_cac == true && objFind.system.deuxmains == true){nb_arme_deuxmains++}
             if (objFind.system.prbouclier == true) {nb_bouclier++}
             if ((objFind.system.arme_distance == true || objFind.system.armefeu == true) && objFind.system.arme_cac == false) {nb_arme_distance++}
             if (objFind.system.nb_munition == true) {nb_munition++}
@@ -696,6 +698,9 @@ export class NaheulbeukActorSheet extends ActorSheet {
           else if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez une arme à distance équipée.");}
           else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
           else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+          else if (nb_arme_deuxmains>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme 2 mains équipée.");}
+          else if (item.system.deuxmains==true && nb_arme_cac>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
+          else if (item.system.deuxmains==true && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier.");}
         } else if (item.system.arme_distance == true || item.system.armefeu == true) {
           if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
           else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
@@ -707,6 +712,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
           else if (nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez une arme à distance équipée.");}
           else if (nb_arme_cac>0 && nb_bouclier>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme et un boulier équipés.");}
           else if (nb_arme_autre>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un objet spécial équipé.");}
+          else if (nb_arme_deuxmains>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme 2 mains équipée.");}
           else if (nb_bouclier>0 && nb_arme_cac==0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà un bouclier équipé.");}
         } else if (item.system.arme_autre == true) {
           if (nb_arme_cac>0 || nb_arme_distance>0) {flag_equipement_possible=false;ui.notifications.error("Vous avez déjà une arme équipée.");}
@@ -1506,23 +1512,18 @@ export class NaheulbeukActorSheet extends ActorSheet {
 
   //Update Effets liés aux états
   async _affichage_etat(actor) {
-    console.log("début")
     let item
     let effect 
     for (item of actor.items) { //Pour tous les objets
       if (item.type=="etat"){ //si c'est un état
-        console.log("état trouvé: " + item.name + " id:" +item.id)
         let action=""
         if (item.system.affichage==false || item.system.equipe==false) {action="desactive"} else {action="active"}
-        console.log(action)
         let effectS
         for (effect of actor.effects) {
           if (effect.label==item.id){ 
             effectS=effect
-            console.log("effet existant trouvé: "+effect.label)
           }
         }
-        console.log(effectS)
         if (action=="active" && effectS==undefined){
           await actor.createEmbeddedDocuments("ActiveEffect", [{
             label: item.id,

@@ -126,6 +126,18 @@
         style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
       {{/if}}
     </label>
+    {{#if (equals system.arme_cac true)}}
+    <label>
+      <strong>Equipée à deux mains : </strong>
+      {{#if (equals system.deuxmains true)}}
+      <input type="checkbox" name="system.deuxmains" checked
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
+      {{else}}
+      <input type="checkbox" name="system.deuxmains"
+        style="width: 15px; height: auto; margin: auto;vertical-align: middle;" />
+      {{/if}}
+    </label>
+    {{/if}}
   </div>
 
   {{#if (equals system.cacher false)}}

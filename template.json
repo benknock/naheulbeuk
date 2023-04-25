@@ -482,7 +482,8 @@
       "desccacher": "",
       "nomcacher": "Nom de l'objet caché",
       "stockage":"sac",
-      "conteneur": {}
+      "conteneur": {},
+      "deuxmains":false
     },
     "armure": {
       "templates": [

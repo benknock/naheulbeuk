@@ -281,6 +281,14 @@
       "tag": "item"
     },
     {
+      "name": "pretires",
+      "label": "PJ prétirés",
+      "system": "naheulbeuk",
+      "path": "./packs/pretires.db",
+      "type": "Actor",
+      "tag": "Actor"
+    },
+    {
       "name": "prieres-pretres-adathie",
       "label": "Prières : prêtre d'Adathie",
       "system": "naheulbeuk",

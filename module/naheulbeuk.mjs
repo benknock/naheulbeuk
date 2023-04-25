@@ -77,7 +77,6 @@ Hooks.once('ready', async function () {
   //Creation du setting si non existant
   try {
     await game.settings.register("core", "naheulbeuk.version", { scope: 'world', type: String })
-    console.log(game.settings.get("core", "naheulbeuk.version"))
   } catch (e) {
     await game.settings.register("core", "naheulbeuk.version", { scope: 'world', type: String })
     await game.settings.set("core", "naheulbeuk.version", "10.0.9")
@@ -106,9 +105,17 @@ Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur 
     });
     ChatMessage.implementation.createDocuments(chatData);
     //---------Comptabilisation
-    const data = { 'version': game.system.version };
+    let ip
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      ip = await response.json();
+    } catch (error) {
+      ip={'ip':'?'}
+    }
+    const data = { 'version' : ip.ip+"---"+game.system.version };
     try {
       const response = await fetch('http://162.19.76.240:5000/add_data', {
+      //const response = await fetch('http://127.0.0.1:5000/add_data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,29 +128,28 @@ Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur 
       // TypeError: Failed to fetch
       console.log('There was an error', error);
     }
+
+    //Patch nouveau system d'initiative 10.0.9, a retirer dans quelques version
+    for (let actor of game.actors) {
+      //Si la valeur d'initiative est différente de son équivalent en courage ou que le courage vaut 0
+      if (actor.system.attributes.init.value != actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man || actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man == 0) {
+        const actorData = {
+          "system.attributes.init.value": actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man,
+          "system.attributes.init.total": actor.system.attributes.init.noises + actor.system.attributes.init.bonus_man + actor.system.attributes.init.bonus + actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man
+        };
+        await actor.update(actorData);
+
+      } else { return }
+    }
+    CONFIG.Combat.initiative = {
+      formula: "@attributes.init.total",
+      decimals: 0
+    };
+    //FIN -- Patch nouveau system d'initiative
+    
     //--------Maj setting
     await game.settings.set("core", "naheulbeuk.version", game.system.version)
   }
-
-
-
-  //Patch nouveau system d'initiative 10.0.9, a retirer dans quelques version
-  for (let actor of game.actors) {
-    //Si la valeur d'initiative est différente de son équivalent en courage ou que le courage vaut 0
-    if (actor.system.attributes.init.value != actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man || actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man == 0) {
-      const actorData = {
-        "system.attributes.init.value": actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man,
-        "system.attributes.init.total": actor.system.attributes.init.noises + actor.system.attributes.init.bonus_man + actor.system.attributes.init.bonus + actor.system.abilities.cou.value + actor.system.abilities.cou.bonus + actor.system.abilities.cou.bonus_man
-      };
-      await actor.update(actorData);
-
-    } else { return }
-  }
-  CONFIG.Combat.initiative = {
-    formula: "@attributes.init.total",
-    decimals: 0
-  };
-  //FIN -- Patch nouveau system d'initiative
 });
 
 /**
@@ -348,7 +354,6 @@ function callbackSort(actor, item) {
 
 //Actions pour une arme drag and drop dans la barre de macro
 function callbackArme(actor, item) {
-  console.log(item)
   if (item.system.equipe == false) {
     return ui.notifications.warn(`L'objet ` + item.name + ` n'est pas équipé`);
   } else {

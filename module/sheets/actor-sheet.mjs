@@ -96,7 +96,7 @@ export class NaheulbeukActorSheet extends ActorSheet {
       if (actor.type == "character") {
         let bio = ""
         if (actor.system.biography=="") {
-          bio = '<h2>Description :</h2>\n<p><strong>&Acirc;ge :</strong></p>\n<p><strong>Taille :</strong></p>\n<p><strong>Poids :</strong></p>\n<p><strong>Cheveux :</strong></p>\n<p>&nbsp;</p>\n<h2>Caract&eacute;ristiques sp&eacute;ciales :</h2>\n<p><strong>Vision :</strong></p>\n<p><strong>Restrictions :</strong></p>\n<p><strong>Bonus :</strong></p>\n<p>&nbsp;</p>\n<h2>Histoire :</h2>\n<p>&nbsp;</p>\n<p>&nbsp;</p>'
+          bio = '<h2>Description :</h2>\n<p><strong>&Acirc;ge :</strong></p>\n<p><strong>Taille :</strong></p>\n<p><strong>Poids :</strong></p>\n<p><strong>Cheveux :</strong></p>\n<p>&nbsp;</p>\n<h2>Caract&eacute;ristiques sp&eacute;ciales :</h2>\n<p><strong>Sens :</strong></p>\n<p><strong>Restrictions :</strong></p>\n<p><strong>Bonus :</strong></p>\n<p>&nbsp;</p>\n<h2>Histoire :</h2>\n<p>&nbsp;</p>\n<p>&nbsp;</p>'
         } else {
           bio = actor.system.biography
         }

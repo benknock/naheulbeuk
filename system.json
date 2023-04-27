@@ -289,6 +289,14 @@
       "tag": "Actor"
     },
     {
+      "name": "pretires-soldat",
+      "label": "Soldats prétirés",
+      "system": "naheulbeuk",
+      "path": "./packs/pretires-soldats.db",
+      "type": "Actor",
+      "tag": "Actor"
+    },
+    {
       "name": "prieres-pretres-adathie",
       "label": "Prières : prêtre d'Adathie",
       "system": "naheulbeuk",

@@ -66,11 +66,11 @@ if [ -d ../../updateNaheulbeuk ]; then
 fi
 mkdir ../../updateNaheulbeuk
 cd ../../updateNaheulbeuk
-mv ../system/naheulbeuk/.git/ .
-cp ../system/naheulbeuk/system.json ./system.json
-cd ../system
+mv ../systems/naheulbeuk/.git/ .
+cp ../systems/naheulbeuk/system.json ./system.json
+cd ../systems
 zip -r system.zip naheulbeuk/
 cd ../updateNaheulbeuk
-mv ../system/system.zip .
-mv .git ../system/naheulbeuk/
+mv ../systems/system.zip .
+mv .git ../systems/naheulbeuk/
 echo "done !"

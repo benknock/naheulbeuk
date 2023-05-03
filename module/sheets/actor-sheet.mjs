@@ -486,6 +486,13 @@ export class NaheulbeukActorSheet extends ActorSheet {
       }
     });
 
+    //Permet d'éviter le drag and drop des attaques de PNJ
+    html.find('.item-combat').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      game.naheulbeuk.rollItemMacro(item.name,2);
+    });
+
     //Affichage d'un compendium (metier/origine)
     html.find('.compendium-pack').click(ev => {
       const element = ev.currentTarget;

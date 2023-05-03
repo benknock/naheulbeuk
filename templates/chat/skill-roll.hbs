@@ -1,11 +1,20 @@
 
 
-<h2 class="standard"><i class="fas fa-dice-d20"></i>&nbsp;{{name}}</h2>
+<h2 class="standard"><i class="fas fa-dice-d20"></i>&nbsp;{{name}}<br/>{{name2}}</h2>
 <div class="flexrow">
 <label style="font-size: 1.1em; padding-bottom: 6px;"><strong>{{diff}}</strong></label>
 </div>
+{{#if hasID}}
+<div style="padding-bottom: 5px;">
+    Personnage(s) actuellement ciblé(s) :<br/>
+    {{#each Object as |object id|}}
+        <a class="content-link" draggable="true" data-uuid="Actor.{{object.id}}" data-id={{object.id}} data-type="Actor" data-tooltip="Actor"><i class="fas fa-user"></i>{{object.name}}</a>
+        <br/>
+    {{/each}}
+</div>
+{{/if}}
 {{#if hasDescription}}
     <h4>
-        <pre class="rollDescr-line">{{{description}}}</pre>
+        <pre class="rollDescr-line">{{{desc}}}</pre>
     </h4>
-{{/if}}  
+{{/if}}

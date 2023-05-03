@@ -34,6 +34,20 @@ export class Macros {
     return targets[0].actor;
   }
 
+  //Global : récupérer les tokens cibles
+  static getSpeakersTargets = function (option) {
+    let targets = ([...game.user.targets].length > 0) ? [...game.user.targets] : canvas.tokens.children.filter(t => t._controlled);
+    if (targets.length == 0) {
+      if (option!="no-notif"){ui.notifications.error("Choisissez un token cible");}
+      return null;
+    }
+    let actorF = []
+    for (let target of targets){
+      actorF.push(target.actor)
+    }
+    return actorF;
+  }
+
   //Global : récupérer le token acteur
   static getSpeakersActor = function () {
     // Vérifie qu'un seul token est sélectionné
@@ -184,8 +198,27 @@ export class Macros {
     var dice = dataset.dice;
     var name = dataset.name;
     var diff = dataset.diff;
-    const desc = dataset.desc;
-    const armefeu = dataset.af;
+    var name2 = ""
+    if (dataset.name2!=undefined){
+      name2 = dataset.name2
+    }
+    var hasID = false
+    var ObjectCible=[]
+    if (game.naheulbeuk.macros.getSpeakersTargets("no-notif")!=undefined){
+      hasID=true;
+      for (let target of game.naheulbeuk.macros.getSpeakersTargets("no-notif")){
+        ObjectCible.push({"id":target.id,"name":target.name})
+      }
+    }
+    var hasDescription = false
+    var desc = ""
+    if (dataset.desc != undefined){
+      hasDescription=true;
+      desc=dataset.desc;
+    }
+
+    //const armefeu = dataset.af;
+    let r
 
     //-------------replace attributs
     if (dice.substr(0, 8) == "épreuve:") { //lancement d'épreuve quand il y'a juste jet de dés
@@ -209,14 +242,14 @@ export class Macros {
     dice = dice.replace(/ /g, "");
     diff = diff.replace(/ /g, "");
 
-    if (armefeu == "true") {
+    /*if (armefeu == "true") {
       let flagTirerCorrectement=0
       for (let actoritem of actor.items){
         if (actoritem.name == "TIRER CORRECTEMENT" ) {flagTirerCorrectement=1}
       }
       if (flagTirerCorrectement == 0) {diff=(parseInt(diff)+5).toString()}
       if (flagTirerCorrectement == 1) {diff=(parseInt(diff)+1).toString()}
-    }
+    }*/
 
     if (option=="interface") {
       let d = new Dialog({
@@ -252,7 +285,7 @@ export class Macros {
                 diff = game.naheulbeuk.macros.replaceAttr(diff, actor);
               }
               if (dice != "") {
-                let r = new Roll(dice);
+                r = new Roll(dice);
                 //await r.roll({"async": true});
                 r.roll({ "async": true }).then(r => {
                   var result = 0;
@@ -261,7 +294,12 @@ export class Macros {
                   if (diff == "") {
                     tplData = {
                       diff: "",
-                      name: name
+                      name: name,
+                      name2:name2,
+                      hasID:hasID,
+                      Object:ObjectCible,
+                      hasDescription: hasDescription,
+                      desc: desc
                     }
                     renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                       r.toMessage({
@@ -274,10 +312,17 @@ export class Macros {
                     diff = new Roll("ceil(" + diff + ")");
                     diff.roll({ "async": true }).then(diff => {
                       result = Math.abs(diff.total - r.total);
-                      if (r.total > diff.total) { reussite = "Echec !   " };
+                      if (r.total > diff.total) { reussite = "Échec !   " };
+                      if (r.total == 1) {reussite = "Réussite critique !!"};
+                      if (r.total == 20) {reussite = "Échec critique !!"};
                       tplData = {
-                        diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
-                        name: name
+                        diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
+                        name: name,
+                        name2:name2,
+                        hasID:hasID,
+                        Object:ObjectCible,
+                        hasDescription: hasDescription,
+                        desc: desc
                       };
                       renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
                         r.toMessage({
@@ -300,7 +345,7 @@ export class Macros {
       const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
       if (dice != "") {
         //on initialise les variables
-        let r = new Roll(dice);
+        r = new Roll(dice);
         await r.roll({ "async": true });
         var tplData = {};
         var reussite = "Réussite !   ";
@@ -309,7 +354,10 @@ export class Macros {
           tplData = {
             diff: "",
             name: name,
-            hasDescription: desc && desc.length > 0,
+            name2:name2,
+            hasID:hasID,
+            Object:ObjectCible,
+            hasDescription: hasDescription,
             desc: desc
           };
           //création du message
@@ -324,12 +372,17 @@ export class Macros {
           diff = new Roll("ceil(" + diff + ")");
           diff.roll({ "async": true }).then(diff => {
             //calcule de la réussite ou l'échec suivant si on est sur un jet de rupture ou non
-            if (r.total > diff.total && name != "Rupture") { reussite = "Echec !   " };
-            if (r.total <= diff.total && name == "Rupture") { reussite = "Echec !   " };
+            if (r.total > diff.total && name != "Rupture") { reussite = "Échec !   " };
+            if (r.total <= diff.total && name == "Rupture") { reussite = "Échec !   " };
+            if (r.total == 1 && name != "Rupture") {reussite = "Réussite critique !!"};
+            if (r.total == 20 && name != "Rupture") {reussite = "Échec critique !!"};
             tplData = {
-              diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + Math.abs(diff.total - r.total),
+              diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + Math.abs(diff.total - r.total),
               name: name,
-              hasDescription: desc && desc.length > 0,
+              name2:name2,
+              hasID:hasID,
+              Object:ObjectCible,
+              hasDescription: hasDescription,
               desc: desc
             };
             //création du message
@@ -344,14 +397,38 @@ export class Macros {
         }
       }
     }
+    return r
   }
 
   //Global : macro jet de dés custom 
-  static async onRollCustom(actor,item,dataset) {
+  static async onRollCustom(actor,item,dataset,titre) {
+    //titre de la fenêtre de dialog
+    if (titre!=undefined){
+      titre = titre
+    } else if (item.name!=undefined) {
+      titre = item.name
+    } else {
+      titre = "Jet de dés"
+    }
+
     let nom_objet=""
     if (item.name!=undefined){
       nom_objet=" - " + item.name
     }
+    var hasID = false
+    var ObjectCible=[]
+    if (game.naheulbeuk.macros.getSpeakersTarget("no-notif")!=undefined){
+      hasID=true;
+      let ObjectCibleI={"id":game.naheulbeuk.macros.getSpeakersTarget("no-notif").id,"name":game.naheulbeuk.macros.getSpeakersTarget("no-notif").name}
+      ObjectCible.push(ObjectCibleI)
+    }
+    var hasDescription = false
+    var desc = ""
+    if (dataset.desc != undefined){
+      hasDescription=true;
+      desc=dataset.desc;
+    }
+
     var dice1 = "";
     var dice2 = "";
     var dice3 = "";
@@ -574,6 +651,10 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
+                hasID:hasID,
+                Object:ObjectCible,
+                hasDescription: hasDescription,
+                desc: desc,
                 diff: "",
                 name: name1 + nom_objet
               }
@@ -588,9 +669,15 @@ export class Macros {
               diff = new Roll(diff);
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
-                if (r.total > diff.total) { reussite = "Echec !   " };
+                if (r.total > diff.total) { reussite = "Échec !   " };
+                if (r.total == 1) {reussite = "Réussite critique !!"};
+                if (r.total == 20) {reussite = "Échec critique !!"};
                 tplData = {
-                  diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                  hasID:hasID,
+                  Object:ObjectCible,
+                  hasDescription: hasDescription,
+                  desc: desc,
+                  diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                   name: name1 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -637,6 +724,10 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
+                hasID:hasID,
+                Object:ObjectCible,
+                hasDescription: hasDescription,
+                desc: desc,
                 diff: "",
                 name: name2 + nom_objet
               }
@@ -651,9 +742,15 @@ export class Macros {
               diff = new Roll(diff);
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
-                if (r.total > diff.total) { reussite = "Echec !   " };
+                if (r.total > diff.total) { reussite = "Échec !   " };
+                if (r.total == 1) {reussite = "Réussite critique !!"};
+                if (r.total == 20) {reussite = "Échec critique !!"};
                 tplData = {
-                  diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                  hasID:hasID,
+                  Object:ObjectCible,
+                  hasDescription: hasDescription,
+                  desc: desc,
+                  diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                   name: name2 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -700,6 +797,10 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
+                hasID:hasID,
+                Object:ObjectCible,
+                hasDescription: hasDescription,
+                desc: desc,
                 diff: "",
                 name: name3 + nom_objet
               }
@@ -714,9 +815,15 @@ export class Macros {
               diff = new Roll(diff);
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
-                if (r.total > diff.total) { reussite = "Echec !   " };
+                if (r.total > diff.total) { reussite = "Échec !   " };
+                if (r.total == 1) {reussite = "Réussite critique !!"};
+                if (r.total == 20) {reussite = "Échec critique !!"};
                 tplData = {
-                  diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                  hasID:hasID,
+                  Object:ObjectCible,
+                  hasDescription: hasDescription,
+                  desc: desc,
+                  diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                   name: name3 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -763,6 +870,10 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
+                hasID:hasID,
+                Object:ObjectCible,
+                hasDescription: hasDescription,
+                desc: desc,
                 diff: "",
                 name: name4 + nom_objet
               }
@@ -777,9 +888,15 @@ export class Macros {
               diff = new Roll(diff);
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
-                if (r.total > diff.total) { reussite = "Echec !   " };
+                if (r.total > diff.total) { reussite = "Échec !   " };
+                if (r.total == 1) {reussite = "Réussite critique !!"};
+                if (r.total == 20) {reussite = "Échec critique !!"};
                 tplData = {
-                  diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                  hasID:hasID,
+                  Object:ObjectCible,
+                  hasDescription: hasDescription,
+                  desc: desc,
+                  diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                   name: name4 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -826,6 +943,10 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
+                hasID:hasID,
+                Object:ObjectCible,
+                hasDescription: hasDescription,
+                desc: desc,
                 diff: "",
                 name: name5 + nom_objet
               }
@@ -840,9 +961,15 @@ export class Macros {
               diff = new Roll(diff);
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
-                if (r.total > diff.total) { reussite = "Echec !   " };
+                if (r.total > diff.total) { reussite = "Échec !   " };
+                if (r.total == 1) {reussite = "Réussite critique !!"};
+                if (r.total == 20) {reussite = "Échec critique !!"};
                 tplData = {
-                  diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                  hasID:hasID,
+                  Object:ObjectCible,
+                  hasDescription: hasDescription,
+                  desc: desc,
+                  diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                   name: name5 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -889,6 +1016,10 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
+                hasID:hasID,
+                Object:ObjectCible,
+                hasDescription: hasDescription,
+                desc: desc,
                 diff: "",
                 name: name6 + nom_objet
               }
@@ -903,9 +1034,15 @@ export class Macros {
               diff = new Roll(diff);
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
-                if (r.total > diff.total) { reussite = "Echec !   " };
+                if (r.total > diff.total) { reussite = "Échec !   " };
+                if (r.total == 1) {reussite = "Réussite critique !!"};
+                if (r.total == 20) {reussite = "Échec critique !!"};
                 tplData = {
-                  diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                  hasID:hasID,
+                  Object:ObjectCible,
+                  hasDescription: hasDescription,
+                  desc: desc,
+                  diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                   name: name6 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -952,6 +1089,10 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
+                hasID:hasID,
+                Object:ObjectCible,
+                hasDescription: hasDescription,
+                desc: desc,
                 diff: "",
                 name: name7 + nom_objet
               }
@@ -966,9 +1107,15 @@ export class Macros {
               diff = new Roll(diff);
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
-                if (r.total > diff.total) { reussite = "Echec !   " };
+                if (r.total > diff.total) { reussite = "Échec !   " };
+                if (r.total == 1) {reussite = "Réussite critique !!"};
+                if (r.total == 20) {reussite = "Échec critique !!"};
                 tplData = {
-                  diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                  hasID:hasID,
+                  Object:ObjectCible,
+                  hasDescription: hasDescription,
+                  desc: desc,
+                  diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                   name: name7 + nom_objet
                 };
                 renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -996,7 +1143,7 @@ export class Macros {
       width: 700
     };
     let d = new CustomDialog({
-      title: "Jet de dés",
+      title: titre,
       content: content,
       buttons: buttons
     }, myDialogOptions);
@@ -1011,7 +1158,29 @@ export class Macros {
     const actor = item.actor;
     let command = null;
     let macroName = null;
-    command = `game.naheulbeuk.rollItemMacro('${item.name}',1);//changer le dernier 1 en 0 pour arriver directement sur l'interface de jets de dés`;
+    try {
+      await game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
+    } catch (e) {
+      await game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
+      await game.settings.set("core", "naheulbeuk.version", "1")
+    }
+    let mode = await game.settings.get("core", "naheulbeuk.mode_drag")
+    if (actor.type=="npc"){
+      command = `
+//Pour un PNJ, il est recommandé d'utiliser plutôt :
+//game.naheulbeuk.macros.actions_pnj();`
+    } else {command=''}
+    command += `
+let mode = ${mode}
+/*
+Changer la valeur du mode pour modifier le comportement au lancement :
+1 --> interface permettant de choisir si on veut voir l'objet, et si possible l'utiliser
+2 --> si possible, on lance directement l'option utiliser l'objet. C'est par exemple utile pour lancer une attaque normale avec une arme, ou un sort
+3 --> si possible, on lance directement une attaque rapide
+4 --> même interface que le mode 1, mais avec en plus un bouton attaque rapide
+*/
+game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
+    
     macroName = item.name + " (" + game.actors.get(actor.id).name + ")";
     let macro = game.macros.contents.find(m => (m.name === macroName) && (m.command === command));
     if (!macro) {
@@ -1385,9 +1554,9 @@ export class Macros {
                       diff = new Roll(diff);
                       diff.roll({ "async": true }).then(diff => {
                         result = Math.abs(diff.total - r.total);
-                        if (r.total > diff.total) { reussite = "Echec !   " };
+                        if (r.total > diff.total) { reussite = "Échec !   " };
                         tplData = {
-                          diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                          diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                           name: "Lancer custom"
                         };
                         renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -2574,9 +2743,9 @@ export class Macros {
                         diff = new Roll(diff);
                         diff.roll({ "async": true }).then(diff => {
                           result = Math.abs(diff.total - r.total);
-                          if (r.total > diff.total) { reussite = "Echec !   " };
+                          if (r.total > diff.total) { reussite = "Échec !   " };
                           tplData = {
-                            diff: reussite + " - Difficulté : " + diff.total + " - Ecart : " + result,
+                            diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                             name: namecomp
                           };
                           renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
@@ -2598,8 +2767,112 @@ export class Macros {
       })
     })
   }
-  
-  static return_items() {
-    return all_items_search;
+
+  //Macros setting drag and drop
+  static async drag_drop(){
+    let d = new Dialog({
+      title: "Sélection mode drag and drop",
+      content: `
+      <form>
+        <label>Quel mode souhaitez vous choisir ? </label><input type="number" name="mode" id="mode" value="1" /><br/><br/>
+        <label>1 --> interface permettant de choisir si on veut voir l'objet, et si possible l'utiliser</label><br/><br/>
+        <label>2 --> si possible, on lance directement l'option utiliser l'objet. C'est par exemple utile pour lancer une attaque normale avec une arme, ou un sort</label><br/><br/>
+        <label>3 --> si possible, on lance directement une attaque rapide</label><br/><br/>
+        <label>4 --> si on souhaite utiliser l'interface qui permet de choisir quoi faire, avec en plus un bouton attaque rapide</label><br/><br/>
+
+      </form>
+      `,
+      buttons: {
+        one: {
+          label: "Valider",
+          callback: (html) => {
+              let mode = html.find('input[name="mode"').val()
+              if (mode!=2 && mode!=3 && mode!=4){mode = 1}
+              try {
+                game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
+              } catch (e) {
+                game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
+              }
+              game.settings.set("core", "naheulbeuk.mode_drag", mode)
+            }
+          }
+        }
+    });
+    d.render(true);
   }
+
+  //Macros actions pnj pour remplacer drag and drop
+  static async actions_pnj(){
+    const source = game.naheulbeuk.macros.getSpeakersActor();
+    let attaque=[]
+    let mode=[]
+    try {
+      game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
+      mode = game.settings.get("core", "naheulbeuk.mode_drag")
+    } catch (e) {
+      mode = 1
+    }
+    if (source.type=="npc"){
+        for (let itemF of source.items){
+            if (itemF.type=="attaque"){
+                attaque.push(itemF)
+            }
+        }
+        attaque.push({"name":"Parade et Esquive"})
+    } else {
+        for (let itemF of source.items){
+            if (itemF.type=="arme" && itemF.system.equipe){
+                attaque.push(itemF)
+            }
+        } 
+    }
+    for (let itemF of source.items){
+      if (itemF.type=="sort"){
+        attaque.push(itemF)
+      }
+    }
+    for (let itemF of source.items){
+      if (itemF.type=="coup"){
+        attaque.push(itemF)
+      }
+    }
+
+    let txt = '<select name="inputDiff3" id="inputDiff3">'
+
+    for (let itemF of attaque){
+        txt += '<option value="' + itemF.name + '">' + itemF.name + '</option>'
+    }
+
+    txt += "</select><br/><br/>"
+
+    let buttons = {};
+    buttons.one= {
+        label: "Valider",
+        callback: (html) => {
+          var attaque = html.find('select[name="inputDiff3"').val()
+          if (attaque!="Parade et Esquive"){
+              game.naheulbeuk.rollItemMacro(attaque,mode);
+          } else {
+              var dataset = { 
+                "actor": source,
+                "name1": "Parade",
+                "dice1": "d20",
+                "diff1": game.naheulbeuk.macros.replaceAttr("@prd", source),
+                "name2": "Parade",
+                "dice2": "d20",
+                "diff2": game.naheulbeuk.macros.replaceAttr("@esq", source)
+              };
+              let item = {"name":attaque}
+              game.naheulbeuk.macros.onRollCustom(actor, item, dataset, item.name)
+          }
+        }
+    }
+
+    let d = new Dialog({
+        title: "Que va utiliser "+ source.name + " ?",
+        content: txt,
+        buttons: buttons
+    });
+    d.render(true);
+  } 
 }

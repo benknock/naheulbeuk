@@ -347,4 +347,14 @@ export const registerHandlebarsHelpers = function() {
       return 0
     }
   });
+
+  //mode drag and drop actif
+  Handlebars.registerHelper("modeactif", function () {
+    try {
+      game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
+      return game.settings.get("core", "naheulbeuk.mode_drag")
+    } catch (e) {
+      return "?"
+    }
+  });
 }

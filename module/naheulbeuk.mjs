@@ -92,8 +92,10 @@ Hooks.once('ready', async function () {
 Si vous avez des questions, vous pouvez consulter 
 <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk">la documentation</a>.<br/>
 Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur le Discord <strong>La Fonderie</strong>.<br/><br/>
-<strong><u>Notes de la mise à jour 10.1.1</u></strong><br/>
-- Affichage d'un message dans le chat après les mises à jour<br/>
+<strong><u>Notes de la mise à jour 10.1.2</u></strong><br/>
+- Si un PJ/MJ cibles des personnages lorsqu'il fait un jet de dés, ces cibles apparaissent dans le message du chat. Le but est d'aider le MJ à s'avoir qui est conscerné par les actions<br/>
+- Refonte du système de drag and drop et du combat rapide, <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk#titre9">plus d'infos ici</a>.<br/>
+- Ajout de compendiums PJ prétirés et Soldats prétirés
 `];
     const chatData = content.map(c => {
       return {
@@ -514,16 +516,6 @@ function callbackAttaque(actor,item){
     dataset.name2="Dégâts"
     dataset.dice2=item.system.formula
   }
-  /*if(game.naheulbeuk.macros.replaceAttr("@prd", actor)!=0){
-    dataset.name3="Parade"
-    dataset.dice3="d20"
-    dataset.diff3=game.naheulbeuk.macros.replaceAttr("@prd", actor)
-  }
-  if(game.naheulbeuk.macros.replaceAttr("@esq", actor)!=0){
-    dataset.name4="Esquive"
-    dataset.dice4="d20"
-    dataset.diff4=game.naheulbeuk.macros.replaceAttr("@esq", actor)
-  }*/
   game.naheulbeuk.macros.onRollCustom(actor, item, dataset, item.name)
 }
 

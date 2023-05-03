@@ -61,16 +61,16 @@ cd ..
 git add *
 git commit -a
 
-if [ -d ../updateNaheulbeuk ]; then
-    rm -R ../updateNaheulbeuk
+if [ -d ../../updateNaheulbeuk ]; then
+    rm -R ../../updateNaheulbeuk
 fi
-mkdir ../updateNaheulbeuk
-cd ../updateNaheulbeuk
-mv ../naheulbeuk/.git/ .
-cp ../naheulbeuk/system.json ./system.json
-cd ..
+mkdir ../../updateNaheulbeuk
+cd ../../updateNaheulbeuk
+mv ../system/naheulbeuk/.git/ .
+cp ../system/naheulbeuk/system.json ./system.json
+cd ../system
 zip -r system.zip naheulbeuk/
-cd updateNaheulbeuk
-mv ../system.zip .
-mv .git ../naheulbeuk/
+cd ../updateNaheulbeuk
+mv ../system/system.zip .
+mv .git ../system/naheulbeuk/
 echo "done !"

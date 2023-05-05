@@ -489,8 +489,15 @@ export class NaheulbeukActorSheet extends ActorSheet {
     //Permet d'éviter le drag and drop des attaques de PNJ
     html.find('.item-combat').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
-      game.naheulbeuk.rollItemMacro(item.name,2);
+      const item = this.actor.items.get(li.data("itemId"));    
+      let mode = 1
+      try {
+        game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
+        mode = game.settings.get("core", "naheulbeuk.mode_drag")
+      } catch (e) {
+        mode = 1
+      }
+      game.naheulbeuk.rollItemMacro(item.name,mode);
     });
 
     //Affichage d'un compendium (metier/origine)

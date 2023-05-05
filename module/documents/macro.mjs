@@ -1158,13 +1158,13 @@ export class Macros {
     const actor = item.actor;
     let command = null;
     let macroName = null;
+    let mode
     try {
       await game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
+      mode = await game.settings.get("core", "naheulbeuk.mode_drag")
     } catch (e) {
-      await game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
-      await game.settings.set("core", "naheulbeuk.version", "1")
+      mode = 1
     }
-    let mode = await game.settings.get("core", "naheulbeuk.mode_drag")
     if (actor.type=="npc"){
       command = `
 //Pour un PNJ, il est recommandé d'utiliser plutôt :
@@ -2788,11 +2788,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           callback: (html) => {
               let mode = html.find('input[name="mode"').val()
               if (mode!=2 && mode!=3 && mode!=4){mode = 1}
-              try {
-                game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
-              } catch (e) {
-                game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
-              }
+              game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
               game.settings.set("core", "naheulbeuk.mode_drag", mode)
             }
           }
@@ -2805,7 +2801,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
   static async actions_pnj(){
     const source = game.naheulbeuk.macros.getSpeakersActor();
     let attaque=[]
-    let mode=[]
+    let mode
     try {
       game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
       mode = game.settings.get("core", "naheulbeuk.mode_drag")

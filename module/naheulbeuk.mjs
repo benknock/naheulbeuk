@@ -88,14 +88,14 @@ Hooks.once('ready', async function () {
     const gms = ChatMessage.getWhisperRecipients("GM");
     // Build Chat Messages
     const content = [`
-<h1>Bienvenue dans le système Naheulbeuk</h1>
+<h2>Bienvenue dans le système Naheulbeuk</h2>
 Si vous avez des questions, vous pouvez consulter 
 <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk">la documentation</a>.<br/>
-Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur le Discord <strong>La Fonderie</strong>.<br/><br/>
-<strong><u>Notes de la mise à jour 10.1.2</u></strong><br/>
-- Si un PJ/MJ cibles des personnages lorsqu'il fait un jet de dés, ces cibles apparaissent dans le message du chat. Le but est d'aider le MJ à s'avoir qui est conscerné par les actions<br/>
-- Refonte du système de drag and drop et du combat rapide, <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk#titre9">plus d'infos ici</a>.<br/>
-- Ajout de compendiums PJ prétirés et Soldats prétirés
+Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur le Discord <a href="https://discord.gg/pPSDNJk">La Fonderie</a>.<br/><br/>
+<div><strong><u>Notes de la mise à jour 10.1.2</u></strong></div>
+<div style="padding-top:8px;">- Si un PJ/MJ cible des personnages lorsqu'il fait un jet de dés, ces cibles apparaissent dans le message du chat. Le but est d'aider le MJ à savoir qui est conscerné par les actions</div>
+<div style="padding-top:8px;">- Refonte du système de drag and drop et du combat rapide, <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk#titre9">plus d'infos ici</a>.</div>
+<div style="padding-top:8px;">- Ajout de compendiums PJ prétirés et Soldats prétirés</div>
 `];
     const chatData = content.map(c => {
       return {
@@ -150,7 +150,7 @@ Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur 
     //FIN -- Patch nouveau system d'initiative
     
     //--------Maj setting
-    await game.settings.set("core", "naheulbeuk.version", game.system.version)
+    //await game.settings.set("core", "naheulbeuk.version", game.system.version)
   }
 });
 
@@ -252,7 +252,7 @@ function rollItemMacro(itemName, param) {
         }
       }
     }
-    if ((item.system.epreuvecustom == false)){
+    if (item.system.epreuvecustom == false && (item.system.formula!="" && item.system.formula!="-")||(item.system.attaque!="" && item.system.attaque!="-")){
       buttons.two= {
         label: "Attaque standard",
         callback: (html) => {

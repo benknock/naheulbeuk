@@ -150,7 +150,7 @@ Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur 
     //FIN -- Patch nouveau system d'initiative
     
     //--------Maj setting
-    //await game.settings.set("core", "naheulbeuk.version", game.system.version)
+    await game.settings.set("core", "naheulbeuk.version", game.system.version)
   }
 });
 

@@ -9,22 +9,34 @@
       <!-- Catégorie -->
       <div class="resource">
         <label class="resource-label">Catégorie</label>
+        {{#if (equals system.attributes.categorie "Humanoïdes")}}<div style="display:flex">{{/if}}
         <select name="system.attributes.categorie"
           style="width: calc(100% - 2px);font-family: Naheulbeuk;font-size: 15px;margin-bottom: 5px;">
           <option value="{{system.attributes.categorie}}">{{system.attributes.categorie}}</option>
           <option value=""></option>
           <option value="Animaux">Animaux</option>
           <option value="Végétaux">Végétaux</option>
+          <option value="Humanoïdes">Humanoïdes</option>
+          <option value="Monstres et créatures">Monstres et créatures</option>
+          <option value="Opposants légendaires">Opposants légendaires</option>
+        </select>
+        {{#if (equals system.attributes.categorie "Humanoïdes")}}
+        <select name="system.attributes.categorie2" style="margin-left: 10px;width: calc(100% - 2px);font-family: Naheulbeuk;font-size: 15px;margin-bottom: 5px;">
+          <option value="{{system.attributes.categorie2}}">{{system.attributes.categorie2}}</option>
+          <option value=""></option>
+          <option value="Créatures">Créatures</option>
           <option value="Fanghiens">Fanghiens</option>
           <option value="Pirates Mauves">Pirates Mauves</option>
           <option value="Birmilistanais">Birmilistanais</option>
           <option value="Sauvages du Froid">Sauvages du Froid</option>
           <option value="Skuulnards">Skuulnards</option>
           <option value="Vrognards">Vrognards</option>
-          <option value="Humanoïdes">Humanoïdes</option>
-          <option value="Monstres et créatures">Monstres et créatures</option>
-          <option value="Opposants légendaires">Opposants légendaires</option>
+          <option value="Gnômes">Gnômes</option>
+          <option value="Elfes sylvains">Elfes sylvains</option>
+          <option value="Nains du Nord">Nains du Nord</option>
         </select>
+        </div>
+        {{/if}}
       </div>
       <!-- Traits -->
       {{#if (equals traits.length 0)}}

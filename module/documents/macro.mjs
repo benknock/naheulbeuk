@@ -2716,7 +2716,6 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         //Rercherche arme new
         var armeO1 = $("[name=armeO1]").val();
         var armeO2 = $("[name=armeO2]").val();
-        console.log(armeO1+armeO2)
         if (armeO1 != '' || armeO2 != ''){
           result = result2.filter(entry => {
             if (armeO1!='' && armeO2!='' && eval("entry.system."+armeO1)==true && eval("entry.system."+armeO2)==true){return true}
@@ -2923,6 +2922,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           <option value="Gnômes">Gnômes</option>
           <option value="Elfes sylvains">Elfes sylvains</option>
           <option value="Nains du Nord">Nains du Nord</option>
+          <option value="Elfes noirs">Elfes noirs</option>
         </select>
         <label style="flex: 1;text-align:right;">Nom ( || pour un OU, && pour un ET )&nbsp;&nbsp;&nbsp;&nbsp;</em></label>
         <input style="flex: 1" type="text" name="nameO" id="nameO" value="" label="Nom de l'objet" />
@@ -3228,22 +3228,37 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
               if (pnj.name.split(' | ')[0]==rname && result[0].name!=pnj.name){result2.push(pnj)}
             }
             result=result2
-            //On vérifie qu'ils sont dans la même zone
-            var geoO1 = $("[name=geoO1]").val();
-            var geoO2 = $("[name=geoO2]").val();
-            if(geoO1!='' || geoO2!=''){
+            //On vérifie qu'ils sont de même type
+            var typeO1 = save.system.attributes.categorie;
+            var typeO2 = save.system.attributes.categorie2;
+            if(typeO1!=''){
               result = result2.filter(entry => {
-                let flag_geoO1=false
-                let flag_geoO2=false
-                for (let item of entry.items){
-                  if(item.name==geoO1){flag_geoO1=true}
-                  if(item.name==geoO2){flag_geoO2=true}
-                }
-                let flag_total=true
-                if ((geoO1!=''|| geoO2!='') && (flag_geoO1==false && flag_geoO2==false)){flag_total=false}
-                return flag_total
+                if (entry.system.attributes.categorie==typeO1){return true}
               })
             }
+            result2=result
+            if(typeO2!=''){
+              result = result2.filter(entry => {
+                if (entry.system.attributes.categorie2==typeO2){return true}
+              })
+            }
+            result2=result;
+            //On vérifie qu'ils sont dans la même zone
+            let zonesSave = []
+            for (let item of save.items){
+                if(item.type=='region'){zonesSave.push(item)}
+            }
+            result = result2.filter(entry => {
+              let flag_zone = true
+              for (let zoneSave of zonesSave){
+                let zoneFind = false
+                for (let item of entry.items){
+                  if (item.name==zoneSave.name){zoneFind=true}
+                }
+                if (zoneFind==false){flag_zone=false}
+              }
+              return flag_zone
+            })
             result2=result;
           }
 
@@ -3302,11 +3317,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           var niveau = $("[name=niveau]").val();
           var zone = $("[name=zone]").val();
           var d20 = Math.floor(Math.random() * 20) +1;
-          console.log(niveau + " - " + zone + " - " + d20)
-          let list = '';
           let r;
           let option='';
-          let result
           
           //Plaine Bas niveau
           if (niveau==1 && zone==1){
@@ -3456,7 +3468,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
               option = option + "&nbsp;x&nbsp;"
             }// d4 loup gris
             if (d20==9){
-              r=arr.filter(entry => {return entry._id===''})[0]
+              r=arr.filter(entry => {return entry._id==='lOvQluaBaaWnL1Kl'})[0]
               option = Math.floor(Math.random() * 4) +1;
               option = option + "&nbsp;x&nbsp;"
             }// d4 prospecteur nain
@@ -3471,6 +3483,67 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             if (d20==18){r=arr.filter(entry => {return entry._id==='GKrpLo9sqs5fZ4CP'})[0]}// troll stupide
             if (d20==19){r=arr.filter(entry => {return entry._id==='a89fpbUQhf3nj2Gh'})[0]}// petit dragon bleu
             if (d20==20){r=arr.filter(entry => {return entry._id==='T4tfHGMC3Aty67L5'})[0]}// jeune vouivre
+          }
+
+          //grotte bas niveau
+          if (niveau==1 && zone==4){
+            if (d20==1){
+              r=arr.filter(entry => {return entry._id==='1OVUOHNEQ7AcXaYI'})[0]
+              option = Math.floor(Math.random() * 6) +1;
+              option = option + Math.floor(Math.random() * 6) +1;
+              option = option + "&nbsp;x&nbsp;"
+            }//2D6 rats pesteux
+            if (d20==2){r=arr.filter(entry => {return entry._id==='JKnWgMcTIJ6Xngat'})[0]}//chauve souris vampire
+            if (d20==3){r=arr.filter(entry => {
+              return entry._id==='70qQxZL0op2T1w0S'})[0]
+              option = Math.floor(Math.random() * 6) +1;
+              option = option + "&nbsp;x&nbsp;"
+            }//d6 Gobelin de base
+            if (d20==4){r=arr.filter(entry => {
+              return entry._id==='hJrzOPiE2hXD5tsf'})[0]
+              option = Math.floor(Math.random() * 5) +1;
+              option = option + "&nbsp;x&nbsp;"
+            }// d5 gobelin costauds
+            if (d20==5){r=arr.filter(entry => {return entry._id==='f13dJS1ozOZ7NSj6'})[0]}//tarentule des cavernes
+            if (d20==6){
+              r=arr.filter(entry => {return entry._id==='PsdtGrqhZP0gsSp8'})[0]
+              option = Math.floor(Math.random() * 4) +1;
+              option = option + "&nbsp;x&nbsp;"
+            }//d4 elfe noir voleur
+            if (d20==7){
+              r=arr.filter(entry => {return entry._id==='lOvQluaBaaWnL1Kl'})[0]
+              option = Math.floor(Math.random() * 4) +1;
+              option = option + "&nbsp;x&nbsp;"
+            }//d4 prospecteur nain
+            if (d20==8){
+              r=arr.filter(entry => {return entry._id==='H7Bvx1hxFz7zkoh9'})[0]
+              option = Math.floor(Math.random() * 4) +1;
+              option = option + "&nbsp;x&nbsp;"
+            }//d4 trogylork de base
+            if (d20==9){r=arr.filter(entry => {return entry._id==='wN6iMz84vfmU0TKb'})[0]}//trogylork chef d'escouade
+            if (d20==10){r=arr.filter(entry => {return entry._id==='jknEhuFE4kh8UFzo'})[0]}//ours noir
+            if (d20==11){
+              r=arr.filter(entry => {return entry._id==='5Vmx0ajAYFIdvIsj'})[0]
+              option = Math.floor(Math.random() * 4) +1;
+              option = option + "&nbsp;x&nbsp;"
+            }//d4 elfe noir assassin débutant
+            if (d20==12){r=arr.filter(entry => {return entry._id==='Wu4ZT5kylSObeQqg'})[0]}//élem de pierre mineur
+            if (d20==13){
+              r=arr.filter(entry => {return entry._id==='Zar7Q32bQpnwY3VD'})[0]
+              option = Math.floor(Math.random() * 4) +1;
+              option = option + "&nbsp;x&nbsp;"
+            }//d4 elfe noir voleur combatif
+            if (d20==14){r=arr.filter(entry => {return entry._id==='GKrpLo9sqs5fZ4CP'})[0]}//troll de base
+            if (d20==15){r=arr.filter(entry => {return entry._id==='1xuoU2fwGjpsgJP2'})[0]}//mille pattes monstrueux
+            if (d20==16){r=arr.filter(entry => {return entry._id==='bMMtmDr3wNs4oSyB'})[0]}//panthère
+            if (d20==17){r=arr.filter(entry => {return entry._id==='xGPtnzBqSj6NXjjK'})[0]}//elfe noir mage
+            if (d20==18){r=arr.filter(entry => {return entry._id==='wpMCIHYUaQpOiqXx'})[0]}//jeune dragon des cavernes
+            if (d20==19){r=arr.filter(entry => {return entry._id==='IuXqpdwiCjC6s5n5'})[0]}//jeune dragon noir
+            if (d20==20){
+              r=arr.filter(entry => {return entry._id===''})[0]
+              option = Math.floor(Math.random() * 4) +1;
+              option = option + "&nbsp;x&nbsp;"
+            }//
           }
 
           /*modèle
@@ -3502,13 +3575,108 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           }
           */
           
-          var valeur_xp = r.system.attributes.xp.value + " XP"
-          list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;'+ option+'<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + valeur_xp + '</li>';
-          //Affichage
-          var res = $("[id=result]");
-          res[0].innerHTML = '';
-          res[0].innerHTML = '<ul>' + list + '</ul>';
-          document.getElementById("app-" + d.appId).style.height = "auto"
+
+
+          //Traitement standard
+
+          let result=[]
+          let result2=[]
+          result.push(r)
+          result2.push(r)
+
+
+          //On cherche les resultats de même famille
+          var save = result[0]
+          let rname=result[0].name.split(' | ')[0]
+          result2=[]
+          for (let pnj of arr){
+            if (pnj.name.split(' | ')[0]==rname && result[0].name!=pnj.name){result2.push(pnj)}
+          }
+          result=result2
+          //On vérifie qu'ils sont de même type
+          var typeO1 = save.system.attributes.categorie;
+          var typeO2 = save.system.attributes.categorie2;
+          if(typeO1!=''){
+            result = result2.filter(entry => {
+              if (entry.system.attributes.categorie==typeO1){return true}
+            })
+          }
+          result2=result
+          if(typeO2!=''){
+            result = result2.filter(entry => {
+              if (entry.system.attributes.categorie2==typeO2){return true}
+            })
+          }
+          result2=result;
+          //On vérifie qu'ils sont dans la même zone
+          let zonesSave = []
+          for (let item of save.items){
+              if(item.type=='region'){zonesSave.push(item)}
+          }
+          result = result2.filter(entry => {
+            let flag_zone = true
+            for (let zoneSave of zonesSave){
+              let zoneFind = false
+              for (let item of entry.items){
+                if (item.name==zoneSave.name){zoneFind=true}
+              }
+              if (zoneFind==false){flag_zone=false}
+            }
+            return flag_zone
+          })
+          result2=result;
+         
+
+         //classe par xp OK
+         let result_sans_xp = []
+         let result_avec_xp = []
+         result = []
+         for (let r of result2) {
+           if (r.system.attributes.xp.value == undefined) {
+             result_sans_xp.push(r)
+           } else {
+             result_avec_xp.push(r)
+           }
+         }
+         while (result_avec_xp.length != 0) {
+           let i = 0
+           let j = 0
+           let minxp = result_avec_xp[0]
+           for (let r of result_avec_xp) {
+             if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
+               minxp = r
+               j = i
+             }
+             i++
+           }
+           result.push(minxp)
+           result_avec_xp.splice(j, 1)
+         }
+         for (let r of result_sans_xp) { result.push(r) }
+         //Une fois classé, il faut remettre le résultat du générateur en premier
+        result.unshift(save)
+         result2=result
+
+         //Affichage
+         var res = $("[id=result]");
+         res[0].innerHTML = '';
+         let list = '';
+         let flag_unique = true
+         for (let r of result) {
+           var prix = r.system.attributes.xp.value + " XP"
+           //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
+           if (flag_unique && result.length>1){
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;'+option+'&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+             list += '<hr>'
+             flag_unique=false
+           } else {
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+           }
+         }
+         if (list==''){list="Aucun objet trouvé"}
+         res[0].innerHTML = '<ul>' + list + '</ul>';
+         document.getElementById("app-" + d.appId).style.height = "auto"
+
         })
       });
     }

@@ -90,7 +90,7 @@ export const generator = `
 {"name":"Coccinelle berserk","id":"Ht1QZ9xBRKvyqgYy","nombre":"1","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"Quenouille massue","id":"GBIEYLfe7akAbM0M","nombre":"1","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"D6 Gobelin flibustier de base","id":"FJdt0N1M38kZVhwG","nombre":"D6","zone":"rivière et lac bas niveau","code":"15"}
-{"name":"D4 Gobelin flibustier costaud","id":"nyBREYegm5uffk01","nombre":"D4","zone":"rivière et lac bas niveau","code":"15"}
+{"name":"D5 Gobelin flibustier costaud","id":"nyBREYegm5uffk01","nombre":"D5","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"D5 Pirate d'eau douce","id":"84XwEPEoMPohiVPT","nombre":"D5","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"D4 Pirate combatif","id":"2fR3xwKFqFQFm74X","nombre":"D4","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"D5 Archer pirate","id":"D3vDFFgXFxnwbyIr","nombre":"D5","zone":"rivière et lac bas niveau","code":"15"}
@@ -107,6 +107,28 @@ export const generator = `
 {"name":"Bête aquatique","id":"Y8O8AGvYTkNHcr6M","nombre":"1","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"Mage d'eau teigneux","id":"x8SmSg16Qnsm0hVi","nombre":"1","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"Kraken d'eau douce","id":"Ng4vYsDyQZdvRkI8","nombre":"1","zone":"rivière et lac bas niveau","code":"15"}
+
+
+{"name":"D12 poisson-volant","id":"mdIUuL1MQpXQ5j6h","nombre":"D12","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"D6 Pélikosaure juvénile","id":"sUpENlTZDkuXLS0O","nombre":"D6","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"D6 Gobelin flibustier de base","id":"FJdt0N1M38kZVhwG","nombre":"D6","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"D5 Gobelin flibustier costaud","id":"nyBREYegm5uffk01","nombre":"D5","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Cap'tain gobelin flibustier","id":"gCQVVQqkpvkkOO3u","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Crabe géant","id":"ZbWt8wso6foLdrVu","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Huître Danbalar","id":"NNdM8qPC9arXIhcs","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Crocodile marin monstrueux","id":"mIp4fiBLg0lZm4Ad","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Moule Bolodrag","id":"msXJWwr7wQDTzOdO","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Ptéranomoran","id":"LZBNTRoJyb5dHanl","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"D6 Moussaillon d'Embarh","id":"ssnMiiKdWYkDYMTQ","nombre":"D6","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"D4 Pirate combatif","id":"2fR3xwKFqFQFm74X","nombre":"D4","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"D5 Archer pirate","id":"D3vDFFgXFxnwbyIr","nombre":"D5","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Maître des rats","id":"7TSlk9GzQ959oYdT","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"D5 Pirate","id":"84XwEPEoMPohiVPT","nombre":"D5","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Capitaine pirate","id":"7qQWhHTAORcCgkMz","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Jeune dragon de sombroloin","id":"w4tOEM5jWM5YPL2G","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Jeune dragon des îles","id":"Z4DfHvlCkC4fU4rv","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Petit Calmar","id":"TGwG245RA2Nyo45n","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
+{"name":"Zaviathan juvénile","id":"VtiZGMFLLrnKK9BL","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
 `
 //{"name":"","id":"","nombre":"1","zone":"","code":""}
 

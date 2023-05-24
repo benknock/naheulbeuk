@@ -1,5 +1,6 @@
 import { all_items_search } from "./items.gen.mjs";
 import { all_actors_search } from "./actors.gen.mjs";
+import { generator } from "./generator.mjs"
 
 //Modifie les Dialog Box pour rester ouvertes après avoir appuyer sur un bouton
 export class CustomDialog extends Dialog {
@@ -28,7 +29,7 @@ export class Macros {
   static getSpeakersTarget = function (option) {
     let targets = ([...game.user.targets].length > 0) ? [...game.user.targets] : canvas.tokens.children.filter(t => t._controlled);
     if (targets.length == 0 || targets.length > 1) {
-      if (option!="no-notif"){ui.notifications.error("Choisissez un token cible (unique)");}
+      if (option != "no-notif") { ui.notifications.error("Choisissez un token cible (unique)"); }
       return null;
     }
     return targets[0].actor;
@@ -38,11 +39,11 @@ export class Macros {
   static getSpeakersTargets = function (option) {
     let targets = ([...game.user.targets].length > 0) ? [...game.user.targets] : canvas.tokens.children.filter(t => t._controlled);
     if (targets.length == 0) {
-      if (option!="no-notif"){ui.notifications.error("Choisissez un token cible");}
+      if (option != "no-notif") { ui.notifications.error("Choisissez un token cible"); }
       return null;
     }
     let actorF = []
-    for (let target of targets){
+    for (let target of targets) {
       actorF.push(target.actor)
     }
     return actorF;
@@ -83,11 +84,11 @@ export class Macros {
       malusmvtpr = 20
     } else if (pr_avec_encombrement > 6) {
       malusmvtpr = 6
-    } else if (pr_avec_encombrement > 5){
+    } else if (pr_avec_encombrement > 5) {
       malusmvtpr = 5
-    } else if (pr_avec_encombrement > 4){
+    } else if (pr_avec_encombrement > 4) {
       malusmvtpr = 4
-    } else if (pr_avec_encombrement > 2){
+    } else if (pr_avec_encombrement > 2) {
       malusmvtpr = 2
     } else {
       malusmvtpr = 0
@@ -108,7 +109,7 @@ export class Macros {
     const lvl = actor.system.attributes.level.value;
     var bonusfo = "";
     if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) > 12) {
-      bonusfo = "+" + (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus  + actor.system.abilities.fo.bonus_man - 12)
+      bonusfo = "+" + (actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man - 12)
     };
     if ((actor.system.abilities.fo.value + actor.system.abilities.fo.bonus + actor.system.abilities.fo.bonus_man) < 9) {
       bonusfo = "-1"
@@ -129,7 +130,7 @@ export class Macros {
         flagTirerCorrectement = 1
       }
     }
-    expr = expr.replace(/@att-arme-poudre/g, lancer+flagTirerCorrectement);
+    expr = expr.replace(/@att-arme-poudre/g, lancer + flagTirerCorrectement);
     expr = expr.replace(/@armefeu/g, flagTirerCorrectement); // pour garder compatibilité, à virer un jour
     expr = expr.replace(/@att-distance/g, lancer);
     expr = expr.replace(/@degat-distance/g, lancerdegat);
@@ -155,7 +156,7 @@ export class Macros {
     expr = expr.replace(/@lvl/g, lvl);
     expr = expr.replace(/ /g, "");
     let i = 0
-    while (i!=4) {
+    while (i != 4) {
       expr = expr.replace(/\+0\+/g, "+");
       expr = expr.replace(/\-0\+/g, "+");
       expr = expr.replace(/\+0\-/g, "-");
@@ -173,7 +174,7 @@ export class Macros {
 
     //si on peut calculer la valeur de l'expression on le fait
     let evalFormula = expr
-    if (expr!=""){
+    if (expr != "") {
       try {
         expr = expr.replace(/max/g, "Math.max");
         expr = expr.replace(/min/g, "Math.min");
@@ -183,8 +184,8 @@ export class Macros {
         expr = expr.replace(/abs/g, "Math.abs");
         evalFormula = eval(expr)
         evalFormula = Math.ceil(evalFormula)
-        evalFormula=evalFormula.toString()
-        if (expr.substring(0,1)=="+") {evalFormula="+" + evalFormula}
+        evalFormula = evalFormula.toString()
+        if (expr.substring(0, 1) == "+") { evalFormula = "+" + evalFormula }
       } catch (error) {
         evalFormula = expr
       }
@@ -194,27 +195,27 @@ export class Macros {
   }
 
   //Global : fonction de jet de dés simples, avec ou sans interface (option "simple" ou "interface") 
-  static async onRoll(actor,item,dataset,option) {
+  static async onRoll(actor, item, dataset, option) {
     var dice = dataset.dice;
     var name = dataset.name;
     var diff = dataset.diff;
     var name2 = ""
-    if (dataset.name2!=undefined){
+    if (dataset.name2 != undefined) {
       name2 = dataset.name2
     }
     var hasID = false
-    var ObjectCible=[]
-    if (game.naheulbeuk.macros.getSpeakersTargets("no-notif")!=undefined){
-      hasID=true;
-      for (let target of game.naheulbeuk.macros.getSpeakersTargets("no-notif")){
-        ObjectCible.push({"id":target.id,"name":target.name})
+    var ObjectCible = []
+    if (game.naheulbeuk.macros.getSpeakersTargets("no-notif") != undefined) {
+      hasID = true;
+      for (let target of game.naheulbeuk.macros.getSpeakersTargets("no-notif")) {
+        ObjectCible.push({ "id": target.id, "name": target.name })
       }
     }
     var hasDescription = false
     var desc = ""
-    if (dataset.desc != undefined){
-      hasDescription=true;
-      desc=dataset.desc;
+    if (dataset.desc != undefined) {
+      hasDescription = true;
+      desc = dataset.desc;
     }
 
     //const armefeu = dataset.af;
@@ -251,7 +252,7 @@ export class Macros {
       if (flagTirerCorrectement == 1) {diff=(parseInt(diff)+1).toString()}
     }*/
 
-    if (option=="interface") {
+    if (option == "interface") {
       let d = new Dialog({
         title: name,
         content: `
@@ -295,9 +296,9 @@ export class Macros {
                     tplData = {
                       diff: "",
                       name: name,
-                      name2:name2,
-                      hasID:hasID,
-                      Object:ObjectCible,
+                      name2: name2,
+                      hasID: hasID,
+                      Object: ObjectCible,
                       hasDescription: hasDescription,
                       desc: desc
                     }
@@ -313,14 +314,14 @@ export class Macros {
                     diff.roll({ "async": true }).then(diff => {
                       result = Math.abs(diff.total - r.total);
                       if (r.total > diff.total) { reussite = "Échec !   " };
-                      if (r.total == 1) {reussite = "Réussite critique !!"};
-                      if (r.total == 20) {reussite = "Échec critique !!"};
+                      if (r.total == 1) { reussite = "Réussite critique !!" };
+                      if (r.total == 20) { reussite = "Échec critique !!" };
                       tplData = {
                         diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
                         name: name,
-                        name2:name2,
-                        hasID:hasID,
-                        Object:ObjectCible,
+                        name2: name2,
+                        hasID: hasID,
+                        Object: ObjectCible,
                         hasDescription: hasDescription,
                         desc: desc
                       };
@@ -354,9 +355,9 @@ export class Macros {
           tplData = {
             diff: "",
             name: name,
-            name2:name2,
-            hasID:hasID,
-            Object:ObjectCible,
+            name2: name2,
+            hasID: hasID,
+            Object: ObjectCible,
             hasDescription: hasDescription,
             desc: desc
           };
@@ -374,14 +375,14 @@ export class Macros {
             //calcule de la réussite ou l'échec suivant si on est sur un jet de rupture ou non
             if (r.total > diff.total && name != "Rupture") { reussite = "Échec !   " };
             if (r.total <= diff.total && name == "Rupture") { reussite = "Échec !   " };
-            if (r.total == 1 && name != "Rupture") {reussite = "Réussite critique !!"};
-            if (r.total == 20 && name != "Rupture") {reussite = "Échec critique !!"};
+            if (r.total == 1 && name != "Rupture") { reussite = "Réussite critique !!" };
+            if (r.total == 20 && name != "Rupture") { reussite = "Échec critique !!" };
             tplData = {
               diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + Math.abs(diff.total - r.total),
               name: name,
-              name2:name2,
-              hasID:hasID,
-              Object:ObjectCible,
+              name2: name2,
+              hasID: hasID,
+              Object: ObjectCible,
               hasDescription: hasDescription,
               desc: desc
             };
@@ -401,32 +402,32 @@ export class Macros {
   }
 
   //Global : macro jet de dés custom 
-  static async onRollCustom(actor,item,dataset,titre) {
+  static async onRollCustom(actor, item, dataset, titre) {
     //titre de la fenêtre de dialog
-    if (titre!=undefined){
+    if (titre != undefined) {
       titre = titre
-    } else if (item.name!=undefined) {
+    } else if (item.name != undefined) {
       titre = item.name
     } else {
       titre = "Jet de dés"
     }
 
-    let nom_objet=""
-    if (item.name!=undefined){
-      nom_objet=" - " + item.name
+    let nom_objet = ""
+    if (item.name != undefined) {
+      nom_objet = " - " + item.name
     }
     var hasID = false
-    var ObjectCible=[]
-    if (game.naheulbeuk.macros.getSpeakersTarget("no-notif")!=undefined){
-      hasID=true;
-      let ObjectCibleI={"id":game.naheulbeuk.macros.getSpeakersTarget("no-notif").id,"name":game.naheulbeuk.macros.getSpeakersTarget("no-notif").name}
+    var ObjectCible = []
+    if (game.naheulbeuk.macros.getSpeakersTarget("no-notif") != undefined) {
+      hasID = true;
+      let ObjectCibleI = { "id": game.naheulbeuk.macros.getSpeakersTarget("no-notif").id, "name": game.naheulbeuk.macros.getSpeakersTarget("no-notif").name }
       ObjectCible.push(ObjectCibleI)
     }
     var hasDescription = false
     var desc = ""
-    if (dataset.desc != undefined){
-      hasDescription=true;
-      desc=dataset.desc;
+    if (dataset.desc != undefined) {
+      hasDescription = true;
+      desc = dataset.desc;
     }
 
     var dice1 = "";
@@ -450,30 +451,30 @@ export class Macros {
     var diff5 = "";
     var diff6 = "";
     var diff7 = "";
-    if (dataset.dice1!=undefined) {dice1 = dataset.dice1;}
-    if (dataset.dice2!=undefined) {dice2 = dataset.dice2;}
-    if (dataset.dice3!=undefined) {dice3 = dataset.dice3;}
-    if (dataset.dice4!=undefined) {dice4 = dataset.dice4;}
-    if (dataset.dice5!=undefined) {dice5 = dataset.dice5;}
-    if (dataset.dice6!=undefined) {dice6 = dataset.dice6;}
-    if (dataset.dice7!=undefined) {dice7 = dataset.dice7;}
-    if (dataset.name1!=undefined) {name1 = dataset.name1;}
-    if (dataset.name2!=undefined) {name2 = dataset.name2;}
-    if (dataset.name3!=undefined) {name3 = dataset.name3;}
-    if (dataset.name4!=undefined) {name4 = dataset.name4;}
-    if (dataset.name5!=undefined) {name5 = dataset.name5;}
-    if (dataset.name6!=undefined) {name6 = dataset.name6;}
-    if (dataset.name7!=undefined) {name7 = dataset.name7;}
-    if (dataset.diff1!=undefined) {diff1 = dataset.diff1;}
-    if (dataset.diff2!=undefined) {diff2 = dataset.diff2;}
-    if (dataset.diff3!=undefined) {diff3 = dataset.diff3;}
-    if (dataset.diff4!=undefined) {diff4 = dataset.diff4;}
-    if (dataset.diff5!=undefined) {diff5 = dataset.diff5;}
-    if (dataset.diff6!=undefined) {diff6 = dataset.diff6;}
-    if (dataset.diff7!=undefined) {diff7 = dataset.diff7;}
+    if (dataset.dice1 != undefined) { dice1 = dataset.dice1; }
+    if (dataset.dice2 != undefined) { dice2 = dataset.dice2; }
+    if (dataset.dice3 != undefined) { dice3 = dataset.dice3; }
+    if (dataset.dice4 != undefined) { dice4 = dataset.dice4; }
+    if (dataset.dice5 != undefined) { dice5 = dataset.dice5; }
+    if (dataset.dice6 != undefined) { dice6 = dataset.dice6; }
+    if (dataset.dice7 != undefined) { dice7 = dataset.dice7; }
+    if (dataset.name1 != undefined) { name1 = dataset.name1; }
+    if (dataset.name2 != undefined) { name2 = dataset.name2; }
+    if (dataset.name3 != undefined) { name3 = dataset.name3; }
+    if (dataset.name4 != undefined) { name4 = dataset.name4; }
+    if (dataset.name5 != undefined) { name5 = dataset.name5; }
+    if (dataset.name6 != undefined) { name6 = dataset.name6; }
+    if (dataset.name7 != undefined) { name7 = dataset.name7; }
+    if (dataset.diff1 != undefined) { diff1 = dataset.diff1; }
+    if (dataset.diff2 != undefined) { diff2 = dataset.diff2; }
+    if (dataset.diff3 != undefined) { diff3 = dataset.diff3; }
+    if (dataset.diff4 != undefined) { diff4 = dataset.diff4; }
+    if (dataset.diff5 != undefined) { diff5 = dataset.diff5; }
+    if (dataset.diff6 != undefined) { diff6 = dataset.diff6; }
+    if (dataset.diff7 != undefined) { diff7 = dataset.diff7; }
 
     //replace attributs 1
-    let diff_dice_array=[dice1,dice2,dice3,dice4,dice5,dice6,dice7,diff1,diff2,diff3,diff4,diff5,diff6,diff7]
+    let diff_dice_array = [dice1, dice2, dice3, dice4, dice5, dice6, dice7, diff1, diff2, diff3, diff4, diff5, diff6, diff7]
     let i = 0
     for (let change_entry of diff_dice_array) {
       if (diff_dice_array[i].substr(0, 6) == "cible:") {
@@ -486,23 +487,23 @@ export class Macros {
       diff_dice_array[i] = diff_dice_array[i].replace(/ /g, "");
       i++
     }
-    dice1=diff_dice_array[0]
-    dice2=diff_dice_array[1]
-    dice3=diff_dice_array[2]
-    dice4=diff_dice_array[3]
-    dice5=diff_dice_array[4]
-    dice6=diff_dice_array[5]
-    dice7=diff_dice_array[6]
-    diff1=diff_dice_array[7]
-    diff2=diff_dice_array[8]
-    diff3=diff_dice_array[9]
-    diff4=diff_dice_array[10]
-    diff5=diff_dice_array[11]
-    diff6=diff_dice_array[12]
-    diff7=diff_dice_array[13]
+    dice1 = diff_dice_array[0]
+    dice2 = diff_dice_array[1]
+    dice3 = diff_dice_array[2]
+    dice4 = diff_dice_array[3]
+    dice5 = diff_dice_array[4]
+    dice6 = diff_dice_array[5]
+    dice7 = diff_dice_array[6]
+    diff1 = diff_dice_array[7]
+    diff2 = diff_dice_array[8]
+    diff3 = diff_dice_array[9]
+    diff4 = diff_dice_array[10]
+    diff5 = diff_dice_array[11]
+    diff6 = diff_dice_array[12]
+    diff7 = diff_dice_array[13]
 
     var content = ""
-    
+
     if (name1 != "") {
       content = content + `
       <div style="display: flex;">
@@ -624,7 +625,7 @@ export class Macros {
     }
     var buttons = []
     var one = {
-      label: '<span style="font-size: 12px;">'+name1+'</span>',
+      label: '<span style="font-size: 12px;">' + name1 + '</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule1"').val();
         let diff = html.find('input[name="inputDiff1"').val();
@@ -651,8 +652,8 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
-                hasID:hasID,
-                Object:ObjectCible,
+                hasID: hasID,
+                Object: ObjectCible,
                 hasDescription: hasDescription,
                 desc: desc,
                 diff: "",
@@ -670,11 +671,11 @@ export class Macros {
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
                 if (r.total > diff.total) { reussite = "Échec !   " };
-                if (r.total == 1) {reussite = "Réussite critique !!"};
-                if (r.total == 20) {reussite = "Échec critique !!"};
+                if (r.total == 1) { reussite = "Réussite critique !!" };
+                if (r.total == 20) { reussite = "Échec critique !!" };
                 tplData = {
-                  hasID:hasID,
-                  Object:ObjectCible,
+                  hasID: hasID,
+                  Object: ObjectCible,
                   hasDescription: hasDescription,
                   desc: desc,
                   diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
@@ -695,7 +696,7 @@ export class Macros {
       }
     }
     var two = {
-      label: '<span style="font-size: 12px;">'+name2+'</span>',
+      label: '<span style="font-size: 12px;">' + name2 + '</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule2"').val();
         let diff = html.find('input[name="inputDiff2"').val();
@@ -724,8 +725,8 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
-                hasID:hasID,
-                Object:ObjectCible,
+                hasID: hasID,
+                Object: ObjectCible,
                 hasDescription: hasDescription,
                 desc: desc,
                 diff: "",
@@ -743,11 +744,11 @@ export class Macros {
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
                 if (r.total > diff.total) { reussite = "Échec !   " };
-                if (r.total == 1) {reussite = "Réussite critique !!"};
-                if (r.total == 20) {reussite = "Échec critique !!"};
+                if (r.total == 1) { reussite = "Réussite critique !!" };
+                if (r.total == 20) { reussite = "Échec critique !!" };
                 tplData = {
-                  hasID:hasID,
-                  Object:ObjectCible,
+                  hasID: hasID,
+                  Object: ObjectCible,
                   hasDescription: hasDescription,
                   desc: desc,
                   diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
@@ -768,7 +769,7 @@ export class Macros {
       }
     }
     var three = {
-      label: '<span style="font-size: 12px;">'+name3+'</span>',
+      label: '<span style="font-size: 12px;">' + name3 + '</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule3"').val();
         let diff = html.find('input[name="inputDiff3"').val();
@@ -797,8 +798,8 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
-                hasID:hasID,
-                Object:ObjectCible,
+                hasID: hasID,
+                Object: ObjectCible,
                 hasDescription: hasDescription,
                 desc: desc,
                 diff: "",
@@ -816,11 +817,11 @@ export class Macros {
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
                 if (r.total > diff.total) { reussite = "Échec !   " };
-                if (r.total == 1) {reussite = "Réussite critique !!"};
-                if (r.total == 20) {reussite = "Échec critique !!"};
+                if (r.total == 1) { reussite = "Réussite critique !!" };
+                if (r.total == 20) { reussite = "Échec critique !!" };
                 tplData = {
-                  hasID:hasID,
-                  Object:ObjectCible,
+                  hasID: hasID,
+                  Object: ObjectCible,
                   hasDescription: hasDescription,
                   desc: desc,
                   diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
@@ -841,7 +842,7 @@ export class Macros {
       }
     }
     var four = {
-      label: '<span style="font-size: 12px;">'+name4+'</span>',
+      label: '<span style="font-size: 12px;">' + name4 + '</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule4"').val();
         let diff = html.find('input[name="inputDiff4"').val();
@@ -870,8 +871,8 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
-                hasID:hasID,
-                Object:ObjectCible,
+                hasID: hasID,
+                Object: ObjectCible,
                 hasDescription: hasDescription,
                 desc: desc,
                 diff: "",
@@ -889,11 +890,11 @@ export class Macros {
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
                 if (r.total > diff.total) { reussite = "Échec !   " };
-                if (r.total == 1) {reussite = "Réussite critique !!"};
-                if (r.total == 20) {reussite = "Échec critique !!"};
+                if (r.total == 1) { reussite = "Réussite critique !!" };
+                if (r.total == 20) { reussite = "Échec critique !!" };
                 tplData = {
-                  hasID:hasID,
-                  Object:ObjectCible,
+                  hasID: hasID,
+                  Object: ObjectCible,
                   hasDescription: hasDescription,
                   desc: desc,
                   diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
@@ -914,7 +915,7 @@ export class Macros {
       }
     }
     var five = {
-      label: '<span style="font-size: 12px;">'+name5+'</span>',
+      label: '<span style="font-size: 12px;">' + name5 + '</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule5"').val();
         let diff = html.find('input[name="inputDiff5"').val();
@@ -943,8 +944,8 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
-                hasID:hasID,
-                Object:ObjectCible,
+                hasID: hasID,
+                Object: ObjectCible,
                 hasDescription: hasDescription,
                 desc: desc,
                 diff: "",
@@ -962,11 +963,11 @@ export class Macros {
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
                 if (r.total > diff.total) { reussite = "Échec !   " };
-                if (r.total == 1) {reussite = "Réussite critique !!"};
-                if (r.total == 20) {reussite = "Échec critique !!"};
+                if (r.total == 1) { reussite = "Réussite critique !!" };
+                if (r.total == 20) { reussite = "Échec critique !!" };
                 tplData = {
-                  hasID:hasID,
-                  Object:ObjectCible,
+                  hasID: hasID,
+                  Object: ObjectCible,
                   hasDescription: hasDescription,
                   desc: desc,
                   diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
@@ -987,7 +988,7 @@ export class Macros {
       }
     }
     var six = {
-      label: '<span style="font-size: 12px;">'+name6+'</span>',
+      label: '<span style="font-size: 12px;">' + name6 + '</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule6"').val();
         let diff = html.find('input[name="inputDiff6"').val();
@@ -1016,8 +1017,8 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
-                hasID:hasID,
-                Object:ObjectCible,
+                hasID: hasID,
+                Object: ObjectCible,
                 hasDescription: hasDescription,
                 desc: desc,
                 diff: "",
@@ -1035,11 +1036,11 @@ export class Macros {
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
                 if (r.total > diff.total) { reussite = "Échec !   " };
-                if (r.total == 1) {reussite = "Réussite critique !!"};
-                if (r.total == 20) {reussite = "Échec critique !!"};
+                if (r.total == 1) { reussite = "Réussite critique !!" };
+                if (r.total == 20) { reussite = "Échec critique !!" };
                 tplData = {
-                  hasID:hasID,
-                  Object:ObjectCible,
+                  hasID: hasID,
+                  Object: ObjectCible,
                   hasDescription: hasDescription,
                   desc: desc,
                   diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
@@ -1060,7 +1061,7 @@ export class Macros {
       }
     }
     var seven = {
-      label: '<span style="font-size: 12px;">'+name7+'</span>',
+      label: '<span style="font-size: 12px;">' + name7 + '</span>',
       callback: (html) => {
         let dice = html.find('input[name="inputFormule5"').val();
         let diff = html.find('input[name="inputDiff5"').val();
@@ -1089,8 +1090,8 @@ export class Macros {
             var reussite = "Réussite !   ";
             if (diff == "") {
               tplData = {
-                hasID:hasID,
-                Object:ObjectCible,
+                hasID: hasID,
+                Object: ObjectCible,
                 hasDescription: hasDescription,
                 desc: desc,
                 diff: "",
@@ -1108,11 +1109,11 @@ export class Macros {
               diff.roll({ "async": true }).then(diff => {
                 result = Math.abs(diff.total - r.total);
                 if (r.total > diff.total) { reussite = "Échec !   " };
-                if (r.total == 1) {reussite = "Réussite critique !!"};
-                if (r.total == 20) {reussite = "Échec critique !!"};
+                if (r.total == 1) { reussite = "Réussite critique !!" };
+                if (r.total == 20) { reussite = "Échec critique !!" };
                 tplData = {
-                  hasID:hasID,
-                  Object:ObjectCible,
+                  hasID: hasID,
+                  Object: ObjectCible,
                   hasDescription: hasDescription,
                   desc: desc,
                   diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
@@ -1153,7 +1154,7 @@ export class Macros {
   //----------------Fonctions utilisées pour naheulbeuk.mjs------------------------------------------------ 
 
   //Global : drag and drop d'un objet dans la barre de macro
-  static createMacro = async function(dropData, slot) {
+  static createMacro = async function (dropData, slot) {
     const item = await fromUuid(dropData.uuid);
     const actor = item.actor;
     let command = null;
@@ -1165,11 +1166,11 @@ export class Macros {
     } catch (e) {
       mode = 1
     }
-    if (actor.type=="npc"){
+    if (actor.type == "npc") {
       command = `
 //Pour un PNJ, il est recommandé d'utiliser plutôt :
 //game.naheulbeuk.macros.actions_pnj();`
-    } else {command=''}
+    } else { command = '' }
     command += `
 let mode = ${mode}
 /*
@@ -1180,18 +1181,18 @@ Changer la valeur du mode pour modifier le comportement au lancement :
 4 --> même interface que le mode 1, mais avec en plus un bouton attaque rapide
 */
 game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
-    
+
     macroName = item.name + " (" + game.actors.get(actor.id).name + ")";
     let macro = game.macros.contents.find(m => (m.name === macroName) && (m.command === command));
     if (!macro) {
       macro = await Macro.create({
-          name: macroName,
-          type: "script",
-          img: item.img,
-          command: command,
-          flags: {"naheulbeuk.macro": true}
-      }, {displaySheet: false});
-      game.user.assignHotbarMacro(macro, slot);        
+        name: macroName,
+        type: "script",
+        img: item.img,
+        command: command,
+        flags: { "naheulbeuk.macro": true }
+      }, { displaySheet: false });
+      game.user.assignHotbarMacro(macro, slot);
     }
   }
 
@@ -2292,7 +2293,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
       })
       $("[class=competencejet]").click(ev => {
         var diffcomp = ev.currentTarget.childNodes[0].data
-        if (diffcomp!="-") {
+        if (diffcomp != "-") {
           var namecomp = ev.currentTarget.attributes.name.value;
           let e = new Dialog({
             title: namecomp,
@@ -2359,7 +2360,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
   }
 
   //Macros setting drag and drop
-  static async drag_drop(){
+  static async drag_drop() {
     let d = new Dialog({
       title: "Sélection mode drag and drop",
       content: `
@@ -2376,21 +2377,21 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         one: {
           label: "Valider",
           callback: (html) => {
-              let mode = html.find('input[name="mode"').val()
-              if (mode!=2 && mode!=3 && mode!=4){mode = 1}
-              game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
-              game.settings.set("core", "naheulbeuk.mode_drag", mode)
-            }
+            let mode = html.find('input[name="mode"').val()
+            if (mode != 2 && mode != 3 && mode != 4) { mode = 1 }
+            game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
+            game.settings.set("core", "naheulbeuk.mode_drag", mode)
           }
         }
+      }
     });
     d.render(true);
   }
 
   //Macros actions pnj pour remplacer drag and drop
-  static async actions_pnj(){
+  static async actions_pnj() {
     const source = game.naheulbeuk.macros.getSpeakersActor();
-    let attaque=[]
+    let attaque = []
     let mode
     try {
       game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
@@ -2398,69 +2399,69 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
     } catch (e) {
       mode = 1
     }
-    if (source.type=="npc"){
-        for (let itemF of source.items){
-            if (itemF.type=="attaque"){
-                attaque.push(itemF)
-            }
+    if (source.type == "npc") {
+      for (let itemF of source.items) {
+        if (itemF.type == "attaque") {
+          attaque.push(itemF)
         }
-        attaque.push({"name":"Parade et Esquive"})
+      }
+      attaque.push({ "name": "Parade et Esquive" })
     } else {
-        for (let itemF of source.items){
-            if (itemF.type=="arme" && itemF.system.equipe){
-                attaque.push(itemF)
-            }
-        } 
+      for (let itemF of source.items) {
+        if (itemF.type == "arme" && itemF.system.equipe) {
+          attaque.push(itemF)
+        }
+      }
     }
-    for (let itemF of source.items){
-      if (itemF.type=="sort"){
+    for (let itemF of source.items) {
+      if (itemF.type == "sort") {
         attaque.push(itemF)
       }
     }
-    for (let itemF of source.items){
-      if (itemF.type=="coup"){
+    for (let itemF of source.items) {
+      if (itemF.type == "coup") {
         attaque.push(itemF)
       }
     }
 
     let txt = '<select name="inputDiff3" id="inputDiff3">'
 
-    for (let itemF of attaque){
-        txt += '<option value="' + itemF.name + '">' + itemF.name + '</option>'
+    for (let itemF of attaque) {
+      txt += '<option value="' + itemF.name + '">' + itemF.name + '</option>'
     }
 
     txt += "</select><br/><br/>"
 
     let buttons = {};
-    buttons.one= {
-        label: "Valider",
-        callback: (html) => {
-          var attaque = html.find('select[name="inputDiff3"').val()
-          if (attaque!="Parade et Esquive"){
-              game.naheulbeuk.rollItemMacro(attaque,mode);
-          } else {
-              var dataset = { 
-                "actor": source,
-                "name1": "Parade",
-                "dice1": "d20",
-                "diff1": game.naheulbeuk.macros.replaceAttr("@prd", source),
-                "name2": "Parade",
-                "dice2": "d20",
-                "diff2": game.naheulbeuk.macros.replaceAttr("@esq", source)
-              };
-              let item = {"name":attaque}
-              game.naheulbeuk.macros.onRollCustom(actor, item, dataset, item.name)
-          }
+    buttons.one = {
+      label: "Valider",
+      callback: (html) => {
+        var attaque = html.find('select[name="inputDiff3"').val()
+        if (attaque != "Parade et Esquive") {
+          game.naheulbeuk.rollItemMacro(attaque, mode);
+        } else {
+          var dataset = {
+            "actor": source,
+            "name1": "Parade",
+            "dice1": "d20",
+            "diff1": game.naheulbeuk.macros.replaceAttr("@prd", source),
+            "name2": "Parade",
+            "dice2": "d20",
+            "diff2": game.naheulbeuk.macros.replaceAttr("@esq", source)
+          };
+          let item = { "name": attaque }
+          game.naheulbeuk.macros.onRollCustom(actor, item, dataset, item.name)
         }
+      }
     }
 
     let d = new Dialog({
-        title: "Que va utiliser "+ source.name + " ?",
-        content: txt,
-        buttons: buttons
+      title: "Que va utiliser " + source.name + " ?",
+      content: txt,
+      buttons: buttons
     });
     d.render(true);
-  } 
+  }
 
   //Macros : outil de recherche/création mag
   static async magic_search() {
@@ -2473,9 +2474,9 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
       arr.push(entry)
       let flag = true
       for (let comp of comps) {
-        if (comp == entry.compendium){flag=false} 
+        if (comp == entry.compendium) { flag = false }
       }
-      if (flag){comps.push(entry.compendium)}
+      if (flag) { comps.push(entry.compendium) }
     }
     const myDialogOptions = {
       width: 900
@@ -2489,8 +2490,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
       <select name="compendium" id="compendium" style="flex: 1">
         <option value=''></option>
     `
-    let comps2=[]
-    for (let comp of comps){
+    let comps2 = []
+    for (let comp of comps) {
       comps2.push(game.packs.find(p => p.metadata.name === comp).metadata.label);
     }
     //Ordre alphabétique
@@ -2499,14 +2500,14 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
       undefined, // locale string -- undefined means to use browser default
       { sensitivity }
     );
-    const byAccent  = sortBySensitivity('accent');
+    const byAccent = sortBySensitivity('accent');
     comps2.sort(byAccent)
 
-    for (let comp of comps2){
+    for (let comp of comps2) {
       let compendium = game.packs.find(p => p.metadata.label === comp).metadata.name;
-      txt +='<option value='+compendium+'>'+comp+'</option>'
+      txt += '<option value=' + compendium + '>' + comp + '</option>'
     }
-    txt +=`
+    txt += `
       </select>
       <label style="flex: 1;text-align:right;">Nom ( || pour un OU, && pour un ET )&nbsp;&nbsp;&nbsp;&nbsp;</em></label>
       <input style="flex: 1" type="text" name="nameO" id="nameO" value="" label="Nom de l'objet" />
@@ -2660,16 +2661,16 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
 
         //Recherche compendium new
         var comp = $("[name=compendium]").val();
-        if (comp != ''){
-          result = result2.filter(entry => {return entry.compendium===comp})
-          
+        if (comp != '') {
+          result = result2.filter(entry => { return entry.compendium === comp })
+
         }
-        result2=result;
+        result2 = result;
 
         //Recherche nom new
         var nameO = $("[id=nameO]").val().toLowerCase();
         var nameOs = nameO.split("&&");
-        if (nameO != ''){
+        if (nameO != '') {
           result = result2.filter(entry => {
             let flag1 = true
             for (let valentry of nameOs) {
@@ -2691,51 +2692,51 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             return flag1
           });
         }
-        result2=result;
-        
+        result2 = result;
+
         //Rercherche type new
         var typeO1 = $("[name=typeO1]").val();
         var typeO2 = $("[name=typeO2]").val();
-        if (typeO1 != '' || typeO2 != ''){
+        if (typeO1 != '' || typeO2 != '') {
           result = result2.filter(entry => {
-            if ((typeO1!='' && entry.type==typeO1) || (typeO2!='' && entry.type==typeO2)){return true}
+            if ((typeO1 != '' && entry.type == typeO1) || (typeO2 != '' && entry.type == typeO2)) { return true }
           })
         }
-        result2=result;
+        result2 = result;
 
         //Rercherche catégorie new
         var catO1 = $("[name=catO1]").val();
         var catO2 = $("[name=catO2]").val();
-        if (catO1 != '' || catO2 != ''){
+        if (catO1 != '' || catO2 != '') {
           result = result2.filter(entry => {
-            if ((catO1!='' && entry.system.categorie==catO1) || (catO2!='' && entry.system.categorie==catO2)){return true}
+            if ((catO1 != '' && entry.system.categorie == catO1) || (catO2 != '' && entry.system.categorie == catO2)) { return true }
           })
         }
-        result2=result;
+        result2 = result;
 
         //Rercherche arme new
         var armeO1 = $("[name=armeO1]").val();
         var armeO2 = $("[name=armeO2]").val();
-        if (armeO1 != '' || armeO2 != ''){
+        if (armeO1 != '' || armeO2 != '') {
           result = result2.filter(entry => {
-            if (armeO1!='' && armeO2!='' && eval("entry.system."+armeO1)==true && eval("entry.system."+armeO2)==true){return true}
-            if (armeO1!='' && armeO2=='' && eval("entry.system."+armeO1)==true){return true}
-            if (armeO2!='' && armeO1=='' && eval("entry.system."+armeO2)==true){return true}
+            if (armeO1 != '' && armeO2 != '' && eval("entry.system." + armeO1) == true && eval("entry.system." + armeO2) == true) { return true }
+            if (armeO1 != '' && armeO2 == '' && eval("entry.system." + armeO1) == true) { return true }
+            if (armeO2 != '' && armeO1 == '' && eval("entry.system." + armeO2) == true) { return true }
           })
         }
-        result2=result;
+        result2 = result;
 
         //Rercherche arme new
         var armureO1 = $("[name=armureO1]").val();
         var armureO2 = $("[name=armureO2]").val();
-        if (armureO1 != '' || armureO2 != ''){
+        if (armureO1 != '' || armureO2 != '') {
           result = result2.filter(entry => {
-            if (armureO1!='' && armureO2!='' && eval("entry.system."+armureO1)==true && eval("entry.system."+armureO2)==true){return true}
-            if (armureO2=='' && armureO1!='' && eval("entry.system."+armureO1)==true){return true}
-            if (armureO1=='' && armureO2!='' && eval("entry.system."+armureO2)==true){return true}
+            if (armureO1 != '' && armureO2 != '' && eval("entry.system." + armureO1) == true && eval("entry.system." + armureO2) == true) { return true }
+            if (armureO2 == '' && armureO1 != '' && eval("entry.system." + armureO1) == true) { return true }
+            if (armureO1 == '' && armureO2 != '' && eval("entry.system." + armureO2) == true) { return true }
           })
         }
-        result2=result;
+        result2 = result;
 
         //Recherche txt OK
         var val = $("[id=q]").val().toLowerCase();
@@ -2768,7 +2769,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             return flag1
           });
         }
-        result2=result;
+        result2 = result;
 
         //Recherche prix- new
         var pomin = $("[id=pomin]").val()
@@ -2776,8 +2777,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         if (pomin != "" || pomax != "") {
           result = result2.filter(entry => {
             if (entry.system.prix != undefined) {
-              let flag1=false
-              let flag2= false
+              let flag1 = false
+              let flag2 = false
               if (pomin != "") {
                 if (entry.system.prix >= parseFloat(pomin)) { flag1 = true }
               } else { flag1 = true }
@@ -2788,7 +2789,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             }
           })
         }
-        result2=result;
+        result2 = result;
 
         //classe par prix OK
         let result_sans_prix = []
@@ -2816,14 +2817,14 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           result_avec_prix.splice(j, 1)
         }
         for (let r of result_sans_prix) { result.push(r) }
-        result2=result
+        result2 = result
 
         //un seul résultat new
         if (document.getElementById("random").checked) {
           let rand = Math.floor(Math.random() * result.length);
           result2 = []
           result2.push(result[rand])
-          result=result2
+          result = result2
         }
 
         //Gestion journal 
@@ -2836,8 +2837,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             if (journal.name == magasin) {
               magasinObj = journal
               for (let pageFind of magasinObj.pages) {
-                if (pageFind.name==page){
-                  pageObj=pageFind
+                if (pageFind.name == page) {
+                  pageObj = pageFind
                 }
               }
             }
@@ -2862,7 +2863,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i></a><input style="width: 280px;"id="' + r._id + r._id + '" type="text" value="' + r.name + '" />&nbsp;-&nbsp;<input style="width: 50px;"id="' + r._id + '" type="text" value="' + prix2 + '" />&nbsp;PO&nbsp;-&nbsp;' + compendium.metadata.label + '&nbsp;&nbsp;<button style="width: 140px;" class="magasin" name="' + r.name + '" type="button">Ajouter au magasin</button></li>';
           }
         }
-        if (list==''){list="Aucun objet trouvé"}
+        if (list == '') { list = "Aucun objet trouvé" }
         res[0].innerHTML = '<ul>' + list + '</ul>';
         document.getElementById("app-" + d.appId).style.height = "auto"
         $("[class=magasin]").click(ev2 => {
@@ -2876,7 +2877,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
                 content2 = content2 + " - vendu pour " + prixObj + " PO"
               }
               content2 = content2 + '</p>\n<section class="secret">\n<p><a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a></p>\n</section>'
-              pageObj.update({"text": {"content":content2}})
+              pageObj.update({ "text": { "content": content2 } })
             }
           }
         });
@@ -2884,20 +2885,20 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
     });
   }
 
-    //Macros : outil de recherche/création mag
-    static async magic_pnj_search() {
-      let all = all_actors_search;
-      var raw_arr = all.split("\n");
-      var arr = []
-      for (let entry of raw_arr) {
-        entry = JSON.parse(entry)
-        if(entry.compendium=='bestiaire'){arr.push(entry)}
-      }
-      const myDialogOptions = {
-        width: 900
-      };
-  
-      let txt = `
+  //Macros : outil de recherche/création mag
+  static async magic_pnj_search() {
+    let all = all_actors_search;
+    var raw_arr = all.split("\n");
+    var arr = []
+    for (let entry of raw_arr) {
+      entry = JSON.parse(entry)
+      if (entry.compendium == 'bestiaire') { arr.push(entry) }
+    }
+    const myDialogOptions = {
+      width: 900
+    };
+
+    let txt = `
       <form>
       <div style="display: flex;align-items: center;padding-bottom: 10px;"> 
         <label style="flex:0.25;">Catégorie</label>
@@ -3109,576 +3110,344 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
       <div id="result"></div>
     </form>
       `
-  
-      let d = new Dialog({
-        title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
-        content: txt,
-        buttons: {
+
+    let d = new Dialog({
+      title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
+      content: txt,
+      buttons: {
+      }
+    }, myDialogOptions);
+    d.render(true);
+    $(document).ready(function () {
+      $("[class=validation]").click(ev2 => {
+        var result = arr;
+        var result2 = arr;
+
+        //Rercherche type new
+        var typeO1 = $("[name=typeO1]").val();
+        if (typeO1 != '') {
+          result = result2.filter(entry => {
+            if (entry.system.attributes.categorie == typeO1) { return true }
+          })
+          result2 = result;
         }
-      }, myDialogOptions);
-      d.render(true);
-      $(document).ready(function () {
-        $("[class=validation]").click(ev2 => {
-          var result = arr;
-          var result2 = arr;
-  
-          //Rercherche type new
-          var typeO1 = $("[name=typeO1]").val();
-          if (typeO1 != ''){
-            result = result2.filter(entry => {
-              if (entry.system.attributes.categorie==typeO1){return true}
-            })
-            result2=result;
-          }
-          var typeO2 = $("[name=typeO2]").val();
-          if (typeO2 != ''){
-            result = result2.filter(entry => {
-              if (entry.system.attributes.categorie2==typeO2){return true}
-            })
-            result2=result;
-          }
-          
-          //Recherche nom new
-          var nameO = $("[id=nameO]").val().toLowerCase();
-          var nameOs = nameO.split("&&");
-          if (nameO != ''){
-            result = result2.filter(entry => {
-              let flag1 = true
-              for (let valentry of nameOs) {
-                let valss = valentry.split("||");
-                if (valss.length == 1) {
+        var typeO2 = $("[name=typeO2]").val();
+        if (typeO2 != '') {
+          result = result2.filter(entry => {
+            if (entry.system.attributes.categorie2 == typeO2) { return true }
+          })
+          result2 = result;
+        }
+
+        //Recherche nom new
+        var nameO = $("[id=nameO]").val().toLowerCase();
+        var nameOs = nameO.split("&&");
+        if (nameO != '') {
+          result = result2.filter(entry => {
+            let flag1 = true
+            for (let valentry of nameOs) {
+              let valss = valentry.split("||");
+              if (valss.length == 1) {
+                let flag2 = false
+                if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
+                if (flag2 == false) { flag1 = false }
+              } else {
+                let flag3 = false
+                for (let valssentry of valss) {
                   let flag2 = false
-                  if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
-                  if (flag2 == false) { flag1 = false }
-                } else {
-                  let flag3 = false
-                  for (let valssentry of valss) {
-                    let flag2 = false
-                    if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
-                    if (flag2 == true) { flag3 = true }
-                  }
-                  if (flag3 == false) { flag1 = false }
+                  if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
+                  if (flag2 == true) { flag3 = true }
                 }
+                if (flag3 == false) { flag1 = false }
               }
-              return flag1
-            });
-            result2=result;
-          }
-          
-          //Recherche trait et zone new
-          var traitO1 = $("[name=traitO1]").val();
-          var traitO2 = $("[name=traitO2]").val();
-          var geoO1 = $("[name=geoO1]").val();
-          var geoO2 = $("[name=geoO2]").val();
-          if(traitO1!='' || traitO2!='' || geoO1!='' || geoO2!=''){
-            result = result2.filter(entry => {
-              let flag_traitO1=false
-              let flag_traitO2=false
-              let flag_geoO1=false
-              let flag_geoO2=false
-              for (let item of entry.items){
-                if(item.name==traitO1){flag_traitO1=true}
-                if(item.name==traitO2){flag_traitO2=true}
-                if(item.name==geoO1){flag_geoO1=true}
-                if(item.name==geoO2){flag_geoO2=true}
-              }
-              let flag_total=true
-              if (traitO1!=''){
-                if (flag_traitO1==false){flag_total=false}
-              }
-              if (traitO2!=''){
-                if (flag_traitO2==false){flag_total=false}
-              }
-              if ((geoO1!=''|| geoO2!='') && (flag_geoO1==false && flag_geoO2==false)){flag_total=false}
-              return flag_total
-            })
-            result2=result;
-          }
-
-          //Rercherche XP new
-          var xpO1 = $("[id=xpO1]").val();
-          var xpO2 = $("[id=xpO2]").val();
-          if (xpO1 != '' || xpO2 != ''){
-            result = result2.filter(entry => {
-              if (xpO1!='' && xpO2==''){
-                if (entry.system.attributes.xp.value>=xpO1){return true}
-              }
-              if (xpO1=='' && xpO2!=''){
-                if (entry.system.attributes.xp.value<=xpO2){return true}
-              }
-              if (xpO1!='' && xpO2!=''){
-                if (entry.system.attributes.xp.value>=xpO1 && entry.system.attributes.xp.value<=xpO2){return true}
-              }
-            })
-            result2=result
-          }
-   
-          //un seul résultat new
-          if (document.getElementById("random").checked) {
-            let rand = Math.floor(Math.random() * result.length);
-            result2 = []
-            result2.push(result[rand])
-            result=result2
-
-            //On cherche les resultats de même famille
-            var save = result[0]
-            let rname=result[0].name.split(' | ')[0]
-            result2=[]
-            for (let pnj of arr){
-              if (pnj.name.split(' | ')[0]==rname && result[0].name!=pnj.name){result2.push(pnj)}
             }
-            result=result2
-            //On vérifie qu'ils sont de même type
-            var typeO1 = save.system.attributes.categorie;
-            var typeO2 = save.system.attributes.categorie2;
-            if(typeO1!=''){
-              result = result2.filter(entry => {
-                if (entry.system.attributes.categorie==typeO1){return true}
-              })
+            return flag1
+          });
+          result2 = result;
+        }
+
+        //Recherche trait et zone new
+        var traitO1 = $("[name=traitO1]").val();
+        var traitO2 = $("[name=traitO2]").val();
+        var geoO1 = $("[name=geoO1]").val();
+        var geoO2 = $("[name=geoO2]").val();
+        if (traitO1 != '' || traitO2 != '' || geoO1 != '' || geoO2 != '') {
+          result = result2.filter(entry => {
+            let flag_traitO1 = false
+            let flag_traitO2 = false
+            let flag_geoO1 = false
+            let flag_geoO2 = false
+            for (let item of entry.items) {
+              if (item.name == traitO1) { flag_traitO1 = true }
+              if (item.name == traitO2) { flag_traitO2 = true }
+              if (item.name == geoO1) { flag_geoO1 = true }
+              if (item.name == geoO2) { flag_geoO2 = true }
             }
-            result2=result
-            if(typeO2!=''){
-              result = result2.filter(entry => {
-                if (entry.system.attributes.categorie2==typeO2){return true}
-              })
+            let flag_total = true
+            if (traitO1 != '') {
+              if (flag_traitO1 == false) { flag_total = false }
             }
-            result2=result;
-            //On vérifie qu'ils sont dans la même zone
-            let zonesSave = []
-            for (let item of save.items){
-                if(item.type=='region'){zonesSave.push(item)}
+            if (traitO2 != '') {
+              if (flag_traitO2 == false) { flag_total = false }
             }
-            result = result2.filter(entry => {
-              let flag_zone = true
-              for (let zoneSave of zonesSave){
-                let zoneFind = false
-                for (let item of entry.items){
-                  if (item.name==zoneSave.name){zoneFind=true}
-                }
-                if (zoneFind==false){flag_zone=false}
-              }
-              return flag_zone
-            })
-            result2=result;
-          }
+            if ((geoO1 != '' || geoO2 != '') && (flag_geoO1 == false && flag_geoO2 == false)) { flag_total = false }
+            return flag_total
+          })
+          result2 = result;
+        }
 
-          //classe par xp OK
-          let result_sans_xp = []
-          let result_avec_xp = []
-          result = []
-          for (let r of result2) {
-            if (r.system.attributes.xp.value == undefined) {
-              result_sans_xp.push(r)
-            } else {
-              result_avec_xp.push(r)
+        //Rercherche XP new
+        var xpO1 = $("[id=xpO1]").val();
+        var xpO2 = $("[id=xpO2]").val();
+        if (xpO1 != '' || xpO2 != '') {
+          result = result2.filter(entry => {
+            if (xpO1 != '' && xpO2 == '') {
+              if (entry.system.attributes.xp.value >= xpO1) { return true }
             }
-          }
-          while (result_avec_xp.length != 0) {
-            let i = 0
-            let j = 0
-            let minxp = result_avec_xp[0]
-            for (let r of result_avec_xp) {
-              if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
-                minxp = r
-                j = i
-              }
-              i++
+            if (xpO1 == '' && xpO2 != '') {
+              if (entry.system.attributes.xp.value <= xpO2) { return true }
             }
-            result.push(minxp)
-            result_avec_xp.splice(j, 1)
-          }
-          for (let r of result_sans_xp) { result.push(r) }
-          //Une fois classé, si on était dans le cas d'un affichage unique, il faut remettre cette valeur en premier
-          if (document.getElementById("random").checked) {
-            result.unshift(save)
-          }
-          result2=result
-
-          //Affichage
-          var res = $("[id=result]");
-          res[0].innerHTML = '';
-          let list = '';
-          let flag_unique = true
-          for (let r of result) {
-            var prix = r.system.attributes.xp.value + " XP"
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
-            //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
-            if (flag_unique && document.getElementById("random").checked && result.length>1){
-              list += '<hr>'
-              flag_unique=false
+            if (xpO1 != '' && xpO2 != '') {
+              if (entry.system.attributes.xp.value >= xpO1 && entry.system.attributes.xp.value <= xpO2) { return true }
             }
-          }
-          if (list==''){list="Aucun objet trouvé"}
-          res[0].innerHTML = '<ul>' + list + '</ul>';
-          document.getElementById("app-" + d.appId).style.height = "auto"
-        })
+          })
+          result2 = result
+        }
 
-        $("[class=generate]").click(ev2 => {
-          var niveau = $("[name=niveau]").val();
-          var zone = $("[name=zone]").val();
-          var d20 = Math.floor(Math.random() * 20) +1;
-          let r;
-          let option='';
-          
-          //Plaine Bas niveau
-          if (niveau==1 && zone==1){
-            if (d20==1){r=arr.filter(entry => {return entry._id==='Ht1QZ9xBRKvyqgYy'})[0]}//cocinelle berserk
-            if (d20==2){r=arr.filter(entry => {return entry._id==='hP6gfZYurz24I2IL'})[0]}//bouc en colère
-            if (d20==3){
-              r=arr.filter(entry => {return entry._id==='rYZNUDXzWCpCKUsE'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 coyotte affamés
-            if (d20==4){
-              r=arr.filter(entry => {return entry._id==='70qQxZL0op2T1w0S'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 gobelin de base
-            if (d20==5){
-              r=arr.filter(entry => {return entry._id==='uGHic6289DmgodKD'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 orque standard
-            if (d20==6){
-              r=arr.filter(entry => {return entry._id==='nz8PQDH2F84tfVoH'})[0]
-              option = Math.floor(Math.random() * 5) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d5 brigand base
-            if (d20==7){
-              r=arr.filter(entry => {return entry._id==='8tHM6HP8JGglHinz'})[0]
-              option = Math.floor(Math.random() * 5) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d5 brigand archer
-            if (d20==8){
-              r=arr.filter(entry => {return entry._id==='PSSTiWfzLClVsFp4'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 loup gris
-            if (d20==9){r=arr.filter(entry => {return entry._id==='tmISoroCoRw3m4yn'})[0]}//guerrier maudit égaré
-            if (d20==10){r=arr.filter(entry => {return entry._id==='hz38qxrjCGasv62o'})[0]}//chapon male
-            if (d20==11){
-              r=arr.filter(entry => {return entry._id==='gNigRkk9QQZuEcVc'})[0]
-              option = Math.floor(Math.random() * 3) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d3 Sanglier noir
-            if (d20==12){r=arr.filter(entry => {return entry._id==='sy3yykMx1dMW0dl4'})[0]}//Dantragor musqué
-            if (d20==13){r=arr.filter(entry => {return entry._id==='HFxGqYs7H4T4w95r'})[0]}//AUroch paisible
-            if (d20==14){r=arr.filter(entry => {return entry._id==='2eAVF3CRmUcJxn6u'})[0]}//Brebiphant
-            if (d20==15){r=arr.filter(entry => {return entry._id==='DotsGE9aXwm5y3OV'})[0]}//Kobold de base
-            if (d20==16){r=arr.filter(entry => {return entry._id==='Aln6aMRdTGL2u7Nr'})[0]}//Morshleg a poil long (jeune)
-            if (d20==17){r=arr.filter(entry => {return entry._id==='bz30GdpS4LOSoVad'})[0]}//Ogre débile
-            if (d20==18){r=arr.filter(entry => {return entry._id==='GKrpLo9sqs5fZ4CP'})[0]}//Troll de base
-            if (d20==19){r=arr.filter(entry => {return entry._id==='uM4qTnSX07O38hiO'})[0]}//Troll géant maladroit
-            if (d20==20){r=arr.filter(entry => {return entry._id==='HlgmPCjzDoBctB6q'})[0]}//Jeune dragon rouge
-
-
-          }
-
-          //Forêt Bas niveau
-          if (niveau==1 && zone==2){
-            if (d20==1){r=arr.filter(entry => {return entry._id==='Ht1QZ9xBRKvyqgYy'})[0]}//Coccinelle
-            if (d20==2){r=arr.filter(entry => {return entry._id==='JVEha8P5zYAI8Pkz'})[0]}//Ortie corrosive
-            if (d20==3){
-              r=arr.filter(entry => {return entry._id==='XpKS80SBsbtnAiI9'})[0]
-              option = "2&nbsp;x&nbsp;"
-            }//2 castors mutant
-            if (d20==4){
-              r=arr.filter(entry => {return entry._id==='xgLWoO6h5tpwMPEN'})[0]
-              option = Math.floor(Math.random() * 6) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//D6 Globzoule
-            if (d20==5){
-              r=arr.filter(entry => {return entry._id==='nz8PQDH2F84tfVoH'})[0]
-              option = Math.floor(Math.random() * 5) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//D5 brigand de base
-            if (d20==6){
-              r=arr.filter(entry => {return entry._id==='8tHM6HP8JGglHinz'})[0]
-              option = Math.floor(Math.random() * 5) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//D5 brigand de base archer
-            if (d20==7){
-              r=arr.filter(entry => {return entry._id==='uGHic6289DmgodKD'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 orque standard
-            if (d20==8){
-              r=arr.filter(entry => {return entry._id==='PSSTiWfzLClVsFp4'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 loup gris
-            if (d20==9){r=arr.filter(entry => {return entry._id==='hz38qxrjCGasv62o'})[0]}//chapon male
-            if (d20==10){
-              r=arr.filter(entry => {return entry._id==='gNigRkk9QQZuEcVc'})[0]
-              option = Math.floor(Math.random() * 3) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d3 Sanglier noir
-            if (d20==11){
-              r=arr.filter(entry => {return entry._id==='RlEBZgjRLPe6DjZc'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 Gnôme des forêt
-            if (d20==12){r=arr.filter(entry => {return entry._id==='DotsGE9aXwm5y3OV'})[0]}//Kobold de base
-            if (d20==13){r=arr.filter(entry => {return entry._id==='uDYbSBmYQtzDjeWl'})[0]}//Ecureuil empoisonneur
-            if (d20==14){r=arr.filter(entry => {return entry._id==='bWnhfP5NiiERMTK5'})[0]}//Plante carnivaure forestière
-            if (d20==15){
-              r=arr.filter(entry => {return entry._id==='wFeaC3vL3KssSttF'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 elfe sylvains
-            if (d20==16){r=arr.filter(entry => {return entry._id==='bMMtmDr3wNs4oSyB'})[0]}//panthère
-            if (d20==17){r=arr.filter(entry => {return entry._id==='jknEhuFE4kh8UFzo'})[0]}//ours noir
-            if (d20==18){r=arr.filter(entry => {return entry._id==='bz30GdpS4LOSoVad'})[0]}//ogre débile 
-            if (d20==19){r=arr.filter(entry => {return entry._id==='GKrpLo9sqs5fZ4CP'})[0]}//troll de base
-            if (d20==20){r=arr.filter(entry => {return entry._id==='1rniPuRWAf44yk2y'})[0]}//dragon des cimes
-          }
-
-          // Montagne Bas niveau
-          if (niveau==1 && zone==3){
-            if (d20==1){r=arr.filter(entry => {return entry._id==='hP6gfZYurz24I2IL'})[0]}// bouc en colère
-            if (d20==2){
-              r=arr.filter(entry => {return entry._id==='rYZNUDXzWCpCKUsE'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }// d4 coyotes affamés
-            if (d20==3){r=arr.filter(entry => {return entry._id==='vgfFJdhcFcEFvOuN'})[0]}// jeune aigle géant
-            if (d20==4){
-              r=arr.filter(entry => {return entry._id==='70qQxZL0op2T1w0S'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }// d4 gobelin de base
-            if (d20==5){
-              r=arr.filter(entry => {return entry._id==='uGHic6289DmgodKD'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }// d4 orque standard
-            if (d20==6){
-              r=arr.filter(entry => {return entry._id==='nz8PQDH2F84tfVoH'})[0]
-              option = Math.floor(Math.random() * 5) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }// d5 brigand de base
-            if (d20==7){
-              r=arr.filter(entry => {return entry._id==='8tHM6HP8JGglHinz'})[0]
-              option = Math.floor(Math.random() * 5) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }// d5 brigand archer
-            if (d20==8){
-              r=arr.filter(entry => {return entry._id==='PSSTiWfzLClVsFp4'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }// d4 loup gris
-            if (d20==9){
-              r=arr.filter(entry => {return entry._id==='lOvQluaBaaWnL1Kl'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }// d4 prospecteur nain
-            if (d20==10){r=arr.filter(entry => {return entry._id==='Wu4ZT5kylSObeQqg'})[0]}// éléméentaire de pierre min
-            if (d20==11){r=arr.filter(entry => {return entry._id==='IDgZP1KWaUN4sCj6'})[0]}// chef orque
-            if (d20==12){r=arr.filter(entry => {return entry._id==='UuG1tumOQCj4Ngw8'})[0]}// chef gob
-            if (d20==13){r=arr.filter(entry => {return entry._id==='2TYEmgJfHSsQ5x65'})[0]}// chef brigand
-            if (d20==14){r=arr.filter(entry => {return entry._id==='jknEhuFE4kh8UFzo'})[0]}// ours noir
-            if (d20==15){r=arr.filter(entry => {return entry._id==='bMMtmDr3wNs4oSyB'})[0]}// panthère
-            if (d20==16){r=arr.filter(entry => {return entry._id==='brIVfOukMEi4w8yX'})[0]}// elan du nord
-            if (d20==17){r=arr.filter(entry => {return entry._id==='bz30GdpS4LOSoVad'})[0]}// ogre débile
-            if (d20==18){r=arr.filter(entry => {return entry._id==='GKrpLo9sqs5fZ4CP'})[0]}// troll stupide
-            if (d20==19){r=arr.filter(entry => {return entry._id==='a89fpbUQhf3nj2Gh'})[0]}// petit dragon bleu
-            if (d20==20){r=arr.filter(entry => {return entry._id==='T4tfHGMC3Aty67L5'})[0]}// jeune vouivre
-          }
-
-          //grotte bas niveau
-          if (niveau==1 && zone==4){
-            if (d20==1){
-              r=arr.filter(entry => {return entry._id==='1OVUOHNEQ7AcXaYI'})[0]
-              option = Math.floor(Math.random() * 6) +1;
-              option = option + Math.floor(Math.random() * 6) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//2D6 rats pesteux
-            if (d20==2){r=arr.filter(entry => {return entry._id==='JKnWgMcTIJ6Xngat'})[0]}//chauve souris vampire
-            if (d20==3){r=arr.filter(entry => {
-              return entry._id==='70qQxZL0op2T1w0S'})[0]
-              option = Math.floor(Math.random() * 6) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d6 Gobelin de base
-            if (d20==4){r=arr.filter(entry => {
-              return entry._id==='hJrzOPiE2hXD5tsf'})[0]
-              option = Math.floor(Math.random() * 5) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }// d5 gobelin costauds
-            if (d20==5){r=arr.filter(entry => {return entry._id==='f13dJS1ozOZ7NSj6'})[0]}//tarentule des cavernes
-            if (d20==6){
-              r=arr.filter(entry => {return entry._id==='PsdtGrqhZP0gsSp8'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 elfe noir voleur
-            if (d20==7){
-              r=arr.filter(entry => {return entry._id==='lOvQluaBaaWnL1Kl'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 prospecteur nain
-            if (d20==8){
-              r=arr.filter(entry => {return entry._id==='H7Bvx1hxFz7zkoh9'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 trogylork de base
-            if (d20==9){r=arr.filter(entry => {return entry._id==='wN6iMz84vfmU0TKb'})[0]}//trogylork chef d'escouade
-            if (d20==10){r=arr.filter(entry => {return entry._id==='jknEhuFE4kh8UFzo'})[0]}//ours noir
-            if (d20==11){
-              r=arr.filter(entry => {return entry._id==='5Vmx0ajAYFIdvIsj'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 elfe noir assassin débutant
-            if (d20==12){r=arr.filter(entry => {return entry._id==='Wu4ZT5kylSObeQqg'})[0]}//élem de pierre mineur
-            if (d20==13){
-              r=arr.filter(entry => {return entry._id==='Zar7Q32bQpnwY3VD'})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//d4 elfe noir voleur combatif
-            if (d20==14){r=arr.filter(entry => {return entry._id==='GKrpLo9sqs5fZ4CP'})[0]}//troll de base
-            if (d20==15){r=arr.filter(entry => {return entry._id==='1xuoU2fwGjpsgJP2'})[0]}//mille pattes monstrueux
-            if (d20==16){r=arr.filter(entry => {return entry._id==='bMMtmDr3wNs4oSyB'})[0]}//panthère
-            if (d20==17){r=arr.filter(entry => {return entry._id==='xGPtnzBqSj6NXjjK'})[0]}//elfe noir mage
-            if (d20==18){r=arr.filter(entry => {return entry._id==='wpMCIHYUaQpOiqXx'})[0]}//jeune dragon des cavernes
-            if (d20==19){r=arr.filter(entry => {return entry._id==='IuXqpdwiCjC6s5n5'})[0]}//jeune dragon noir
-            if (d20==20){
-              r=arr.filter(entry => {return entry._id===''})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//
-          }
-
-          /*modèle
-          if (niveau==1 && zone==2){
-            if (d20==1){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==2){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==3){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==4){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==5){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==6){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==7){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==8){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==9){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==10){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==11){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==12){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==13){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==14){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==15){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==16){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==17){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==18){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==19){r=arr.filter(entry => {return entry._id===''})[0]}//
-            if (d20==20){
-              r=arr.filter(entry => {return entry._id===''})[0]
-              option = Math.floor(Math.random() * 4) +1;
-              option = option + "&nbsp;x&nbsp;"
-            }//
-          }
-          */
-          
-
-
-          //Traitement standard
-
-          let result=[]
-          let result2=[]
-          result.push(r)
-          result2.push(r)
-
+        //un seul résultat new
+        if (document.getElementById("random").checked) {
+          let rand = Math.floor(Math.random() * result.length);
+          result2 = []
+          result2.push(result[rand])
+          result = result2
 
           //On cherche les resultats de même famille
           var save = result[0]
-          let rname=result[0].name.split(' | ')[0]
-          result2=[]
-          for (let pnj of arr){
-            if (pnj.name.split(' | ')[0]==rname && result[0].name!=pnj.name){result2.push(pnj)}
+          let rname = result[0].name.split(' | ')[0]
+          result2 = []
+          for (let pnj of arr) {
+            if (pnj.name.split(' | ')[0] == rname && result[0].name != pnj.name) { result2.push(pnj) }
           }
-          result=result2
+          result = result2
           //On vérifie qu'ils sont de même type
           var typeO1 = save.system.attributes.categorie;
           var typeO2 = save.system.attributes.categorie2;
-          if(typeO1!=''){
+          if (typeO1 != '') {
             result = result2.filter(entry => {
-              if (entry.system.attributes.categorie==typeO1){return true}
+              if (entry.system.attributes.categorie == typeO1) { return true }
             })
           }
-          result2=result
-          if(typeO2!=''){
+          result2 = result
+          if (typeO2 != '') {
             result = result2.filter(entry => {
-              if (entry.system.attributes.categorie2==typeO2){return true}
+              if (entry.system.attributes.categorie2 == typeO2) { return true }
             })
           }
-          result2=result;
+          result2 = result;
           //On vérifie qu'ils sont dans la même zone
           let zonesSave = []
-          for (let item of save.items){
-              if(item.type=='region'){zonesSave.push(item)}
+          for (let item of save.items) {
+            if (item.type == 'region') { zonesSave.push(item) }
           }
           result = result2.filter(entry => {
             let flag_zone = true
-            for (let zoneSave of zonesSave){
+            for (let zoneSave of zonesSave) {
               let zoneFind = false
-              for (let item of entry.items){
-                if (item.name==zoneSave.name){zoneFind=true}
+              for (let item of entry.items) {
+                if (item.name == zoneSave.name) { zoneFind = true }
               }
-              if (zoneFind==false){flag_zone=false}
+              if (zoneFind == false) { flag_zone = false }
             }
             return flag_zone
           })
-          result2=result;
-         
+          result2 = result;
+        }
 
-         //classe par xp OK
-         let result_sans_xp = []
-         let result_avec_xp = []
-         result = []
-         for (let r of result2) {
-           if (r.system.attributes.xp.value == undefined) {
-             result_sans_xp.push(r)
-           } else {
-             result_avec_xp.push(r)
-           }
-         }
-         while (result_avec_xp.length != 0) {
-           let i = 0
-           let j = 0
-           let minxp = result_avec_xp[0]
-           for (let r of result_avec_xp) {
-             if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
-               minxp = r
-               j = i
-             }
-             i++
-           }
-           result.push(minxp)
-           result_avec_xp.splice(j, 1)
-         }
-         for (let r of result_sans_xp) { result.push(r) }
-         //Une fois classé, il faut remettre le résultat du générateur en premier
-        result.unshift(save)
-         result2=result
+        //classe par xp OK
+        let result_sans_xp = []
+        let result_avec_xp = []
+        result = []
+        for (let r of result2) {
+          if (r.system.attributes.xp.value == undefined) {
+            result_sans_xp.push(r)
+          } else {
+            result_avec_xp.push(r)
+          }
+        }
+        while (result_avec_xp.length != 0) {
+          let i = 0
+          let j = 0
+          let minxp = result_avec_xp[0]
+          for (let r of result_avec_xp) {
+            if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
+              minxp = r
+              j = i
+            }
+            i++
+          }
+          result.push(minxp)
+          result_avec_xp.splice(j, 1)
+        }
+        for (let r of result_sans_xp) { result.push(r) }
+        //Une fois classé, si on était dans le cas d'un affichage unique, il faut remettre cette valeur en premier
+        if (document.getElementById("random").checked) {
+          result.unshift(save)
+        }
+        result2 = result
 
-         //Affichage
-         var res = $("[id=result]");
-         res[0].innerHTML = '';
-         let list = '';
-         let flag_unique = true
-         for (let r of result) {
-           var prix = r.system.attributes.xp.value + " XP"
-           //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
-           if (flag_unique && result.length>1){
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;'+option+'&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
-             list += '<hr>'
-             flag_unique=false
-           } else {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
-           }
-         }
-         if (list==''){list="Aucun objet trouvé"}
-         res[0].innerHTML = '<ul>' + list + '</ul>';
-         document.getElementById("app-" + d.appId).style.height = "auto"
+        //Affichage
+        var res = $("[id=result]");
+        res[0].innerHTML = '';
+        let list = '';
+        let flag_unique = true
+        for (let r of result) {
+          var prix = r.system.attributes.xp.value + " XP"
+          list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+          //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
+          if (flag_unique && document.getElementById("random").checked && result.length > 1) {
+            list += '<hr>'
+            flag_unique = false
+          }
+        }
+        if (list == '') { list = "Aucun objet trouvé" }
+        res[0].innerHTML = '<ul>' + list + '</ul>';
+        document.getElementById("app-" + d.appId).style.height = "auto"
+      })
 
+      $("[class=generate]").click(ev2 => {
+        var niveau = $("[name=niveau]").val();
+        var zone = $("[name=zone]").val();
+        let r;
+        //Génère une rencontre à partir du fichier generator.mjs
+        let code = "" + niveau + zone
+        var raw_arr2 = generator.split("\n");
+        var arr2 = []
+        for (let entry of raw_arr2) {
+          if (entry != "") {
+            entry = JSON.parse(entry)
+            if (entry.code==code){arr2.push(entry)}
+          }
+        }
+        let resultat = arr2[Math.floor(Math.random() * 20)];
+        r=arr.filter(entry => {return entry._id===resultat.id})[0]
+        let nombre = ""+resultat.nombre
+        let option = 0
+        if (nombre.split("D").length == 1) {
+          option = parseInt(nombre.split("D")[0])
+        } else {
+          if (nombre.split("D")[0]==""){
+            option = Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
+          } else {
+            for (let i = 0; i < parseInt(nombre.split("D")[0]); i++) {
+              option = option + Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
+            }
+          }
+        }
+        if (option=="1" || option==1){
+          option=""
+        } else {
+          option = option + "&nbsp;x&nbsp;"
+        }
+        let result = []
+        let result2 = []
+        result.push(r)
+        result2.push(r)
+
+
+        //On cherche les resultats de même famille
+        var save = result[0]
+        let rname = result[0].name.split(' | ')[0]
+        result2 = []
+        for (let pnj of arr) {
+          if (pnj.name.split(' | ')[0] == rname && result[0].name != pnj.name) { result2.push(pnj) }
+        }
+        result = result2
+        //On vérifie qu'ils sont de même type
+        var typeO1 = save.system.attributes.categorie;
+        var typeO2 = save.system.attributes.categorie2;
+        if (typeO1 != '') {
+          result = result2.filter(entry => {
+            if (entry.system.attributes.categorie == typeO1) { return true }
+          })
+        }
+        result2 = result
+        if (typeO2 != '') {
+          result = result2.filter(entry => {
+            if (entry.system.attributes.categorie2 == typeO2) { return true }
+          })
+        }
+        result2 = result;
+        //On vérifie qu'ils sont dans la même zone
+        let zonesSave = []
+        for (let item of save.items) {
+          if (item.type == 'region') { zonesSave.push(item) }
+        }
+        result = result2.filter(entry => {
+          let flag_zone = true
+          for (let zoneSave of zonesSave) {
+            let zoneFind = false
+            for (let item of entry.items) {
+              if (item.name == zoneSave.name) { zoneFind = true }
+            }
+            if (zoneFind == false) { flag_zone = false }
+          }
+          return flag_zone
         })
-      });
-    }
+        result2 = result;
 
+
+        //classe par xp les résultat de même famille
+        let result_sans_xp = []
+        let result_avec_xp = []
+        result = []
+        for (let r of result2) {
+          if (r.system.attributes.xp.value == undefined) {
+            result_sans_xp.push(r)
+          } else {
+            result_avec_xp.push(r)
+          }
+        }
+        while (result_avec_xp.length != 0) {
+          let i = 0
+          let j = 0
+          let minxp = result_avec_xp[0]
+          for (let r of result_avec_xp) {
+            if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
+              minxp = r
+              j = i
+            }
+            i++
+          }
+          result.push(minxp)
+          result_avec_xp.splice(j, 1)
+        }
+        for (let r of result_sans_xp) { result.push(r) }
+        //Une fois classé, il faut remettre le résultat du générateur en premier
+        result.unshift(save)
+        result2 = result
+
+
+        //Affichage
+        var res = $("[id=result]");
+        res[0].innerHTML = '';
+        let list = '';
+        let flag_unique = true
+        for (let r of result) {
+          var prix = r.system.attributes.xp.value + " XP"
+          //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
+          if (flag_unique && result.length > 1) {
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+            list += '<hr>'
+            flag_unique = false
+          } else {
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+          }
+        }
+        if (list == '') { list = "Aucun objet trouvé" }
+        res[0].innerHTML = '<ul>' + list + '</ul>';
+        document.getElementById("app-" + d.appId).style.height = "auto"
+
+      })
+    });
+  }
 }

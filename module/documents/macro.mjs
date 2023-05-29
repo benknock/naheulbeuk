@@ -2924,6 +2924,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           <option value="Elfes sylvains">Elfes sylvains</option>
           <option value="Nains du Nord">Nains du Nord</option>
           <option value="Elfes noirs">Elfes noirs</option>
+          <option value="Sauvages de jungle">Sauvages de jungle</option>
         </select>
         <label style="flex: 1;text-align:right;">Nom ( || pour un OU, && pour un ET )&nbsp;&nbsp;&nbsp;&nbsp;</em></label>
         <input style="flex: 1" type="text" name="nameO" id="nameO" value="" label="Nom de l'objet" />
@@ -3100,6 +3101,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           <option value="8">Marécage</option>
           <option value="9">Désert</option>
           <option value="10">Urbain</option>
+          <option value="11">Souterrain et ruine</option>
         </select>
         <label style="flex: 7;"></label>
       </div>
@@ -3430,7 +3432,10 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         //Affichage
         var res = $("[id=result]");
         res[0].innerHTML = '';
-        let list = '';
+        let list = `Cette rencontre est à ajuster suivant votre contexte.<br/>
+        <em>Par exemple dans le désert de Fangh, un troll de base est un troll assoifé et un brigand brimilistanais est un voleur des sables.</em><br/>
+        Cette rencontre peut aussi être trop faible ou trop forte, le but est de laisser les aventuriers s'adapter !<br/>
+        Pour finir, n'hésite pas à relancer le résultat voir à le modifier ;)<br/>`;
         let flag_unique = true
         for (let r of result) {
           var prix = r.system.attributes.xp.value + " XP"
@@ -3443,7 +3448,6 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
           }
         }
-        if (list == '') { list = "Aucun objet trouvé" }
         res[0].innerHTML = '<ul>' + list + '</ul>';
         document.getElementById("app-" + d.appId).style.height = "auto"
 

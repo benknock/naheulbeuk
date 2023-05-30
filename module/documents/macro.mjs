@@ -3184,6 +3184,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
               if (item.name == traitO2) { flag_traitO2 = true }
               if (item.name == geoO1) { flag_geoO1 = true }
               if (item.name == geoO2) { flag_geoO2 = true }
+              if (item.name == "Partout") {flag_geoO1 = true; flag_geoO2 = true}
             }
             let flag_total = true
             if (traitO1 != '') {

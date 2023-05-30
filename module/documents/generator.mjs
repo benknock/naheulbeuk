@@ -129,10 +129,8 @@ export const generator = `
 {"name":"Jeune dragon des îles","id":"Z4DfHvlCkC4fU4rv","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
 {"name":"Petit Calmar","id":"TGwG245RA2Nyo45n","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
 {"name":"Zaviathan juvénile","id":"VtiZGMFLLrnKK9BL","nombre":"1","zone":"côte, mer et océan bas niveau","code":"16"}
-`
-//{"name":"","id":"","nombre":"1","zone":"","code":""}
 
-/*
+
 {"name":"Nuée de moustique","id":"r3Yq8K5v4IvokSaT","nombre":"1","zone":"jungle bas niveau","code":"17"}
 {"name":"D6 Globzoule","id":"xgLWoO6h5tpwMPEN","nombre":"D6","zone":"jungle bas niveau","code":"17"}
 {"name":"Liane cleptomane","id":"kIKTePnOdBarna88","nombre":"1","zone":"jungle bas niveau","code":"17"}
@@ -150,7 +148,7 @@ export const generator = `
 {"name":"D2 Araignée tranchante","id":"TP0QBnac4Gk7eVUh","nombre":"D2","zone":"jungle bas niveau","code":"17"}
 {"name":"Panthère noire corrompue","id":"evU0PldOEGnYvBOS","nombre":"1","zone":"jungle bas niveau","code":"17"}
 {"name":"Serpent constricteur","id":"XdXKcN3xnoKbcwhs","nombre":"1","zone":"jungle bas niveau","code":"17"}
---{"name":"Chasseur de la jungle","id":"","nombre":"1","zone":"jungle bas niveau","code":"17"}
+{"name":"D2 Chasseur de la jungle","id":"lkQAPXEdp1eaCTcG","nombre":"D2","zone":"jungle bas niveau","code":"17"}
 {"name":"Troll de la jungle","id":"UJu3D5bEMGKlY3Sh","nombre":"1","zone":"jungle bas niveau","code":"17"}
 {"name":"Petit Ouklaf","id":"F1IRy6srYNcDQUQ5","nombre":"1","zone":"jungle bas niveau","code":"17"}
 
@@ -167,15 +165,18 @@ export const generator = `
 {"name":"Crocodile","id":"rjwVwViWVaGpzxTK","nombre":"1","zone":"marécage bas niveau","code":"18"}
 {"name":"D4 Homme-lézard","id":"uwI19bFEiEfVq5ZG","nombre":"D4","zone":"marécage bas niveau","code":"18"}
 {"name":"D4 Homme lézard brutal","id":"lhJ4PS7Iy8AM6srt","nombre":"D4","zone":"marécage bas niveau","code":"18"}
---{"name":"Elémentaire de boue mineur","id":"","nombre":"1","zone":"marécage bas niveau","code":"18"}
---{"name":"Spectre de base","id":"","nombre":"1","zone":"marécage bas niveau","code":"18"}
+{"name":"Elémentaire de boue mineur","id":"ERcO60BkH7lbm7bK","nombre":"1","zone":"marécage bas niveau","code":"18"}
+{"name":"Spectre de base","id":"r3qsQhRuMe0t3xf6","nombre":"1","zone":"marécage bas niveau","code":"18"}
 {"name":"Liche de base","id":"D7Nbpb9OLNfQ1y5J","nombre":"1","zone":"marécage bas niveau","code":"18"}
 {"name":" Scolopendre","id":"n0v05bbElfPCfw64","nombre":"1","zone":"marécage bas niveau","code":"18"}
 {"name":"Petit serpent des marécages","id":"5X5wkr8K8dKlty0k","nombre":"1","zone":"marécage bas niveau","code":"18"}
---{"name":"Arbre marcheur malsain","id":"","nombre":"1","zone":"marécage bas niveau","code":"18"}
+{"name":"Arbre marcheur malsain","id":"uNV0SGfn75iIQ5VL","nombre":"1","zone":"marécage bas niveau","code":"18"}
 {"name":"Troll de base","id":"GKrpLo9sqs5fZ4CP","nombre":"1","zone":"marécage bas niveau","code":"18"}
 {"name":"Jeune dragon noir","id":"IuXqpdwiCjC6s5n5","nombre":"1","zone":"marécage bas niveau","code":"18"}
+`
+//{"name":"","id":"","nombre":"1","zone":"","code":""}
 
+/*
 
 {"name":Scorpion brun"","id":"UZKdkj7doAcyNA5z","nombre":"1","zone":"désert bas niveau","code":"19"}
 --{"name":"D6 Vautour famélique","id":"","nombre":"D6","zone":"désert bas niveau","code":"19"}
@@ -192,7 +193,7 @@ export const generator = `
 {"name":"D4 Voleur du désert","id":"1WS61iwldFCpmppS","nombre":"D4","zone":"désert bas niveau","code":"19"}
 {"name":"D4 Archer du désert","id":"toPcDr4nWQLLC1Yq","nombre":"D4","zone":"désert bas niveau","code":"19"}
 {"name":"D4 Guerrier du désert","id":"0TJcsnldIoPjJ3LS","nombre":"D4","zone":"désert bas niveau","code":"19"}
---{"name":"Spectre de base","id":"","nombre":"1","zone":"désert bas niveau","code":"19"}
+{"name":"Spectre de base","id":"r3qsQhRuMe0t3xf6","nombre":"1","zone":"désert bas niveau","code":"19"}
 {"name":"Liche de base","id":"D7Nbpb9OLNfQ1y5J","nombre":"1","zone":"désert bas niveau","code":"19"}
 {"name":"Scolopendre","id":"n0v05bbElfPCfw64","nombre":"1","zone":"désert bas niveau","code":"19"}
 --{"name":"Nécrophage frénétique","id":"","nombre":"1","zone":"désert bas niveau","code":"19"}
@@ -237,7 +238,7 @@ export const generator = `
 --{"name":"Cancrevisse","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 --{"name":"Minotaure de base","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 --{"name":"Mort-vivant monstrueux","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
---{"name":"Spectre de base","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
+{"name":"Spectre de base","id":"r3qsQhRuMe0t3xf6","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"Liche de base","id":"D7Nbpb9OLNfQ1y5J","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"Ghukkutuh","id":"U7ZBj8vt9ErowGRk","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"Gorgauth","id":"ntDOvyhlP1iQx1hq","nombre":"1","zone":"souterrain bas niveau","code":"111"}

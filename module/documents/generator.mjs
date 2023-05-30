@@ -52,7 +52,7 @@ export const generator = `
 {"name":"D6 Brigand archer","id":"8tHM6HP8JGglHinz","nombre":"D6","zone":"montagne bas niveau","code":"13"}
 {"name":"D4 Loup gris","id":"PSSTiWfzLClVsFp4","nombre":"D4","zone":"montagne bas niveau","code":"13"}
 {"name":"D4 Prospecteur nain","id":"lOvQluaBaaWnL1Kl","nombre":"D4","zone":"montagne bas niveau","code":"13"}
-{"name":"Elémentaire pierre mineur","id":"Wu4ZT5kylSObeQqg","nombre":"1","zone":"montagne bas niveau","code":"13"}
+{"name":"D4 Elémentaire pierre mineur","id":"Wu4ZT5kylSObeQqg","nombre":"D4","zone":"montagne bas niveau","code":"13"}
 {"name":"Chef orque","id":"IDgZP1KWaUN4sCj6","nombre":"1","zone":"montagne bas niveau","code":"13"}
 {"name":"Chef gob","id":"UuG1tumOQCj4Ngw8","nombre":"1","zone":"montagne bas niveau","code":"13"}
 {"name":"Chef brigand","id":"2TYEmgJfHSsQ5x65","nombre":"1","zone":"montagne bas niveau","code":"13"}
@@ -77,7 +77,7 @@ export const generator = `
 {"name":"Trogylork chef d'escouade","id":"wN6iMz84vfmU0TKb","nombre":"1","zone":"grotte bas niveau","code":"14"}
 {"name":"Ours noir","id":"jknEhuFE4kh8UFzo","nombre":"1","zone":"grotte bas niveau","code":"14"}
 {"name":"D4 Elfe noir assassin débutant","id":"5Vmx0ajAYFIdvIsj","nombre":"D4","zone":"grotte bas niveau","code":"14"}
-{"name":"Elémentaire pierre mineur","id":"Wu4ZT5kylSObeQqg","nombre":"1","zone":"grotte bas niveau","code":"14"}
+{"name":"D4 Elémentaire pierre mineur","id":"Wu4ZT5kylSObeQqg","nombre":"D4","zone":"grotte bas niveau","code":"14"}
 {"name":"D4 Elfe noir voleur combatif","id":"Zar7Q32bQpnwY3VD","nombre":"D4","zone":"grotte bas niveau","code":"14"}
 {"name":"Troll de base","id":"GKrpLo9sqs5fZ4CP","nombre":"1","zone":"grotte bas niveau","code":"14"}
 {"name":"Mille-pattes monstrueux","id":"1xuoU2fwGjpsgJP2","nombre":"1","zone":"grotte bas niveau","code":"14"}
@@ -95,7 +95,7 @@ export const generator = `
 {"name":"D4 Pirate combatif","id":"2fR3xwKFqFQFm74X","nombre":"D4","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"D5 Archer pirate","id":"D3vDFFgXFxnwbyIr","nombre":"D5","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"Crabe d'eau douce géant","id":"ZbWt8wso6foLdrVu","nombre":"1","zone":"rivière et lac bas niveau","code":"15"}
-{"name":"D3 Petit élémentaire d'eau","id":"xtVmnrgPjrgRfz63","nombre":"D3","zone":"rivière et lac bas niveau","code":"15"}
+{"name":"D4 Petit élémentaire d'eau","id":"xtVmnrgPjrgRfz63","nombre":"D4","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"Ondine","id":"ezKXl6Dc50SfUDc2","nombre":"1","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"Moule d'eau douce","id":"msXJWwr7wQDTzOdO","nombre":"1","zone":"rivière et lac bas niveau","code":"15"}
 {"name":"Cap'taine gobelin","id":"gCQVVQqkpvkkOO3u","nombre":"1","zone":"rivière et lac bas niveau","code":"15"}
@@ -165,7 +165,7 @@ export const generator = `
 {"name":"Crocodile","id":"rjwVwViWVaGpzxTK","nombre":"1","zone":"marécage bas niveau","code":"18"}
 {"name":"D4 Homme-lézard","id":"uwI19bFEiEfVq5ZG","nombre":"D4","zone":"marécage bas niveau","code":"18"}
 {"name":"D4 Homme lézard brutal","id":"lhJ4PS7Iy8AM6srt","nombre":"D4","zone":"marécage bas niveau","code":"18"}
-{"name":"Elémentaire de boue mineur","id":"kf8UmUMwloZ9ECNf","nombre":"1","zone":"marécage bas niveau","code":"18"}
+{"name":"D4 Elémentaire de boue mineur","id":"kf8UmUMwloZ9ECNf","nombre":"D4","zone":"marécage bas niveau","code":"18"}
 {"name":"Spectre de base","id":"r3qsQhRuMe0t3xf6","nombre":"1","zone":"marécage bas niveau","code":"18"}
 {"name":"Liche de base","id":"D7Nbpb9OLNfQ1y5J","nombre":"1","zone":"marécage bas niveau","code":"18"}
 {"name":" Scolopendre","id":"n0v05bbElfPCfw64","nombre":"1","zone":"marécage bas niveau","code":"18"}
@@ -175,16 +175,16 @@ export const generator = `
 {"name":"Jeune dragon noir","id":"IuXqpdwiCjC6s5n5","nombre":"1","zone":"marécage bas niveau","code":"18"}
 
 
-{"name":Scorpion brun"","id":"UZKdkj7doAcyNA5z","nombre":"1","zone":"désert bas niveau","code":"19"}
+{"name":"Scorpion brun","id":"UZKdkj7doAcyNA5z","nombre":"1","zone":"désert bas niveau","code":"19"}
 {"name":"D6 Vautour famélique","id":"OupBK4bFX0PqovNw","nombre":"D6","zone":"désert bas niveau","code":"19"}
 {"name":"Nuée de scolopendre des sables","id":"7Tehchum3pAelgDn","nombre":"1","zone":"désert bas niveau","code":"19"}
 {"name":"2D6 Coyote du désert affamé","id":"rYZNUDXzWCpCKUsE","nombre":"2D6","zone":"désert bas niveau","code":"19"}
 {"name":"Nid de fourmi Dévorag","id":"duFCAA25IrBOHZKo","nombre":"1","zone":"désert bas niveau","code":"19"}
 {"name":"2D6 Squelette de base","id":"G7S1Yko1CmKfofuq","nombre":"2D6","zone":"désert bas niveau","code":"19"}
 {"name":"D6 Squelette de base armuré","id":"uMw3tVJ6xbQHucUJ","nombre":"D6","zone":"désert bas niveau","code":"19"}
-{"name":"Petit élémentaire d'air","id":"YWmcsNz7Hq2QIwGE","nombre":"1","zone":"désert bas niveau","code":"19"}
+{"name":"D4 Petit élémentaire d'air","id":"YWmcsNz7Hq2QIwGE","nombre":"D4","zone":"désert bas niveau","code":"19"}
 {"name":"Araignée pondeuse","id":"OQwOwjdz9vzyUjbz","nombre":"1","zone":"désert bas niveau","code":"19"}
-{"name":"Elémentaire pierre mineur","id":"Wu4ZT5kylSObeQqg","nombre":"1","zone":"désert bas niveau","code":"19"}
+{"name":"D4 Elémentaire pierre mineur","id":"Wu4ZT5kylSObeQqg","nombre":"D4","zone":"désert bas niveau","code":"19"}
 {"name":"Troll assoiffé","id":"GKrpLo9sqs5fZ4CP","nombre":"1","zone":"désert bas niveau","code":"19"}
 {"name":"Kobold de base","id":"DotsGE9aXwm5y3OV","nombre":"1","zone":"désert bas niveau","code":"19"}
 {"name":"D4 Voleur du désert","id":"1WS61iwldFCpmppS","nombre":"D4","zone":"désert bas niveau","code":"19"}
@@ -195,12 +195,6 @@ export const generator = `
 {"name":"Scolopendre","id":"n0v05bbElfPCfw64","nombre":"1","zone":"désert bas niveau","code":"19"}
 {"name":"Nécrophage frénétique","id":"cjAEtL4DkdTUMmN7","nombre":"1","zone":"désert bas niveau","code":"19"}
 {"name":"Petit dragon mort-vivant","id":"CkQXUR7Mmg5EX3Vb","nombre":"1","zone":"désert bas niveau","code":"19"}
-`
-//{"name":"","id":"","nombre":"1","zone":"","code":""}
-
-/*
-
-
 
 
 {"name":"2D6 Chien affamé","id":"rYZNUDXzWCpCKUsE","nombre":"2D6","zone":"urbain bas niveau","code":"110"}
@@ -218,11 +212,16 @@ export const generator = `
 {"name":"Brute des bas quartier","id":"WxqG8z9eelojRoxZ","nombre":"1","zone":"urbain bas niveau","code":"110"}
 {"name":"Chef des brigands ruraux","id":"2TYEmgJfHSsQ5x65","nombre":"1","zone":"urbain bas niveau","code":"110"}
 {"name":"Kobold de base","id":"DotsGE9aXwm5y3OV","nombre":"1","zone":"urbain bas niveau","code":"110"}
---{"name":"Loup-garou citadin","id":"","nombre":"1","zone":"urbain bas niveau","code":"110"}
---{"name":"Prêtre novice","id":"","nombre":"1","zone":"urbain bas niveau","code":"110"}
---{"name":"Paladin novice","id":"","nombre":"1","zone":"urbain bas niveau","code":"110"}
+{"name":"Loup-garou citadin","id":"IeMcMYYxRGRgyG2p","nombre":"1","zone":"urbain bas niveau","code":"110"}
+{"name":"Prêtre novice","id":"sD1YFX23751pAOTC","nombre":"1","zone":"urbain bas niveau","code":"110"}
+{"name":"Aventurier énervé","id":"XeCEhlyf65PtzCu2","nombre":"1","zone":"urbain bas niveau","code":"110"}
 {"name":"Mage teigneux","id":"x8SmSg16Qnsm0hVi","nombre":"1","zone":"urbain bas niveau","code":"110"}
 {"name":"Jeune dragon de banlieue","id":"QkQv8vHPWaYVKn6u","nombre":"1","zone":"urbain bas niveau","code":"110"}
+`
+//{"name":"","id":"","nombre":"1","zone":"","code":""}
+
+/*
+
 
 
 {"name":"Vers des cryptes","id":"vAKmah0I9lXZvC0M","nombre":"1","zone":"souterrain bas niveau","code":"111"}
@@ -235,7 +234,7 @@ export const generator = `
 {"name":"Truiccube","id":"cUWguL9YKTO9MyhM","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"D4 Tarentule des cavernes","id":"f13dJS1ozOZ7NSj6","nombre":"D4","zone":"souterrain bas niveau","code":"111"}
 {"name":"D4 Zombie costaud","id":"P2Lezha6cjPXGM73","nombre":"D4","zone":"souterrain bas niveau","code":"111"}
---{"name":"Nécrophage frénétique","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
+{"name":"Nécrophage frénétique","id":"cjAEtL4DkdTUMmN7","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"Salamandre incandescente","id":"8NbYRKlYiaHz8zxE","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 --{"name":"Bête des ruines","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 --{"name":"Cancrevisse","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}

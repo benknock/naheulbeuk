@@ -3332,6 +3332,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           }
         }
         let resultat = arr2[Math.floor(Math.random() * 20)];
+        console.log(resultat)
         r=arr.filter(entry => {return entry._id===resultat.id})[0]
         let nombre = ""+resultat.nombre
         let option = 0
@@ -3446,7 +3447,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             list += '<hr>'
             flag_unique = false
           } else {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
           }
         }
         res[0].innerHTML = '<ul>' + list + '</ul>';

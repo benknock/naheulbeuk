@@ -48,7 +48,7 @@ export const generator = `
 {"name":"Jeune aigle géant","id":"vgfFJdhcFcEFvOuN","nombre":"1","zone":"montagne bas niveau","code":"13"}
 {"name":"D6 Gobelin de base","id":"70qQxZL0op2T1w0S","nombre":"D6","zone":"montagne bas niveau","code":"13"}
 {"name":"D5 Orque standard","id":"uGHic6289DmgodKD","nombre":"D5","zone":"montagne bas niveau","code":"13"}
-{"name":"D5 Brigand base","id":"nz8PQDH2F84tfVoH","nombre":"D5","zone":"montagne bas niveau","code":"13"}
+{"name":"D6 Brigand base","id":"nz8PQDH2F84tfVoH","nombre":"D6","zone":"montagne bas niveau","code":"13"}
 {"name":"D6 Brigand archer","id":"8tHM6HP8JGglHinz","nombre":"D6","zone":"montagne bas niveau","code":"13"}
 {"name":"D4 Loup gris","id":"PSSTiWfzLClVsFp4","nombre":"D4","zone":"montagne bas niveau","code":"13"}
 {"name":"D4 Prospecteur nain","id":"lOvQluaBaaWnL1Kl","nombre":"D4","zone":"montagne bas niveau","code":"13"}
@@ -201,8 +201,8 @@ export const generator = `
 {"name":"2D6 Rat pesteux","id":"1OVUOHNEQ7AcXaYI","nombre":"2D6","zone":"urbain bas niveau","code":"110"}
 {"name":"D4 Mendiant ivre","id":"LAQHAIBLEX2jMAFs","nombre":"D4","zone":"urbain bas niveau","code":"110"}
 {"name":"D4 Ivrogne de taverne","id":"LR37tONYmYavB8yY","nombre":"D4","zone":"urbain bas niveau","code":"110"}
-{"name":"D6 Brigand de base à l'épée","id":"nz8PQDH2F84tfVoH","n6mbre":"D5","zone":"urbain bas niveau","code":"110"}
-{"name":"D6 Brigand de base archer","id":"8tHM6HP8JGglHinz","nom6re":"D5","zone":"urbain bas niveau","code":"110"}
+{"name":"D6 Brigand de base à l'épée","id":"nz8PQDH2F84tfVoH","nombre":"D6","zone":"urbain bas niveau","code":"110"}
+{"name":"D6 Brigand de base archer","id":"8tHM6HP8JGglHinz","nombre":"D6","zone":"urbain bas niveau","code":"110"}
 {"name":"Gros patron d'aubergne","id":"uxZfgwX1K9QRstXN","nombre":"1","zone":"urbain bas niveau","code":"110"}
 {"name":"D6 Paysan énervé","id":"8BgECGgVnQpXz2R9","nombre":"D6","zone":"urbain bas niveau","code":"110"}
 {"name":"Commerçant faché","id":"FZpOSjoztahsEE3W","nombre":"1","zone":"urbain bas niveau","code":"110"}
@@ -217,17 +217,12 @@ export const generator = `
 {"name":"Aventurier énervé","id":"XeCEhlyf65PtzCu2","nombre":"1","zone":"urbain bas niveau","code":"110"}
 {"name":"Mage teigneux","id":"x8SmSg16Qnsm0hVi","nombre":"1","zone":"urbain bas niveau","code":"110"}
 {"name":"Jeune dragon de banlieue","id":"QkQv8vHPWaYVKn6u","nombre":"1","zone":"urbain bas niveau","code":"110"}
-`
-//{"name":"","id":"","nombre":"1","zone":"","code":""}
-
-/*
-
 
 
 {"name":"Vers des cryptes","id":"vAKmah0I9lXZvC0M","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"2D6 Rat pesteux","id":"1OVUOHNEQ7AcXaYI","nombre":"2D6","zone":"souterrain bas niveau","code":"111"}
 {"name":"D6 Zombie de base","id":"kB3s4P2NzMK5wLgX","nombre":"D6","zone":"souterrain bas niveau","code":"111"}
---{"name":"Limon maléfique et glaireux","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
+{"name":"Limon maléfique et glaireux","id":"zo5NDPyuIKEDVUGe","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"2D6 Squelette de base","id":"G7S1Yko1CmKfofuq","nombre":"2D6","zone":"souterrain bas niveau","code":"111"}
 {"name":"D2 Cellule géante de base","id":"tDke6Pt2HxXgjdFG","nombre":"D2","zone":"souterrain bas niveau","code":"111"}
 {"name":"D6 Goule de base","id":"soNA1datoG73hbLz","nombre":"D6","zone":"souterrain bas niveau","code":"111"}
@@ -236,12 +231,19 @@ export const generator = `
 {"name":"D4 Zombie costaud","id":"P2Lezha6cjPXGM73","nombre":"D4","zone":"souterrain bas niveau","code":"111"}
 {"name":"Nécrophage frénétique","id":"cjAEtL4DkdTUMmN7","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"Salamandre incandescente","id":"8NbYRKlYiaHz8zxE","nombre":"1","zone":"souterrain bas niveau","code":"111"}
---{"name":"Bête des ruines","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
---{"name":"Cancrevisse","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
---{"name":"Minotaure de base","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
---{"name":"Mort-vivant monstrueux","id":"","nombre":"1","zone":"souterrain bas niveau","code":"111"}
+{"name":"Bête des ruines","id":"Y8O8AGvYTkNHcr6M","nombre":"1","zone":"souterrain bas niveau","code":"111"}
+{"name":"Cancrevisse","id":"NkobjNLN7aBVCxVS","nombre":"1","zone":"souterrain bas niveau","code":"111"}
+{"name":"Minotaure de base","id":"1g30dneFjF19niaH","nombre":"1","zone":"souterrain bas niveau","code":"111"}
+{"name":"Mort-vivant monstrueux","id":"aJ1qZTzsYrkpf1WS","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"Spectre de base","id":"r3qsQhRuMe0t3xf6","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"Liche de base","id":"D7Nbpb9OLNfQ1y5J","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"Ghukkutuh","id":"U7ZBj8vt9ErowGRk","nombre":"1","zone":"souterrain bas niveau","code":"111"}
 {"name":"Gorgauth","id":"ntDOvyhlP1iQx1hq","nombre":"1","zone":"souterrain bas niveau","code":"111"}
+`
+//{"name":"","id":"","nombre":"1","zone":"","code":""}
+
+/*
+
+
+
 */

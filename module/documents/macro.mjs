@@ -3327,12 +3327,14 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         var raw_arr2 = generator.split("\n");
         var arr2 = []
         for (let entry of raw_arr2) {
-          if (entry != "") {
+          if (entry != "" && entry.split("////").length==1) {
+            //console.log(entry)
             entry = JSON.parse(entry)
             if (entry.code==code){arr2.push(entry)}
           }
         }
         let resultat = arr2[Math.floor(Math.random() * 20)];
+        console.log(resultat)
         r=arr.filter(entry => {return entry._id===resultat.id})[0]
         let nombre = ""+resultat.nombre
         let option = 0
@@ -3434,17 +3436,13 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         //Affichage
         var res = $("[id=result]");
         res[0].innerHTML = '';
-        let list = `Cette rencontre est à ajuster suivant votre contexte.<br/>
-        <em>Par exemple dans le désert de Fangh, un troll de base est un troll assoifé et un brigand brimilistanais est un voleur des sables.</em><br/>
-        Cette rencontre peut aussi être trop faible ou trop forte, le but est de laisser les aventuriers s'adapter !<br/>
-        Pour finir, n'hésite pas à relancer le résultat voir à le modifier ;)
-        <hr>`;
+        let list =''
         let flag_unique = 1
         for (let r of result) {
           var prix = r.system.attributes.xp.value + " XP"
           //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
           if (flag_unique == 1) {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i>' + r.name + '</a>&nbsp;-&nbsp;' + prix + '&nbsp;-&nbsp;' + resultat.name + '</li>';
             flag_unique = 2
           } else if (flag_unique==2) {
             list += '<hr>'

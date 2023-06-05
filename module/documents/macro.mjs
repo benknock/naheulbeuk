@@ -13,6 +13,16 @@ export class CustomDialog extends Dialog {
     }
   }
 }
+export class PCHDialog extends Dialog {
+  submit(button) {
+    try {
+      button.callback(this.options.jQuery ? this.element : this.element[0])
+    } catch (err) {
+      ui.notifications.error(err);
+      throw new Error(err);
+    }
+  }
+}
 
 export class Macros {
   /**
@@ -1198,1057 +1208,9 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
 
   //----------------Fonctions utilisées pour les outils du compendium Macros------------------------------ 
 
-  //Macros : chercher une rencontre (liste) --------------------------TO DELETE
-  static async rencontre() {
-    var message = "";
-    var monstres = []
-    const promise = []
-    const compendium = game.packs.find(p => p.metadata.label === "Bestiaire");
-    for (let c of compendium.index) {
-      promise.push(compendium.getDocument(c._id));
-    }
-    await Promise.all(promise).then(actors => {
-      for (let actor of actors) {
-        monstres.push(actor)
-      }
-    })
-    let monstresClasses = []
-    while (monstres.length != 0) {
-      var i = 0
-      var j = 0
-      var minxp = monstres[0]
-      for (let monstre of monstres) {
-        if (monstre.system.attributes.xp.value < minxp.system.attributes.xp.value) {
-          minxp = monstre
-          j = i
-        }
-        i++
-      }
-      monstresClasses.push(minxp)
-      monstres.splice(j, 1)
-    }
-    monstres = monstresClasses
-    let d = new Dialog({
-      title: "Rencontre",
-      content: `
-      <form>
-        <a class="afficher">Ouvrir le compendium</a>
-        <br/>
-        <a class="relance">Relancer la sélection aléatoire</a>
-        <br/>
-        <a class="jet">Lancer de dés</a>
-        <br/>
-        <hr>
-        <label>Trait</label>
-        <select name="a" id="a" style="margin-bottom: 5px;">
-          <option value=""></option>
-          <option value="Bizarre +">Bizarre +</option>
-          <option value="Bizarre ++">Bizarre ++</option>
-          <option value="Bizarre +++">Bizarre +++</option>
-          <option value="Bulldozer +">Bulldozer +</option>
-          <option value="Bulldozer ++">Bulldozer ++</option>
-          <option value="Bulldozer +++">Bulldozer +++</option>
-          <option value="Critique +">Critique +</option>
-          <option value="Critique ++">Critique ++</option>
-          <option value="Critique +++">Critique +++</option>
-          <option value="Mâchoire +">Mâchoire +</option>
-          <option value="Mâchoire ++">Mâchoire ++</option>
-          <option value="Mâchoire +++">Mâchoire +++</option>
-          <option value="Mise à terre +">Mise à terre +</option>
-          <option value="Mise à terre ++">Mise à terre ++</option>
-          <option value="Mise à terre +++">Mise à terre +++</option>
-          <option value="Puissant +">Puissant +</option>
-          <option value="Puissant ++">Puissant ++</option>
-          <option value="Puissant +++">Puissant +++</option>
-          <option value="Rapide +">Rapide +</option>
-          <option value="Rapide ++">Rapide ++</option>
-          <option value="Rapide +++">Rapide +++</option>
-          <option value="Terrifiant +">Terrifiant +</option>
-          <option value="Terrifiant ++">Terrifiant ++</option>
-          <option value="Terrifiant +++">Terrifiant +++</option>
-          <option value="Violent +">Violent +</option>
-          <option value="Violent ++">Violent ++</option>
-          <option value="Violent +++">Violent +++</option>
-          <option value="Agile">Agile</option>
-          <option value="Bulldozer volant">Bulldozer volant</option>
-          <option value="Immunité">Immunité</option>
-          <option value="Légende">Légende</option>
-          <option value="Malin">Malin</option>
-          <option value="Mort">Mort</option>
-          <option value="Nuée">Nuée</option>
-          <option value="Paisible">Paisible</option>
-          <option value="Surnaturel">Surnaturel</option>
-          <option value="Volant">Volant</option>
-        </select>
-        <br/>
-        <label>Répartition géographique</label>
-        <select name="b" id="b" style="margin-bottom: 5px;">
-          <option value=""></option>
-          <option value="Archipel Papoutouh">Archipel Papoutouh</option>
-          <option value="Arnn">Arnn</option>
-          <option value="Banquise">Banquise</option>
-          <option value="Cimes de Kuylinia">Cimes de Kuylinia</option>
-          <option value="Côte de Sk'ka">Côte de Sk'ka</option>
-          <option value="Fernol et Galzanie">Fernol et Galzanie</option>
-          <option value="Forêt maudite de l'Ouest">Forêt maudite de l'Ouest</option>
-          <option value="Haute mer">Haute mer</option>
-          <option value="Jungles de la péninsule">Jungles de la péninsule</option>
-          <option value="Marais gelés">Marais gelés</option>
-          <option value="Montagnes du Nord">Montagnes du Nord</option>
-          <option value="Monts de l'Est">Monts de l'Est</option>
-          <option value="Pays de Nugh">Pays de Nugh</option>
-          <option value="Plaine centrale">Plaine centrale</option>
-          <option value="Plaine de Sakourvit">Plaine de Sakourvit</option>
-          <option value="Plaines de Fangh et Caladie">Plaines de Fangh et Caladie</option>
-          <option value="Plaines de l'Ouest">Plaines de l'Ouest</option>
-          <option value="Plaines gelées du Nord">Plaines gelées du Nord</option>
-          <option value="Pointe sud du Birmilistan">Pointe sud du Birmilistan</option>
-          <option value="Rivages de la mer d'Embarh">Rivages de la mer d'Embarh</option>
-          <option value="Rivages de la mer Sidralnée">Rivages de la mer Sidralnée</option>
-          <option value="Steppes du Srölnagud">Steppes du Srölnagud</option>
-          <option value="Uzgueg et Gnaal">Uzgueg et Gnaal</option>
-          <option value="Vallée du Birmilistan">Vallée du Birmilistan</option>
-        </select>
-        <br/>
-        <label>Catégorie</label>
-        <select name="c" id="c">
-          <option value=""></option>
-          <option value="Animaux">Animaux</option>
-          <option value="Végétaux">Végétaux</option>
-          <option value="Fanghiens">Fanghiens</option>
-          <option value="Pirates Mauves">Pirates Mauves</option>
-          <option value="Birmilistanais">Birmilistanais</option>
-          <option value="Sauvages du Froid">Sauvages du Froid</option>
-          <option value="Skuulnards">Skuulnards</option>
-          <option value="Vrognards">Vrognards</option>
-          <option value="Humanoïdes">Humanoïdes</option>
-          <option value="Monstres et créatures">Monstres et créatures</option>
-          <option value="Opposants légendaires">Opposants légendaires</option>
-        </select>
-        <hr>
-        <div id="result"></div>
-      </form>
-      `,
-      buttons: {
-      }
-    });
-    d.render(true);
-    $(document).ready(function () {
-      $("[class=afficher]").click(ev => {
-        game.packs.find(p => p.metadata.label === "Bestiaire").render(true)
-      });
-      $("[id=a]").change(function () {
-        var trait = $("[id=a]").val();
-        var geo = $("[id=b]").val();
-        var categorie = $("[id=c]").val();
-        let list = '';
-        var res = $("[id=result]");
-        var count = 0;
-        res[0].innerHTML = '';
-        monstres.forEach(monstre => {
-          let flagTrait = false;
-          let flagGeo = false;
-          let flagCategorie = false;
-          monstre.items.forEach(item => {
-            if (item.name == trait || trait == "") { flagTrait = true }
-            if (item.name == geo || geo == "") { flagGeo = true }
-          })
-          if (monstre.system.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
-          if (flagCategorie && flagGeo && flagTrait) {
-            count++;
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + monstre._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.system.attributes.xp.value + ' XP</li>';
-          }
-          //}
-        });
-        if (count > 0) {
-          count = 1 + Math.floor(Math.random() * count);
-          message = 'Sélection aléatoire :&nbsp;' + count;
-        } else {
-          message = 'Aucun résultat'
-        }
-        res[0].innerHTML = message + '<ul>' + list + '</ul>';
-        document.getElementById("app-" + d.appId).style.height = "auto"
-      });
-      $("[id=b]").change(function () {
-        var trait = $("[id=a]").val();
-        var geo = $("[id=b]").val();
-        var categorie = $("[id=c]").val();
-        let list = '';
-        var res = $("[id=result]");
-        var count = 0;
-        res[0].innerHTML = '';
-        monstres.forEach(monstre => {
-          let flagTrait = false;
-          let flagGeo = false;
-          let flagCategorie = false;
-          monstre.items.forEach(item => {
-            if (item.name == trait || trait == "") { flagTrait = true }
-            if (item.name == geo || geo == "") { flagGeo = true }
-          })
-          if (monstre.system.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
-          if (flagCategorie && flagGeo && flagTrait) {
-            count++;
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true"data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + monstre._id + '"  data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.system.attributes.xp.value + ' XP</li>';
-          }
-          //}
-        });
-        if (count > 0) {
-          count = 1 + Math.floor(Math.random() * count);
-          message = 'Sélection aléatoire :&nbsp;' + count;
-        } else {
-          message = 'Aucun résultat'
-        }
-        res[0].innerHTML = message + '<ul>' + list + '</ul>';
-        document.getElementById("app-" + d.appId).style.height = "auto"
-      });
-      $("[id=c]").change(function () {
-        var trait = $("[id=a]").val();
-        var geo = $("[id=b]").val();
-        var categorie = $("[id=c]").val();
-        let list = '';
-        var res = $("[id=result]");
-        var count = 0;
-        res[0].innerHTML = '';
-        monstres.forEach(monstre => {
-          let flagTrait = false;
-          let flagGeo = false;
-          let flagCategorie = false;
-          monstre.items.forEach(item => {
-            if (item.name == trait || trait == "") { flagTrait = true }
-            if (item.name == geo || geo == "") { flagGeo = true }
-          })
-          if (monstre.system.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
-          if (flagCategorie && flagGeo && flagTrait) {
-            count++;
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + monstre._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.system.attributes.xp.value + ' XP</li>';
-          }
-          //}
-        });
-        if (count > 0) {
-          count = 1 + Math.floor(Math.random() * count);
-          message = 'Sélection aléatoire :&nbsp;' + count;
-        } else {
-          message = 'Aucun résultat'
-        }
-        res[0].innerHTML = message + '<ul>' + list + '</ul>';
-        document.getElementById("app-" + d.appId).style.height = "auto"
-      });
-      $("[class=relance]").click(ev => {
-        var trait = $("[id=a]").val();
-        var geo = $("[id=b]").val();
-        var categorie = $("[id=c]").val();
-        let list = '';
-        var res = $("[id=result]");
-        var count = 0;
-        res[0].innerHTML = '';
-        monstres.forEach(monstre => {
-          let flagTrait = false;
-          let flagGeo = false;
-          let flagCategorie = false;
-          monstre.items.forEach(item => {
-            if (item.name == trait || trait == "") { flagTrait = true }
-            if (item.name == geo || geo == "") { flagGeo = true }
-          })
-          if (monstre.system.attributes.categorie == categorie || categorie == "") { flagCategorie = true }
-          if (flagCategorie && flagGeo && flagTrait) {
-            count++;
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">' + count + '&nbsp;<img src=' + monstre.img + ' style="width:30px;height:30px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + monstre._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + monstre._id + '><i class="fas fa-suitcase"></i>&nbsp;' + monstre.name + '</a>&nbsp;' + monstre.system.attributes.xp.value + ' XP</li>';
-          }
-          //}
-        });
-        if (count > 0) {
-          count = 1 + Math.floor(Math.random() * count);
-          message = 'Sélection aléatoire :&nbsp;' + count;
-        } else {
-          message = 'Aucun résultat'
-        }
-        res[0].innerHTML = message + '<ul>' + list + '</ul>';
-        document.getElementById("app-" + d.appId).style.height = "auto"
-      });
-      $("[class=jet]").click(ev => {
-        let e = new Dialog({
-          title: "Lancer custom",
-          content: `
-          <label style="font-size: 15px;">Formule :</label>
-          <input style="font-size: 15px;" type="text" name="inputFormule" value="d20">
-          <br/><br/>
-          <label style="font-size: 15px;">Difficulté :</label>
-          <input style="font-size: 15px;" type="text" name="inputDiff" value=""></li>
-          <br/><br/>
-          `,
-          buttons: {
-            one: {
-              label: "Lancer custom",
-              callback: (html) => {
-                let dice = html.find('input[name="inputFormule"').val();
-                let diff = html.find('input[name="inputDiff"').val();
-                const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
-                if (dice != "") {
-                  let r = new Roll(dice);
-                  //await r.roll({"async": true});
-                  r.roll({ "async": true }).then(r => {
-                    var result = 0;
-                    var tplData = {};
-                    var reussite = "Réussite !   ";
-                    if (diff == "") {
-                      tplData = {
-                        diff: "",
-                        name: "Lancer custom"
-                      }
-                      renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
-                        r.toMessage({
-                          user: game.user.id,
-                          flavor: msgFlavor,
-                        });
-                      });
-                    } else {
-                      diff = new Roll(diff);
-                      diff.roll({ "async": true }).then(diff => {
-                        result = Math.abs(diff.total - r.total);
-                        if (r.total > diff.total) { reussite = "Échec !   " };
-                        tplData = {
-                          diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
-                          name: "Lancer custom"
-                        };
-                        renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
-                          r.toMessage({
-                            user: game.user.id,
-                            flavor: msgFlavor,
-                          });
-                        });
-                      });
-                    };
-                  });
-                }
-              }
-            }
-          }
-        });
-        e.render(true);
-      });
-    });
-  }
-
-  //Macros : chercher une rencontre (générateur) étape 1 --------------------------TO DELETE
-  static async listrencontreprep() {
-    //---------------------------
-    let list = '';
-    let i = 1;
-    let j = 1;
-    let levelFinal = [];
-    let zoneFinal = [];
-    let traitFinal = [];
-    let typeFinal = [];
-    let consnom = '';
-    let listfamille = '';
-
-    let d = new Dialog({
-      title: "Rencontre",
-      content: `
-      <form>
-        Choisissez l'XP de votre rencontre.<br/>
-        Ordre de grandeur :<br/>
-        - 4 aventuriers de niveau 1 -> 1-20 XP<br/>
-        - 4 aventuriers de niveau 2 -> 20-40 XP<br/>
-        - 4 aventuriers de niveau 3 -> 40-60 XP<br/>
-        - 4 aventuriers de niveau 5 -> 80-100 XP<br/>
-        - 4 aventuriers de niveau 10 -> 180-200 XP<br/>
-        - 4 aventuriers de niveau 15 -> 280-300 XP<br/>
-        <hr>
-        <em>Remarque : s'il n'y a pas de résultat, la macro essayera de trouver une rencontre jusqu'à +/- 10 d'xp par rapport à la valeur choisie</em>
-        <hr>
-        Toutes les rencontres seront de la même famille que la 1 : <input type="checkbox" id="consnom" name="consnom"><br/>
-        Lister toutes les rencontres de la même famille que la 1 : <input type="checkbox" id="listfamille" name="listfamille"><hr>
-        <div style="display:flex;text-align: center;">
-          <div style="flex:2">Plage d'XP</div>
-          <div style="flex:1">Zones</div>
-          <div style="flex:1">Traits</div>
-          <div style="flex:1">Types</div>
-          <div style="flex:0.4"></div>
-        </div>
-        <div style="display:flex">
-          <input name="a1" id="a1" type="text" value=1>
-          <input name="b1" id="b1" type="text" value=20>
-          <input name="c1" id="c1" type="text" value="" class="zone">
-          <input name="d1" id="d1" type="text" value="" class="trait">
-          <input name="e1" id="e1" type="text" value="" class="type">
-        </div>
-        <div id="result"></div>
-        <hr>
-        <a class="afficher"><strong>Ajouter une rencontre</strong></a><br/>
-        <a class="afficherd6"><strong>Ajouter 1d6 rencontres</strong></a><br/>
-        <br/>
-      </form>
-      `,
-      buttons: {
-        one: {
-          label: "Valider",
-          callback: (html) => {
-            while (j != (i + 1)) {
-              levelFinal.push([html.find('input[name="a' + j + '"]').val(), html.find('input[name="b' + j + '"]').val()])
-              zoneFinal.push([html.find('input[name="c' + j + '"]').val()])
-              traitFinal.push([html.find('input[name="d' + j + '"]').val()])
-              typeFinal.push([html.find('input[name="e' + j + '"]').val()])
-              j = j + 1
-            }
-            consnom = document.getElementById("consnom").checked
-            listfamille = document.getElementById("listfamille").checked
-            game.naheulbeuk.macros.listrencontre(monstres, levelFinal, zoneFinal, traitFinal, typeFinal, consnom, listfamille)
-          }
-        }
-      }
-    });
-    var monstres = []
-    const promise = []
-    const compendium = game.packs.find(p => p.metadata.label === "Bestiaire");
-    for (let c of compendium.index) {
-      promise.push(compendium.getDocument(c._id));
-    }
-    await Promise.all(promise).then(actors => {
-      for (let actor of actors) {
-        monstres.push(actor)
-      }
-    })
-    d.render(true);
-
-    $(document).ready(function () {
-      $("[class=afficher]").click(ev => {
-        i = i + 1
-        var res = $("[id=result]");
-        let xpmin = []
-        let xpmax = []
-        let zone = []
-        let trait = []
-        if (i != 2) {
-          for (let z = 2; z < i; z++) {
-            xpmin.push(document.getElementById("a" + z).value)
-            xpmax.push(document.getElementById("b" + z).value)
-            trait.push(document.getElementById("c" + z).value)
-            zone.push(document.getElementById("d" + z).value)
-          }
-        }
-        res[0].innerHTML = '';
-        list += `
-        <div class="test" style="display:flex">
-          <input name="a`+ i + `" id="a` + i + `" type="text" value=` + $("[name=a1]")[0].value + `>
-          <input name="b`+ i + `" id="b` + i + `" type="text" value=` + $("[name=b1]")[0].value + `>
-          <input class="zoneAd" name="c`+ i + `" id="c` + i + `" type="text" value="` + $("[name=c1]")[0].value + `">
-          <input class="traitAd"name="d`+ i + `" id="d` + i + `" type="text" value="` + $("[name=d1]")[0].value + `">
-          <input class="typeAd"name="e`+ i + `" id="e` + i + `" type="text" value="` + $("[name=e1]")[0].value + `">
-        </div>
-        `
-        res[0].innerHTML = res[0].innerHTML + list;
-        if (i != 2) {
-          for (let z = 2; z < i; z++) {
-            document.getElementById("a" + z).value = xpmin[z - 2]
-            document.getElementById("b" + z).value = xpmax[z - 2]
-            document.getElementById("c" + z).value = trait[z - 2]
-            document.getElementById("d" + z).value = zone[z - 2]
-          }
-        }
-        document.getElementById("app-" + d.appId).style.height = "auto"
-        $("[class=traitAd]").click(ev => {
-          let e = new Dialog({
-            title: "Rencontre",
-            content: `
-            <input type="checkbox" id="zone1" name="Bizarre +"><label>Bizarre +</label><hr>
-            <input type="checkbox" id="zone2" name="Bizarre ++"><label>Bizarre ++</label><hr>
-            <input type="checkbox" id="zone3" name="Bizarre +++"><label>Bizarre +++</label><hr>
-            <input type="checkbox" id="zone4" name="Bulldozer +"><label>Bulldozer +</label><hr>
-            <input type="checkbox" id="zone5" name="Bulldozer ++"><label>Bulldozer ++</label><hr>
-            <input type="checkbox" id="zone6" name="Bulldozer +++"><label>Bulldozer +++</label><hr>
-            <input type="checkbox" id="zone7" name="Critique +"><label>Critique +</label><hr>
-            <input type="checkbox" id="zone8" name="Critique ++"><label>Critique ++</label><hr>
-            <input type="checkbox" id="zone9" name="Critique +++"><label>Critique +++</label><hr>
-            <input type="checkbox" id="zone10" name="Mâchoire +"><label>Mâchoire +</label><hr>
-            <input type="checkbox" id="zone11" name="Mâchoire ++"><label>Mâchoire ++</label><hr>
-            <input type="checkbox" id="zone12" name="Mâchoire +++"><label>Mâchoire +++</label><hr>
-            <input type="checkbox" id="zone13" name="Mise à terre +"><label>Mise à terre +</label><hr>
-            <input type="checkbox" id="zone14" name="Mise à terre ++"><label>Mise à terre ++</label><hr>
-            <input type="checkbox" id="zone15" name="Mise à terre +++"><label>Mise à terre +++</label><hr>
-            <input type="checkbox" id="zone16" name="Puissant +"><label>Puissant +</label><hr>
-            <input type="checkbox" id="zone17" name="Puissant ++"><label>Puissant ++</label><hr>
-            <input type="checkbox" id="zone18" name="Puissant +++"><label>Puissant +++</label><hr>
-            <input type="checkbox" id="zone19" name="Rapide +"><label>Rapide +</label><hr>
-            <input type="checkbox" id="zone20" name="Rapide ++"><label>Rapide ++</label><hr>
-            <input type="checkbox" id="zone21" name="Rapide +++"><label>Rapide +++</label><hr>
-            <input type="checkbox" id="zone22" name="Terrifiant +"><label>Terrifiant +</label><hr>
-            <input type="checkbox" id="zone23" name="Terrifiant ++"><label>Terrifiant ++</label><hr>
-            <input type="checkbox" id="zone24" name="Terrifiant +++"><label>Terrifiant +++</label><hr>
-            <input type="checkbox" id="zone25" name="Violent +"><label>Violent +</label><hr>
-            <input type="checkbox" id="zone26" name="Violent ++"><label>Violent ++</label><hr>
-            <input type="checkbox" id="zone27" name="Violent +++"><label>Violent +++</label><hr>
-            <input type="checkbox" id="zone28" name="Agile"><label>Agile</label><hr>
-            <input type="checkbox" id="zone29" name="Bulldozer volant"><label>Bulldozer volant</label><hr>
-            <input type="checkbox" id="zone30" name="Immunité"><label>Immunité</label><hr>
-            <input type="checkbox" id="zone31" name="Légende"><label>Légende</label><hr>
-            <input type="checkbox" id="zone32" name="Malin"><label>Malin</label><hr>
-            <input type="checkbox" id="zone33" name="Mort"><label>Mort</label><hr>
-            <input type="checkbox" id="zone34" name="Nuée"><label>Nuée</label><hr>
-            <input type="checkbox" id="zone35" name="Paisible"><label>Paisible</label><hr>
-            <input type="checkbox" id="zone36" name="Surnaturel"><label>Surnaturel</label><hr>
-            <input type="checkbox" id="zone37" name="Volant"><label>Volant</label><hr>
-            <button class="validation" type="button">Ok</button>
-            `,
-            buttons: {
-            }
-          });
-          e.render(true);
-          $(document).ready(function () {
-            document.getElementById("app-" + d.appId).style.height = "auto"
-            $("[class=validation]").click(ev2 => {
-              let id_ev = ev.currentTarget.id
-              let variable = []
-              for (let env = 1; env < 38; env++) {
-                if (document.getElementById("zone" + env).checked) {
-                  variable.push(document.getElementById("zone" + env).name)
-                }
-              }
-              document.getElementById(id_ev).value = variable
-              e.close()
-            })
-          })
-        })
-        $("[class=zoneAd]").click(ev => {
-          let e = new Dialog({
-            title: "Rencontre",
-            content: `
-            <input type="checkbox" id="zone1" name="Archipel Papoutouh"><label>Archipel Papoutouh</label><hr>
-            <input type="checkbox" id="zone2" name="Arnn"><label>Arnn</label><hr>
-            <input type="checkbox" id="zone3" name="Banquise"><label>Banquise</label><hr>
-            <input type="checkbox" id="zone4" name="Cimes de Kuylinia"><label>Cimes de Kuylinia</label><hr>
-            <input type="checkbox" id="zone5" name="Côte de Sk'ka"><label>Côte de Sk'ka</label><hr>
-            <input type="checkbox" id="zone6" name="Fernol et Galzanie"><label>Fernol et Galzanie</label><hr>
-            <input type="checkbox" id="zone7" name="Forêt maudite de l'Ouest"><label>Forêt maudite de l'Ouest</label><hr>
-            <input type="checkbox" id="zone8" name="Haute mer"><label>Haute mer</label><hr>
-            <input type="checkbox" id="zone9" name="Jungles de la péninsule"><label>Jungles de la péninsule</label><hr>
-            <input type="checkbox" id="zone10" name="Marais gelés"><label>Marais gelés</label><hr>
-            <input type="checkbox" id="zone11" name="Montagnes du Nord"><label>Montagnes du Nord</label><hr>
-            <input type="checkbox" id="zone12" name="Monts de l'Est"><label>Monts de l'Est</label><hr>
-            <input type="checkbox" id="zone13" name="Pays de Nugh"><label>Pays de Nugh</label><hr>
-            <input type="checkbox" id="zone14" name="Plaine centrale"><label>Plaine centrale</label><hr>
-            <input type="checkbox" id="zone15" name="Plaine de Sakourvit"><label>Plaine de Sakourvit</label><hr>
-            <input type="checkbox" id="zone16" name="Plaines de Fangh et Caladie"><label>Plaines de Fangh et Caladie</label><hr>
-            <input type="checkbox" id="zone17" name="Plaines de l'Ouest"><label>Plaines de l'Ouest</label><hr>
-            <input type="checkbox" id="zone18" name="Plaines gelées du Nord"><label>Plaines gelées du Nord</label><hr>
-            <input type="checkbox" id="zone19" name="Pointe sud du Birmilistan"><label>Pointe sud du Birmilistan</label><hr>
-            <input type="checkbox" id="zone20" name="Rivages de la mer d'Embarh"><label>Rivages de la mer d'Embarh</label><hr>
-            <input type="checkbox" id="zone21" name="Rivages de la mer Sidralnée"><label>Rivages de la mer Sidralnée</label><hr>
-            <input type="checkbox" id="zone22" name="Steppes du Srölnagud"><label>Steppes du Srölnagud</label><hr>
-            <input type="checkbox" id="zone23" name="Uzgueg et Gnaal"><label>Uzgueg et Gnaal</label><hr>
-            <input type="checkbox" id="zone24" name="Vallée du Birmilistan"><label>Vallée du Birmilistan</label><hr>
-            <button class="validation" type="button">Ok</button>
-            `,
-            buttons: {
-            }
-          });
-          e.render(true);
-          $(document).ready(function () {
-            document.getElementById("app-" + d.appId).style.height = "auto"
-            $("[class=validation]").click(ev2 => {
-              let id_ev = ev.currentTarget.id
-              let variable = []
-              for (let env = 1; env < 25; env++) {
-                if (document.getElementById("zone" + env).checked) {
-                  variable.push(document.getElementById("zone" + env).name)
-                }
-              }
-              document.getElementById(id_ev).value = variable
-              e.close()
-            })
-          })
-        })
-        $("[class=typeAd]").click(ev => {
-          let e = new Dialog({
-            title: "Rencontre",
-            content: `
-            <input type="checkbox" id="zone1" name="Animaux"><label>Animaux</label><hr>
-            <input type="checkbox" id="zone2" name="Végétaux"><label>Végétaux</label><hr>
-            <input type="checkbox" id="zone3" name="Fanghiens"><label>Fanghiens</label><hr>
-            <input type="checkbox" id="zone4" name="Pirates Mauves"><label>Pirates Mauves</label><hr>
-            <input type="checkbox" id="zone5" name="Birmilistanais"><label>Birmilistanais</label><hr>
-            <input type="checkbox" id="zone6" name="Sauvages du Froid"><label>Sauvages du Froid</label><hr>
-            <input type="checkbox" id="zone7" name="Skuulnards"><label>Skuulnards</label><hr>
-            <input type="checkbox" id="zone8" name="Vrognards"><label>Vrognards</label><hr>
-            <input type="checkbox" id="zone9" name="Humanoïdes"><label>Humanoïdes</label><hr>
-            <input type="checkbox" id="zone10" name="Monstres et créatures"><label>Monstres et créatures</label><hr>
-            <input type="checkbox" id="zone11" name="Opposants légendaires"><label>Opposants légendaires</label><hr>
-            <button class="validation" type="button">Ok</button>
-            `,
-            buttons: {
-            }
-          });
-          e.render(true);
-          $(document).ready(function () {
-            document.getElementById("app-" + d.appId).style.height = "auto"
-            $("[class=validation]").click(ev2 => {
-              let id_ev = ev.currentTarget.id
-              let variable = []
-              for (let env = 1; env < 12; env++) {
-                if (document.getElementById("zone" + env).checked) {
-                  variable.push(document.getElementById("zone" + env).name)
-                }
-              }
-              document.getElementById(id_ev).value = variable
-              e.close()
-            })
-          })
-        })
-      })
-      $("[class=afficherd6]").click(ev => {
-        let alea = Math.floor(Math.random() * 6) + 1
-        while (alea != 0) {
-          i = i + 1
-          var res = $("[id=result]");
-          let xpmin = []
-          let xpmax = []
-          let zone = []
-          let trait = []
-          if (i != 2) {
-            for (let z = 2; z < i; z++) {
-              xpmin.push(document.getElementById("a" + z).value)
-              xpmax.push(document.getElementById("b" + z).value)
-              trait.push(document.getElementById("c" + z).value)
-              zone.push(document.getElementById("d" + z).value)
-            }
-          }
-          res[0].innerHTML = '';
-          list += `
-          <div class="test" style="display:flex">
-            <input name="a`+ i + `" id="a` + i + `" type="text" value=` + $("[name=a1]")[0].value + `>
-            <input name="b`+ i + `" id="b` + i + `" type="text" value=` + $("[name=b1]")[0].value + `>
-            <input class="zoneAd" name="c`+ i + `" id="c` + i + `" type="text" value="` + $("[name=c1]")[0].value + `">
-            <input class="traitAd" name="d`+ i + `" id="d` + i + `" type="text" value="` + $("[name=d1]")[0].value + `">
-            <input class="typeAd"name="e`+ i + `" id="e` + i + `" type="text" value="` + $("[name=e1]")[0].value + `">
-          </div>
-          `
-          res[0].innerHTML = list;
-          if (i != 2) {
-            for (let z = 2; z < i; z++) {
-              document.getElementById("a" + z).value = xpmin[z - 2]
-              document.getElementById("b" + z).value = xpmax[z - 2]
-              document.getElementById("c" + z).value = trait[z - 2]
-              document.getElementById("d" + z).value = zone[z - 2]
-            }
-          }
-          document.getElementById("app-" + d.appId).style.height = "auto"
-          alea = alea - 1;
-        }
-        $("[class=traitAd]").click(ev => {
-          let e = new Dialog({
-            title: "Rencontre",
-            content: `
-            <input type="checkbox" id="zone1" name="Bizarre +"><label>Bizarre +</label><hr>
-            <input type="checkbox" id="zone2" name="Bizarre ++"><label>Bizarre ++</label><hr>
-            <input type="checkbox" id="zone3" name="Bizarre +++"><label>Bizarre +++</label><hr>
-            <input type="checkbox" id="zone4" name="Bulldozer +"><label>Bulldozer +</label><hr>
-            <input type="checkbox" id="zone5" name="Bulldozer ++"><label>Bulldozer ++</label><hr>
-            <input type="checkbox" id="zone6" name="Bulldozer +++"><label>Bulldozer +++</label><hr>
-            <input type="checkbox" id="zone7" name="Critique +"><label>Critique +</label><hr>
-            <input type="checkbox" id="zone8" name="Critique ++"><label>Critique ++</label><hr>
-            <input type="checkbox" id="zone9" name="Critique +++"><label>Critique +++</label><hr>
-            <input type="checkbox" id="zone10" name="Mâchoire +"><label>Mâchoire +</label><hr>
-            <input type="checkbox" id="zone11" name="Mâchoire ++"><label>Mâchoire ++</label><hr>
-            <input type="checkbox" id="zone12" name="Mâchoire +++"><label>Mâchoire +++</label><hr>
-            <input type="checkbox" id="zone13" name="Mise à terre +"><label>Mise à terre +</label><hr>
-            <input type="checkbox" id="zone14" name="Mise à terre ++"><label>Mise à terre ++</label><hr>
-            <input type="checkbox" id="zone15" name="Mise à terre +++"><label>Mise à terre +++</label><hr>
-            <input type="checkbox" id="zone16" name="Puissant +"><label>Puissant +</label><hr>
-            <input type="checkbox" id="zone17" name="Puissant ++"><label>Puissant ++</label><hr>
-            <input type="checkbox" id="zone18" name="Puissant +++"><label>Puissant +++</label><hr>
-            <input type="checkbox" id="zone19" name="Rapide +"><label>Rapide +</label><hr>
-            <input type="checkbox" id="zone20" name="Rapide ++"><label>Rapide ++</label><hr>
-            <input type="checkbox" id="zone21" name="Rapide +++"><label>Rapide +++</label><hr>
-            <input type="checkbox" id="zone22" name="Terrifiant +"><label>Terrifiant +</label><hr>
-            <input type="checkbox" id="zone23" name="Terrifiant ++"><label>Terrifiant ++</label><hr>
-            <input type="checkbox" id="zone24" name="Terrifiant +++"><label>Terrifiant +++</label><hr>
-            <input type="checkbox" id="zone25" name="Violent +"><label>Violent +</label><hr>
-            <input type="checkbox" id="zone26" name="Violent ++"><label>Violent ++</label><hr>
-            <input type="checkbox" id="zone27" name="Violent +++"><label>Violent +++</label><hr>
-            <input type="checkbox" id="zone28" name="Agile"><label>Agile</label><hr>
-            <input type="checkbox" id="zone29" name="Bulldozer volant"><label>Bulldozer volant</label><hr>
-            <input type="checkbox" id="zone30" name="Immunité"><label>Immunité</label><hr>
-            <input type="checkbox" id="zone31" name="Légende"><label>Légende</label><hr>
-            <input type="checkbox" id="zone32" name="Malin"><label>Malin</label><hr>
-            <input type="checkbox" id="zone33" name="Mort"><label>Mort</label><hr>
-            <input type="checkbox" id="zone34" name="Nuée"><label>Nuée</label><hr>
-            <input type="checkbox" id="zone35" name="Paisible"><label>Paisible</label><hr>
-            <input type="checkbox" id="zone36" name="Surnaturel"><label>Surnaturel</label><hr>
-            <input type="checkbox" id="zone37" name="Volant"><label>Volant</label><hr>
-            <button class="validation" type="button">Ok</button>
-            `,
-            buttons: {
-            }
-          });
-          e.render(true);
-          $(document).ready(function () {
-            document.getElementById("app-" + d.appId).style.height = "auto"
-            $("[class=validation]").click(ev2 => {
-              let id_ev = ev.currentTarget.id
-              let variable = []
-              for (let env = 1; env < 38; env++) {
-                if (document.getElementById("zone" + env).checked) {
-                  variable.push(document.getElementById("zone" + env).name)
-                }
-              }
-              document.getElementById(id_ev).value = variable
-              e.close()
-            })
-          })
-        })
-        $("[class=zoneAd]").click(ev => {
-          let e = new Dialog({
-            title: "Rencontre",
-            content: `
-            <input type="checkbox" id="zone1" name="Archipel Papoutouh"><label>Archipel Papoutouh</label><hr>
-            <input type="checkbox" id="zone2" name="Arnn"><label>Arnn</label><hr>
-            <input type="checkbox" id="zone3" name="Banquise"><label>Banquise</label><hr>
-            <input type="checkbox" id="zone4" name="Cimes de Kuylinia"><label>Cimes de Kuylinia</label><hr>
-            <input type="checkbox" id="zone5" name="Côte de Sk'ka"><label>Côte de Sk'ka</label><hr>
-            <input type="checkbox" id="zone6" name="Fernol et Galzanie"><label>Fernol et Galzanie</label><hr>
-            <input type="checkbox" id="zone7" name="Forêt maudite de l'Ouest"><label>Forêt maudite de l'Ouest</label><hr>
-            <input type="checkbox" id="zone8" name="Haute mer"><label>Haute mer</label><hr>
-            <input type="checkbox" id="zone9" name="Jungles de la péninsule"><label>Jungles de la péninsule</label><hr>
-            <input type="checkbox" id="zone10" name="Marais gelés"><label>Marais gelés</label><hr>
-            <input type="checkbox" id="zone11" name="Montagnes du Nord"><label>Montagnes du Nord</label><hr>
-            <input type="checkbox" id="zone12" name="Monts de l'Est"><label>Monts de l'Est</label><hr>
-            <input type="checkbox" id="zone13" name="Pays de Nugh"><label>Pays de Nugh</label><hr>
-            <input type="checkbox" id="zone14" name="Plaine centrale"><label>Plaine centrale</label><hr>
-            <input type="checkbox" id="zone15" name="Plaine de Sakourvit"><label>Plaine de Sakourvit</label><hr>
-            <input type="checkbox" id="zone16" name="Plaines de Fangh et Caladie"><label>Plaines de Fangh et Caladie</label><hr>
-            <input type="checkbox" id="zone17" name="Plaines de l'Ouest"><label>Plaines de l'Ouest</label><hr>
-            <input type="checkbox" id="zone18" name="Plaines gelées du Nord"><label>Plaines gelées du Nord</label><hr>
-            <input type="checkbox" id="zone19" name="Pointe sud du Birmilistan"><label>Pointe sud du Birmilistan</label><hr>
-            <input type="checkbox" id="zone20" name="Rivages de la mer d'Embarh"><label>Rivages de la mer d'Embarh</label><hr>
-            <input type="checkbox" id="zone21" name="Rivages de la mer Sidralnée"><label>Rivages de la mer Sidralnée</label><hr>
-            <input type="checkbox" id="zone22" name="Steppes du Srölnagud"><label>Steppes du Srölnagud</label><hr>
-            <input type="checkbox" id="zone23" name="Uzgueg et Gnaal"><label>Uzgueg et Gnaal</label><hr>
-            <input type="checkbox" id="zone24" name="Vallée du Birmilistan"><label>Vallée du Birmilistan</label><hr>
-            <button class="validation" type="button">Ok</button>
-            `,
-            buttons: {
-            }
-          });
-          e.render(true);
-          $(document).ready(function () {
-            document.getElementById("app-" + d.appId).style.height = "auto"
-            $("[class=validation]").click(ev2 => {
-              let id_ev = ev.currentTarget.id
-              let variable = []
-              for (let env = 1; env < 25; env++) {
-                if (document.getElementById("zone" + env).checked) {
-                  variable.push(document.getElementById("zone" + env).name)
-                }
-              }
-              document.getElementById(id_ev).value = variable
-              e.close()
-            })
-          })
-        })
-        $("[class=typeAd]").click(ev => {
-          let e = new Dialog({
-            title: "Rencontre",
-            content: `
-            <input type="checkbox" id="zone1" name="Animaux"><label>Animaux</label><hr>
-            <input type="checkbox" id="zone2" name="Végétaux"><label>Végétaux</label><hr>
-            <input type="checkbox" id="zone3" name="Fanghiens"><label>Fanghiens</label><hr>
-            <input type="checkbox" id="zone4" name="Pirates Mauves"><label>Pirates Mauves</label><hr>
-            <input type="checkbox" id="zone5" name="Birmilistanais"><label>Birmilistanais</label><hr>
-            <input type="checkbox" id="zone6" name="Sauvages du Froid"><label>Sauvages du Froid</label><hr>
-            <input type="checkbox" id="zone7" name="Skuulnards"><label>Skuulnards</label><hr>
-            <input type="checkbox" id="zone8" name="Vrognards"><label>Vrognards</label><hr>
-            <input type="checkbox" id="zone9" name="Humanoïdes"><label>Humanoïdes</label><hr>
-            <input type="checkbox" id="zone10" name="Monstres et créatures"><label>Monstres et créatures</label><hr>
-            <input type="checkbox" id="zone11" name="Opposants légendaires"><label>Opposants légendaires</label><hr>
-            <button class="validation" type="button">Ok</button>
-            `,
-            buttons: {
-            }
-          });
-          e.render(true);
-          $(document).ready(function () {
-            document.getElementById("app-" + d.appId).style.height = "auto"
-            $("[class=validation]").click(ev2 => {
-              let id_ev = ev.currentTarget.id
-              let variable = []
-              for (let env = 1; env < 12; env++) {
-                if (document.getElementById("zone" + env).checked) {
-                  variable.push(document.getElementById("zone" + env).name)
-                }
-              }
-              document.getElementById(id_ev).value = variable
-              e.close()
-            })
-          })
-        })
-      })
-
-      $("[class=zone]").click(ev => {
-        let e = new Dialog({
-          title: "Rencontre",
-          content: `
-          <input type="checkbox" id="zone1" name="Archipel Papoutouh"><label>Archipel Papoutouh</label><hr>
-          <input type="checkbox" id="zone2" name="Arnn"><label>Arnn</label><hr>
-          <input type="checkbox" id="zone3" name="Banquise"><label>Banquise</label><hr>
-          <input type="checkbox" id="zone4" name="Cimes de Kuylinia"><label>Cimes de Kuylinia</label><hr>
-          <input type="checkbox" id="zone5" name="Côte de Sk'ka"><label>Côte de Sk'ka</label><hr>
-          <input type="checkbox" id="zone6" name="Fernol et Galzanie"><label>Fernol et Galzanie</label><hr>
-          <input type="checkbox" id="zone7" name="Forêt maudite de l'Ouest"><label>Forêt maudite de l'Ouest</label><hr>
-          <input type="checkbox" id="zone8" name="Haute mer"><label>Haute mer</label><hr>
-          <input type="checkbox" id="zone9" name="Jungles de la péninsule"><label>Jungles de la péninsule</label><hr>
-          <input type="checkbox" id="zone10" name="Marais gelés"><label>Marais gelés</label><hr>
-          <input type="checkbox" id="zone11" name="Montagnes du Nord"><label>Montagnes du Nord</label><hr>
-          <input type="checkbox" id="zone12" name="Monts de l'Est"><label>Monts de l'Est</label><hr>
-          <input type="checkbox" id="zone13" name="Pays de Nugh"><label>Pays de Nugh</label><hr>
-          <input type="checkbox" id="zone14" name="Plaine centrale"><label>Plaine centrale</label><hr>
-          <input type="checkbox" id="zone15" name="Plaine de Sakourvit"><label>Plaine de Sakourvit</label><hr>
-          <input type="checkbox" id="zone16" name="Plaines de Fangh et Caladie"><label>Plaines de Fangh et Caladie</label><hr>
-          <input type="checkbox" id="zone17" name="Plaines de l'Ouest"><label>Plaines de l'Ouest</label><hr>
-          <input type="checkbox" id="zone18" name="Plaines gelées du Nord"><label>Plaines gelées du Nord</label><hr>
-          <input type="checkbox" id="zone19" name="Pointe sud du Birmilistan"><label>Pointe sud du Birmilistan</label><hr>
-          <input type="checkbox" id="zone20" name="Rivages de la mer d'Embarh"><label>Rivages de la mer d'Embarh</label><hr>
-          <input type="checkbox" id="zone21" name="Rivages de la mer Sidralnée"><label>Rivages de la mer Sidralnée</label><hr>
-          <input type="checkbox" id="zone22" name="Steppes du Srölnagud"><label>Steppes du Srölnagud</label><hr>
-          <input type="checkbox" id="zone23" name="Uzgueg et Gnaal"><label>Uzgueg et Gnaal</label><hr>
-          <input type="checkbox" id="zone24" name="Vallée du Birmilistan"><label>Vallée du Birmilistan</label><hr>
-          <button class="validation" type="button">Ok</button>
-          `,
-          buttons: {
-          }
-        });
-        e.render(true);
-        $(document).ready(function () {
-          document.getElementById("app-" + d.appId).style.height = "auto"
-          $("[class=validation]").click(ev2 => {
-            let id_ev = ev.currentTarget.id
-            let variable = []
-            for (let env = 1; env < 25; env++) {
-              if (document.getElementById("zone" + env).checked) {
-                variable.push(document.getElementById("zone" + env).name)
-              }
-            }
-            document.getElementById(id_ev).value = variable
-            e.close()
-          })
-        })
-      })
-      $("[class=trait]").click(ev => {
-        let e = new Dialog({
-          title: "Rencontre",
-          content: `
-          <input type="checkbox" id="zone1" name="Bizarre +"><label>Bizarre +</label><hr>
-          <input type="checkbox" id="zone2" name="Bizarre ++"><label>Bizarre ++</label><hr>
-          <input type="checkbox" id="zone3" name="Bizarre +++"><label>Bizarre +++</label><hr>
-          <input type="checkbox" id="zone4" name="Bulldozer +"><label>Bulldozer +</label><hr>
-          <input type="checkbox" id="zone5" name="Bulldozer ++"><label>Bulldozer ++</label><hr>
-          <input type="checkbox" id="zone6" name="Bulldozer +++"><label>Bulldozer +++</label><hr>
-          <input type="checkbox" id="zone7" name="Critique +"><label>Critique +</label><hr>
-          <input type="checkbox" id="zone8" name="Critique ++"><label>Critique ++</label><hr>
-          <input type="checkbox" id="zone9" name="Critique +++"><label>Critique +++</label><hr>
-          <input type="checkbox" id="zone10" name="Mâchoire +"><label>Mâchoire +</label><hr>
-          <input type="checkbox" id="zone11" name="Mâchoire ++"><label>Mâchoire ++</label><hr>
-          <input type="checkbox" id="zone12" name="Mâchoire +++"><label>Mâchoire +++</label><hr>
-          <input type="checkbox" id="zone13" name="Mise à terre +"><label>Mise à terre +</label><hr>
-          <input type="checkbox" id="zone14" name="Mise à terre ++"><label>Mise à terre ++</label><hr>
-          <input type="checkbox" id="zone15" name="Mise à terre +++"><label>Mise à terre +++</label><hr>
-          <input type="checkbox" id="zone16" name="Puissant +"><label>Puissant +</label><hr>
-          <input type="checkbox" id="zone17" name="Puissant ++"><label>Puissant ++</label><hr>
-          <input type="checkbox" id="zone18" name="Puissant +++"><label>Puissant +++</label><hr>
-          <input type="checkbox" id="zone19" name="Rapide +"><label>Rapide +</label><hr>
-          <input type="checkbox" id="zone20" name="Rapide ++"><label>Rapide ++</label><hr>
-          <input type="checkbox" id="zone21" name="Rapide +++"><label>Rapide +++</label><hr>
-          <input type="checkbox" id="zone22" name="Terrifiant +"><label>Terrifiant +</label><hr>
-          <input type="checkbox" id="zone23" name="Terrifiant ++"><label>Terrifiant ++</label><hr>
-          <input type="checkbox" id="zone24" name="Terrifiant +++"><label>Terrifiant +++</label><hr>
-          <input type="checkbox" id="zone25" name="Violent +"><label>Violent +</label><hr>
-          <input type="checkbox" id="zone26" name="Violent ++"><label>Violent ++</label><hr>
-          <input type="checkbox" id="zone27" name="Violent +++"><label>Violent +++</label><hr>
-          <input type="checkbox" id="zone28" name="Agile"><label>Agile</label><hr>
-          <input type="checkbox" id="zone29" name="Bulldozer volant"><label>Bulldozer volant</label><hr>
-          <input type="checkbox" id="zone30" name="Immunité"><label>Immunité</label><hr>
-          <input type="checkbox" id="zone31" name="Légende"><label>Légende</label><hr>
-          <input type="checkbox" id="zone32" name="Malin"><label>Malin</label><hr>
-          <input type="checkbox" id="zone33" name="Mort"><label>Mort</label><hr>
-          <input type="checkbox" id="zone34" name="Nuée"><label>Nuée</label><hr>
-          <input type="checkbox" id="zone35" name="Paisible"><label>Paisible</label><hr>
-          <input type="checkbox" id="zone36" name="Surnaturel"><label>Surnaturel</label><hr>
-          <input type="checkbox" id="zone37" name="Volant"><label>Volant</label><hr>
-          <button class="validation" type="button">Ok</button>
-          `,
-          buttons: {
-          }
-        });
-        e.render(true);
-        $(document).ready(function () {
-          document.getElementById("app-" + d.appId).style.height = "auto"
-          $("[class=validation]").click(ev2 => {
-            let id_ev = ev.currentTarget.id
-            let variable = []
-            for (let env = 1; env < 38; env++) {
-              if (document.getElementById("zone" + env).checked) {
-                variable.push(document.getElementById("zone" + env).name)
-              }
-            }
-            document.getElementById(id_ev).value = variable
-            e.close()
-          })
-        })
-      })
-      $("[class=type]").click(ev => {
-        let e = new Dialog({
-          title: "Rencontre",
-          content: `
-          <input type="checkbox" id="zone1" name="Animaux"><label>Animaux</label><hr>
-          <input type="checkbox" id="zone2" name="Végétaux"><label>Végétaux</label><hr>
-          <input type="checkbox" id="zone3" name="Fanghiens"><label>Fanghiens</label><hr>
-          <input type="checkbox" id="zone4" name="Pirates Mauves"><label>Pirates Mauves</label><hr>
-          <input type="checkbox" id="zone5" name="Birmilistanais"><label>Birmilistanais</label><hr>
-          <input type="checkbox" id="zone6" name="Sauvages du Froid"><label>Sauvages du Froid</label><hr>
-          <input type="checkbox" id="zone7" name="Skuulnards"><label>Skuulnards</label><hr>
-          <input type="checkbox" id="zone8" name="Vrognards"><label>Vrognards</label><hr>
-          <input type="checkbox" id="zone9" name="Humanoïdes"><label>Humanoïdes</label><hr>
-          <input type="checkbox" id="zone10" name="Monstres et créatures"><label>Monstres et créatures</label><hr>
-          <input type="checkbox" id="zone11" name="Opposants légendaires"><label>Opposants légendaires</label><hr>
-          <button class="validation" type="button">Ok</button>
-          `,
-          buttons: {
-          }
-        });
-        e.render(true);
-        $(document).ready(function () {
-          document.getElementById("app-" + d.appId).style.height = "auto"
-          $("[class=validation]").click(ev2 => {
-            let id_ev = ev.currentTarget.id
-            let variable = []
-            for (let env = 1; env < 12; env++) {
-              if (document.getElementById("zone" + env).checked) {
-                variable.push(document.getElementById("zone" + env).name)
-              }
-            }
-            document.getElementById(id_ev).value = variable
-            e.close()
-          })
-        })
-      })
-    })
-    //-------------------------
-  }
-
-  //Macros : chercher une rencontre (générateur) étape 2 --------------------------TO DELETE
-  static async listrencontre(monstres, level, zone, trait, type, consnom, listfamille) {
-    var rencontresN = []
-    var rencontresM = []
-    var monstres = monstres
-    var list = ''
-    let i = 0
-    let firstchar = ""
-    for (let levelCust of level) {
-      var zoneCusts = zone[i][0].split(',')
-      if (zoneCusts.length == 1 && zoneCusts[0] == "") { zoneCusts = [] }
-      var traitCusts = trait[i][0].split(',')
-      if (traitCusts.length == 1 && traitCusts[0] == "") { traitCusts = [] }
-      var typeCusts = type[i][0].split(',')
-      if (typeCusts.length == 1 && typeCusts[0] == "") { typeCusts = [] }
-      var flag1 = 0
-      var flag2 = 0
-      var flag3 = false
-      var rencontres = []
-      let xpmax = levelCust[1]
-      let xpmin = levelCust[0]
-      let flagtest = false
-      let compteurtest = 0
-      while (!flagtest) {
-        xpmax = parseFloat(levelCust[1]) + compteurtest
-        xpmin = parseFloat(levelCust[0]) - compteurtest
-        for (let monstre of monstres) {
-          flag1 = 0
-          flag2 = 0
-          flag3 = false
-          if (monstre.system.attributes.xp.value <= xpmax && monstre.system.attributes.xp.value >= xpmin) {
-            for (let zoneCust of zoneCusts) {
-              monstre.items.forEach(item => {
-                if (item.name == zoneCust) { flag1++ }
-              })
-            }
-            for (let traitCust of traitCusts) {
-              monstre.items.forEach(item => {
-                if (item.name == traitCust) { flag2++ }
-              })
-            }
-            for (let typeCust of typeCusts) {
-              if (monstre.system.attributes.categorie == typeCust) { flag3 = true }
-            }
-            if (typeCusts.length == 0) { flag3 = true }
-          }
-          if (flag1 == zoneCusts.length && flag2 == traitCusts.length && flag3 == true) {
-            if (consnom == true && firstchar != "") {
-              if (monstre.name.split("|")[0].replace(/ /g, '') == firstchar) {
-                rencontres.push(monstre)
-              }
-            } else {
-              rencontres.push(monstre)
-            }
-          }
-        }
-        compteurtest++
-        if (compteurtest == 11) { flagtest = true }
-        if (rencontres.length != 0) { flagtest = true }
-      }
-      if (rencontres.length == 0) {
-        rencontresN.push("vide")
-      } else {
-        let alea = Math.floor(Math.random() * rencontres.length)
-        let aleamonstre = rencontres[alea]
-        if (consnom == true && firstchar == "") {
-          firstchar = aleamonstre.name.split("|")[0].replace(/ /g, '')
-        }
-        rencontresN.push(aleamonstre)
-      }
-      if (rencontresN.length == 1 && rencontresM.length == 0) {
-        if (rencontresN[0] == "vide") {
-          consnom = false;
-          listfamille = false;
-        }
-        rencontresM = rencontresN
-        rencontresN = []
-      }
-      i = i + 1
-    }
-    if (listfamille == true) {
-      for (let monstre of monstres) {
-        if (monstre.name != rencontresM[0].name && monstre.name.split("|")[0].replace(/ /g, '') == rencontresM[0].name.split("|")[0].replace(/ /g, '')) {
-          rencontresM.push(monstre)
-        }
-      }
-    }
-
-    for (let r of rencontresM) {
-      if (r == "vide") {
-        list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">Pas de résultat</li>';
-      } else {
-        list += '<li style="padding-bottom: 5px;display: flex;align-items: center;"><img src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + r._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;' + r.system.attributes.xp.value + ' XP</li>';
-      }
-    }
-    list += '<hr>'
-    for (let r of rencontresN) {
-      if (r == "vide") {
-        list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">Pas de résultat</li>';
-      } else {
-        list += '<li style="padding-bottom: 5px;display: flex;align-items: center;"><img src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.bestiaire' + '.' + r._id + '" data-pack="naheulbeuk.bestiaire" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;' + r.system.attributes.xp.value + ' XP</li>';
-      }
-    }
-    let ul = '<ul>' + list + '</ul>';
-    let d = new Dialog({
-      title: "Rencontre",
-      content: ul,
-      buttons: {}
-    });
-    d.render(true);
-  }
-
   //Macros : chercher les compétence
   static async competence_display() {
-    var content = ''
+    //Trouver les compétences
     var competences = []
     const source = game.naheulbeuk.macros.getSpeakersActor();
     for (let item of source.items) {
@@ -2256,107 +1218,80 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         competences.push(item)
       }
     }
-    let i = 0
+
+    //Afficher le selecteur
+    let content = `
+    <div style="display: flex;align-items: center;padding-bottom: 10px;">
+    <label>Choisir une compétence : &nbsp;</label>
+    <select name="competence" id="competence" style="flex: 1">
+        <option value=''></option>
+    `
+    let expr = ''
     for (let competence of competences) {
+      expr = ''
       if (competence.system.diff != "-") {
-        var expr = game.naheulbeuk.macros.replaceAttr(competence.system.diff, source)
+        expr = game.naheulbeuk.macros.replaceAttr(competence.system.diff, source)
         expr = expr.replace(/ceil/g, "Math.ceil");
         expr = expr.replace(/max/g, "Math.max");
         expr = eval(expr)
-      } else {
-        expr = "-"
+        expr = "&nbsp;-&nbsp;"+expr
       }
-      var affichage = '<div style="display:flex"><div style="flex:1.5"><label class="competence" id=' + i + '><label class="cliquable">' + competence.name + '</label></label></div>' + '<div style="flex:0.5;"><label class="cliquable"><label class="competencejet" style="cursor: pointer;" name="' + competence.name + '">' + expr + '</label></label></div></div>'
-      content = content + affichage
-      i = i + 1
+      content += '<option value="'+competence.name+'">'+competence.name+expr+'</option>'
     }
-    content = content + '<br/>'
-    const myDialogOptions = {
-      width: 300
-    };
+    content += '</select></div>'
+
+    //Afficher la fenetre
     let d = new Dialog({
       title: "Compétences",
       content: content,
       buttons: {
         one: {
-          label: "Fermer",
+          label: "Afficher",
           callback: (html) => {
+            let compName = html.find('select[name="competence"]').val();
+            let compFind
+            let expr
+            for (let competence of competences) {
+              if (compName==competence.name){
+                compFind=competence
+              }
+            }
+            compFind.sheet.render(true)
           }
-        }
-      }
-    }, myDialogOptions);
-    d.render(true)
-    $(document).ready(function () {
-      $("[class=competence]").click(ev => {
-        let id = ev.currentTarget.id
-        competences[id].sheet.render(true)
-      })
-      $("[class=competencejet]").click(ev => {
-        var diffcomp = ev.currentTarget.childNodes[0].data
-        if (diffcomp != "-") {
-          var namecomp = ev.currentTarget.attributes.name.value;
-          let e = new Dialog({
-            title: namecomp,
-            content: `
-            <label style="font-size: 15px;">Formule :</label>
-            <input style="font-size: 15px;" type="text" name="inputFormule" value="d20">
-            <br/><br/>
-            <label style="font-size: 15px;">Difficulté :</label>
-            <input style="font-size: 15px;" type="text" name="inputDiff" value="`+ diffcomp + `"></li>
-            <br/><br/>
-            `,
-            buttons: {
-              one: {
-                label: "Lancer",
-                callback: (html) => {
-                  let dice = html.find('input[name="inputFormule"').val();
-                  let diff = html.find('input[name="inputDiff"').val();
-                  const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
-                  if (dice != "") {
-                    let r = new Roll(dice);
-                    //await r.roll({"async": true});
-                    r.roll({ "async": true }).then(r => {
-                      var result = 0;
-                      var tplData = {};
-                      var reussite = "Réussite !   ";
-                      if (diff == "") {
-                        tplData = {
-                          diff: "",
-                          name: namecomp
-                        }
-                        renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
-                          r.toMessage({
-                            user: game.user.id,
-                            flavor: msgFlavor,
-                          });
-                        });
-                      } else {
-                        diff = new Roll(diff);
-                        diff.roll({ "async": true }).then(diff => {
-                          result = Math.abs(diff.total - r.total);
-                          if (r.total > diff.total) { reussite = "Échec !   " };
-                          tplData = {
-                            diff: reussite + " - Difficulté : " + diff.total + " - Écart : " + result,
-                            name: namecomp
-                          };
-                          renderTemplate(rollMessageTpl, tplData).then(msgFlavor => {
-                            r.toMessage({
-                              user: game.user.id,
-                              flavor: msgFlavor,
-                            });
-                          });
-                        });
-                      };
-                    });
-                  }
+        },
+        two: {
+          label: "Jet de dés",
+          callback: (html)=>{
+            let compName = html.find('select[name="competence"]').val();
+            let compFind
+            let expr = ""
+            for (let competence of competences) {
+              if (compName==competence.name){
+                compFind=competence
+                if (competence.system.diff != "-") {
+                  expr = game.naheulbeuk.macros.replaceAttr(competence.system.diff, source)
+                  expr = expr.replace(/ceil/g, "Math.ceil");
+                  expr = expr.replace(/max/g, "Math.max");
+                  expr = eval(expr)
                 }
               }
             }
-          });
-          e.render(true);
+            if (expr!=""){
+              let datasetRoll = {}
+              datasetRoll.dice = "d20"
+              datasetRoll.diff = expr+""
+              datasetRoll.name = compFind.name
+              let option="interface"
+              let itemRoll={}
+              game.naheulbeuk.macros.onRoll(source,itemRoll,datasetRoll, option)
+            } else {
+              ui.notifications.error("Pas de jet de dés possible");
+            }
+          }
         }
-      })
-    })
+      }
+    }, {width: 400});
+    d.render(true)
   }
 
   //Macros setting drag and drop
@@ -2478,9 +1413,6 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
       }
       if (flag) { comps.push(entry.compendium) }
     }
-    const myDialogOptions = {
-      width: 900
-    };
 
 
     let txt = `
@@ -2509,7 +1441,9 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
     }
     txt += `
       </select>
-      <label style="flex: 1;text-align:right;">Nom ( || pour un OU, && pour un ET )&nbsp;&nbsp;&nbsp;&nbsp;</em></label>
+    </div>
+    <div style="display: flex;align-items: center;padding-bottom: 10px;">
+      <label style="flex: 1;">Nom ( || pour un OU, && pour un ET )&nbsp;&nbsp;</em></label>
       <input style="flex: 1" type="text" name="nameO" id="nameO" value="" label="Nom de l'objet" />
     </div>
     <div style="display: flex;align-items: center;padding-bottom: 10px;"> 
@@ -2549,7 +1483,9 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         <option value="sort">Sorts</option>
         <option value="truc">Trucs</option>
       </select>
-      <label style="flex: 1;text-align:right;">Catégorie d'inventaire&nbsp;&nbsp;</label><br/>
+    </div>
+    <div style="display: flex;align-items: center;padding-bottom: 10px;">
+      <label style="flex: 1;">Catégorie d'inventaire&nbsp;&nbsp;</label><br/>
       <select name="catO1" id="catO1" style="flex:1;">
         <option value=""></option>
         <option value="Divers">Divers</option>
@@ -2599,7 +1535,9 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         <option value="armefeu">Arme à poudre</option>
         <option value="munition">Munition</option>
       </select>
-      <label style="flex: 0.7;text-align:right;">Types d'armures&nbsp;&nbsp;</label><br/>
+    </div>
+    <div style="display: flex;align-items: center;padding-bottom: 10px;">
+      <label style="flex: 0.7;">Types d'armures&nbsp;&nbsp;</label><br/>
       <select name="armureO1" id="armureO1" style="flex:1;">
         <option value=""></option>
         <option value="enchantement">Enchantée</option>
@@ -2624,265 +1562,280 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         <option value="prpieds">PR Pieds</option>
       </select>
     </div>
-    <div style="display: flex;align-items: center;">  
+    <div style="display: flex;align-items: center;padding-bottom: 10px;">  
       <label style="flex: 1.8">Mots clés ( || pour un OU, && pour un ET )</em></label>
-      <input style="flex: 3" type="text" name="q" id="q" value="" label="Nom de l'objet" />
-      <label style="flex: 1;text-align:right;">Prix min / max&nbsp;&nbsp;</label>
+      <input style="flex: 1.8" type="text" name="q" id="q" value="" label="Nom de l'objet" />
+    </div>
+    <div style="display: flex;align-items: center;padding-bottom: 10px;">
+      <label style="flex: 0.7;">Prix min / max&nbsp;&nbsp;</label>
       <input style="flex: 0.4" type="text" name="pomin" id="pomin" value="" label="Prix min" />
       <label style="flex: 0.1">&nbsp;/</label>
       <input style="flex: 0.4" type="text" name="pomax" id="pomax" value="" label="Prix max" />
+      <label style="flex:1;text-align:right">Un seul résultat</label>
+      <input type="checkbox" id="random" name="random" style="flex:0.1">
+      <label style="flex:0.5;"></label>
     </div>
     <hr>
-    <div style="display: flex;align-items: center;">
+    <div style="display: flex;align-items: center;padding-bottom: 10px;"> 
       <label style="flex:1">Remplir un magasin (nom du journal puis nom de la page)</label>
       <input style="flex: 0.6" type="text" name="magasin" id="magasin" value="" label="Nom de magasin" />
       <label style="flex:0.02"></label>
       <input style="flex: 0.6" type="text" name="page" id="page" value="" label="Nom de la page" />
-      <label style="flex:0.4;text-align:right">Un seul résultat</label>
-      <input type="checkbox" id="random" name="random" style="flex:0.1">
     </div>
-    <br/>
-    <button class="validation" type="button">Rechercher</button>
-    <div id="result"></div>
   </form>
     `
-
-    let d = new Dialog({
+    var l
+    let d = new PCHDialog({
       title: "Rechercher un objet (tous les champs sont optionels)",
       content: txt,
       buttons: {
-      }
-    }, myDialogOptions);
-    d.render(true);
-    $(document).ready(function () {
-      $("[class=validation]").click(ev2 => {
-        var result = arr;
-        var result2 = arr;
-
-        //Recherche compendium new
-        var comp = $("[name=compendium]").val();
-        if (comp != '') {
-          result = result2.filter(entry => { return entry.compendium === comp })
-
-        }
-        result2 = result;
-
-        //Recherche nom new
-        var nameO = $("[id=nameO]").val().toLowerCase();
-        var nameOs = nameO.split("&&");
-        if (nameO != '') {
-          result = result2.filter(entry => {
-            let flag1 = true
-            for (let valentry of nameOs) {
-              let valss = valentry.split("||");
-              if (valss.length == 1) {
-                let flag2 = false
-                if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
-                if (flag2 == false) { flag1 = false }
-              } else {
-                let flag3 = false
-                for (let valssentry of valss) {
-                  let flag2 = false
-                  if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
-                  if (flag2 == true) { flag3 = true }
-                }
-                if (flag3 == false) { flag1 = false }
-              }
+        one:{
+          label:"Rechercher",
+          callback: (html)=>{
+            var result = arr;
+            var result2 = arr;
+    
+            //Recherche compendium new
+            var comp = $("[name=compendium]").val();
+            if (comp != '') {
+              result = result2.filter(entry => { return entry.compendium === comp })
+    
             }
-            return flag1
-          });
-        }
-        result2 = result;
-
-        //Rercherche type new
-        var typeO1 = $("[name=typeO1]").val();
-        var typeO2 = $("[name=typeO2]").val();
-        if (typeO1 != '' || typeO2 != '') {
-          result = result2.filter(entry => {
-            if ((typeO1 != '' && entry.type == typeO1) || (typeO2 != '' && entry.type == typeO2)) { return true }
-          })
-        }
-        result2 = result;
-
-        //Rercherche catégorie new
-        var catO1 = $("[name=catO1]").val();
-        var catO2 = $("[name=catO2]").val();
-        if (catO1 != '' || catO2 != '') {
-          result = result2.filter(entry => {
-            if ((catO1 != '' && entry.system.categorie == catO1) || (catO2 != '' && entry.system.categorie == catO2)) { return true }
-          })
-        }
-        result2 = result;
-
-        //Rercherche arme new
-        var armeO1 = $("[name=armeO1]").val();
-        var armeO2 = $("[name=armeO2]").val();
-        if (armeO1 != '' || armeO2 != '') {
-          result = result2.filter(entry => {
-            if (armeO1 != '' && armeO2 != '' && eval("entry.system." + armeO1) == true && eval("entry.system." + armeO2) == true) { return true }
-            if (armeO1 != '' && armeO2 == '' && eval("entry.system." + armeO1) == true) { return true }
-            if (armeO2 != '' && armeO1 == '' && eval("entry.system." + armeO2) == true) { return true }
-          })
-        }
-        result2 = result;
-
-        //Rercherche arme new
-        var armureO1 = $("[name=armureO1]").val();
-        var armureO2 = $("[name=armureO2]").val();
-        if (armureO1 != '' || armureO2 != '') {
-          result = result2.filter(entry => {
-            if (armureO1 != '' && armureO2 != '' && eval("entry.system." + armureO1) == true && eval("entry.system." + armureO2) == true) { return true }
-            if (armureO2 == '' && armureO1 != '' && eval("entry.system." + armureO1) == true) { return true }
-            if (armureO1 == '' && armureO2 != '' && eval("entry.system." + armureO2) == true) { return true }
-          })
-        }
-        result2 = result;
-
-        //Recherche txt OK
-        var val = $("[id=q]").val().toLowerCase();
-        var vals = val.split("&&");
-        if (val != '') {
-          result = result2.filter(entry => {
-            let flag1 = true
-            for (let valentry of vals) {
-              let valss = valentry.split("||");
-              if (valss.length == 1) {
-                let flag2 = false
-                if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
-                for (let e in entry.system) {
-                  if (("" + entry.system[e]).toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
-                }
-                if (flag2 == false) { flag1 = false }
-              } else {
-                let flag3 = false
-                for (let valssentry of valss) {
-                  let flag2 = false
-                  if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
-                  for (let e in entry.system) {
-                    if (("" + entry.system[e]).toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
+            result2 = result;
+    
+            //Recherche nom new
+            var nameO = $("[id=nameO]").val().toLowerCase();
+            var nameOs = nameO.split("&&");
+            if (nameO != '') {
+              result = result2.filter(entry => {
+                let flag1 = true
+                for (let valentry of nameOs) {
+                  let valss = valentry.split("||");
+                  if (valss.length == 1) {
+                    let flag2 = false
+                    if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
+                    if (flag2 == false) { flag1 = false }
+                  } else {
+                    let flag3 = false
+                    for (let valssentry of valss) {
+                      let flag2 = false
+                      if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
+                      if (flag2 == true) { flag3 = true }
+                    }
+                    if (flag3 == false) { flag1 = false }
                   }
-                  if (flag2 == true) { flag3 = true }
                 }
-                if (flag3 == false) { flag1 = false }
+                return flag1
+              });
+            }
+            result2 = result;
+    
+            //Rercherche type new
+            var typeO1 = $("[name=typeO1]").val();
+            var typeO2 = $("[name=typeO2]").val();
+            if (typeO1 != '' || typeO2 != '') {
+              result = result2.filter(entry => {
+                if ((typeO1 != '' && entry.type == typeO1) || (typeO2 != '' && entry.type == typeO2)) { return true }
+              })
+            }
+            result2 = result;
+    
+            //Rercherche catégorie new
+            var catO1 = $("[name=catO1]").val();
+            var catO2 = $("[name=catO2]").val();
+            if (catO1 != '' || catO2 != '') {
+              result = result2.filter(entry => {
+                if ((catO1 != '' && entry.system.categorie == catO1) || (catO2 != '' && entry.system.categorie == catO2)) { return true }
+              })
+            }
+            result2 = result;
+    
+            //Rercherche arme new
+            var armeO1 = $("[name=armeO1]").val();
+            var armeO2 = $("[name=armeO2]").val();
+            if (armeO1 != '' || armeO2 != '') {
+              result = result2.filter(entry => {
+                if (armeO1 != '' && armeO2 != '' && eval("entry.system." + armeO1) == true && eval("entry.system." + armeO2) == true) { return true }
+                if (armeO1 != '' && armeO2 == '' && eval("entry.system." + armeO1) == true) { return true }
+                if (armeO2 != '' && armeO1 == '' && eval("entry.system." + armeO2) == true) { return true }
+              })
+            }
+            result2 = result;
+    
+            //Rercherche arme new
+            var armureO1 = $("[name=armureO1]").val();
+            var armureO2 = $("[name=armureO2]").val();
+            if (armureO1 != '' || armureO2 != '') {
+              result = result2.filter(entry => {
+                if (armureO1 != '' && armureO2 != '' && eval("entry.system." + armureO1) == true && eval("entry.system." + armureO2) == true) { return true }
+                if (armureO2 == '' && armureO1 != '' && eval("entry.system." + armureO1) == true) { return true }
+                if (armureO1 == '' && armureO2 != '' && eval("entry.system." + armureO2) == true) { return true }
+              })
+            }
+            result2 = result;
+    
+            //Recherche txt OK
+            var val = $("[id=q]").val().toLowerCase();
+            var vals = val.split("&&");
+            if (val != '') {
+              result = result2.filter(entry => {
+                let flag1 = true
+                for (let valentry of vals) {
+                  let valss = valentry.split("||");
+                  if (valss.length == 1) {
+                    let flag2 = false
+                    if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
+                    for (let e in entry.system) {
+                      if (("" + entry.system[e]).toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
+                    }
+                    if (flag2 == false) { flag1 = false }
+                  } else {
+                    let flag3 = false
+                    for (let valssentry of valss) {
+                      let flag2 = false
+                      if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
+                      for (let e in entry.system) {
+                        if (("" + entry.system[e]).toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
+                      }
+                      if (flag2 == true) { flag3 = true }
+                    }
+                    if (flag3 == false) { flag1 = false }
+                  }
+                }
+                return flag1
+              });
+            }
+            result2 = result;
+    
+            //Recherche prix- new
+            var pomin = $("[id=pomin]").val()
+            var pomax = $("[id=pomax]").val()
+            if (pomin != "" || pomax != "") {
+              result = result2.filter(entry => {
+                if (entry.system.prix != undefined) {
+                  let flag1 = false
+                  let flag2 = false
+                  if (pomin != "") {
+                    if (entry.system.prix >= parseFloat(pomin)) { flag1 = true }
+                  } else { flag1 = true }
+                  if (pomax != "") {
+                    if (entry.system.prix <= parseFloat(pomax)) { flag2 = true }
+                  } else { flag2 = true }
+                  if (flag1 == true && flag2 == true) { return true }
+                }
+              })
+            }
+            result2 = result;
+    
+            //classe par prix OK
+            let result_sans_prix = []
+            let result_avec_prix = []
+            result = []
+            for (let r of result2) {
+              if (r.system.prix == undefined) {
+                result_sans_prix.push(r)
+              } else {
+                result_avec_prix.push(r)
               }
             }
-            return flag1
-          });
-        }
-        result2 = result;
-
-        //Recherche prix- new
-        var pomin = $("[id=pomin]").val()
-        var pomax = $("[id=pomax]").val()
-        if (pomin != "" || pomax != "") {
-          result = result2.filter(entry => {
-            if (entry.system.prix != undefined) {
-              let flag1 = false
-              let flag2 = false
-              if (pomin != "") {
-                if (entry.system.prix >= parseFloat(pomin)) { flag1 = true }
-              } else { flag1 = true }
-              if (pomax != "") {
-                if (entry.system.prix <= parseFloat(pomax)) { flag2 = true }
-              } else { flag2 = true }
-              if (flag1 == true && flag2 == true) { return true }
+            while (result_avec_prix.length != 0) {
+              let i = 0
+              let j = 0
+              let minprix = result_avec_prix[0]
+              for (let r of result_avec_prix) {
+                if (r.system.prix < minprix.system.prix) {
+                  minprix = r
+                  j = i
+                }
+                i++
+              }
+              result.push(minprix)
+              result_avec_prix.splice(j, 1)
             }
-          })
-        }
-        result2 = result;
-
-        //classe par prix OK
-        let result_sans_prix = []
-        let result_avec_prix = []
-        result = []
-        for (let r of result2) {
-          if (r.system.prix == undefined) {
-            result_sans_prix.push(r)
-          } else {
-            result_avec_prix.push(r)
-          }
-        }
-        while (result_avec_prix.length != 0) {
-          let i = 0
-          let j = 0
-          let minprix = result_avec_prix[0]
-          for (let r of result_avec_prix) {
-            if (r.system.prix < minprix.system.prix) {
-              minprix = r
-              j = i
+            for (let r of result_sans_prix) { result.push(r) }
+            result2 = result
+    
+            //un seul résultat new
+            if (document.getElementById("random").checked) {
+              let rand = Math.floor(Math.random() * result.length);
+              result2 = []
+              result2.push(result[rand])
+              result = result2
             }
-            i++
-          }
-          result.push(minprix)
-          result_avec_prix.splice(j, 1)
-        }
-        for (let r of result_sans_prix) { result.push(r) }
-        result2 = result
-
-        //un seul résultat new
-        if (document.getElementById("random").checked) {
-          let rand = Math.floor(Math.random() * result.length);
-          result2 = []
-          result2.push(result[rand])
-          result = result2
-        }
-
-        //Gestion journal 
-        var magasin = $("[id=magasin]").val();
-        var page = $("[id=page]").val();
-        var magasinObj = "vide"
-        var pageObj = "vide"
-        if (magasin != "") {
-          for (const journal of game.journal) {
-            if (journal.name == magasin) {
-              magasinObj = journal
-              for (let pageFind of magasinObj.pages) {
-                if (pageFind.name == page) {
-                  pageObj = pageFind
+    
+            //Gestion journal 
+            var magasin = $("[id=magasin]").val();
+            var page = $("[id=page]").val();
+            var magasinObj = "vide"
+            var pageObj = "vide"
+            if (magasin != "") {
+              for (const journal of game.journal) {
+                if (journal.name == magasin) {
+                  magasinObj = journal
+                  for (let pageFind of magasinObj.pages) {
+                    if (pageFind.name == page) {
+                      pageObj = pageFind
+                    }
+                  }
                 }
               }
             }
-          }
-        }
-
-        //Affichage
-        var res = $("[id=result]");
-        res[0].innerHTML = '';
-        let list = '';
-        for (let r of result) {
-          let compendium = game.packs.find(p => p.metadata.name === r.compendium);
-          var prix = ""
-          var prix2 = ""
-          if (r.system.prix != undefined && r.system.prix.length == undefined) {
-            prix = r.system.prix + " PO - "
-            prix2 = r.system.prix
-          }
-          if (pageObj == "vide") {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + compendium.metadata.label + '</li>';
-          } else {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i></a><input style="width: 280px;"id="' + r._id + r._id + '" type="text" value="' + r.name + '" />&nbsp;-&nbsp;<input style="width: 50px;"id="' + r._id + '" type="text" value="' + prix2 + '" />&nbsp;PO&nbsp;-&nbsp;' + compendium.metadata.label + '&nbsp;&nbsp;<button style="width: 140px;" class="magasin" name="' + r.name + '" type="button">Ajouter au magasin</button></li>';
-          }
-        }
-        if (list == '') { list = "Aucun objet trouvé" }
-        res[0].innerHTML = '<ul>' + list + '</ul>';
-        document.getElementById("app-" + d.appId).style.height = "auto"
-        $("[class=magasin]").click(ev2 => {
-          for (let r of result) {
-            if (r.name == ev2.currentTarget.name) {
-              let prixObj = $('[id=' + r._id + ']').val()
-              let nameObj = $('[id=' + r._id + r._id + ']').val()
-              let content = pageObj.text.content
-              let content2 = content + '<p>Article : ' + nameObj
-              if (prixObj != "") {
-                content2 = content2 + " - vendu pour " + prixObj + " PO"
+    
+            //Affichage
+            let list = '';
+            for (let r of result) {
+              let compendium = game.packs.find(p => p.metadata.name === r.compendium);
+              var prix = ""
+              var prix2 = ""
+              if (r.system.prix != undefined && r.system.prix.length == undefined) {
+                prix = r.system.prix + " PO - "
+                prix2 = r.system.prix
               }
-              content2 = content2 + '</p>\n<section class="secret">\n<p><a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a></p>\n</section>'
-              pageObj.update({ "text": { "content": content2 } })
+              if (pageObj == "vide") {
+                list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + compendium.metadata.label + '</li>';
+              } else {
+                list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i></a>&nbsp;<input style="width: 280px;"id="' + r._id + r._id + '" type="text" value="' + r.name + '" />&nbsp;-&nbsp;<input style="width: 50px;"id="' + r._id + '" type="text" value="' + prix2 + '" />&nbsp;PO&nbsp;&nbsp;<button style="width: 140px;" class="magasin" name="' + r.name + '" type="button">Ajouter au magasin</button></li>';
+              }
             }
+            if (list == '') { list = "Aucun objet trouvé" }
+            
+            if(l!=undefined){
+              try {
+                document.getElementById("app-" + l.appId).remove()
+              } catch (e) {
+                l=undefined
+              }
+            }
+            l = new CustomDialog({
+              title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
+              content: '<ul>' + list + '</ul>',
+              buttons: {
+              }
+            }, {width:800,left: 520});
+            l.render(true)
+            $(document).ready(function () {
+              $("[class=magasin]").click(ev2 => {
+                console.log("test")
+                for (let r of result) {
+                  if (r.name == ev2.currentTarget.name) {
+                    let prixObj = $('[id=' + r._id + ']').val()
+                    let nameObj = $('[id=' + r._id + r._id + ']').val()
+                    let content = pageObj.text.content
+                    let content2 = content + '<p>Article : ' + nameObj
+                    if (prixObj != "") {
+                      content2 = content2 + " - vendu pour " + prixObj + " PO"
+                    }
+                    content2 = content2 + '</p>\n<section class="secret">\n<p><a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a></p>\n</section>'
+                    pageObj.update({ "text": { "content": content2 } })
+                  }
+                }
+              });
+            });
           }
-        });
-      })
-    });
+        }
+      }
+    }, {width: 500,left:10});
+    d.render(true);
   }
 
   //Macros : outil de recherche/création mag
@@ -2894,9 +1847,6 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
       entry = JSON.parse(entry)
       if (entry.compendium == 'bestiaire') { arr.push(entry) }
     }
-    const myDialogOptions = {
-      width: 900
-    };
 
     let txt = `
       <form>
@@ -2927,7 +1877,9 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           <option value="Sauvages de jungle">Sauvages de jungle</option>
           <option value="Fernoliens">Fernoliens</option>
         </select>
-        <label style="flex: 1;text-align:right;">Nom ( || pour un OU, && pour un ET )&nbsp;&nbsp;&nbsp;&nbsp;</em></label>
+      </div>
+      <div style="display: flex;align-items: center;padding-bottom: 10px;">
+        <label style="flex: 0.9;">Nom ( || pour un OU, && pour un ET )&nbsp;&nbsp;</em></label>
         <input style="flex: 1" type="text" name="nameO" id="nameO" value="" label="Nom de l'objet" />
       </div>
       <div style="display: flex;align-items: center;padding-bottom: 10px;"> 
@@ -3013,7 +1965,9 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           <option value="Surnaturel">Surnaturel</option>
           <option value="Volant">Volant</option>
         </select>
-        <label style="flex:1; text-align:right;">Répartition géographique&nbsp;&nbsp;</label>
+      </div>
+      <div style="display: flex;align-items: center;padding-bottom: 10px;">
+        <label style="flex:0.5;">Répartition géo.&nbsp;&nbsp;</label>
         <select style="flex:1;" name="geoO1" id="geoO1">
           <option value=""></option>
           <option value="Archipel Papoutouh">Archipel Papoutouh</option>
@@ -3075,9 +2029,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         <input style="flex: 0.5" type="number" name="xpO1" id="xpO1" value="" label="XP mini" />
         <label style="flex: 0.1;"></label>
         <input style="flex: 0.5" type="number" name="xpO2" id="xpO2" value="" label="XP maxi" />
-        <label style="flex:1.5;text-align:right">Un seul résultat</label>
+        <label style="flex:1;text-align:right">Un seul résultat</label>
         <input type="checkbox" id="random" name="random" style="flex:0.2;vertical-align:-4px;">
-        <label style="flex: 2.7;"></label>
       </div>
       <hr>
       <div style="align-items: center;padding-bottom: 8px;">
@@ -3104,126 +2057,264 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           <option value="10">Urbain</option>
           <option value="11">Souterrain et ruine</option>
         </select>
-        <label style="flex: 7;"></label>
+        <label style="flex: 1;"></label>
       </div>
-      <div style="display:flex">
-        <button class="validation" type="button">Rechercher</button>
-        <button class="generate" type="button">Générer</button>
-      </div>
-      <div id="result"></div>
     </form>
       `
+    var k
+    let buttons = {
+      one:{
+        label: 'Rechercher',
+        callback: (html) => {
+          var result = arr;
+          var result2 = arr;
 
-    let d = new Dialog({
-      title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
-      content: txt,
-      buttons: {
-      }
-    }, myDialogOptions);
-    d.render(true);
-    $(document).ready(function () {
-      $("[class=validation]").click(ev2 => {
-        var result = arr;
-        var result2 = arr;
+          //Rercherche type new
+          var typeO1 = $("[name=typeO1]").val();
+          if (typeO1 != '') {
+            result = result2.filter(entry => {
+              if (entry.system.attributes.categorie == typeO1) { return true }
+            })
+            result2 = result;
+          }
+          var typeO2 = $("[name=typeO2]").val();
+          if (typeO2 != '') {
+            result = result2.filter(entry => {
+              if (entry.system.attributes.categorie2 == typeO2) { return true }
+            })
+            result2 = result;
+          }
 
-        //Rercherche type new
-        var typeO1 = $("[name=typeO1]").val();
-        if (typeO1 != '') {
-          result = result2.filter(entry => {
-            if (entry.system.attributes.categorie == typeO1) { return true }
-          })
-          result2 = result;
-        }
-        var typeO2 = $("[name=typeO2]").val();
-        if (typeO2 != '') {
-          result = result2.filter(entry => {
-            if (entry.system.attributes.categorie2 == typeO2) { return true }
-          })
-          result2 = result;
-        }
-
-        //Recherche nom new
-        var nameO = $("[id=nameO]").val().toLowerCase();
-        var nameOs = nameO.split("&&");
-        if (nameO != '') {
-          result = result2.filter(entry => {
-            let flag1 = true
-            for (let valentry of nameOs) {
-              let valss = valentry.split("||");
-              if (valss.length == 1) {
-                let flag2 = false
-                if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
-                if (flag2 == false) { flag1 = false }
-              } else {
-                let flag3 = false
-                for (let valssentry of valss) {
+          //Recherche nom new
+          var nameO = $("[id=nameO]").val().toLowerCase();
+          var nameOs = nameO.split("&&");
+          if (nameO != '') {
+            result = result2.filter(entry => {
+              let flag1 = true
+              for (let valentry of nameOs) {
+                let valss = valentry.split("||");
+                if (valss.length == 1) {
                   let flag2 = false
-                  if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
-                  if (flag2 == true) { flag3 = true }
+                  if (entry.name.toLowerCase().indexOf(valentry.trim()) !== -1) { flag2 = true }
+                  if (flag2 == false) { flag1 = false }
+                } else {
+                  let flag3 = false
+                  for (let valssentry of valss) {
+                    let flag2 = false
+                    if (entry.name.toLowerCase().indexOf(valssentry.trim()) !== -1) { flag2 = true }
+                    if (flag2 == true) { flag3 = true }
+                  }
+                  if (flag3 == false) { flag1 = false }
                 }
-                if (flag3 == false) { flag1 = false }
+              }
+              return flag1
+            });
+            result2 = result;
+          }
+
+          //Recherche trait et zone new
+          var traitO1 = $("[name=traitO1]").val();
+          var traitO2 = $("[name=traitO2]").val();
+          var geoO1 = $("[name=geoO1]").val();
+          var geoO2 = $("[name=geoO2]").val();
+          if (traitO1 != '' || traitO2 != '' || geoO1 != '' || geoO2 != '') {
+            result = result2.filter(entry => {
+              let flag_traitO1 = false
+              let flag_traitO2 = false
+              let flag_geoO1 = false
+              let flag_geoO2 = false
+              for (let item of entry.items) {
+                if (item.name == traitO1) { flag_traitO1 = true }
+                if (item.name == traitO2) { flag_traitO2 = true }
+                if (item.name == geoO1) { flag_geoO1 = true }
+                if (item.name == geoO2) { flag_geoO2 = true }
+                if (item.name == "Partout") {flag_geoO1 = true; flag_geoO2 = true}
+              }
+              let flag_total = true
+              if (traitO1 != '') {
+                if (flag_traitO1 == false) { flag_total = false }
+              }
+              if (traitO2 != '') {
+                if (flag_traitO2 == false) { flag_total = false }
+              }
+              if ((geoO1 != '' || geoO2 != '') && (flag_geoO1 == false && flag_geoO2 == false)) { flag_total = false }
+              return flag_total
+            })
+            result2 = result;
+          }
+
+          //Rercherche XP new
+          var xpO1 = $("[id=xpO1]").val();
+          var xpO2 = $("[id=xpO2]").val();
+          if (xpO1 != '' || xpO2 != '') {
+            result = result2.filter(entry => {
+              if (xpO1 != '' && xpO2 == '') {
+                if (entry.system.attributes.xp.value >= xpO1) { return true }
+              }
+              if (xpO1 == '' && xpO2 != '') {
+                if (entry.system.attributes.xp.value <= xpO2) { return true }
+              }
+              if (xpO1 != '' && xpO2 != '') {
+                if (entry.system.attributes.xp.value >= xpO1 && entry.system.attributes.xp.value <= xpO2) { return true }
+              }
+            })
+            result2 = result
+          }
+
+          //un seul résultat new
+          if (document.getElementById("random").checked) {
+            let rand = Math.floor(Math.random() * result.length);
+            result2 = []
+            result2.push(result[rand])
+            result = result2
+
+            //On cherche les resultats de même famille
+            var save = result[0]
+            let rname = result[0].name.split(' | ')[0]
+            result2 = []
+            for (let pnj of arr) {
+              if (pnj.name.split(' | ')[0] == rname && result[0].name != pnj.name) { result2.push(pnj) }
+            }
+            result = result2
+            //On vérifie qu'ils sont de même type
+            var typeO1 = save.system.attributes.categorie;
+            var typeO2 = save.system.attributes.categorie2;
+            if (typeO1 != '') {
+              result = result2.filter(entry => {
+                if (entry.system.attributes.categorie == typeO1) { return true }
+              })
+            }
+            result2 = result
+            if (typeO2 != '') {
+              result = result2.filter(entry => {
+                if (entry.system.attributes.categorie2 == typeO2) { return true }
+              })
+            }
+            result2 = result;
+            //On vérifie qu'ils sont dans la même zone
+            let zonesSave = []
+            for (let item of save.items) {
+              if (item.type == 'region') { zonesSave.push(item) }
+            }
+            result = result2.filter(entry => {
+              let flag_zone = true
+              for (let zoneSave of zonesSave) {
+                let zoneFind = false
+                for (let item of entry.items) {
+                  if (item.name == zoneSave.name) { zoneFind = true }
+                }
+                if (zoneFind == false) { flag_zone = false }
+              }
+              return flag_zone
+            })
+            result2 = result;
+          }
+
+          //classe par xp OK
+          let result_sans_xp = []
+          let result_avec_xp = []
+          result = []
+          for (let r of result2) {
+            if (r.system.attributes.xp.value == undefined) {
+              result_sans_xp.push(r)
+            } else {
+              result_avec_xp.push(r)
+            }
+          }
+          while (result_avec_xp.length != 0) {
+            let i = 0
+            let j = 0
+            let minxp = result_avec_xp[0]
+            for (let r of result_avec_xp) {
+              if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
+                minxp = r
+                j = i
+              }
+              i++
+            }
+            result.push(minxp)
+            result_avec_xp.splice(j, 1)
+          }
+          for (let r of result_sans_xp) { result.push(r) }
+          //Une fois classé, si on était dans le cas d'un affichage unique, il faut remettre cette valeur en premier
+          if (document.getElementById("random").checked) {
+            result.unshift(save)
+          }
+          result2 = result
+
+          //Affichage
+          let list = '';
+          let flag_unique = true
+          for (let r of result) {
+            var prix = r.system.attributes.xp.value + " XP"
+            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+            //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
+            if (flag_unique && document.getElementById("random").checked && result.length > 1) {
+              list += '<hr>'
+              flag_unique = false
+            }
+          }
+          if (list == '') { list = "Aucun objet trouvé" }
+
+          if(k!=undefined){
+            try {
+              document.getElementById("app-" + k.appId).remove()
+            } catch (e) {
+              k=undefined
+            }
+          }
+          k = new CustomDialog({
+            title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
+            content: '<ul>' + list + '</ul>',
+            buttons: {
+            }
+          }, {width:800,left: 520});
+          k.render(true)
+        }
+      },
+      two:{
+        label:"Générer",
+        callback: (html)=>{
+          var niveau = $("[name=niveau]").val();
+          var zone = $("[name=zone]").val();
+          let r;
+          //Génère une rencontre à partir du fichier generator.mjs
+          let code = "" + niveau + zone
+          var raw_arr2 = generator.split("\n");
+          var arr2 = []
+          for (let entry of raw_arr2) {
+            if (entry != "" && entry.split("////").length==1) {
+              //console.log(entry)
+              entry = JSON.parse(entry)
+              if (entry.code==code){arr2.push(entry)}
+            }
+          }
+          let resultat = arr2[Math.floor(Math.random() * 20)];
+          console.log(resultat)
+          r=arr.filter(entry => {return entry._id===resultat.id})[0]
+          let nombre = ""+resultat.nombre
+          let option = 0
+          if (nombre.split("D").length == 1) {
+            option = parseInt(nombre.split("D")[0])
+          } else {
+            if (nombre.split("D")[0]==""){
+              option = Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
+            } else {
+              for (let i = 0; i < parseInt(nombre.split("D")[0]); i++) {
+                option = option + Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
               }
             }
-            return flag1
-          });
-          result2 = result;
-        }
+          }
+          if (option=="1" || option==1){
+            option=""
+          } else {
+            option = option + "&nbsp;x&nbsp;"
+          }
+          let result = []
+          let result2 = []
+          result.push(r)
+          result2.push(r)
 
-        //Recherche trait et zone new
-        var traitO1 = $("[name=traitO1]").val();
-        var traitO2 = $("[name=traitO2]").val();
-        var geoO1 = $("[name=geoO1]").val();
-        var geoO2 = $("[name=geoO2]").val();
-        if (traitO1 != '' || traitO2 != '' || geoO1 != '' || geoO2 != '') {
-          result = result2.filter(entry => {
-            let flag_traitO1 = false
-            let flag_traitO2 = false
-            let flag_geoO1 = false
-            let flag_geoO2 = false
-            for (let item of entry.items) {
-              if (item.name == traitO1) { flag_traitO1 = true }
-              if (item.name == traitO2) { flag_traitO2 = true }
-              if (item.name == geoO1) { flag_geoO1 = true }
-              if (item.name == geoO2) { flag_geoO2 = true }
-              if (item.name == "Partout") {flag_geoO1 = true; flag_geoO2 = true}
-            }
-            let flag_total = true
-            if (traitO1 != '') {
-              if (flag_traitO1 == false) { flag_total = false }
-            }
-            if (traitO2 != '') {
-              if (flag_traitO2 == false) { flag_total = false }
-            }
-            if ((geoO1 != '' || geoO2 != '') && (flag_geoO1 == false && flag_geoO2 == false)) { flag_total = false }
-            return flag_total
-          })
-          result2 = result;
-        }
-
-        //Rercherche XP new
-        var xpO1 = $("[id=xpO1]").val();
-        var xpO2 = $("[id=xpO2]").val();
-        if (xpO1 != '' || xpO2 != '') {
-          result = result2.filter(entry => {
-            if (xpO1 != '' && xpO2 == '') {
-              if (entry.system.attributes.xp.value >= xpO1) { return true }
-            }
-            if (xpO1 == '' && xpO2 != '') {
-              if (entry.system.attributes.xp.value <= xpO2) { return true }
-            }
-            if (xpO1 != '' && xpO2 != '') {
-              if (entry.system.attributes.xp.value >= xpO1 && entry.system.attributes.xp.value <= xpO2) { return true }
-            }
-          })
-          result2 = result
-        }
-
-        //un seul résultat new
-        if (document.getElementById("random").checked) {
-          let rand = Math.floor(Math.random() * result.length);
-          result2 = []
-          result2.push(result[rand])
-          result = result2
 
           //On cherche les resultats de même famille
           var save = result[0]
@@ -3265,197 +2356,79 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             return flag_zone
           })
           result2 = result;
-        }
 
-        //classe par xp OK
-        let result_sans_xp = []
-        let result_avec_xp = []
-        result = []
-        for (let r of result2) {
-          if (r.system.attributes.xp.value == undefined) {
-            result_sans_xp.push(r)
-          } else {
-            result_avec_xp.push(r)
-          }
-        }
-        while (result_avec_xp.length != 0) {
-          let i = 0
-          let j = 0
-          let minxp = result_avec_xp[0]
-          for (let r of result_avec_xp) {
-            if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
-              minxp = r
-              j = i
+
+          //classe par xp les résultat de même famille
+          let result_sans_xp = []
+          let result_avec_xp = []
+          result = []
+          for (let r of result2) {
+            if (r.system.attributes.xp.value == undefined) {
+              result_sans_xp.push(r)
+            } else {
+              result_avec_xp.push(r)
             }
-            i++
           }
-          result.push(minxp)
-          result_avec_xp.splice(j, 1)
-        }
-        for (let r of result_sans_xp) { result.push(r) }
-        //Une fois classé, si on était dans le cas d'un affichage unique, il faut remettre cette valeur en premier
-        if (document.getElementById("random").checked) {
+          while (result_avec_xp.length != 0) {
+            let i = 0
+            let j = 0
+            let minxp = result_avec_xp[0]
+            for (let r of result_avec_xp) {
+              if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
+                minxp = r
+                j = i
+              }
+              i++
+            }
+            result.push(minxp)
+            result_avec_xp.splice(j, 1)
+          }
+          for (let r of result_sans_xp) { result.push(r) }
+          //Une fois classé, il faut remettre le résultat du générateur en premier
           result.unshift(save)
-        }
-        result2 = result
+          result2 = result
 
-        //Affichage
-        var res = $("[id=result]");
-        res[0].innerHTML = '';
-        let list = '';
-        let flag_unique = true
-        for (let r of result) {
-          var prix = r.system.attributes.xp.value + " XP"
-          list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
-          //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
-          if (flag_unique && document.getElementById("random").checked && result.length > 1) {
-            list += '<hr>'
-            flag_unique = false
-          }
-        }
-        if (list == '') { list = "Aucun objet trouvé" }
-        res[0].innerHTML = '<ul>' + list + '</ul>';
-        document.getElementById("app-" + d.appId).style.height = "auto"
-      })
 
-      $("[class=generate]").click(ev2 => {
-        var niveau = $("[name=niveau]").val();
-        var zone = $("[name=zone]").val();
-        let r;
-        //Génère une rencontre à partir du fichier generator.mjs
-        let code = "" + niveau + zone
-        var raw_arr2 = generator.split("\n");
-        var arr2 = []
-        for (let entry of raw_arr2) {
-          if (entry != "" && entry.split("////").length==1) {
-            //console.log(entry)
-            entry = JSON.parse(entry)
-            if (entry.code==code){arr2.push(entry)}
-          }
-        }
-        let resultat = arr2[Math.floor(Math.random() * 20)];
-        console.log(resultat)
-        r=arr.filter(entry => {return entry._id===resultat.id})[0]
-        let nombre = ""+resultat.nombre
-        let option = 0
-        if (nombre.split("D").length == 1) {
-          option = parseInt(nombre.split("D")[0])
-        } else {
-          if (nombre.split("D")[0]==""){
-            option = Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
-          } else {
-            for (let i = 0; i < parseInt(nombre.split("D")[0]); i++) {
-              option = option + Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
+          //Affichage
+          let list =''
+          let flag_unique = 1
+          for (let r of result) {
+            var prix = r.system.attributes.xp.value + " XP"
+            //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
+            if (flag_unique == 1) {
+              list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i>' + r.name + '</a>&nbsp;&nbsp;<span>(' + prix + ')&nbsp;&nbsp;' + resultat.name + '</<span></li>';
+              flag_unique = 2
+            } else if (flag_unique==2) {
+              list += '<hr>'
+              list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+              flag_unique = 3
+            } else {
+              list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
             }
           }
-        }
-        if (option=="1" || option==1){
-          option=""
-        } else {
-          option = option + "&nbsp;x&nbsp;"
-        }
-        let result = []
-        let result2 = []
-        result.push(r)
-        result2.push(r)
 
-
-        //On cherche les resultats de même famille
-        var save = result[0]
-        let rname = result[0].name.split(' | ')[0]
-        result2 = []
-        for (let pnj of arr) {
-          if (pnj.name.split(' | ')[0] == rname && result[0].name != pnj.name) { result2.push(pnj) }
-        }
-        result = result2
-        //On vérifie qu'ils sont de même type
-        var typeO1 = save.system.attributes.categorie;
-        var typeO2 = save.system.attributes.categorie2;
-        if (typeO1 != '') {
-          result = result2.filter(entry => {
-            if (entry.system.attributes.categorie == typeO1) { return true }
-          })
-        }
-        result2 = result
-        if (typeO2 != '') {
-          result = result2.filter(entry => {
-            if (entry.system.attributes.categorie2 == typeO2) { return true }
-          })
-        }
-        result2 = result;
-        //On vérifie qu'ils sont dans la même zone
-        let zonesSave = []
-        for (let item of save.items) {
-          if (item.type == 'region') { zonesSave.push(item) }
-        }
-        result = result2.filter(entry => {
-          let flag_zone = true
-          for (let zoneSave of zonesSave) {
-            let zoneFind = false
-            for (let item of entry.items) {
-              if (item.name == zoneSave.name) { zoneFind = true }
+          if(k!=undefined){
+            try {
+              document.getElementById("app-" + k.appId).remove()
+            } catch (e) {
+              k=undefined
             }
-            if (zoneFind == false) { flag_zone = false }
           }
-          return flag_zone
-        })
-        result2 = result;
-
-
-        //classe par xp les résultat de même famille
-        let result_sans_xp = []
-        let result_avec_xp = []
-        result = []
-        for (let r of result2) {
-          if (r.system.attributes.xp.value == undefined) {
-            result_sans_xp.push(r)
-          } else {
-            result_avec_xp.push(r)
-          }
-        }
-        while (result_avec_xp.length != 0) {
-          let i = 0
-          let j = 0
-          let minxp = result_avec_xp[0]
-          for (let r of result_avec_xp) {
-            if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
-              minxp = r
-              j = i
+          k = new Dialog({
+            title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
+            content: '<ul>' + list + '</ul>',
+            buttons: {
             }
-            i++
-          }
-          result.push(minxp)
-          result_avec_xp.splice(j, 1)
-        }
-        for (let r of result_sans_xp) { result.push(r) }
-        //Une fois classé, il faut remettre le résultat du générateur en premier
-        result.unshift(save)
-        result2 = result
-
-
-        //Affichage
-        var res = $("[id=result]");
-        res[0].innerHTML = '';
-        let list =''
-        let flag_unique = 1
-        for (let r of result) {
-          var prix = r.system.attributes.xp.value + " XP"
-          //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
-          if (flag_unique == 1) {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i>' + r.name + '</a>&nbsp;-&nbsp;' + prix + '&nbsp;-&nbsp;' + resultat.name + '</li>';
-            flag_unique = 2
-          } else if (flag_unique==2) {
-            list += '<hr>'
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
-            flag_unique = 3
-          } else {
-            list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
-          }
-        }
-        res[0].innerHTML = '<ul>' + list + '</ul>';
-        document.getElementById("app-" + d.appId).style.height = "auto"
-
-      })
-    });
+          }, {width:800,left: 520});
+          k.render(true)
+        },
+      }
+    }
+    let f = new PCHDialog({
+      title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
+      content: txt,
+      buttons: buttons
+    }, {width: 500,left: 10});
+    f.render(true)
   }
 }

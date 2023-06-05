@@ -24,13 +24,13 @@ export const generator = `
 //// Plaine, niveau intermédiaire
 {"name":"D6 Mercenaire errent agressif, pensez à mixer les mercenaires","id":"cdJUFaJKKeXeGISO","nombre":"1","code":"21"}
 {"name":"2D6 Coyotes robuste","id":"qVefKSTokIvjTYQ2","nombre":"2D6","code":"21"}
-{"name":"1D6 Guerrier Gobelin, possibilité de mixer avec un chef, un artificier, un ingénieur...","id":"MJVExvpkZs3StMKT","nombre":"D6","code":"21"}
-{"name":"1D6 Orque troupier, possibilité de mettre des troupiers défensifs et un chef","id":"UxxiiBv7zw2JW96l","nombre":"D6","code":"21"}
-{"name":"1D4 Villageois en colère (vol, profanation...), rajouter quelques villageois bas niveau","id":"W1VAfoOVoAyQ2kKt","nombre":"D4","code":"21"}
+{"name":"D6 Guerrier Gobelin, possibilité de mixer avec un chef, un artificier, un ingénieur...","id":"MJVExvpkZs3StMKT","nombre":"D6","code":"21"}
+{"name":"D6 Orque troupier, possibilité de mettre des troupiers défensifs et un chef","id":"UxxiiBv7zw2JW96l","nombre":"D6","code":"21"}
+{"name":"D4 Villageois en colère (vol, profanation...), rajouter quelques villageois bas niveau","id":"W1VAfoOVoAyQ2kKt","nombre":"D4","code":"21"}
 {"name":"Groupe de lapins agressif","id":"qZmbGl5aGz4snYLD","nombre":"1","code":"21"}
-{"name":"1D6 Loup noir, possibilité de rajouter un dominant","id":"tlqNP4fe4bEOOnol","nombre":"D6","code":"21"}
+{"name":"D6 Loup noir, possibilité de rajouter un dominant","id":"tlqNP4fe4bEOOnol","nombre":"D6","code":"21"}
 {"name":"Chaponne fanghienne","id":"sHvKjYt6clFvlv3V","nombre":"1","code":"21"}
-{"name":"1D4 Sanglier Gagrouk","id":"6uXZakiLHsellpXq","nombre":"D4","code":"21"}
+{"name":"D4 Sanglier Gagrouk","id":"6uXZakiLHsellpXq","nombre":"D4","code":"21"}
 {"name":"Ogre impressionnant","id":"Lj0F0zqtPubmsAdh","nombre":"1","code":"21"}
 {"name":"D6 Auroch sauvage","id":"WXy7l9Xdu0gVArCM","nombre":"D6","code":"21"}
 {"name":"Brebiphant dominant","id":"xRd6cCwr9WMq7mqa","nombre":"1","code":"21"}
@@ -67,19 +67,19 @@ export const generator = `
 {"name":"Dragon des cimes","id":"1rniPuRWAf44yk2y","nombre":"1","code":"12"}
 
 //// Forêt, niveau intermédiaire
-{"name":"1D6 Castor ninja","id":"LCCRhgREYLOXfeNW","nombre":"D6","code":"22"}
-{"name":"1D6 Loup noir, possibilité de rajouter un dominant","id":"tlqNP4fe4bEOOnol","nombre":"D6","code":"22"}
+{"name":"D6 Castor ninja","id":"LCCRhgREYLOXfeNW","nombre":"D6","code":"22"}
+{"name":"D6 Loup noir, possibilité de rajouter un dominant","id":"tlqNP4fe4bEOOnol","nombre":"D6","code":"22"}
 {"name":"Chaponne fanghienne","id":"sHvKjYt6clFvlv3V","nombre":"1","code":"22"}
 {"name":"2D6 Globzoule énervé","id":"xgLWoO6h5tpwMPEN","nombre":"2D6","code":"22"}
 {"name":"D6 Mercenaire errent agressif, pensez à mixer les mercenaires","id":"cdJUFaJKKeXeGISO","nombre":"D6","code":"22"}
 {"name":"Héroïne de la forêt","id":"E9VKoQ9VuCLf4Nzy","nombre":"1","code":"22"}
-{"name":"1D6 Orque troupier, possibilité de mettre des troupiers défensifs et un chef","id":"UxxiiBv7zw2JW96l","nombre":"D6","code":"22"}
+{"name":"D6 Orque d'assaut, possibilité de mettre des troupiers défensifs et un chef","id":"UxxiiBv7zw2JW96l","nombre":"D6","code":"22"}
 {"name":"D3 Mille-pattes monstrueux","id":"1xuoU2fwGjpsgJP2","nombre":"D3","code":"22"}
-{"name":"1D4 Sanglier Gagrouk","id":"6uXZakiLHsellpXq","nombre":"D4","code":"22"}
-{"name":"1D6 Assassin gnôme","id":"Zcubo9UWENGqQ3NL","nombre":"D6","code":"22"}
+{"name":"D4 Sanglier Gagrouk","id":"6uXZakiLHsellpXq","nombre":"D4","code":"22"}
+{"name":"D6 Assassin gnôme","id":"Zcubo9UWENGqQ3NL","nombre":"D6","code":"22"}
 {"name":"1D3 Kobold aguerri","id":"b4WtNo61lODBrjka","nombre":"D3","code":"22"}
 {"name":"Plante carnivaure géante, n'hésitez pas à en mettre plusieurs","id":"bWnhfP5NiiERMTK5","nombre":"1","code":"22"}
-{"name":"1D6 Elfe sylvain entraîné, il y en a 3 types donc n'hésitez pas à les mélanger","id":"143fSNgXSTfoabdO","nombre":"D6","code":"22"}
+{"name":"D6 Elfe sylvain entraîné, il y en a 3 types donc n'hésitez pas à les mélanger","id":"143fSNgXSTfoabdO","nombre":"D6","code":"22"}
 {"name":"D2 Panthère corrompue","id":"evU0PldOEGnYvBOS","nombre":"D2","code":"22"}
 {"name":"Ours brun","id":"NDcITTlRsxUe2d4T","nombre":"1","code":"22"}
 {"name":"Ogre mutant puissant, possibilité de rajouter un mutant débile pour plus de difficulté","id":"8R1oLm8drHq9w5LA","nombre":"1","code":"22"}
@@ -93,16 +93,16 @@ export const generator = `
 {"name":"Bouc en colère","id":"hP6gfZYurz24I2IL","nombre":"1","code":"13"}
 {"name":"2D6 Coyotes affamés","id":"rYZNUDXzWCpCKUsE","nombre":"2D6","code":"13"}
 {"name":"Jeune aigle géant","id":"vgfFJdhcFcEFvOuN","nombre":"1","code":"13"}
-{"name":"D6 Gobelin de base","id":"70qQxZL0op2T1w0S","nombre":"D6","code":"13"}
-{"name":"D5 Orque standard","id":"uGHic6289DmgodKD","nombre":"D5","code":"13"}
-{"name":"D6 Brigand base","id":"nz8PQDH2F84tfVoH","nombre":"D6","code":"13"}
-{"name":"D6 Brigand archer","id":"8tHM6HP8JGglHinz","nombre":"D6","code":"13"}
+{"name":"D6 Gobelin de base, possibilité de mettre quelques gobelins différents","id":"70qQxZL0op2T1w0S","nombre":"D6","code":"13"}
+{"name":"D5 Orque standard, possibilité de mettre quelques orques différents","id":"uGHic6289DmgodKD","nombre":"D5","code":"13"}
+{"name":"D6 Brigand base, possibilité de mettre des brigands archer","id":"nz8PQDH2F84tfVoH","nombre":"D6","code":"13"}
+{"name":"D6 Brigand archer, possibilité de mettre des brigands à l'épée","id":"8tHM6HP8JGglHinz","nombre":"D6","code":"13"}
 {"name":"D4 Loup gris","id":"PSSTiWfzLClVsFp4","nombre":"D4","code":"13"}
 {"name":"D4 Prospecteur nain","id":"lOvQluaBaaWnL1Kl","nombre":"D4","code":"13"}
 {"name":"D4 Elémentaire pierre mineur","id":"Wu4ZT5kylSObeQqg","nombre":"D4","code":"13"}
-{"name":"Chef orque","id":"IDgZP1KWaUN4sCj6","nombre":"1","code":"13"}
-{"name":"Chef gob","id":"UuG1tumOQCj4Ngw8","nombre":"1","code":"13"}
-{"name":"Chef brigand","id":"2TYEmgJfHSsQ5x65","nombre":"1","code":"13"}
+{"name":"Chef orque, possibilité de rajouter 1 ou 2 orques de base","id":"IDgZP1KWaUN4sCj6","nombre":"1","code":"13"}
+{"name":"Chef gob, possibilité de rajouter 1 ou 2 gobelins de base","id":"UuG1tumOQCj4Ngw8","nombre":"1","code":"13"}
+{"name":"Chef brigand, possibilité de rajouter 1 ou 2 brigands de base","id":"2TYEmgJfHSsQ5x65","nombre":"1","code":"13"}
 {"name":"Ours noir","id":"jknEhuFE4kh8UFzo","nombre":"1","code":"13"}
 {"name":"Panthère ","id":"bMMtmDr3wNs4oSyB","nombre":"1","code":"13"}
 {"name":"Elan du nord","id":"brIVfOukMEi4w8yX","nombre":"1","code":"13"}
@@ -111,17 +111,40 @@ export const generator = `
 {"name":"Petit dragon bleu","id":"a89fpbUQhf3nj2Gh","nombre":"1","code":"13"}
 {"name":"Jeune vouivre","id":"T4tfHGMC3Aty67L5","nombre":"1","code":"13"}
 
+//// Montagne, niveau intermédiaire
+{"name":"2D6 Cabretin","id":"Lydi0iS32Lo9IFH1","nombre":"2D6","code":"23"}
+{"name":"D6 Coyote des montagnes","id":"qVefKSTokIvjTYQ2","nombre":"D6","code":"23"}
+{"name":"D3 Aigle géant adulte","id":"yIyZWKVJpcdeZnRq","nombre":"D3","code":"23"}
+{"name":"D6 Orque d'assaut, possibilité de mettre des troupiers défensifs et un chef","id":"UxxiiBv7zw2JW96l","nombre":"D6","code":"23"}
+{"name":"Ours brun","id":"NDcITTlRsxUe2d4T","nombre":"1","code":"23"}
+{"name":"Panthère des neiges","id":"F5G0pIOVb0UNZv2H","nombre":"1","code":"23"}
+{"name":"D6 Guerrier Gobelin, n'hésitez pas à mixer le type de gobelin","id":"MJVExvpkZs3StMKT","nombre":"D6","code":"23"}
+{"name":"D6 Loup noir","id":"tlqNP4fe4bEOOnol","nombre":"D6","code":"23"}
+{"name":"D3 Nain aventurier","id":"ty93j5TowOlvHlnj","nombre":"D3","code":"23"}
+{"name":"D2 Auroch des confins","id":"TyioNVu78Sa85mPW","nombre":"D2","code":"23"}
+{"name":"D4 Brigands aguerris","id":"o5sRWEy28lWuzJ7X","nombre":"D4","code":"23"}
+{"name":"D4 Sanglier Gagrouk","id":"6uXZakiLHsellpXq","nombre":"D4","code":"23"}
+{"name":"D4 Yakak","id":"WXKNHkFAq7JX9hTp","nombre":"D4","code":"23"}
+{"name":"Elan du Nord dominant","id":"KFeKCWZMtXjPbFIB","nombre":"1","code":"23"}
+{"name":"Elémentaire pierre moyen","id":"lKR596gq08OTmb2I","nombre":"1","code":"23"}
+{"name":"D4 Ogre impressionnant","id":"Lj0F0zqtPubmsAdh","nombre":"D4","code":"23"}
+{"name":"Troll berserk","id":"TvvQBXFbXIAJPKNv","nombre":"1","code":"23"}
+{"name":"Golem de pierre","id":"UMHvIr1Y2DItcx4p","nombre":"1","code":"23"}
+{"name":"Dragon bleu adulte","id":"NEP2DuyueYyygu0P","nombre":"1","code":"23"}
+{"name":"Vouivre adulte","id":"s5JLc39LVCvmBrmN","nombre":"1","code":"23"}
+
+
 //// Grotte, bas niveau
 {"name":"2D6 Rat pesteux","id":"1OVUOHNEQ7AcXaYI","nombre":"2D6","code":"14"}
 {"name":"D6 Chauve-souris vampire","id":"JKnWgMcTIJ6Xngat","nombre":"D6","code":"14"}
-{"name":"D6 Gobelin de base","id":"70qQxZL0op2T1w0S","nombre":"D6","code":"14"}
-{"name":"D6 Gobelin costaud","id":"hJrzOPiE2hXD5tsf","nombre":"D6","code":"14"}
+{"name":"D6 Gobelin de base, possibilité de mettre quelques gobelins différents","id":"70qQxZL0op2T1w0S","nombre":"D6","code":"14"}
+{"name":"D6 Gobelin costaud, possibilité de mettre quelques gobelins différents","id":"hJrzOPiE2hXD5tsf","nombre":"D6","code":"14"}
 {"name":"D4 Tarentule des cavernes","id":"f13dJS1ozOZ7NSj6","nombre":"D4","code":"14"}
 {"name":"D2 Cellule géante de base","id":"tDke6Pt2HxXgjdFG","nombre":"D2","code":"14"}
 {"name":"D4 Elfe noir voleur","id":"PsdtGrqhZP0gsSp8","nombre":"D4","code":"14"}
 {"name":"D4 Prospecteur nain","id":"lOvQluaBaaWnL1Kl","nombre":"D4","code":"14"}
-{"name":"D4 Trogylork de base","id":"H7Bvx1hxFz7zkoh9","nombre":"D4","code":"14"}
-{"name":"Trogylork chef d'escouade","id":"wN6iMz84vfmU0TKb","nombre":"1","code":"14"}
+{"name":"D4 Trogylork de base, possibilité de rajouter un chef d'escouade","id":"H7Bvx1hxFz7zkoh9","nombre":"D4","code":"14"}
+{"name":"D4 Nain de la mafia en expédition","id":"Z9VED3xBB7p1RVvt","nombre":"1","code":"14"}
 {"name":"Ours noir","id":"jknEhuFE4kh8UFzo","nombre":"1","code":"14"}
 {"name":"D4 Elfe noir assassin débutant","id":"5Vmx0ajAYFIdvIsj","nombre":"D4","code":"14"}
 {"name":"D4 Elémentaire pierre mineur","id":"Wu4ZT5kylSObeQqg","nombre":"D4","code":"14"}
@@ -132,6 +155,28 @@ export const generator = `
 {"name":"Elfe noir mage","id":"xGPtnzBqSj6NXjjK","nombre":"1","code":"14"}
 {"name":"Jeune dragon des cavernes","id":"wpMCIHYUaQpOiqXx","nombre":"1","code":"14"}
 {"name":"Jeune dragon noir","id":"IuXqpdwiCjC6s5n5","nombre":"1","code":"14"}
+
+//// Grotte, niveau intermédiaire
+{"name":"2D6 Rat géant","id":"8NSHyl7YZcpmi8xl","nombre":"2D6","code":"24"}
+{"name":"D6 Eclaireur gobelin, n'hésitez pas à mixer le type de gobelin","id":"JUVg9qyOwSYprWXL","nombre":"D6","code":"24"}
+{"name":"D6 Guerrier Gobelin, n'hésitez pas à mixer le type de gobelin","id":"MJVExvpkZs3StMKT","nombre":"D6","code":"24"}
+{"name":"D2 Cellule géante monstrueuse","id":"qLnfRWqV5Addgx46","nombre":"D2","code":"24"}
+{"name":"Tarentule des cavernes épique, possibilité de mettre 1 ou 2 tarentules de base","id":"Dq5jBdKxopeNXyBZ","nombre":"1","code":"24"}
+{"name":"Panthère ancienne","id":"evU0PldOEGnYvBOS","nombre":"1","code":"24"}
+{"name":"D3 Nain aventurier","id":"ty93j5TowOlvHlnj","nombre":"D3","code":"24"}
+{"name":"D2 Taupe-garou géante","id":"fN76L19NBAR5dXuR","nombre":"D2","code":"24"}
+{"name":"D4 Trogylork massif, possibilité de mixer le type de trogylork","id":"0LiHodSZD7AnXFGw","nombre":"D4","code":"24"}
+{"name":"D4 Nain de la mafia en expédition","id":"bhzWJ8h9FEjoS9Id","nombre":"D4","code":"24"}
+{"name":"Ours brun","id":"NDcITTlRsxUe2d4T","nombre":"1","code":"24"}
+{"name":"D4 Elfe noir assassin aguerri","id":"WqNIXuWGhLZTXK1c","nombre":"D4","code":"24"}
+{"name":"D4 Elfe noir voleur aguerri","id":"k6kIPKG7MgRgJ7Ah","nombre":"D4","code":"24"}
+{"name":"Prêtresse drow de Slanoush","id":"EKuNUFXXgOxwKmhT","nombre":"1","code":"24"}
+{"name":"Elémentaire pierre moyen","id":"UMHvIr1Y2DItcx4p","nombre":"1","code":"24"}
+{"name":"Vampire","id":"51KLw5t8CgODyIk8","nombre":"1","code":"24"}
+{"name":"D4 Grosse scolopendre","id":"n0v05bbElfPCfw64","nombre":"D4","code":"24"}
+{"name":"Vieux troll cavernicole","id":"oTMHKu5ZcMYrOkN9","nombre":"1","code":"24"}
+{"name":"Dragon des cavernes adulte","id":"W5ufqoiZ6rZxkhDJ","nombre":"1","code":"24"}
+{"name":"Dragon noir adulte","id":"pdzZnUwAXvzZb0CK","nombre":"1","code":"24"}
 
 //// Rivière et lac, bas niveau
 {"name":"Coccinelle berserk","id":"Ht1QZ9xBRKvyqgYy","nombre":"1","code":"15"}
@@ -296,41 +341,19 @@ export const generator = `
 
 
 
-{"name":"Cabretin","id":"","nombre":"1","code":"23"}
-{"name":"1D6 Coyote des montagnes","id":"","nombre":"D6","code":"23"}
-{"name":"Aigle géant adulte","id":"","nombre":"1","code":"23"}
-{"name":"1D6 Orque troupier","id":"","nombre":"D6","code":"23"}
-{"name":"Ours brun","id":"","nombre":"1","code":"23"}
-{"name":"Panthère des neiges","id":"","nombre":"1","code":"23"}
-{"name":"1D6 Guerrier Gobelin","id":"","nombre":"D6","code":"23"}
-{"name":"1D6 Loup noir","id":"","nombre":"D6","code":"23"}
-{"name":"Nain aventurier","id":"","nombre":"1","code":"23"}
-{"name":"Auroch des confins","id":"","nombre":"1","code":"23"}
-{"name":"1D4 Brigands aguerris","id":"","nombre":"D4","code":"23"}
-{"name":"1D4 Sanglier Gagrouk","id":"","nombre":"D4","code":"23"}
-{"name":"Yakak","id":"","nombre":"1","code":"23"}
-{"name":"Elan du Nord dominant","id":"","nombre":"1","code":"23"}
-{"name":"Elémentaire pierre moyen","id":"","nombre":"1","code":"23"}
-{"name":"Ogre impressionnant","id":"","nombre":"1","code":"23"}
-{"name":"Troll berserk","id":"","nombre":"1","code":"23"}
-{"name":"Golem de pierre","id":"","nombre":"1","code":"23"}
-{"name":"Dragon bleu adulte","id":"","nombre":"1","code":"23"}
-{"name":"Vouivre adulte","id":"","nombre":"1","code":"23"}
-
-
 {"name":"2D6 Rat géant","id":"","nombre":"2D6","code":"24"}
-{"name":"1D6 Eclaireur gobelin","id":"","nombre":"D6","code":"24"}
-{"name":"1D6 Guerrier Gobelin","id":"","nombre":"D6","code":"24"}
-{"name":"Cellule géante monstrueuse","id":"","nombre":"1","code":"24"}
-{"name":"Tarentule des cavernes épique","id":"","nombre":"1","code":"24"}
+{"name":"D6 Eclaireur gobelin, n'hésitez pas à mixer le type de gobelin","id":"","nombre":"D6","code":"24"}
+{"name":"D6 Guerrier Gobelin, n'hésitez pas à mixer le type de gobelin","id":"","nombre":"D6","code":"24"}
+{"name":"D2 Cellule géante monstrueuse","id":"","nombre":"D2","code":"24"}
+{"name":"Tarentule des cavernes épique, possibilité de mettre 1 ou 2 tarentules de base","id":"","nombre":"1","code":"24"}
 {"name":"Panthère ancienne","id":"","nombre":"1","code":"24"}
 {"name":"Nain aventurier","id":"","nombre":"1","code":"24"}
 {"name":"Taupe-garou géante","id":"","nombre":"1","code":"24"}
-{"name":"1D4 Trogylork massif","id":"","nombre":"D4","code":"24"}
-{"name":"1D4 Trogylork chasseur","id":"","nombre":"D4","code":"24"}
+{"name":"D4 Trogylork massif, possibilité de mixer le type de trogylork","id":"","nombre":"D4","code":"24"}
+{"name":"D4 Nain de la mafia en expédition, possibilité de mixer le type de nain","id":"","nombre":"D4","code":"24"}
 {"name":"Ours brun","id":"","nombre":"1","code":"24"}
-{"name":"1D4 Elfe noir assassin aguerri","id":"","nombre":"D4","code":"24"}
-{"name":"1D4 Elfe noir voleur aguerri","id":"","nombre":"D4","code":"24"}
+{"name":"D4 Elfe noir assassin aguerri","id":"","nombre":"D4","code":"24"}
+{"name":"D4 Elfe noir voleur aguerri","id":"","nombre":"D4","code":"24"}
 {"name":"Prêtresse drow de Slanoush","id":"","nombre":"1","code":"24"}
 {"name":"Elémentaire pierre moyen","id":"","nombre":"1","code":"24"}
 {"name":"Vampire","id":"","nombre":"1","code":"24"}
@@ -342,41 +365,41 @@ export const generator = `
 
 {"name":"Nuée de mouche","id":"","nombre":"1","code":"25"}
 {"name":"Petite quenouille massue","id":"","nombre":"1","code":"25"}
-{"name":"1D4 Gobelin flibustier","id":"","nombre":"D4","code":"25"}
-{"name":"1D4 Gobelin flibustier tireur","id":"","nombre":"D4","code":"25"}
-{"name":"1D4 Pirate acharné","id":"","nombre":"D4","code":"25"}
-{"name":"1D4 Pirate tireur","id":"","nombre":"D4","code":"25"}
-{"name":"1D4 Pirate flingueur","id":"","nombre":"D4","code":"25"}
+{"name":"D4 Gobelin flibustier,n'hésitez pas à mixer le type de gobelin","id":"","nombre":"D4","code":"25"}
+{"name":"D4 Gobelin flibustier tireur, n'hésitez pas à mixer le type de gobelin","id":"","nombre":"D4","code":"25"}
+{"name":"D4 Pirate acharné, n'hésitez pas à mixer le type de gobelin","id":"","nombre":"D4","code":"25"}
+{"name":"D4 Pirate tireur,n'hésitez pas à mixer le type de gobelin","id":"","nombre":"D4","code":"25"}
+{"name":"D4 Pirate flingueur,n'hésitez pas à mixer le type de gobelin","id":"","nombre":"D4","code":"25"}
 {"name":"Seigneur crabe d'eau douce géant","id":"","nombre":"1","code":"25"}
 {"name":"Gros élémentaire d'eau","id":"","nombre":"1","code":"25"}
 {"name":"Bête aquatique robuste","id":"","nombre":"1","code":"25"}
 {"name":"Grosse moule d'eau douce","id":"","nombre":"1","code":"25"}
-{"name":"Cap'taine gobelin costaud","id":"","nombre":"1","code":"25"}
-{"name":"1D4 Homme-amphibien griffeur","id":"","nombre":"D4","code":"25"}
-{"name":"1D4 Homme-amphibien cracheur","id":"","nombre":"D4","code":"25"}
+{"name":"Cap'taine gobelin costaud, possibilité de rajouter 1 ou 2 gobelins flibustier","id":"","nombre":"1","code":"25"}
+{"name":"D4 Homme-amphibien griffeur, n'hésitez pas à mixer le type de d'homme amphibien","id":"","nombre":"D4","code":"25"}
+{"name":"D4 Homme-amphibien cracheur, n'hésitez pas à mixer le type de d'homme amphibien","id":"","nombre":"D4","code":"25"}
 {"name":"Troll berserk affamé","id":"","nombre":"1","code":"25"}
 {"name":"Crocodile énorme","id":"","nombre":"1","code":"25"}
-{"name":"Capitaine pirate","id":"","nombre":"1","code":"25"}
+{"name":"Capitaine pirate, possibilité de rajouter 1 ou 2 pirates de base","id":"","nombre":"1","code":"25"}
 {"name":"Bête aquatique frénétique","id":"","nombre":"1","code":"25"}
-{"name":"Mage d'eau teigneux","id":"","nombre":"1","code":"25"}
+{"name":"Mage d'eau teigneux, attention préparation des sorts nécessaires","id":"","nombre":"1","code":"25"}
 {"name":"Kraken toxique géant","id":"","nombre":"1","code":"25"}
 
 
 {"name":"Ptéranomoran","id":"","nombre":"1","code":"26"}
-{"name":"1D4 Gobelin flibustier","id":"","nombre":"D4","code":"26"}
-{"name":"1D4 Gobelin flibustier","id":"","nombre":"D4","code":"26"}
-{"name":"1D4 Gobelin flibustier tireur","id":"","nombre":"D4","code":"26"}
+{"name":"D4 Gobelin flibustier,n'hésitez pas à mixer le type de gobelin","id":"","nombre":"D4","code":"26"}
+{"name":"D4 Gobelin flibustier tireur, n'hésitez pas à mixer le type de gobelin","id":"","nombre":"D4","code":"26"}
+{"name":"????????????","id":"","nombre":"1","code":"26"}
 {"name":"Contremaître pirate","id":"","nombre":"1","code":"26"}
 {"name":"Seigneur crabe géant","id":"","nombre":"1","code":"26"}
 {"name":"Goélosaure","id":"","nombre":"1","code":"26"}
 {"name":"Ptéranomoran Gumbuk","id":"","nombre":"1","code":"26"}
 {"name":"Crocodile marin monstrueux","id":"","nombre":"1","code":"26"}
 {"name":"Grosse moule Bolodrag","id":"","nombre":"1","code":"26"}
-{"name":"1D4 Pirate abordeur","id":"","nombre":"D4","code":"26"}
+{"name":"D4 Pirate abordeur","id":"","nombre":"D4","code":"26"}
 {"name":"Cap'taine gobelin costaud","id":"","nombre":"1","code":"26"}
 {"name":"Lézard pataud","id":"","nombre":"1","code":"26"}
 {"name":"Pélikosaure","id":"","nombre":"1","code":"26"}
-{"name":"1D4 Pirate flingueur","id":"","nombre":"1","code":"26"}
+{"name":"D4 Pirate flingueur","id":"","nombre":"1","code":"26"}
 {"name":"Commandant pirate","id":"","nombre":"1","code":"26"}
 {"name":"Dragon de sombroloin","id":"","nombre":"1","code":"26"}
 {"name":"Dragon des îles","id":"","nombre":"1","code":"26"}
@@ -393,13 +416,13 @@ export const generator = `
 {"name":"Plante carnivaure géante","id":"","nombre":"1","code":"27"}
 {"name":"Python mordeur énorme","id":"","nombre":"1","code":"27"}
 {"name":"Crocodile monstrueux","id":"","nombre":"1","code":"27"}
-{"name":"1D4 Dompteur de fauve","id":"","nombre":"D4","code":"27"}
+{"name":"D4 Dompteur de fauve","id":"","nombre":"D4","code":"27"}
 {"name":"Grosse scolopendre","id":"","nombre":"1","code":"27"}
 {"name":"Scorpion géant","id":"","nombre":"1","code":"27"}
 {"name":"Tigre d'Ammouka dominant","id":"","nombre":"1","code":"27"}
 {"name":"Ours d'Ammouka","id":"","nombre":"1","code":"27"}
 {"name":"Vrukka","id":"","nombre":"1","code":"27"}
-{"name":"1D4 Champion de village","id":"","nombre":"D4","code":"27"}
+{"name":"D4 Champion de village","id":"","nombre":"D4","code":"27"}
 {"name":"Mère tranchante","id":"","nombre":"1","code":"27"}
 {"name":"Troll géant","id":"","nombre":"1","code":"27"}
 {"name":"Plakodo","id":"","nombre":"1","code":"27"}
@@ -408,16 +431,16 @@ export const generator = `
 
 {"name":"Nuée de moustique","id":"","nombre":"1","code":"28"}
 {"name":"Petite quenouille massue","id":"","nombre":"1","code":"28"}
-{"name":"1D4 Gros squelette en armure","id":"","nombre":"D4","code":"28"}
-{"name":"1D4 Super-goule","id":"","nombre":"D4","code":"28"}
+{"name":"D4 Gros squelette en armure","id":"","nombre":"D4","code":"28"}
+{"name":"D4 Super-goule","id":"","nombre":"D4","code":"28"}
 {"name":"Sangsue colossale","id":"","nombre":"1","code":"28"}
 {"name":"Grosse araignée pondeuse","id":"","nombre":"1","code":"28"}
 {"name":"Grosse scolopendre","id":"","nombre":"1","code":"28"}
-{"name":"1D4 Homme-amphibien griffeur","id":"","nombre":"D4","code":"28"}
-{"name":"1D4 Homme-amphibien cracheur","id":"","nombre":"D4","code":"28"}
+{"name":"D4 Homme-amphibien griffeur","id":"","nombre":"D4","code":"28"}
+{"name":"D4 Homme-amphibien cracheur","id":"","nombre":"D4","code":"28"}
 {"name":"Crocodile monstrueux","id":"","nombre":"1","code":"28"}
 {"name":"Homme lézard chef","id":"","nombre":"1","code":"28"}
-{"name":"1D4 Homme lézard empoisonneur","id":"","nombre":"D4","code":"28"}
+{"name":"D4 Homme lézard empoisonneur","id":"","nombre":"D4","code":"28"}
 {"name":"Arbre marcheur malsain","id":"","nombre":"1","code":"28"}
 {"name":"Serpent des marécages","id":"","nombre":"1","code":"28"}
 {"name":"Golem de boue","id":"","nombre":"1","code":"28"}
@@ -430,16 +453,16 @@ export const generator = `
 
 {"name":"Scorpion Zorig","id":"","nombre":"1","code":"29"}
 {"name":"2D6 Coyote des sables","id":"","nombre":"2D6","code":"29"}
-{"name":"1D4 Gros vautour","id":"","nombre":"D4","code":"29"}
+{"name":"D4 Gros vautour","id":"","nombre":"D4","code":"29"}
 {"name":"Vipère du désert","id":"","nombre":"1","code":"29"}
-{"name":"1D4 Gros squelette en armure","id":"","nombre":"D4","code":"29"}
+{"name":"D4 Gros squelette en armure","id":"","nombre":"D4","code":"29"}
 {"name":"Scorpion géant","id":"","nombre":"1","code":"29"}
 {"name":"Gros élémentaire d'air","id":"","nombre":"1","code":"29"}
 {"name":"Grosse araignée pondeuse","id":"","nombre":"1","code":"29"}
 {"name":"Kobold aguerri","id":"","nombre":"1","code":"29"}
 {"name":"Troll des sables","id":"","nombre":"1","code":"29"}
-{"name":"1D4 Brigand des sables","id":"","nombre":"D4","code":"29"}
-{"name":"1D4 Archer des sables","id":"","nombre":"D4","code":"29"}
+{"name":"D4 Brigand des sables","id":"","nombre":"D4","code":"29"}
+{"name":"D4 Archer des sables","id":"","nombre":"D4","code":"29"}
 {"name":"Chef de brigand des sables","id":"","nombre":"1","code":"29"}
 {"name":"Grosse scolopendre","id":"","nombre":"1","code":"29"}
 {"name":"Nécrophage enragé","id":"","nombre":"1","code":"29"}
@@ -452,12 +475,12 @@ export const generator = `
 
 {"name":"2D6 Gros rat","id":"","nombre":"2D6","code":"210"}
 {"name":"2D6 Chien errant","id":"","nombre":"2D6","code":"210"}
-{"name":"1D4 Brigand zelé","id":"","nombre":"D4","code":"210"}
-{"name":"1D4 Brigand archer","id":"","nombre":"D4","code":"210"}
+{"name":"D4 Brigand zelé","id":"","nombre":"D4","code":"210"}
+{"name":"D4 Brigand archer","id":"","nombre":"D4","code":"210"}
 {"name":"Kobold aguerri","id":"","nombre":"1","code":"210"}
 {"name":"Loup-garou de base","id":"","nombre":"1","code":"210"}
-{"name":"1D4 Brute des bas quartiers","id":"","nombre":"D4","code":"210"}
-{"name":"1D4 Vigile aguerri","id":"","nombre":"D4","code":"210"}
+{"name":"D4 Brute des bas quartiers","id":"","nombre":"D4","code":"210"}
+{"name":"D4 Vigile aguerri","id":"","nombre":"D4","code":"210"}
 {"name":"Mercenaire errant 1","id":"","nombre":"1","code":"210"}
 {"name":"Mercenaire errant 2","id":"","nombre":"1","code":"210"}
 {"name":"Mercenaire errant 3","id":"","nombre":"1","code":"210"}
@@ -474,13 +497,13 @@ export const generator = `
 
 {"name":"Limon maléfique et glaireux","id":"","nombre":"1","code":"211"}
 {"name":"2D6 Rat géant","id":"","nombre":"2D6","code":"211"}
-{"name":"1D6 Mort viv'orc costaud","id":"","nombre":"D6","code":"211"}
+{"name":"D6 Mort viv'orc costaud","id":"","nombre":"D6","code":"211"}
 {"name":"Cellule géante monstrueuse","id":"","nombre":"1","code":"211"}
 {"name":"Taupe-garou géante","id":"","nombre":"1","code":"211"}
 {"name":"Scorpion géant","id":"","nombre":"1","code":"211"}
 {"name":"Bête des ruines frénétique","id":"","nombre":"1","code":"211"}
-{"name":"1D4 Gros squelette en armure","id":"","nombre":"D4","code":"211"}
-{"name":"1D4 Super-goule","id":"","nombre":"D4","code":"211"}
+{"name":"D4 Gros squelette en armure","id":"","nombre":"D4","code":"211"}
+{"name":"D4 Super-goule","id":"","nombre":"D4","code":"211"}
 {"name":"Ogre zombie","id":"","nombre":"1","code":"211"}
 {"name":"Horreur osseuse","id":"","nombre":"1","code":"211"}
 {"name":"Spectre guerrier","id":"","nombre":"1","code":"211"}

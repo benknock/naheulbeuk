@@ -277,8 +277,8 @@ export class Macros {
           one: {
             label: "Lancer",
             callback: (html) => {
-              let dice = html.find('input[name="inputFormule"').val();
-              let diff = html.find('input[name="inputDiff"').val();
+              let dice = html.find('input[name="inputFormule"]').val();
+              let diff = html.find('input[name="inputDiff"]').val();
               const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
               //dice=game.naheulbeuk.macros.replaceAttr(dice,actor);
               //diff=game.naheulbeuk.macros.replaceAttr(diff,actor);
@@ -637,8 +637,8 @@ export class Macros {
     var one = {
       label: '<span style="font-size: 12px;">' + name1 + '</span>',
       callback: (html) => {
-        let dice = html.find('input[name="inputFormule1"').val();
-        let diff = html.find('input[name="inputDiff1"').val();
+        let dice = html.find('input[name="inputFormule1"]').val();
+        let diff = html.find('input[name="inputDiff1"]').val();
         const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
         if (dice.substr(0, 6) == "cible:" || diff.substr(0, 6) == "cible:") {
           if (game.naheulbeuk.macros.getSpeakersTarget() == null) { return }
@@ -708,8 +708,8 @@ export class Macros {
     var two = {
       label: '<span style="font-size: 12px;">' + name2 + '</span>',
       callback: (html) => {
-        let dice = html.find('input[name="inputFormule2"').val();
-        let diff = html.find('input[name="inputDiff2"').val();
+        let dice = html.find('input[name="inputFormule2"]').val();
+        let diff = html.find('input[name="inputDiff2"]').val();
         const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
         //dice=game.naheulbeuk.macros.replaceAttr(dice,actor);
         //diff=game.naheulbeuk.macros.replaceAttr(diff,actor);
@@ -781,8 +781,8 @@ export class Macros {
     var three = {
       label: '<span style="font-size: 12px;">' + name3 + '</span>',
       callback: (html) => {
-        let dice = html.find('input[name="inputFormule3"').val();
-        let diff = html.find('input[name="inputDiff3"').val();
+        let dice = html.find('input[name="inputFormule3"]').val();
+        let diff = html.find('input[name="inputDiff3"]').val();
         const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
         //dice=game.naheulbeuk.macros.replaceAttr(dice,actor);
         //diff=game.naheulbeuk.macros.replaceAttr(diff,actor);
@@ -854,8 +854,8 @@ export class Macros {
     var four = {
       label: '<span style="font-size: 12px;">' + name4 + '</span>',
       callback: (html) => {
-        let dice = html.find('input[name="inputFormule4"').val();
-        let diff = html.find('input[name="inputDiff4"').val();
+        let dice = html.find('input[name="inputFormule4"]').val();
+        let diff = html.find('input[name="inputDiff4"]').val();
         const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
         //dice=game.naheulbeuk.macros.replaceAttr(dice,actor);
         //diff=game.naheulbeuk.macros.replaceAttr(diff,actor);
@@ -927,8 +927,8 @@ export class Macros {
     var five = {
       label: '<span style="font-size: 12px;">' + name5 + '</span>',
       callback: (html) => {
-        let dice = html.find('input[name="inputFormule5"').val();
-        let diff = html.find('input[name="inputDiff5"').val();
+        let dice = html.find('input[name="inputFormule5"]').val();
+        let diff = html.find('input[name="inputDiff5"]').val();
         const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
         //dice=game.naheulbeuk.macros.replaceAttr(dice,actor);
         //diff=game.naheulbeuk.macros.replaceAttr(diff,actor);
@@ -1000,8 +1000,8 @@ export class Macros {
     var six = {
       label: '<span style="font-size: 12px;">' + name6 + '</span>',
       callback: (html) => {
-        let dice = html.find('input[name="inputFormule6"').val();
-        let diff = html.find('input[name="inputDiff6"').val();
+        let dice = html.find('input[name="inputFormule6"]').val();
+        let diff = html.find('input[name="inputDiff6"]').val();
         const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
         //dice=game.naheulbeuk.macros.replaceAttr(dice,actor);
         //diff=game.naheulbeuk.macros.replaceAttr(diff,actor);
@@ -1073,8 +1073,8 @@ export class Macros {
     var seven = {
       label: '<span style="font-size: 12px;">' + name7 + '</span>',
       callback: (html) => {
-        let dice = html.find('input[name="inputFormule5"').val();
-        let diff = html.find('input[name="inputDiff5"').val();
+        let dice = html.find('input[name="inputFormule5"]').val();
+        let diff = html.find('input[name="inputDiff5"]').val();
         const rollMessageTpl = 'systems/naheulbeuk/templates/chat/skill-roll.hbs';
         //dice=game.naheulbeuk.macros.replaceAttr(dice,actor);
         //diff=game.naheulbeuk.macros.replaceAttr(diff,actor);
@@ -1224,7 +1224,6 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
     <div style="display: flex;align-items: center;padding-bottom: 10px;">
     <label>Choisir une compétence : &nbsp;</label>
     <select name="competence" id="competence" style="flex: 1">
-        <option value=''></option>
     `
     let expr = ''
     for (let competence of competences) {
@@ -1312,7 +1311,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         one: {
           label: "Valider",
           callback: (html) => {
-            let mode = html.find('input[name="mode"').val()
+            let mode = html.find('input[name="mode"]').val()
             if (mode != 2 && mode != 3 && mode != 4) { mode = 1 }
             game.settings.register("core", "naheulbeuk.mode_drag", { scope: 'world', type: String })
             game.settings.set("core", "naheulbeuk.mode_drag", mode)
@@ -1371,7 +1370,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
     buttons.one = {
       label: "Valider",
       callback: (html) => {
-        var attaque = html.find('select[name="inputDiff3"').val()
+        var attaque = html.find('select[name="inputDiff3"]').val()
         if (attaque != "Parade et Esquive") {
           game.naheulbeuk.rollItemMacro(attaque, mode);
         } else {
@@ -1523,6 +1522,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         <option value="arme_distance">Arme à distance</option>
         <option value="armefeu">Arme à poudre</option>
         <option value="munition">Munition</option>
+        <option value="arme_autre">Autre</option>
       </select>
       <label style="flex: 0.1;">&nbsp;et&nbsp;</label><br/>
       <select name="armeO2" id="armeO2" style="flex:1;">
@@ -1534,6 +1534,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
         <option value="arme_distance">Arme à distance</option>
         <option value="armefeu">Arme à poudre</option>
         <option value="munition">Munition</option>
+        <option value="arme_autre">Autre</option>
       </select>
     </div>
     <div style="display: flex;align-items: center;padding-bottom: 10px;">
@@ -1596,7 +1597,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             var result2 = arr;
     
             //Recherche compendium new
-            var comp = $("[name=compendium]").val();
+            //var comp = $("[name=compendium]").val();
+            var comp = html.find('select[name="compendium"]').val();
             if (comp != '') {
               result = result2.filter(entry => { return entry.compendium === comp })
     
@@ -1604,7 +1606,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             result2 = result;
     
             //Recherche nom new
-            var nameO = $("[id=nameO]").val().toLowerCase();
+            var nameO = html.find('input[id="nameO"]').val().toLowerCase();
             var nameOs = nameO.split("&&");
             if (nameO != '') {
               result = result2.filter(entry => {
@@ -1631,8 +1633,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             result2 = result;
     
             //Rercherche type new
-            var typeO1 = $("[name=typeO1]").val();
-            var typeO2 = $("[name=typeO2]").val();
+            var typeO1 = html.find('select[name="typeO1"]').val();
+            var typeO2 = html.find('select[name="typeO2"]').val();
             if (typeO1 != '' || typeO2 != '') {
               result = result2.filter(entry => {
                 if ((typeO1 != '' && entry.type == typeO1) || (typeO2 != '' && entry.type == typeO2)) { return true }
@@ -1641,8 +1643,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             result2 = result;
     
             //Rercherche catégorie new
-            var catO1 = $("[name=catO1]").val();
-            var catO2 = $("[name=catO2]").val();
+            var catO1 = html.find('select[name="catO1"]').val();
+            var catO2 = html.find('select[name="catO2"]').val();
             if (catO1 != '' || catO2 != '') {
               result = result2.filter(entry => {
                 if ((catO1 != '' && entry.system.categorie == catO1) || (catO2 != '' && entry.system.categorie == catO2)) { return true }
@@ -1651,10 +1653,11 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             result2 = result;
     
             //Rercherche arme new
-            var armeO1 = $("[name=armeO1]").val();
-            var armeO2 = $("[name=armeO2]").val();
+            var armeO1 = html.find('select[name="armeO1"]').val();
+            var armeO2 = html.find('select[name="armeO2"]').val();
             if (armeO1 != '' || armeO2 != '') {
               result = result2.filter(entry => {
+                if (entry.type!='arme'){return false}
                 if (armeO1 != '' && armeO2 != '' && eval("entry.system." + armeO1) == true && eval("entry.system." + armeO2) == true) { return true }
                 if (armeO1 != '' && armeO2 == '' && eval("entry.system." + armeO1) == true) { return true }
                 if (armeO2 != '' && armeO1 == '' && eval("entry.system." + armeO2) == true) { return true }
@@ -1662,11 +1665,12 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             }
             result2 = result;
     
-            //Rercherche arme new
-            var armureO1 = $("[name=armureO1]").val();
-            var armureO2 = $("[name=armureO2]").val();
+            //Rercherche armure new
+            var armureO1 = html.find('select[name="armureO1"]').val();
+            var armureO2 = html.find('select[name="armureO2"]').val();
             if (armureO1 != '' || armureO2 != '') {
               result = result2.filter(entry => {
+                if (entry.type!='armure'){return false}
                 if (armureO1 != '' && armureO2 != '' && eval("entry.system." + armureO1) == true && eval("entry.system." + armureO2) == true) { return true }
                 if (armureO2 == '' && armureO1 != '' && eval("entry.system." + armureO1) == true) { return true }
                 if (armureO1 == '' && armureO2 != '' && eval("entry.system." + armureO2) == true) { return true }
@@ -1675,7 +1679,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             result2 = result;
     
             //Recherche txt OK
-            var val = $("[id=q]").val().toLowerCase();
+            var val = html.find('input[id="q"]').val().toLowerCase();
             var vals = val.split("&&");
             if (val != '') {
               result = result2.filter(entry => {
@@ -1708,8 +1712,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             result2 = result;
     
             //Recherche prix- new
-            var pomin = $("[id=pomin]").val()
-            var pomax = $("[id=pomax]").val()
+            var pomin = html.find('input[id="pomin"]').val()
+            var pomax = html.find('input[id="pomax"]').val()
             if (pomin != "" || pomax != "") {
               result = result2.filter(entry => {
                 if (entry.system.prix != undefined) {
@@ -1756,7 +1760,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             result2 = result
     
             //un seul résultat new
-            if (document.getElementById("random").checked) {
+            if (document.getElementById("random").checked && result.length!=0) {
               let rand = Math.floor(Math.random() * result.length);
               result2 = []
               result2.push(result[rand])
@@ -1765,6 +1769,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
     
             //Gestion journal 
             var magasin = $("[id=magasin]").val();
+            
             var page = $("[id=page]").val();
             var magasinObj = "vide"
             var pageObj = "vide"
@@ -1807,7 +1812,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
               }
             }
             l = new CustomDialog({
-              title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
+              title: "Résultats",
               content: '<ul>' + list + '</ul>',
               buttons: {
               }
@@ -1815,7 +1820,6 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             l.render(true)
             $(document).ready(function () {
               $("[class=magasin]").click(ev2 => {
-                console.log("test")
                 for (let r of result) {
                   if (r.name == ev2.currentTarget.name) {
                     let prixObj = $('[id=' + r._id + ']').val()
@@ -2034,13 +2038,13 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
       </div>
       <hr>
       <div style="align-items: center;padding-bottom: 8px;">
-      Générateur de rencontres pour les terres de Fangh (document by Wölrajh) :
+      Générateur de rencontres fanghiennes (n'oubliez pas de prendre en compte les traits !!) :
       </div>
       <div style="display:flex;align-items: center;padding-bottom: 10px;"> 
         <label style="flex:1;">Niveau :</label>
         <select style="flex:1;" name="niveau" id="niveau">
           <option value="1">Bas niveau (1-3)</option>
-          <option value="2">Niveau intermédiaire (3-6)</option>
+          <option value="2">Niveau intermédiaire (4-6)</option>
           <option value="3">Haut niveau (6+)</option>
         </select>
         <label style="flex:1;text-align:right">Biome :&nbsp;&nbsp;&nbsp;</label>
@@ -2065,19 +2069,19 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
     let buttons = {
       one:{
         label: 'Rechercher',
-        callback: (html) => {
+        callback: (html)=>{
           var result = arr;
           var result2 = arr;
 
           //Rercherche type new
-          var typeO1 = $("[name=typeO1]").val();
+          var typeO1 = html.find("[name=typeO1]").val();
           if (typeO1 != '') {
             result = result2.filter(entry => {
               if (entry.system.attributes.categorie == typeO1) { return true }
             })
             result2 = result;
           }
-          var typeO2 = $("[name=typeO2]").val();
+          var typeO2 = html.find("[name=typeO2]").val();
           if (typeO2 != '') {
             result = result2.filter(entry => {
               if (entry.system.attributes.categorie2 == typeO2) { return true }
@@ -2086,7 +2090,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           }
 
           //Recherche nom new
-          var nameO = $("[id=nameO]").val().toLowerCase();
+          var nameO = html.find("[id=nameO]").val().toLowerCase();
           var nameOs = nameO.split("&&");
           if (nameO != '') {
             result = result2.filter(entry => {
@@ -2113,10 +2117,10 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           }
 
           //Recherche trait et zone new
-          var traitO1 = $("[name=traitO1]").val();
-          var traitO2 = $("[name=traitO2]").val();
-          var geoO1 = $("[name=geoO1]").val();
-          var geoO2 = $("[name=geoO2]").val();
+          var traitO1 = html.find("[name=traitO1]").val();
+          var traitO2 = html.find("[name=traitO2]").val();
+          var geoO1 = html.find("[name=geoO1]").val();
+          var geoO2 = html.find("[name=geoO2]").val();
           if (traitO1 != '' || traitO2 != '' || geoO1 != '' || geoO2 != '') {
             result = result2.filter(entry => {
               let flag_traitO1 = false
@@ -2144,8 +2148,8 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
           }
 
           //Rercherche XP new
-          var xpO1 = $("[id=xpO1]").val();
-          var xpO2 = $("[id=xpO2]").val();
+          var xpO1 = html.find("[id=xpO1]").val();
+          var xpO2 = html.find("[id=xpO2]").val();
           if (xpO1 != '' || xpO2 != '') {
             result = result2.filter(entry => {
               if (xpO1 != '' && xpO2 == '') {
@@ -2264,7 +2268,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             }
           }
           k = new CustomDialog({
-            title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
+            title: "Résultats",
             content: '<ul>' + list + '</ul>',
             buttons: {
             }
@@ -2275,9 +2279,10 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
       two:{
         label:"Générer",
         callback: (html)=>{
-          var niveau = $("[name=niveau]").val();
-          var zone = $("[name=zone]").val();
+          var niveau = html.find("[name=niveau]").val();
+          var zone = html.find("[name=zone]").val();
           let r;
+          let list=''
           //Génère une rencontre à partir du fichier generator.mjs
           let code = "" + niveau + zone
           var raw_arr2 = generator.split("\n");
@@ -2289,121 +2294,127 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
               if (entry.code==code){arr2.push(entry)}
             }
           }
-          let resultat = arr2[Math.floor(Math.random() * 20)];
-          console.log(resultat)
-          r=arr.filter(entry => {return entry._id===resultat.id})[0]
-          let nombre = ""+resultat.nombre
-          let option = 0
-          if (nombre.split("D").length == 1) {
-            option = parseInt(nombre.split("D")[0])
+
+          if (arr2.length==0){
+            list=`Les rencontres de haut niveau ne sont pas encore dans le système. Mais tu peux les créer toi même.<br/>
+            <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk#titre85">La doc est ici, voir le chapitre "Générer une rencontre"</a>.
+            `
           } else {
-            if (nombre.split("D")[0]==""){
-              option = Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
+            let resultat = arr2[Math.floor(Math.random() * arr2.length)];
+            console.log(resultat)
+            r=arr.filter(entry => {return entry._id===resultat.id})[0]
+            let nombre = ""+resultat.nombre
+            let option = 0
+            if (nombre.split("D").length == 1) {
+              option = parseInt(nombre.split("D")[0])
             } else {
-              for (let i = 0; i < parseInt(nombre.split("D")[0]); i++) {
-                option = option + Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
+              if (nombre.split("D")[0]==""){
+                option = Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
+              } else {
+                for (let i = 0; i < parseInt(nombre.split("D")[0]); i++) {
+                  option = option + Math.floor(Math.random() * parseInt(nombre.split("D")[1])) + 1;
+                }
               }
             }
-          }
-          if (option=="1" || option==1){
-            option=""
-          } else {
-            option = option + "&nbsp;x&nbsp;"
-          }
-          let result = []
-          let result2 = []
-          result.push(r)
-          result2.push(r)
+            if (option=="1" || option==1){
+              option=""
+            } else {
+              option = option + "&nbsp;x&nbsp;"
+            }
+            let result = []
+            let result2 = []
+            result.push(r)
+            result2.push(r)
 
 
-          //On cherche les resultats de même famille
-          var save = result[0]
-          let rname = result[0].name.split(' | ')[0]
-          result2 = []
-          for (let pnj of arr) {
-            if (pnj.name.split(' | ')[0] == rname && result[0].name != pnj.name) { result2.push(pnj) }
-          }
-          result = result2
-          //On vérifie qu'ils sont de même type
-          var typeO1 = save.system.attributes.categorie;
-          var typeO2 = save.system.attributes.categorie2;
-          if (typeO1 != '') {
+            //On cherche les resultats de même famille
+            var save = result[0]
+            let rname = result[0].name.split(' | ')[0]
+            result2 = []
+            for (let pnj of arr) {
+              if (pnj.name.split(' | ')[0] == rname && result[0].name != pnj.name) { result2.push(pnj) }
+            }
+            result = result2
+            //On vérifie qu'ils sont de même type
+            var typeO1 = save.system.attributes.categorie;
+            var typeO2 = save.system.attributes.categorie2;
+            if (typeO1 != '') {
+              result = result2.filter(entry => {
+                if (entry.system.attributes.categorie == typeO1) { return true }
+              })
+            }
+            result2 = result
+            if (typeO2 != '') {
+              result = result2.filter(entry => {
+                if (entry.system.attributes.categorie2 == typeO2) { return true }
+              })
+            }
+            result2 = result;
+            //On vérifie qu'ils sont dans la même zone
+            let zonesSave = []
+            for (let item of save.items) {
+              if (item.type == 'region') { zonesSave.push(item) }
+            }
             result = result2.filter(entry => {
-              if (entry.system.attributes.categorie == typeO1) { return true }
-            })
-          }
-          result2 = result
-          if (typeO2 != '') {
-            result = result2.filter(entry => {
-              if (entry.system.attributes.categorie2 == typeO2) { return true }
-            })
-          }
-          result2 = result;
-          //On vérifie qu'ils sont dans la même zone
-          let zonesSave = []
-          for (let item of save.items) {
-            if (item.type == 'region') { zonesSave.push(item) }
-          }
-          result = result2.filter(entry => {
-            let flag_zone = true
-            for (let zoneSave of zonesSave) {
-              let zoneFind = false
-              for (let item of entry.items) {
-                if (item.name == zoneSave.name) { zoneFind = true }
+              let flag_zone = true
+              for (let zoneSave of zonesSave) {
+                let zoneFind = false
+                for (let item of entry.items) {
+                  if (item.name == zoneSave.name) { zoneFind = true }
+                }
+                if (zoneFind == false) { flag_zone = false }
               }
-              if (zoneFind == false) { flag_zone = false }
-            }
-            return flag_zone
-          })
-          result2 = result;
+              return flag_zone
+            })
+            result2 = result;
 
 
-          //classe par xp les résultat de même famille
-          let result_sans_xp = []
-          let result_avec_xp = []
-          result = []
-          for (let r of result2) {
-            if (r.system.attributes.xp.value == undefined) {
-              result_sans_xp.push(r)
-            } else {
-              result_avec_xp.push(r)
-            }
-          }
-          while (result_avec_xp.length != 0) {
-            let i = 0
-            let j = 0
-            let minxp = result_avec_xp[0]
-            for (let r of result_avec_xp) {
-              if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
-                minxp = r
-                j = i
+            //classe par xp les résultat de même famille
+            let result_sans_xp = []
+            let result_avec_xp = []
+            result = []
+            for (let r of result2) {
+              if (r.system.attributes.xp.value == undefined) {
+                result_sans_xp.push(r)
+              } else {
+                result_avec_xp.push(r)
               }
-              i++
             }
-            result.push(minxp)
-            result_avec_xp.splice(j, 1)
-          }
-          for (let r of result_sans_xp) { result.push(r) }
-          //Une fois classé, il faut remettre le résultat du générateur en premier
-          result.unshift(save)
-          result2 = result
+            while (result_avec_xp.length != 0) {
+              let i = 0
+              let j = 0
+              let minxp = result_avec_xp[0]
+              for (let r of result_avec_xp) {
+                if (r.system.attributes.xp.value < minxp.system.attributes.xp.value) {
+                  minxp = r
+                  j = i
+                }
+                i++
+              }
+              result.push(minxp)
+              result_avec_xp.splice(j, 1)
+            }
+            for (let r of result_sans_xp) { result.push(r) }
+            //Une fois classé, il faut remettre le résultat du générateur en premier
+            result.unshift(save)
+            result2 = result
 
 
-          //Affichage
-          let list =''
-          let flag_unique = 1
-          for (let r of result) {
-            var prix = r.system.attributes.xp.value + " XP"
-            //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
-            if (flag_unique == 1) {
-              list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i>' + r.name + '</a>&nbsp;&nbsp;<span>(' + prix + ')&nbsp;&nbsp;' + resultat.name + '</<span></li>';
-              flag_unique = 2
-            } else if (flag_unique==2) {
-              list += '<hr>'
-              list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
-              flag_unique = 3
-            } else {
-              list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+            //Affichage
+            let flag_unique = 1
+            for (let r of result) {
+              var prix = r.system.attributes.xp.value + " XP"
+              //Positionne une ligne après un résultat unique random, pour le séparer de sa famille
+              if (flag_unique == 1) {
+                list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;' + option + '&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i>' + r.name + '</a>&nbsp;&nbsp;<span>(' + prix + ')&nbsp;&nbsp;' + resultat.name + '</<span></li>';
+                flag_unique = 2
+              } else if (flag_unique==2) {
+                list += '<hr>'
+                list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+                flag_unique = 3
+              } else {
+                list += '<li style="padding-bottom: 5px;display: flex;align-items: center;">&nbsp;<img loading="lazy" decoding="async" src=' + r.img + ' style="width:60px;height:60px;">&nbsp;&nbsp;<a class="entity-link content-link" draggable="true" data-uuid="Compendium.naheulbeuk.' + r.compendium + '.' + r._id + '" data-pack="naheulbeuk.' + r.compendium + '" data-id=' + r._id + '><i class="fas fa-suitcase"></i> ' + r.name + '</a>&nbsp;-&nbsp;' + prix + '</li>';
+              }
             }
           }
 
@@ -2415,7 +2426,7 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             }
           }
           k = new Dialog({
-            title: "Rechercher (tous les champs sont optionels) ou générer une rencontre",
+            title: "Résultats",
             content: '<ul>' + list + '</ul>',
             buttons: {
             }

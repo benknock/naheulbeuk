@@ -22,7 +22,7 @@ export const generator = `
 {"name":"Jeune dragon rouge","id":"HlgmPCjzDoBctB6q","nombre":"1","code":"11"}
 
 //// Plaine, niveau intermédiaire code 21
-{"name":"D6 Mercenaire errent agressif, pensez à mixer les mercenaires","id":"cdJUFaJKKeXeGISO","nombre":"1","code":"21"}
+{"name":"D6 Mercenaire/aventurier errant agressif, pensez à mixer les mercenaires","id":"cdJUFaJKKeXeGISO","nombre":"D6","code":"21"}
 {"name":"2D6 Coyotes robuste","id":"qVefKSTokIvjTYQ2","nombre":"2D6","code":"21"}
 {"name":"D6 Guerrier Gobelin, possibilité de mixer avec un chef, un artificier, un ingénieur...","id":"MJVExvpkZs3StMKT","nombre":"D6","code":"21"}
 {"name":"D6 Orque troupier, possibilité de mettre des troupiers défensifs et un chef","id":"UxxiiBv7zw2JW96l","nombre":"D6","code":"21"}
@@ -73,7 +73,7 @@ export const generator = `
 {"name":"D6 Loup noir, possibilité de rajouter un dominant","id":"tlqNP4fe4bEOOnol","nombre":"D6","code":"22"}
 {"name":"Chaponne fanghienne","id":"sHvKjYt6clFvlv3V","nombre":"1","code":"22"}
 {"name":"2D6 Globzoule énervé","id":"xgLWoO6h5tpwMPEN","nombre":"2D6","code":"22"}
-{"name":"D6 Mercenaire errent agressif, pensez à mixer les mercenaires","id":"cdJUFaJKKeXeGISO","nombre":"D6","code":"22"}
+{"name":"D6 Mercenaire/aventurier errant agressif, pensez à mixer les mercenaires","id":"cdJUFaJKKeXeGISO","nombre":"D6","code":"22"}
 {"name":"Héroïne de la forêt","id":"E9VKoQ9VuCLf4Nzy","nombre":"1","code":"22"}
 {"name":"D6 Orque d'assaut, possibilité de mettre des troupiers défensifs et un chef","id":"UxxiiBv7zw2JW96l","nombre":"D6","code":"22"}
 {"name":"D3 Mille-pattes monstrueux","id":"1xuoU2fwGjpsgJP2","nombre":"D3","code":"22"}
@@ -117,7 +117,7 @@ export const generator = `
 
 //// Montagne, niveau intermédiaire code 23
 {"name":"2D6 Cabretin","id":"Lydi0iS32Lo9IFH1","nombre":"2D6","code":"23"}
-{"name":"D6 Coyote des montagnes","id":"qVefKSTokIvjTYQ2","nombre":"D6","code":"23"}
+{"name":"2D6 Coyote des montagnes","id":"qVefKSTokIvjTYQ2","nombre":"2D6","code":"23"}
 {"name":"D3 Aigle géant adulte","id":"yIyZWKVJpcdeZnRq","nombre":"D3","code":"23"}
 {"name":"D6 Orque d'assaut, possibilité de mettre des troupiers défensifs et un chef","id":"UxxiiBv7zw2JW96l","nombre":"D6","code":"23"}
 {"name":"Ours brun","id":"NDcITTlRsxUe2d4T","nombre":"1","code":"23"}
@@ -362,7 +362,7 @@ export const generator = `
 {"name":"D4 Homme lézard empoisonneur, possibilité de changer quelques types","id":"MAFtFxhavSFN7s41","nombre":"D4","code":"28"}
 {"name":"Arbre marcheur malsain","id":"uNV0SGfn75iIQ5VL","nombre":"1","code":"28"}
 {"name":"Serpent des marécages","id":"kjREnP2HnPQnyYGt","nombre":"1","code":"28"}
-{"name":"Golem de boue","id":"qD537jvd48ZJqNh9","nombre":"1","code":"28"}
+{"name":"D6 Mercenaire/aventurier errant agressif, pensez à mixer les mercenaires","id":"cdJUFaJKKeXeGISO","nombre":"D6","code":"28"}
 {"name":"Liche impressionnante(préparer les sorts!), rajouter quelques morts-vivants","id":"fYZwhvY26X4G5rgy","nombre":"1","code":"28"}
 {"name":"D2 Troll berserk affamé","id":"DhKrRbbweo75qIqg","nombre":"D2","code":"28"}
 {"name":"Dalmorg","id":"Lm0oi8PRW0v5NFG8","nombre":"1","code":"28"}
@@ -394,7 +394,26 @@ export const generator = `
 {"name":"Petit dragon mort-vivant","id":"CkQXUR7Mmg5EX3Vb","nombre":"1","code":"19"}
 
 //// Désert, niveau intermédiaire code 29
-
+{"name":"Scorpion Zorig, possibilité de changer le type et le nombre","id":"vN3q6vIDb7kG4d71","nombre":"1","code":"29"}
+{"name":"2D6 Coyote des sables","id":"qVefKSTokIvjTYQ2","nombre":"2D6","code":"29"}
+{"name":"D2 Ruisklin ","id":"yI1AxPAHA5FSXB0u","nombre":"D2","code":"29"}
+{"name":"Kobold doyen","id":"uAM68zacBl6uBHXP","nombre":"1","code":"29"}
+{"name":"D4 Gros squelette en armure","id":"8DWXcQLBsznV3Gxk","nombre":"D4","code":"29"}
+{"name":"D3 Scorpion géant","id":"FTgyQyyH7a4EGPL4","nombre":"D3","code":"29"}
+{"name":"D6 Mercenaire/aventurier errant agressif, pensez à mixer les mercenaires","id":"cdJUFaJKKeXeGISO","nombre":"D6","code":"29"}
+{"name":"D4 Grosse araignée pondeuse","id":"OQwOwjdz9vzyUjbz","nombre":"D4","code":"29"}
+{"name":"Mammouth","id":"aWtyTyxCjZDH9vD6","nombre":"1","code":"29"}
+{"name":"D2 Troll des sables","id":"DhKrRbbweo75qIqg","nombre":"D2","code":"29"}
+{"name":"D4 Brigand des sables, possibilité de mixer avec des archers","id":"JOaQqSiSVLAwJqE1","nombre":"D4","code":"29"}
+{"name":"D4 Archer des sables, possibilité de mixer avec d'autres brigands","id":"cOysof9sDhVsuFOn","nombre":"D4","code":"29"}
+{"name":"Champion des brigand des sables","id":"r6wPb5GuFTg0BJ9a","nombre":"1","code":"29"}
+{"name":"D3 Grosse scolopendre","id":"n0v05bbElfPCfw64","nombre":"D3","code":"29"}
+{"name":"D2 Nécrophage enragé","id":"NYdkdBQIl487lYxg","nombre":"D2","code":"29"}
+{"name":"Elémentaire pierre moyen","id":"UMHvIr1Y2DItcx4p","nombre":"1","code":"29"}
+{"name":"Spectre guerrier","id":"fStysfodupXetUBG","nombre":"1","code":"29"}
+{"name":"Liche impressionnante(préparer les sorts!), rajouter quelques morts-vivants","id":"fYZwhvY26X4G5rgy","nombre":"1","code":"29"}
+{"name":"D6 Momies","id":"9PVlhtDkyTt6Lihj","nombre":"D6","code":"29"}
+{"name":"Grand dragon mort-vivant","id":"CkQXUR7Mmg5EX3Vb","nombre":"1","code":"29"}
 //// Désert, haut niveau code 319
 
 
@@ -421,6 +440,26 @@ export const generator = `
 {"name":"Jeune dragon de banlieue","id":"QkQv8vHPWaYVKn6u","nombre":"1","code":"110"}
 
 //// Urbain, niveau intermédiaire code 210
+{"name":"2D6 Rat géant","id":"8NSHyl7YZcpmi8xl","nombre":"2D6","code":"210"}
+{"name":"2D6 Chien errant","id":"qVefKSTokIvjTYQ2","nombre":"2D6","code":"210"}
+{"name":"Brigand très fort","id":"eveHcBpDTHZy6CSR","nombre":"D4","code":"210"}
+{"name":"D6 Brigand de base, rajouter 1 ou 2 archers","id":"nz8PQDH2F84tfVoH","nombre":"D6","code":"210"}
+{"name":"Kobold doyen","id":"uAM68zacBl6uBHXP","nombre":"1","code":"210"}
+{"name":"Loup-garou de base","id":"3WtJx01uj3RFX4cv","nombre":"1","code":"210"}
+{"name":"D4 Brute des bas quartiers","id":"WxqG8z9eelojRoxZ","nombre":"D4","code":"210"}
+{"name":"D4 Vigile aguerri","id":"iQwAuj6C6MGfGG2E","nombre":"D4","code":"210"}
+{"name":"D4 Mercenaire errant, possibilité de mixer les types de mercenaire","id":"cdJUFaJKKeXeGISO","nombre":"D4","code":"210"}
+{"name":"D6 Paysan énervé","id":"8BgECGgVnQpXz2R9","nombre":"D6","code":"210"}
+{"name":"D6 Ivrogne de taverne, possibilité de mixer les types d'ivrognes","id":"LR37tONYmYavB8yY","nombre":"D6","code":"210"}
+{"name":"Prêtre de Niourgl, possibilité de rajouter un paladin","id":"1MKcvLyrBMvk7op4","nombre":"1","code":"210"}
+{"name":"Gladiateur stoïque","id":"qdXGFZIbO4eJS9Iu","nombre":"1","code":"210"}
+{"name":"Ménestrel drow","id":"xLKsuqCs0YKaoPjZ","nombre":"1","code":"210"}
+{"name":"Aventurier irrité","id":"GwkV8tw57wd5tFEG","nombre":"1","code":"210"}
+{"name":"Mage agacé, préparation des sorts nécessaires","id":"IHgqlGd8GyoXkeYP","nombre":"1","code":"210"}
+{"name":"Vampire","id":"51KLw5t8CgODyIk8","nombre":"1","code":"210"}
+{"name":"Prêtre du culte, préparation des sorts nécessaires + rajouter des adeptes","id":"VV0KWkS5cWb1rIXq","nombre":"1","code":"210"}
+{"name":"Paladin du culte, préparation des sorts nécessaires","id":"vjeJ3HpwNKSfuhH6","nombre":"1","code":"210"}
+{"name":"Dragon de banlieue adulte","id":"6VP4WZhZCjlpwKNj","nombre":"1","code":"210"}
 
 //// Urbain, haut niveau code 310
 
@@ -448,77 +487,27 @@ export const generator = `
 {"name":"Gorgauth","id":"ntDOvyhlP1iQx1hq","nombre":"1","code":"111"}
 
 //// Souterrain, niveau intermédiaire code 211
+{"name":"D3 Limon maléfique et glaireux","id":"zo5NDPyuIKEDVUGe","nombre":"D3","code":"211"}
+{"name":"2D6 Rat géant","id":"8NSHyl7YZcpmi8xl","nombre":"2D6","code":"211"}
+{"name":"D6 Mort viv'orc costaud","id":"SzuepXlOtRLzEm19","nombre":"D6","code":"211"}
+{"name":"D2 Cellule géante monstrueuse","id":"qLnfRWqV5Addgx46","nombre":"D2","code":"211"}
+{"name":"D2 Taupe-garou géante","id":"fN76L19NBAR5dXuR","nombre":"D2","code":"211"}
+{"name":"D3 Scorpion géant","id":"FTgyQyyH7a4EGPL4","nombre":"D3","code":"211"}
+{"name":"Bête aquatique robuste, théoriquement elles attaquent en meute, donc possibilité d'en mettre plus","id":"xJI88HgM9K7EjE6j","nombre":"1","code":"211"}
+{"name":"D4 Gros squelette en armure","id":"8DWXcQLBsznV3Gxk","nombre":"D4","code":"211"}
+{"name":"D4 Super-goule","id":"FtmeOYZEWJ5KJ8n7","nombre":"D4","code":"211"}
+{"name":"D3 Ogre zombie","id":"tAI8PrBphq9WzEjp","nombre":"D3","code":"211"}
+{"name":"D2 Horreur de chair","id":"aJ1qZTzsYrkpf1WS","nombre":"D2","code":"211"}
+{"name":"Spectre guerrier","id":"fStysfodupXetUBG","nombre":"1","code":"211"}
+{"name":"Vampire","id":"51KLw5t8CgODyIk8","nombre":"1","code":"211"}
+{"name":"Minotaure vétéran","id":"6fRZlzMeYPvha9yg","nombre":"1","code":"211"}
+{"name":"Liche impressionnante(préparer les sorts!), rajouter quelques morts-vivants","id":"fYZwhvY26X4G5rgy","nombre":"1","code":"211"}
+{"name":"Tarentule des cavernes épique, possibilité de mettre 1 ou 2 tarentules de base","id":"Dq5jBdKxopeNXyBZ","nombre":"1","code":"211"}
+{"name":"Dalmorg","id":"Lm0oi8PRW0v5NFG8","nombre":"1","code":"211"}
+{"name":"Golem de fer","id":"JO9JyQ8is62gEOLR","nombre":"1","code":"211"}
+{"name":"Démon gardien","id":"438lGsivtitnbHCV","nombre":"1","code":"211"}
+{"name":"Jeune hydre  à 3 têtes","id":"qD537jvd48ZJqNh9","nombre":"1","code":"211"}
 
 //// Souterrain, haut niveau code 311
 `
 //{"name":"","id":"","nombre":"1","code":""}
-
-/*
-
-
-{"name":"Scorpion Zorig, possibilité de changer le type et le nombre","id":"","nombre":"1","code":"29"}
-{"name":"2D6 Coyote des sables","id":"","nombre":"2D6","code":"29"}
-{"name":"D4 Gros vautour","id":"","nombre":"D4","code":"29"}
-{"name":"Vipère du désert","id":"","nombre":"1","code":"29"}
-{"name":"D4 Gros squelette en armure","id":"","nombre":"D4","code":"29"}
-{"name":"Scorpion géant","id":"","nombre":"1","code":"29"}
-{"name":"Gros élémentaire d'air","id":"","nombre":"1","code":"29"}
-{"name":"Grosse araignée pondeuse","id":"","nombre":"1","code":"29"}
-{"name":"Kobold aguerri","id":"","nombre":"1","code":"29"}
-{"name":"Troll des sables","id":"","nombre":"1","code":"29"}
-{"name":"D4 Brigand des sables","id":"","nombre":"D4","code":"29"}
-{"name":"D4 Archer des sables","id":"","nombre":"D4","code":"29"}
-{"name":"Chef de brigand des sables","id":"","nombre":"1","code":"29"}
-{"name":"D3 Grosse scolopendre","id":"n0v05bbElfPCfw64","nombre":"D3","code":"29"}
-{"name":"Nécrophage enragé","id":"","nombre":"1","code":"29"}
-{"name":"Elémentaire pierre moyen","id":"","nombre":"1","code":"29"}
-{"name":"Spectre guerrier","id":"","nombre":"1","code":"29"}
-{"name":"Liche impressionnante","id":"","nombre":"1","code":"29"}
-{"name":"Momie de Merek-Baab","id":"","nombre":"1","code":"29"}
-{"name":"Grand dragon mort-vivant","id":"","nombre":"1","code":"29"}
-
-
-{"name":"2D6 Gros rat","id":"","nombre":"2D6","code":"210"}
-{"name":"2D6 Chien errant","id":"","nombre":"2D6","code":"210"}
-{"name":"D4 Brigand zelé","id":"","nombre":"D4","code":"210"}
-{"name":"D4 Brigand archer","id":"","nombre":"D4","code":"210"}
-{"name":"Kobold aguerri","id":"","nombre":"1","code":"210"}
-{"name":"Loup-garou de base","id":"","nombre":"1","code":"210"}
-{"name":"D4 Brute des bas quartiers","id":"","nombre":"D4","code":"210"}
-{"name":"D4 Vigile aguerri","id":"","nombre":"D4","code":"210"}
-{"name":"Mercenaire errant 1","id":"","nombre":"1","code":"210"}
-{"name":"Mercenaire errant 2","id":"","nombre":"1","code":"210"}
-{"name":"Mercenaire errant 3","id":"","nombre":"1","code":"210"}
-{"name":"Prêtre de Niourgl","id":"","nombre":"1","code":"210"}
-{"name":"Gladiateur stoïque","id":"","nombre":"1","code":"210"}
-{"name":"Ménestrel drow","id":"","nombre":"1","code":"210"}
-{"name":"Aventurier irrité","id":"","nombre":"1","code":"210"}
-{"name":"Mage agacé","id":"","nombre":"1","code":"210"}
-{"name":"Vampire","id":"","nombre":"1","code":"210"}
-{"name":"Prêtre du culte","id":"","nombre":"1","code":"210"}
-{"name":"Paladin du culte","id":"","nombre":"1","code":"210"}
-{"name":"Dragon de banlieue adulte","id":"","nombre":"1","code":"210"}
-
-
-{"name":"Limon maléfique et glaireux","id":"","nombre":"1","code":"211"}
-{"name":"2D6 Rat géant","id":"","nombre":"2D6","code":"211"}
-{"name":"D6 Mort viv'orc costaud","id":"","nombre":"D6","code":"211"}
-{"name":"Cellule géante monstrueuse","id":"","nombre":"1","code":"211"}
-{"name":"Taupe-garou géante","id":"","nombre":"1","code":"211"}
-{"name":"Scorpion géant","id":"","nombre":"1","code":"211"}
-{"name":"Bête des ruines frénétique","id":"","nombre":"1","code":"211"}
-{"name":"D4 Gros squelette en armure","id":"","nombre":"D4","code":"211"}
-{"name":"D4 Super-goule","id":"","nombre":"D4","code":"211"}
-{"name":"Ogre zombie","id":"","nombre":"1","code":"211"}
-{"name":"Horreur osseuse","id":"","nombre":"1","code":"211"}
-{"name":"Spectre guerrier","id":"","nombre":"1","code":"211"}
-{"name":"Vampire","id":"","nombre":"1","code":"211"}
-{"name":"Minotaure vétéran","id":"","nombre":"1","code":"211"}
-{"name":"Liche impressionnante","id":"","nombre":"1","code":"211"}
-{"name":"Tarentule des cavernes épique","id":"","nombre":"1","code":"211"}
-{"name":"Dalmorg","id":"","nombre":"1","code":"211"}
-{"name":"Golem de fer","id":"","nombre":"1","code":"211"}
-{"name":"Globonoeil","id":"","nombre":"1","code":"211"}
-{"name":"Jeune hydre  à 3 têtes","id":"","nombre":"1","code":"211"}
-
-*/

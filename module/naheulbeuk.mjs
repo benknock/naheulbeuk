@@ -92,10 +92,13 @@ Hooks.once('ready', async function () {
 Si vous avez des questions, vous pouvez consulter 
 <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk">la documentation</a>.<br/>
 Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur le Discord <a href="https://discord.gg/pPSDNJk">La Fonderie</a>.<br/><br/>
-<div><strong><u>Notes de la mise à jour 10.1.2</u></strong></div>
-<div style="padding-top:8px;">- Si un PJ/MJ cible des personnages lorsqu'il fait un jet de dés, ces cibles apparaissent dans le message du chat. Le but est d'aider le MJ à savoir qui est conscerné par les actions</div>
-<div style="padding-top:8px;">- Refonte du système de drag and drop et du combat rapide, <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk#titre9">plus d'infos ici</a>.</div>
-<div style="padding-top:8px;">- Ajout de compendiums PJ prétirés et Soldats prétirés</div>
+<div><strong><u>Notes de la mise à jour 10.1.4, dernière en v10</u></strong></div>
+<div style="padding-top:8px;">- Plus d'une centaine d'ajouts au Bestiaire</div>
+<div style="padding-top:8px;">- Plus d'une centaine d'ajouts de tokens (systems/naheulbeuk/assets/from-2minutetabletop.com-token)</div>
+<div style="padding-top:8px;">- Nettoyage des macros</div>
+<div style="padding-top:8px;">- Amélioration de la macro de recherche d'objets, <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk#titre81">plus d'infos ici</a>.</div>
+<div style="padding-top:8px;">- Création d'une macro de recherche et génération de rencontres, <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk#titre85">plus d'infos ici</a>.</div>
+
 `];
     const chatData = content.map(c => {
       return {
@@ -106,7 +109,8 @@ Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur 
       };
     });
     ChatMessage.implementation.createDocuments(chatData);
-    //---------Comptabilisation
+    //---------Comptabilisation, désactiver
+    /*
     let ip
     try {
       const response = await fetch('https://api.ipify.org?format=json');
@@ -130,6 +134,7 @@ Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur 
       // TypeError: Failed to fetch
       console.log('There was an error', error);
     }
+    */
 
     //Patch nouveau system d'initiative 10.0.9, a retirer dans quelques version
     /*for (let actor of game.actors) {

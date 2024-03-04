@@ -3,12 +3,11 @@ cd ../packs
 
 for f in *
 do
-    cd $f
+    cd ./$f
     rm -r _source
     fvtt package unpack $f
     cd ..
 done
-
 
 touch all.txt
 listitem=("accessoires-magiques" "ape" "armes" "armespoudre" "armures" "bestiaire-items" "blessures-graves" "competences-b" "competences-h" "competences-a" "coups-speciaux" "couvre-chefs" "equipements-pour-mages" "equipements-pour-pretres" "folies" "immobilier" "ingredients" "instruments" "livres" "maladies" "objet-inge" "maps" "metiers" "mutations" "objets-exclusifs" "origines" "pieges" "plan-inge" "potions-poisons" "prieres-pretres-adathie" "prieres-paladins-braav" "prieres-paladins-niourgl" "prieres-pretres-niourgl" "prieres-paladin-dlul" "prieres-paladin-khornettoh" "prieres-paladin-slanoush" "prieres-pretre-dlul" "prieres-pretre-slanoush" "prieres-pretre-youclidh" "reliques" "services" "soldats-items" "soldats" "sorts-air" "sorts-chamane" "sorts-combat" "sorts-eau" "sorts-feu" "sorts-generaliste" "sorts-invocateur" "sorts-item" "sorts-meta" "sorts-necro" "sorts-terre" "sorts-thermo" "sorts-tzinntch" "specialites" "trucs")
@@ -26,7 +25,6 @@ do
         comp2='", '
         echo "$comp$list$comp2$line2">>../../all.txt
     done
-    break
     cd ../..
 done
 allObj=$(cat all.txt)
@@ -46,7 +44,6 @@ do
         comp2='", '
         echo "$comp$list$comp2$line2">>../../all.txt
     done
-    break
     cd ../..
 done
 allObj=$(cat all.txt)
@@ -56,7 +53,7 @@ rm all.txt
 
 for f in *
 do
-    cd $f
+    cd ./$f
     rm -r _source
     cd ..
 done

@@ -1,0 +1,5 @@
+2024/03/04-13:44:33.757443 7f7bd7fff640 Recovering log #3
+2024/03/04-13:44:33.757916 7f7bd7fff640 Level-0 table #5: started
+2024/03/04-13:44:33.763455 7f7bd7fff640 Level-0 table #5: 117427 bytes OK
+2024/03/04-13:44:33.775194 7f7bd7fff640 Delete type=0 #3
+2024/03/04-13:44:33.775260 7f7bd7fff640 Delete type=3 #2

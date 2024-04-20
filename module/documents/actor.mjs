@@ -94,6 +94,7 @@ export class NaheulbeukActor extends Actor {
     }
 
     // Add level for easier access, or fall back to 0.
+    // Add hlvl for half level rounded up for use in quick tests
     if (data.attributes.level) {
       data.lvl = data.attributes.level.value ?? 0;
     }

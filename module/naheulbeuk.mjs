@@ -79,7 +79,7 @@ Hooks.once('ready', async function () {
     await game.settings.register("core", "naheulbeuk.version", { scope: 'world', type: String })
   } catch (e) {
     await game.settings.register("core", "naheulbeuk.version", { scope: 'world', type: String })
-    await game.settings.set("core", "naheulbeuk.version", "10.0.9")
+    await game.settings.set("core", "naheulbeuk.version", "10.1.5")
   }
   //Comparaison du setting avec la version actuelle et sinon on affiche un message et on comptabilise puis maj setting
   if (game.system.version != game.settings.get("core", "naheulbeuk.version")) {
@@ -92,13 +92,9 @@ Hooks.once('ready', async function () {
 Si vous avez des questions, vous pouvez consulter 
 <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk">la documentation</a>.<br/>
 Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur le Discord <a href="https://discord.gg/pPSDNJk">La Fonderie</a>.<br/><br/>
-<div><strong><u>Notes de la mise à jour 10.1.4, dernière en v10</u></strong></div>
-<div style="padding-top:8px;">- Plus d'une centaine d'ajouts au Bestiaire</div>
-<div style="padding-top:8px;">- Plus d'une centaine d'ajouts de tokens (systems/naheulbeuk/assets/from-2minutetabletop.com-token)</div>
-<div style="padding-top:8px;">- Nettoyage des macros</div>
-<div style="padding-top:8px;">- Amélioration de la macro de recherche d'objets, <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk#titre81">plus d'infos ici</a>.</div>
-<div style="padding-top:8px;">- Création d'une macro de recherche et génération de rencontres, <a href="https://foundryvtt.wiki/fr/systemes/Naheulbeuk#titre85">plus d'infos ici</a>.</div>
-
+<div><strong><u>Notes de la mise à jour 10.1.5, portage de la v10 à la v11</u></strong></div>
+<div style="padding-top:8px;">- Mise à jour sur la base de la version de Eltrys. Merci ;)</div>
+<div style="padding-top:8px;">- Cette version contient plusieurs améliorations des prières et notamment l'ajout du compendium : Poing de Crôm</div>
 `];
     const chatData = content.map(c => {
       return {
@@ -109,33 +105,7 @@ Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur 
       };
     });
     ChatMessage.implementation.createDocuments(chatData);
-    //---------Comptabilisation, désactiver
-    /*
-    let ip
-    try {
-      const response = await fetch('https://api.ipify.org?format=json');
-      ip = await response.json();
-    } catch (error) {
-      ip={'ip':'?'}
-    }
-    const data = { 'version' : ip.ip+"---"+game.system.version };
-    try {
-      const response = await fetch('http://162.19.76.240:5000/add_data', {
-      //const response = await fetch('http://127.0.0.1:5000/add_data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer FOUNDRY_dipes_5'
-        },
-        body: JSON.stringify(data),
-        mode: 'cors'
-      });
-    } catch (error) {
-      // TypeError: Failed to fetch
-      console.log('There was an error', error);
-    }
-    */
-
+    
     //Patch nouveau system d'initiative 10.0.9, a retirer dans quelques version
     /*for (let actor of game.actors) {
       //Si la valeur d'initiative est différente de son équivalent en courage ou que le courage vaut 0

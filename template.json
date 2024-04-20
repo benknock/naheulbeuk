@@ -164,6 +164,9 @@
         "pa-khornettoh": {
           "value": false
         },
+        "pa-crom": {
+          "value": false
+        },
         "chamane": {
           "value": false
         },

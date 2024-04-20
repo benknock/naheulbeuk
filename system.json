@@ -2,10 +2,10 @@
   "id": "naheulbeuk",
   "title": "Naheulbeuk",
   "description": "The Naheulbeuk system for FoundryVTT!",
-  "version": "10.1.4",
+  "version": "10.1.5",
   "compatibility": {
-    "minimum": "10",
-    "verified": "10.291"
+    "minimum": "11",
+    "verified": "11.315"
   },
   "authors": [{"name": "Dipes"}],
   "esmodules": [
@@ -377,6 +377,14 @@
       "tag": "item"
     },
     {
+      "name":"prieres-poing-crom",
+      "label": "Prières : Poing de Crôm",
+      "path": "./packs/prieres-poing-crom",
+      "type": "Item",
+      "system": "naheulbeuk",
+      "tag": "item"
+    },
+    {
       "name": "reliques",
       "label": "Équipements : reliques",
       "system": "naheulbeuk",
@@ -582,6 +590,6 @@
   "secondaryTokenAttribute": "power",
   "url": "https://github.com/Dipess/naheulbeuk",
   "manifest": "https://github.com/Dipess/naheulbeuk/releases/latest/download/system.json",
-  "download": "https://github.com/Dipess/naheulbeuk/releases/download/10.1.4/system.zip",
+  "download": "https://github.com/Dipess/naheulbeuk/releases/download/10.1.5/system.zip",
   "license": "LICENSE.txt"
 }

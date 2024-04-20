@@ -1,0 +1,62 @@
+Changelog Naheulbeuk 10.1.5
+
+> system.json
+Compatibilité minimum : Foundry v11
+Ajout du compendium Prières : Poing de Crôm
+
+> naheulbeuk.mjs
+Correction de la macro d'attaque rapide pour lancer les attaques des PNJ
+
+> actor-sheet.mjs
+Ajout de la catégorie magique pa-crom
+
+> actor-spells.html
+Ajout de la catégorie de paladin Poing de Crom
+
+> item-sort-sheet.html
+Ajout de la catégorie d'items pa-crom / Poing de Crom
+
+> template.json
+Ajout du paramètre pa-crom (défaut à False comme pour les autres paladins)
+
+>>> Objets dans Foundry (ajouts dans les compendiums)
+>> Nouveautés POING DE CROM
+Ajout du métier "Poing de Crôm" avec explications des règles directement sur le métier
+Ajout de l'état "Jugement de Crôm" dans les maladies et empoisonnements (en attente de création d'une catégorie Malédictions suite à la refonte de la magie en cours par PoC)
+Ajout du pack compendium de Prières: Poing de Crôm
+Ajout du tableau des maladresses du Poing de Crôm pour les maladresses au cast des Faveurs
+Ajouts des coups spéciaux CROM-10: Regard de Chuck et CROM-13: Jugement de Crôm pour les compétences spéciales du Poing de Crôm
+
+>> MàJ Prières existantes
+> Paladin de Khornettoh
+Tri des prières du Paladin de Khornettoh (15 niveaux, toutes prières du livre de règles). Mises à jour des prières suite MàJ par PoC en février 2024 et création des états correspondants
+Création d'une origine GUERRIER MAUDIT pour le sort de Malédiction Volontaire du Paladin de Khornettoh
+Ajout du tableau des sorts entropiques dans les descriptions des sorts qui le nécessitent (pour gain de temps)
+
+> Prêtre de Niourgl
+Tri des prières du Prêtre de Niourgl (15 niveaux), mises à jour diverses liées aux MàJ de février 2024
+Ajout de divers tableaux pour les sorts de niveaux 5 et plus
+Ajouts des états et maladies pour les sorts de niveaux 5 et plus
+Ajout du tableau des sorts entropiques dans les descriptions des sorts qui le nécessitent (pour gain de temps)
+Création d'un monstre "Avatar de Niourgl" dans le bestiaire pour le sort du même nom
+
+> Prêtre de Dlul
+Tri des prières jusqu'au niveau 15 et mises à jour pour prise en comptes des modif de février 2024 par PoC
+Ajout dans le bestiaire de l'invocation Feignasse du Chaos
+Ajout d'états pour les sorts de niveaux 5 et plus
+Ajout de références aux tableaux des critiques dans les descriptions de tous les sorts
+
+> Prêtre de Youclidh
+Tri des prières jusqu'au niveau 15 et mise à jour des prières pour prise en compte des modif de février 2024 par PoC
+Ajout de la prière de niveau 15 "Maîtrise de la Grande Guérison"
+Ajout de références aux tableaux dans les descriptions de tous les sorts
+Ajout des états donnés pour les différents sorts de Youclidh sur les niveaux 5 => 15
+
+> Prêtre de Slanoush
+Tri des prières jusqu'au niveau 15 et mise à jour des prières pour prise en compte des modif de février 2024
+Ajout des commandes de /roll dans les descriptions des sorts, pour faciliter les jets de dés pour les sorts à effets variables selon les niveaux
+Création de l'Avatar de Slanoush dans le bestiaire pour le sort du même nom
+Ajout des états donnés pour les différents sorts pour les niveaus 5 => 15
+MàJ des états pour les sorts des niveaux 1 => 4
+Ajout des ref' aux tableaux dans les descriptions des différents sorts
+

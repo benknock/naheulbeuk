@@ -1379,12 +1379,12 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
             "name1": "Parade",
             "dice1": "d20",
             "diff1": game.naheulbeuk.macros.replaceAttr("@prd", source),
-            "name2": "Parade",
+            "name2": "Esquive",
             "dice2": "d20",
             "diff2": game.naheulbeuk.macros.replaceAttr("@esq", source)
           };
           let item = { "name": attaque }
-          game.naheulbeuk.macros.onRollCustom(actor, item, dataset, item.name)
+          game.naheulbeuk.macros.onRollCustom(source, item, dataset, item.name)
         }
       }
     }

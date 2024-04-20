@@ -1400,17 +1400,32 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
   //Macros : outil de recherche/création mag
   static async magic_search() {
     let all = all_items_search;
-    var raw_arr = all.split("\n");
+    var raw_arr = all.split("**********");
     var arr = []
     var comps = []
     for (let entry of raw_arr) {
-      entry = JSON.parse(entry)
-      arr.push(entry)
-      let flag = true
-      for (let comp of comps) {
-        if (comp == entry.compendium) { flag = false }
+      try {
+        entry = entry.replace(/\n/g,' ');
+        entry = entry.replace(/\|"/g,'');
+        var map = {"gt":">" /* , … */};
+        entry=entry.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, function($0, $1) {
+        if ($1[0] === "#") {
+              return String.fromCharCode($1[1].toLowerCase() === "x" ? parseInt($1.substr(2), 16)  : parseInt($1.substr(1), 10));
+          } else {
+              return map.hasOwnProperty($1) ? map[$1] : $0;
+          }
+        });
+        entry = JSON.parse(entry)
+        arr.push(entry)
+        let flag = true
+        for (let comp of comps) {
+          if (comp == entry.compendium) { flag = false }
+        }
+        if (flag) { comps.push(entry.compendium) }
+      } catch (e) {
+        console.log(entry)
+        console.log(e)
       }
-      if (flag) { comps.push(entry.compendium) }
     }
 
 
@@ -1845,11 +1860,26 @@ game.naheulbeuk.rollItemMacro(\`${item.name}\`,mode);`;
   //Macros : outil de recherche/création mag
   static async magic_pnj_search() {
     let all = all_actors_search;
-    var raw_arr = all.split("\n");
+    var raw_arr = all.split("**********");
     var arr = []
     for (let entry of raw_arr) {
-      entry = JSON.parse(entry)
-      if (entry.compendium == 'bestiaire') { arr.push(entry) }
+      try {
+        entry = entry.replace(/\n/g,' ');
+        entry = entry.replace(/\|"/g,'');
+        var map = {"gt":">" /* , … */};
+        entry=entry.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, function($0, $1) {
+        if ($1[0] === "#") {
+              return String.fromCharCode($1[1].toLowerCase() === "x" ? parseInt($1.substr(2), 16)  : parseInt($1.substr(1), 10));
+          } else {
+              return map.hasOwnProperty($1) ? map[$1] : $0;
+          }
+        });
+        entry = JSON.parse(entry)
+        if (entry.compendium == 'bestiaire') { arr.push(entry) }
+      } catch(e){
+        console.log(entry)
+        console.log(e)
+      }
     }
 
     let txt = `

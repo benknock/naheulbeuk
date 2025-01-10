@@ -5,6 +5,7 @@
     {{!-- Default tab is specified in actor-sheet.mjs --}}
     <a data-tab="carac">Caractéristiques</a>
     <a data-tab="description">Description</a>
+    {{#if editable}}
     <a data-tab="competences">Compétences</a>
     {{#if (equalsnot coups.length 0)}}
     <a data-tab="coupsspeciaux">Coups spéciaux</a>
@@ -17,7 +18,8 @@
     {{/if}}
     <a data-tab="items">Inventaire</a>
     {{!--<a data-tab="effects">Effets</a>--}}
-  </nav>
+    {{/if}}
+</nav>
 
   {{!-- Sheet Body --}}
   <!-- Onglet Caractéristiques -->
@@ -75,6 +77,7 @@
         </div>
       </header>
       <hr>
+      {{#if editable}}
       <section class="grid grid-2col" style="grid-column-gap:40px;grid-template-columns: 40% 55%">
         <!-- Caractéristiques principales stockées dans abilities(cou,int,...) -->
         <aside class="sidebar">
@@ -301,6 +304,7 @@
           </ol>
         </aside>
       </section>
+      {{/if}}
     </div>
 
     <!-- Onglet description -->

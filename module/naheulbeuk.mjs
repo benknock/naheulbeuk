@@ -13,16 +13,55 @@ import { Macros } from "./documents/macro.mjs";
 import { registerHandlebarsHelpers } from './documents/helpers.mjs';
 
 
-/* -------------------------------------------- */
-/*  Init Hook                                   */
-/* -------------------------------------------- */
+/**
+ * Configure additional system fonts.
+ */
+function _configureFonts() {
+  console.log(`NAHEULBEUK | ConfigureFont`);
+  Object.assign(CONFIG.fontDefinitions, {
+    Roboto: {
+      editor: true,
+      fonts: [
+        { urls: ["systems/naheulbeuk/fonts/roboto/Roboto-Regular.woff2"] },
+        { urls: ["systems/naheulbeuk/fonts/roboto/Roboto-Bold.woff2"], weight: "bold" },
+        { urls: ["systems/naheulbeuk/fonts/roboto/Roboto-Italic.woff2"], style: "italic" },
+        { urls: ["systems/naheulbeuk/fonts/roboto/Roboto-BoldItalic.woff2"], weight: "bold", style: "italic" }
+      ]
+    },
+    "Roboto Condensed": {
+      editor: true,
+      fonts: [
+        { urls: ["systems/naheulbeuk/fonts/roboto-condensed/RobotoCondensed-Regular.woff2"] },
+        { urls: ["systems/naheulbeuk/fonts/roboto-condensed/RobotoCondensed-Bold.woff2"], weight: "bold" },
+        { urls: ["systems/naheulbeuk/fonts/roboto-condensed/RobotoCondensed-Italic.woff2"], style: "italic" },
+        {
+          urls: ["systems/naheulbeuk/fonts/roboto-condensed/RobotoCondensed-BoldItalic.woff2"], weight: "bold",
+          style: "italic"
+        }
+      ]
+    },
+    "Roboto Slab": {
+      editor: true,
+      fonts: [
+        { urls: ["systems/naheulbeuk/fonts/roboto-slab/RobotoSlab-Regular.ttf"] },
+        { urls: ["systems/naheulbeuk/fonts/roboto-slab/RobotoSlab-Bold.ttf"], weight: "bold" }
+      ]
+    }
+  });
+}
 
 /* -------------------------------------------- */
-/*  Ready Hook                                  */
+/*  Foundry VTT Setup                           */
 /* -------------------------------------------- */
 
 
-Hooks.once('init', async function () {
+/* -------------------------------------------- */
+/*  Foundry VTT Initialization                  */
+/* -------------------------------------------- */
+
+Hooks.once('init', function () {
+  globalThis.naheulbeuk = game.naheulbeuk = Object.assign(game.system, globalThis.naheulbeuk);
+  console.log(`NAHEULBEUK | Initializing the Naheulbeuk Game System - Version ${naheulbeuk.version}\n${NAHEULBEUK.ASCII}`);
 
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
@@ -46,6 +85,9 @@ Hooks.once('init', async function () {
     formula: "@attributes.init.total",
     decimals: 0
   };
+
+  // Add fonts
+  _configureFonts();
 
   // Define custom Document classes
   CONFIG.Actor.documentClass = NaheulbeukActor;
@@ -128,6 +170,58 @@ Vous pouvez également rejoindre la communauté <strong>Naheulbeuk</strong> sur 
     await game.settings.set("core", "naheulbeuk.version", game.system.version)
   }
 });
+
+/* -------------------------------------------- */
+/*  System Styling                              */
+/* -------------------------------------------- */
+
+Hooks.on("renderPause", (app, [html]) => {
+  html.classList.add("naheulbeuk");
+  const img = html.querySelector("img");
+  img.src = "systems/naheulbeuk/ui/official/DonjonDeNaheulbeuk.jpg";
+  img.className = "";
+});
+
+Hooks.on("renderSettings", (app, [html]) => {
+  const details = html.querySelector("#game-details");
+  const pip = details.querySelector(".system-info .update");
+  details.querySelector(".system").remove();
+
+  const heading = document.createElement("div");
+  heading.classList.add("naheulbeuk", "sidebar-heading");
+  heading.innerHTML = `
+    <h2>${game.i18n.localize("WORLD.GameSystem")}</h2>
+    <h2>Version ${naheulbeuk.version}</h2>
+    <ul class="links">
+      <li>
+        <a href="" target="_blank">${game.i18n.localize("DDN.Notes")}</a>
+      </li>
+      <li>
+        <a href="" target="_blank">${game.i18n.localize("DDN.Issues")}</a>
+      </li>
+      <li>
+        <a href="" target="_blank">${game.i18n.localize("DDN.Wiki")}</a>
+      </li>
+      <li>
+        <a href="" target="_blank">${game.i18n.localize("DDN.Discord")}</a>
+      </li>
+    </ul>
+  `;
+  details.insertAdjacentElement("afterend", heading);
+
+  const badge = document.createElement("div");
+  badge.classList.add("naheulbeuk", "system-badge");
+  badge.innerHTML = `
+    <img src="systems/naheulbeuk/ui/official/DonjonDeNaheulbeuk.jpg" data-tooltip="${naheulbeuk.title}" alt="${naheulbeuk.title}">
+    <span class="system-info">${naheulbeuk.version}</span>
+  `;
+  if ( pip ) badge.querySelector(".system-info").insertAdjacentElement("beforeend", pip);
+  heading.insertAdjacentElement("afterend", badge);
+});
+/* -------------------------------------------- */
+/*  Other Hooks                                 */
+/* -------------------------------------------- */
+
 
 /**
  * Create a Macro from an Item drop.

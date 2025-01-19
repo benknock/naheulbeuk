@@ -1,9 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+/* Common Styles */
+/* ----------------------------------------- */
+/*  Fonts                                    */
+/* ----------------------------------------- */
 
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 @font-face {
   font-family: Naheulbeuk;
-  src: url("../css/Dauphin.ttf");
+  /* src: url("../css/Dauphin.ttf"); */
+  src: url("../css/CenturyGothic.ttf");
 }
+
 
 /* Global styles */
 .window-app {
